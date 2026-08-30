@@ -57,7 +57,7 @@ export default function ContactoPage() {
                   <li key={detail.title} className="flex gap-4">
                     <span
                       aria-hidden
-                      className="inline-flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary-500"
+                      className="inline-flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary-700"
                     >
                       <detail.icon className="size-5" strokeWidth={1.6} />
                     </span>
@@ -73,7 +73,7 @@ export default function ContactoPage() {
                             ? "noopener noreferrer"
                             : undefined
                         }
-                        className="mt-0.5 inline-block text-sm text-ink-700/80 transition-colors hover:text-primary-600"
+                        className="mt-0.5 inline-block text-sm text-ink-700/80 transition-colors hover:text-primary-700"
                       >
                         {detail.value}
                       </a>
@@ -84,7 +84,7 @@ export default function ContactoPage() {
                 <li className="flex gap-4">
                   <span
                     aria-hidden
-                    className="inline-flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary-500"
+                    className="inline-flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary-50 text-primary-700"
                   >
                     <Clock className="size-5" strokeWidth={1.6} />
                   </span>
@@ -133,7 +133,7 @@ export default function ContactoPage() {
                   <Button
                     asChild
                     size="sm"
-                    className="shrink-0 rounded-full bg-primary-500 text-cream-50 hover:bg-primary-600"
+                    className="shrink-0 rounded-full bg-primary-700 text-cream-50 hover:bg-primary-800"
                   >
                     <a
                       href={directionsUrl}

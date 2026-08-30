@@ -52,7 +52,7 @@ export function VirtualTour() {
           >
             <span
               aria-hidden
-              className="inline-flex size-20 items-center justify-center rounded-full bg-cream-50/95 text-primary-600 shadow-lg transition-transform duration-300 group-hover:scale-110"
+              className="inline-flex size-20 items-center justify-center rounded-full bg-cream-50/95 text-primary-700 shadow-lg transition-transform duration-300 group-hover:scale-110"
             >
               <Play className="ml-1 size-8 fill-current" strokeWidth={0} />
             </span>

@@ -75,7 +75,7 @@ export function ProfessionalModal({
               <div className="mb-6 flex items-center justify-between gap-4">
                 <Link
                   href={`/profesionales/${professional.slug}`}
-                  className="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
+                  className="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-primary-700 transition-colors hover:text-primary-800 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
                 >
                   Ver perfil completo
                   <ArrowUpRight className="size-4" aria-hidden />
@@ -85,7 +85,7 @@ export function ProfessionalModal({
                   type="button"
                   onClick={close}
                   aria-label="Cerrar perfil"
-                  className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-card text-ink-700 transition-colors hover:bg-primary-50 hover:text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
+                  className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-card text-ink-700 transition-colors hover:bg-primary-50 hover:text-primary-800 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
                 >
                   <X className="size-5" aria-hidden />
                 </button>

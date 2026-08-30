@@ -56,7 +56,7 @@ export default async function BlogPostPage({
       <article className="container-auris pt-10 pb-20 lg:pt-14">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
+          className="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-primary-700 transition-colors hover:text-primary-800 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
         >
           <ArrowLeft className="size-4" aria-hidden />
           Todos los artículos
@@ -65,7 +65,7 @@ export default async function BlogPostPage({
         <Reveal className="mx-auto mt-10 max-w-3xl">
           <time
             dateTime={post.publishedAt}
-            className="text-sm font-semibold tracking-[0.16em] text-primary-500 uppercase"
+            className="text-sm font-semibold tracking-[0.16em] text-primary-700 uppercase"
           >
             {formatDate(post.publishedAt)}
           </time>

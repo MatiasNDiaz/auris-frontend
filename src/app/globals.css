@@ -4,35 +4,43 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Paleta institucional AURIS. En Tailwind v4 el theme se define acá, no en
-   tailwind.config.ts, por eso las escalas viven en un bloque @theme estático. */
+/* Paleta institucional AURIS, tomada del isotipo (hoja verde + degradé beige).
+   En Tailwind v4 el theme se define acá, no en tailwind.config.ts, por eso las
+   escalas viven en un bloque @theme estático.
+
+   El verde 400 es el #88B94F de marca; del 600 al 900 va hacia el verde bosque
+   del logo, que es el que sostiene las superficies grandes y el texto. */
 @theme {
-  --color-primary-50: #f3f6f3;
-  --color-primary-100: #e2eae2;
-  --color-primary-200: #c5d5c5;
-  --color-primary-300: #9fb89f;
-  --color-primary-400: #749574;
-  --color-primary-500: #4a6b52;
-  --color-primary-600: #3d5744;
-  --color-primary-700: #324638;
-  --color-primary-800: #2a392e;
-  --color-primary-900: #233026;
+  --color-primary-50: #f4f9ed;
+  --color-primary-100: #e6f2d6;
+  --color-primary-200: #cee5b0;
+  --color-primary-300: #aed486;
+  --color-primary-400: #88b94f;
+  --color-primary-500: #6fa03d;
+  --color-primary-600: #578231;
+  --color-primary-700: #46682c;
+  --color-primary-800: #3a5528;
+  --color-primary-900: #2b4020;
 
-  --color-accent-50: #fdf3ec;
-  --color-accent-100: #fbe4d2;
-  --color-accent-200: #f6c6a3;
-  --color-accent-300: #f0a374;
-  --color-accent-400: #e8845a;
-  --color-accent-500: #dd6b47;
-  --color-accent-600: #c1522f;
-  --color-accent-700: #9e3f26;
+  --color-accent-50: #fff8ea;
+  --color-accent-100: #fdeecb;
+  --color-accent-200: #fdd26e;
+  --color-accent-300: #f9c04c;
+  --color-accent-400: #f2a62d;
+  --color-accent-500: #dc8f1c;
+  --color-accent-600: #b87215;
+  --color-accent-700: #8f5711;
 
-  --color-cream-50: #fdfbf8;
-  --color-cream-100: #faf3ec;
-  --color-cream-200: #f5e9dc;
+  --color-cream-50: #fdfbf6;
+  --color-cream-100: #f8f2e6;
+  --color-cream-200: #eed8b1;
+  --color-cream-300: #d9c19b;
 
-  --color-ink-700: #2d3b31;
-  --color-ink-900: #1a231d;
+  --color-sand-400: #c0ab93;
+  --color-sand-500: #a9947c;
+
+  --color-ink-700: #45483d;
+  --color-ink-900: #262a20;
 }
 
 @theme inline {
@@ -80,33 +88,33 @@
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-fraunces), ui-serif, Georgia, "Times New Roman", serif;
 
-  --background: #fdfbf8;
-  --foreground: #1a231d;
+  --background: #fdfbf6;
+  --foreground: #262a20;
   --card: #ffffff;
-  --card-foreground: #1a231d;
+  --card-foreground: #262a20;
   --popover: #ffffff;
-  --popover-foreground: #1a231d;
-  --primary: #4a6b52;
-  --primary-foreground: #fdfbf8;
-  --secondary: #f5e9dc;
-  --secondary-foreground: #324638;
-  --muted: #faf3ec;
-  --muted-foreground: #5b6b60;
-  --accent: #f5e9dc;
-  --accent-foreground: #324638;
+  --popover-foreground: #262a20;
+  --primary: #46682c;
+  --primary-foreground: #fdfbf6;
+  --secondary: #e6f2d6;
+  --secondary-foreground: #3a5528;
+  --muted: #f8f2e6;
+  --muted-foreground: #5f6552;
+  --accent: #e6f2d6;
+  --accent-foreground: #3a5528;
   --destructive: #b23c22;
-  --border: #e7ded3;
-  --input: #ded3c5;
-  --ring: #749574;
+  --border: #e6ddcc;
+  --input: #d9cdb8;
+  --ring: #88b94f;
   --radius: 1rem;
-  --sidebar: #faf3ec;
-  --sidebar-foreground: #1a231d;
-  --sidebar-primary: #4a6b52;
-  --sidebar-primary-foreground: #fdfbf8;
-  --sidebar-accent: #f5e9dc;
-  --sidebar-accent-foreground: #324638;
-  --sidebar-border: #e7ded3;
-  --sidebar-ring: #749574;
+  --sidebar: #f8f2e6;
+  --sidebar-foreground: #262a20;
+  --sidebar-primary: #46682c;
+  --sidebar-primary-foreground: #fdfbf6;
+  --sidebar-accent: #e6f2d6;
+  --sidebar-accent-foreground: #3a5528;
+  --sidebar-border: #e6ddcc;
+  --sidebar-ring: #88b94f;
 }
 
 @layer base {

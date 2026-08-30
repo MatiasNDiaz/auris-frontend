@@ -94,7 +94,7 @@ export function ContactForm() {
             role="status"
           >
             <CheckCircle2
-              className="mx-auto size-12 text-primary-500"
+              className="mx-auto size-12 text-primary-700"
               strokeWidth={1.5}
               aria-hidden
             />
@@ -109,7 +109,7 @@ export function ContactForm() {
               type="button"
               variant="ghost"
               onClick={() => reset()}
-              className="mt-6 rounded-full text-primary-600 hover:bg-primary-50"
+              className="mt-6 rounded-full text-primary-700 hover:bg-primary-50"
             >
               Enviar otra consulta
             </Button>
@@ -207,7 +207,7 @@ export function ContactForm() {
               type="submit"
               size="lg"
               disabled={isSubmitting}
-              className="mt-8 w-full rounded-full bg-primary-500 font-semibold text-cream-50 hover:bg-primary-600 sm:w-auto"
+              className="mt-8 w-full rounded-full bg-primary-700 font-semibold text-cream-50 hover:bg-primary-800 sm:w-auto"
             >
               {isSubmitting ? (
                 <>

@@ -149,22 +149,80 @@ export const professionals: Professional[] = [
   {
     slug: "gabriel-ferrari",
     name: "Lic. Gabriel Ferrari",
-    specialty: "Coordinación de talleres grupales",
-    serviceSlug: "taller-de-auto",
+    specialty: "Coordinación de talleres para adultos mayores",
+    serviceSlug: "taller-de-adultos-mayores",
     photoUrl:
       "https://images.unsplash.com/photo-1612531386530-97286d97c2d2?q=80&w=800&auto=format&fit=crop",
-    bio: "Coordina los ciclos de talleres del centro, orientados al autoconocimiento, la autoestima y el autocuidado. Diseña las dinámicas y el material de trabajo de cada encuentro.",
+    bio: "Coordina los talleres para adultos mayores del centro, orientados a la estimulación cognitiva, la autonomía y el vínculo social. Diseña las dinámicas de cada encuentro adaptándolas al ritmo del grupo.",
     education: [
       "Licenciatura en Psicología — Universidad de Belgrano",
-      "Formación en Coordinación de Grupos — Escuela de Psicología Social",
+      "Especialización en Psicogerontología — Universidad Maimónides",
     ],
-    experience: "8 años coordinando espacios grupales y de desarrollo personal.",
+    experience:
+      "8 años coordinando espacios grupales con personas mayores en centros de día e instituciones.",
     certifications: [
       "Matrícula Nacional MN 48.663",
-      "Formación en Psicodrama aplicado a grupos",
+      "Formación en Estimulación Cognitiva en el Adulto Mayor",
+    ],
+  },
+  {
+    slug: "florencia-arias",
+    name: "Dra. Florencia Arias",
+    specialty: "Odontopediatría",
+    serviceSlug: "odontologia",
+    photoUrl:
+      "https://images.unsplash.com/photo-1623854766464-c3645e6841d8?q=80&w=800&auto=format&fit=crop",
+    bio: "Atiende a niños y adolescentes con un enfoque centrado en que la primera experiencia odontológica sea buena. Trabaja la prevención junto a las familias desde la primera consulta.",
+    education: [
+      "Odontología — Universidad Nacional de Córdoba",
+      "Especialización en Odontopediatría — Universidad Maimónides",
+    ],
+    experience: "9 años de atención odontológica pediátrica.",
+    certifications: [
+      "Matrícula Nacional MN 36.720",
+      "Formación en Manejo de Conducta Infantil en Odontología",
+    ],
+  },
+  {
+    slug: "tomas-linares",
+    name: "Lic. Tomás Linares",
+    specialty: "Kinesiología y reeducación postural",
+    serviceSlug: "kinesiologia",
+    photoUrl:
+      "https://images.unsplash.com/photo-1642975967602-653d378f3b5b?q=80&w=800&auto=format&fit=crop",
+    bio: "Se orienta al tratamiento del dolor crónico de columna y a la reeducación postural en personas con trabajo de oficina. Combina terapia manual con planes de ejercicio domiciliario.",
+    education: [
+      "Licenciatura en Kinesiología y Fisiatría — Universidad de Buenos Aires",
+      "Formación en Reeducación Postural Global (RPG)",
+    ],
+    experience: "7 años en consultorio y programas de salud laboral.",
+    certifications: [
+      "Matrícula Nacional MN 16.845",
+      "Certificación en Ejercicio Terapéutico para Dolor Crónico",
+    ],
+  },
+  {
+    slug: "camila-duarte",
+    name: "Camila Duarte",
+    specialty: "Estética corporal y aparatología",
+    serviceSlug: "estetica-facial-y-corporal",
+    photoUrl:
+      "https://images.unsplash.com/photo-1618294454352-eb84462415b0?q=80&w=800&auto=format&fit=crop",
+    bio: "Se especializa en tratamientos corporales y en el uso de aparatología estética. Arma planes por ciclos con evaluación de resultados en cada etapa, sin prometer cambios inmediatos.",
+    education: [
+      "Tecnicatura en Estética Integral — Instituto Argentino de Estética",
+      "Formación en Aparatología Corporal Avanzada",
+    ],
+    experience: "6 años en centros de estética y bienestar.",
+    certifications: [
+      "Certificación en Radiofrecuencia y Ultracavitación",
+      "Formación en Bioseguridad aplicada a la estética",
     ],
   },
 ];
+
+/** Tope de tarjetas del carousel de la Home. */
+export const CAROUSEL_LIMIT = 12;
 
 export function getProfessionalBySlug(slug: string) {
   return professionals.find((professional) => professional.slug === slug);

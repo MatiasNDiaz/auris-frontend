@@ -1,5 +1,6 @@
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import { Logo } from "@/components/shared/Logo";
 import {
   FacebookIcon,
   InstagramIcon,
@@ -18,10 +19,10 @@ export function Footer() {
     <footer className="mt-24 bg-primary-700 text-primary-100">
       <div className="container-auris grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="font-serif text-3xl leading-none text-cream-50">
-            {siteConfig.name}
-          </p>
-          <p className="mt-3 text-sm leading-relaxed text-primary-200">
+          <div className="w-fit rounded-2xl bg-cream-50 px-4 py-3">
+            <Logo variant="full" className="w-32" />
+          </div>
+          <p className="mt-5 text-sm leading-relaxed text-primary-100">
             {siteConfig.tagline}. Atención integral con un enfoque humano,
             profesional y personalizado.
           </p>

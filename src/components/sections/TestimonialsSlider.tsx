@@ -5,26 +5,42 @@ import { ChevronLeft, ChevronRight, Quote, Star } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { testimonials } from "@/lib/data/testimonials";
+import { useMediaQuery } from "@/lib/use-media-query";
 import { cn } from "@/lib/utils";
 
 const AUTOPLAY_MS = 7000;
 
-const variants = {
-  enter: (direction: number) => ({ opacity: 0, x: direction * 48 }),
-  center: { opacity: 1, x: 0 },
-  exit: (direction: number) => ({ opacity: 0, x: direction * -48 }),
-};
+/** "María Elena G." -> "ME" */
+function initials(name: string) {
+  return name
+    .split(" ")
+    .filter((part) => part.length > 1)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+}
 
 export function TestimonialsSlider() {
-  const [[index, direction], setState] = useState<[number, number]>([0, 1]);
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const perPage = isDesktop ? 3 : 1;
+  const pageCount = Math.ceil(testimonials.length / perPage);
+
+  const [[page, direction], setState] = useState<[number, number]>([0, 1]);
   const [paused, setPaused] = useState(false);
 
-  const paginate = useCallback((step: number) => {
-    setState(([current]) => [
-      (current + step + testimonials.length) % testimonials.length,
-      step,
-    ]);
-  }, []);
+  // Al cambiar el ancho cambia la cantidad de páginas: acotamos la actual.
+  const safePage = Math.min(page, pageCount - 1);
+
+  const paginate = useCallback(
+    (step: number) => {
+      setState(([current]) => {
+        const bounded = Math.min(current, pageCount - 1);
+        return [(bounded + step + pageCount) % pageCount, step];
+      });
+    },
+    [pageCount],
+  );
 
   useEffect(() => {
     if (paused) return;
@@ -32,96 +48,112 @@ export function TestimonialsSlider() {
     return () => clearInterval(timer);
   }, [paginate, paused]);
 
-  const testimonial = testimonials[index];
+  const visible = testimonials.slice(
+    safePage * perPage,
+    safePage * perPage + perPage,
+  );
 
   return (
-    <section className="bg-cream-100 py-20 lg:py-28">
+    <section className="bg-primary-50 py-20 lg:py-28">
       <div className="container-auris">
         <SectionHeading
           eyebrow="Testimonios"
-          title="Lo que cuentan nuestros pacientes"
-          description="Experiencias reales de personas que eligieron acompañarse con nuestro equipo."
+          title="Lo que dicen nuestros pacientes"
+          description="Experiencias reales que nos inspiran a seguir creciendo."
           className="mb-14"
         />
 
         <div
-          className="relative mx-auto max-w-3xl"
+          className="relative"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
           onFocusCapture={() => setPaused(true)}
           onBlurCapture={() => setPaused(false)}
         >
-          <div className="relative min-h-72 sm:min-h-64">
+          <div className="min-h-72 lg:min-h-64">
             <AnimatePresence mode="wait" custom={direction} initial={false}>
-              <motion.figure
-                key={index}
+              <motion.ul
+                key={safePage}
                 custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.45, ease: [0.21, 0.47, 0.32, 0.98] }}
-                className="rounded-[2rem] border border-border bg-card p-8 shadow-sm sm:p-12"
+                initial={{ opacity: 0, x: direction * 40 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: direction * -40 }}
+                transition={{ duration: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
+                className="grid gap-6 lg:grid-cols-3"
                 aria-live="polite"
               >
-                <Quote
-                  className="size-8 text-accent-300"
-                  strokeWidth={1.5}
-                  aria-hidden
-                />
-
-                <blockquote className="mt-5 font-serif text-xl leading-relaxed text-pretty text-ink-900 sm:text-2xl">
-                  {testimonial.content}
-                </blockquote>
-
-                <figcaption className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2">
-                  <span className="font-medium text-ink-900">
-                    {testimonial.authorName}
-                  </span>
-                  <span
-                    className="flex items-center gap-0.5"
-                    aria-label={`Puntuación: ${testimonial.rating} de 5`}
-                  >
-                    {Array.from({ length: 5 }, (_, i) => (
-                      <Star
-                        key={i}
+                {visible.map((testimonial) => (
+                  <li key={testimonial.authorName}>
+                    <figure className="flex h-full flex-col rounded-3xl border border-primary-100 bg-card p-7 shadow-sm">
+                      <Quote
+                        className="size-7 text-primary-300"
+                        strokeWidth={1.5}
                         aria-hidden
-                        className={cn(
-                          "size-4",
-                          i < testimonial.rating
-                            ? "fill-accent-400 text-accent-400"
-                            : "text-primary-200",
-                        )}
                       />
-                    ))}
-                  </span>
-                </figcaption>
-              </motion.figure>
+
+                      <blockquote className="mt-4 flex-1 text-base leading-relaxed text-pretty text-ink-700/90">
+                        {testimonial.content}
+                      </blockquote>
+
+                      <figcaption className="mt-6 flex items-center gap-3 border-t border-primary-100 pt-5">
+                        <span
+                          aria-hidden
+                          className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-600 font-semibold text-cream-50"
+                        >
+                          {initials(testimonial.authorName)}
+                        </span>
+                        <span>
+                          <span className="block font-medium text-ink-900">
+                            {testimonial.authorName}
+                          </span>
+                          <span
+                            className="mt-0.5 flex items-center gap-0.5"
+                            aria-label={`Puntuación: ${testimonial.rating} de 5`}
+                          >
+                            {Array.from({ length: 5 }, (_, i) => (
+                              <Star
+                                key={i}
+                                aria-hidden
+                                className={cn(
+                                  "size-3.5",
+                                  i < testimonial.rating
+                                    ? "fill-accent-400 text-accent-400"
+                                    : "text-primary-200",
+                                )}
+                              />
+                            ))}
+                          </span>
+                        </span>
+                      </figcaption>
+                    </figure>
+                  </li>
+                ))}
+              </motion.ul>
             </AnimatePresence>
           </div>
 
-          <div className="mt-8 flex items-center justify-center gap-4">
+          <div className="mt-9 flex items-center justify-center gap-4">
             <button
               type="button"
               onClick={() => paginate(-1)}
-              aria-label="Testimonio anterior"
-              className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-card text-ink-700 transition-colors hover:bg-primary-50 hover:text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
+              aria-label="Testimonios anteriores"
+              className="inline-flex size-11 items-center justify-center rounded-full border border-primary-200 bg-card text-primary-700 transition-colors hover:bg-primary-100 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
             >
               <ChevronLeft className="size-5" aria-hidden />
             </button>
 
             <div className="flex items-center gap-2">
-              {testimonials.map((item, i) => (
+              {Array.from({ length: pageCount }, (_, i) => (
                 <button
-                  key={item.authorName}
+                  key={i}
                   type="button"
-                  aria-label={`Ver testimonio de ${item.authorName}`}
-                  aria-current={i === index}
-                  onClick={() => setState([i, i > index ? 1 : -1])}
+                  aria-label={`Ir al grupo de testimonios ${i + 1}`}
+                  aria-current={i === safePage}
+                  onClick={() => setState([i, i > safePage ? 1 : -1])}
                   className={cn(
                     "h-2 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none",
-                    i === index
-                      ? "w-7 bg-primary-500"
+                    i === safePage
+                      ? "w-7 bg-primary-600"
                       : "w-2 bg-primary-200 hover:bg-primary-300",
                   )}
                 />
@@ -131,8 +163,8 @@ export function TestimonialsSlider() {
             <button
               type="button"
               onClick={() => paginate(1)}
-              aria-label="Testimonio siguiente"
-              className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-card text-ink-700 transition-colors hover:bg-primary-50 hover:text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
+              aria-label="Testimonios siguientes"
+              className="inline-flex size-11 items-center justify-center rounded-full border border-primary-200 bg-card text-primary-700 transition-colors hover:bg-primary-100 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
             >
               <ChevronRight className="size-5" aria-hidden />
             </button>

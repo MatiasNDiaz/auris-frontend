@@ -27,7 +27,7 @@ export function BlogCard({ post, className }: BlogCardProps) {
       <div className="flex flex-1 flex-col p-6">
         <time
           dateTime={post.publishedAt}
-          className="text-xs font-semibold tracking-[0.14em] text-primary-500 uppercase"
+          className="text-xs font-semibold tracking-[0.14em] text-primary-700 uppercase"
         >
           {formatDate(post.publishedAt)}
         </time>
@@ -45,7 +45,7 @@ export function BlogCard({ post, className }: BlogCardProps) {
           {post.excerpt}
         </p>
 
-        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary-600">
+        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary-700">
           Leer artículo
           <ArrowUpRight
             className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

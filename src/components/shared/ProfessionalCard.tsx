@@ -40,7 +40,7 @@ export function ProfessionalCard({
 
       <div className="flex flex-1 flex-col p-6">
         {service && (
-          <p className="text-xs font-semibold tracking-[0.14em] text-primary-500 uppercase">
+          <p className="text-xs font-semibold tracking-[0.14em] text-primary-700 uppercase">
             {service.name}
           </p>
         )}
@@ -55,7 +55,7 @@ export function ProfessionalCard({
         </h3>
         <p className="mt-1 text-sm text-ink-700/75">{professional.specialty}</p>
 
-        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary-600">
+        <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-primary-700">
           Ver perfil
           <ArrowUpRight
             className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

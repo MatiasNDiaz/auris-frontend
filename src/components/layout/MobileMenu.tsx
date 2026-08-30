@@ -11,6 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Logo } from "@/components/shared/Logo";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { mainNav, siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -29,10 +30,11 @@ export function MobileMenu() {
       </SheetTrigger>
 
       <SheetContent side="right" className="w-full max-w-sm bg-cream-50 p-0">
-        <SheetHeader className="border-b border-border px-6 py-5">
-          <SheetTitle className="font-serif text-2xl tracking-tight text-primary-600">
-            {siteConfig.name}
+        <SheetHeader className="border-b border-primary-100 px-6 py-5">
+          <SheetTitle className="sr-only">
+            {siteConfig.name} — {siteConfig.tagline}
           </SheetTitle>
+          <Logo />
         </SheetHeader>
 
         <nav className="flex flex-col px-3 py-4">
@@ -52,7 +54,7 @@ export function MobileMenu() {
                 className={cn(
                   "rounded-xl px-4 py-3 text-base font-medium transition-colors",
                   active
-                    ? "bg-primary-50 text-primary-600"
+                    ? "bg-primary-50 text-primary-700"
                     : "text-ink-700 hover:bg-cream-100",
                 )}
               >

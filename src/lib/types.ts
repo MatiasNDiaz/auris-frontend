@@ -13,6 +13,8 @@ export type Service = {
   /** Clave del ícono de lucide-react, resuelta en `@/lib/icons`. */
   icon: string;
   shortDescription: string;
+  /** Frase de una línea, usada en el carousel del hero. */
+  tagline: string;
   fullDescription: string;
   imageUrl: string;
   features: string[];

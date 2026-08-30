@@ -18,7 +18,7 @@ export function PageHeader({ eyebrow, title, description }: PageHeaderProps) {
       <div className="container-auris relative">
         <Reveal className="max-w-3xl">
           {eyebrow && (
-            <p className="mb-3 text-sm font-semibold tracking-[0.18em] text-primary-500 uppercase">
+            <p className="mb-3 text-sm font-semibold tracking-[0.18em] text-primary-700 uppercase">
               {eyebrow}
             </p>
           )}

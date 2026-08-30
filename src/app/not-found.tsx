@@ -18,7 +18,7 @@ export default function NotFound() {
         <Button
           asChild
           size="lg"
-          className="rounded-full bg-primary-500 text-cream-50 hover:bg-primary-600"
+          className="rounded-full bg-primary-700 text-cream-50 hover:bg-primary-800"
         >
           <Link href="/">
             <ArrowLeft className="size-4" aria-hidden />
@@ -29,7 +29,7 @@ export default function NotFound() {
           asChild
           variant="outline"
           size="lg"
-          className="rounded-full border-primary-500 text-primary-600 hover:bg-primary-50"
+          className="rounded-full border-primary-700 text-primary-700 hover:bg-primary-50"
         >
           <Link href="/contacto">Ir a contacto</Link>
         </Button>

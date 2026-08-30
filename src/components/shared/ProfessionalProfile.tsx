@@ -68,7 +68,7 @@ export function ProfessionalProfile({
           {service && (
             <Link
               href={`/servicios/${service.slug}`}
-              className="inline-flex rounded-full bg-primary-50 px-3.5 py-1.5 text-xs font-semibold tracking-[0.14em] text-primary-600 uppercase transition-colors hover:bg-primary-100 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
+              className="inline-flex rounded-full bg-primary-50 px-3.5 py-1.5 text-xs font-semibold tracking-[0.14em] text-primary-700 uppercase transition-colors hover:bg-primary-100 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
             >
               {service.name}
             </Link>
@@ -105,7 +105,7 @@ export function ProfessionalProfile({
           className="mt-8 flex items-start gap-3 rounded-2xl border border-border bg-cream-100 p-5"
         >
           <Briefcase
-            className="mt-0.5 size-5 shrink-0 text-primary-500"
+            className="mt-0.5 size-5 shrink-0 text-primary-700"
             strokeWidth={1.6}
             aria-hidden
           />
@@ -128,7 +128,7 @@ export function ProfessionalProfile({
             >
               <h2 className="flex items-center gap-2 text-sm font-semibold text-ink-900">
                 <block.icon
-                  className="size-4 text-primary-500"
+                  className="size-4 text-primary-700"
                   strokeWidth={1.7}
                   aria-hidden
                 />

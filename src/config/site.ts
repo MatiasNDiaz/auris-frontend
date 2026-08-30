@@ -4,9 +4,9 @@
  */
 export const siteConfig = {
   name: "AURIS",
-  tagline: "Centro de Salud y Bienestar",
+  tagline: "Espacio de salud y bienestar",
   description:
-    "Centro de salud y bienestar integral. Psicología, odontología, estética, nutrición, kinesiología y fonoaudiología con un enfoque humano, profesional y personalizado.",
+    "Espacio de salud y bienestar integral. Psicología, odontología, estética, nutrición, kinesiología, fonoaudiología y talleres para adultos mayores con un enfoque humano, profesional y personalizado.",
   url: "https://auris.com.ar",
 
   phone: "+54 11 4000-0000",

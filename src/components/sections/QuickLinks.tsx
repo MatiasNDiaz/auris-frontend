@@ -37,20 +37,21 @@ const links = [
 
 export function QuickLinks() {
   return (
-    <section className="container-auris -mt-8 pb-4 lg:-mt-14">
+    <section className="container-auris py-16 lg:py-20">
       <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {links.map((link, index) => (
           <Reveal as="li" key={link.href} delay={index * 0.07}>
             <Link
               href={link.href}
-              className="group flex h-full flex-col rounded-2xl border border-border bg-card p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
+              className="group flex h-full flex-col rounded-2xl border border-primary-100 bg-card p-5 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:border-primary-300 hover:shadow-md focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
             >
-              <link.icon
-                className="size-5 text-primary-500 transition-transform duration-200 group-hover:scale-110"
-                strokeWidth={1.6}
+              <span
                 aria-hidden
-              />
-              <span className="mt-3.5 font-medium text-ink-900">
+                className="inline-flex size-11 items-center justify-center rounded-xl bg-primary-100 text-primary-700 transition-colors duration-200 group-hover:bg-primary-600 group-hover:text-cream-50"
+              >
+                <link.icon className="size-5" strokeWidth={1.6} />
+              </span>
+              <span className="mt-4 font-semibold text-ink-900">
                 {link.title}
               </span>
               <span className="mt-1 text-sm text-ink-700/70">

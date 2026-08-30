@@ -45,8 +45,8 @@ export function ProfessionalsDirectory() {
               className={cn(
                 "rounded-full border px-4 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none",
                 active
-                  ? "border-primary-500 bg-primary-500 text-cream-50"
-                  : "border-border bg-card text-ink-700/80 hover:border-primary-300 hover:text-primary-600",
+                  ? "border-primary-700 bg-primary-700 text-cream-50"
+                  : "border-border bg-card text-ink-700/80 hover:border-primary-300 hover:text-primary-700",
               )}
             >
               {option.name}

@@ -43,7 +43,7 @@ export default async function ProfesionalDetallePage({
       <div className="container-auris pt-10 pb-20 lg:pt-14 lg:pb-24">
         <Link
           href="/profesionales"
-          className="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
+          className="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-primary-700 transition-colors hover:text-primary-800 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
         >
           <ArrowLeft className="size-4" aria-hidden />
           Todo el equipo

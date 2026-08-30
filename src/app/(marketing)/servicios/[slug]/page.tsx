@@ -49,7 +49,7 @@ export default async function ServicioDetallePage({
         <div className="container-auris relative">
           <Link
             href="/servicios"
-            className="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-primary-600 transition-colors hover:text-primary-700 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
+            className="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-primary-700 transition-colors hover:text-primary-800 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
           >
             <ArrowLeft className="size-4" aria-hidden />
             Todos los servicios
@@ -58,7 +58,7 @@ export default async function ServicioDetallePage({
           <Reveal className="mt-8 max-w-3xl">
             <span
               aria-hidden
-              className="inline-flex size-14 items-center justify-center rounded-2xl bg-primary-500 text-cream-50"
+              className="inline-flex size-14 items-center justify-center rounded-2xl bg-primary-700 text-cream-50"
             >
               {renderServiceIcon(service.icon, {
                 className: "size-7",
@@ -96,7 +96,7 @@ export default async function ServicioDetallePage({
                   <li key={feature} className="flex items-start gap-3">
                     <span
                       aria-hidden
-                      className="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-600"
+                      className="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-700"
                     >
                       <Check className="size-3" strokeWidth={3} />
                     </span>

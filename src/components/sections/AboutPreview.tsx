@@ -1,60 +1,76 @@
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Building2, Check, HeartPulse, Play, Users } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/shared/Reveal";
 import { Button } from "@/components/ui/button";
+import { BLUR_DATA_URL } from "@/lib/blur";
+
+const pillars = [
+  {
+    icon: HeartPulse,
+    title: "Enfoque integral",
+    description: "Abordamos tu bienestar físico, mental y emocional.",
+  },
+  {
+    icon: Users,
+    title: "Profesionales comprometidos",
+    description: "Equipo interdisciplinario en constante capacitación.",
+  },
+  {
+    icon: Building2,
+    title: "Instalaciones modernas",
+    description: "Espacios diseñados para la comodidad y la tranquilidad.",
+  },
+];
 
 const values = [
   "Consultas con tiempo real de escucha, sin apuro",
   "Equipo interdisciplinario que se comunica entre sí",
   "Planes de tratamiento explicados y acordados con vos",
-  "Instalaciones accesibles y pensadas para el descanso",
 ];
 
 export function AboutPreview() {
   return (
-    <section className="bg-cream-100 py-20 lg:py-28">
+    <section className="bg-cream-50 py-20 lg:py-28">
       <div className="container-auris grid items-center gap-14 lg:grid-cols-2">
-        <Reveal from="right">
-          <div className="relative aspect-4/3 overflow-hidden rounded-[2.5rem] bg-linear-to-br from-primary-300 to-primary-600 shadow-lg">
-            <div
-              aria-hidden
-              className="absolute inset-0 opacity-45"
-              style={{
-                backgroundImage:
-                  "radial-gradient(circle at 25% 25%, rgba(255,255,255,.6), transparent 50%), radial-gradient(circle at 80% 70%, rgba(246,198,163,.65), transparent 45%)",
-              }}
-            />
-            <div className="absolute right-6 bottom-6 left-6 rounded-2xl bg-cream-50/95 px-5 py-4 backdrop-blur-sm">
-              <p className="font-serif text-lg text-primary-700">
-                Un espacio pensado para bajar un cambio
-              </p>
-              <p className="mt-1 text-sm text-ink-700/75">
-                Luz natural, silencio y consultorios amplios.
-              </p>
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal from="left">
-          <p className="text-sm font-semibold tracking-[0.18em] text-primary-500 uppercase">
-            Sobre el centro
+        <Reveal from="left" className="order-2 lg:order-1">
+          <p className="text-sm font-semibold tracking-[0.18em] text-primary-700 uppercase">
+            Sobre AURIS
           </p>
           <h2 className="mt-3 font-serif text-3xl leading-tight text-balance text-ink-900 sm:text-4xl">
-            Salud integral con una mirada humana
+            Sobre el centro
           </h2>
           <p className="mt-5 text-base leading-relaxed text-pretty text-ink-700/85">
-            Nacimos con una convicción simple: la salud mejora cuando quien
-            consulta se siente escuchado. Por eso reunimos disciplinas que
-            habitualmente funcionan por separado y las hicimos trabajar en
-            equipo, con historias clínicas compartidas y criterios comunes.
+            Somos un espacio de salud y bienestar integral que busca promover la
+            calidad de vida a través de un enfoque humano, profesional y
+            personalizado.
           </p>
 
-          <ul className="mt-7 space-y-3">
+          <ul className="mt-8 space-y-5">
+            {pillars.map((pillar) => (
+              <li key={pillar.title} className="flex gap-4">
+                <span
+                  aria-hidden
+                  className="inline-flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary-100 text-primary-700"
+                >
+                  <pillar.icon className="size-5" strokeWidth={1.6} />
+                </span>
+                <div>
+                  <p className="font-semibold text-ink-900">{pillar.title}</p>
+                  <p className="mt-0.5 text-sm leading-relaxed text-ink-700/75">
+                    {pillar.description}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <ul className="mt-8 space-y-2.5 border-t border-primary-100 pt-7">
             {values.map((value) => (
               <li key={value} className="flex items-start gap-3 text-ink-700/85">
                 <span
                   aria-hidden
-                  className="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-primary-100 text-primary-600"
+                  className="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-primary-600 text-cream-50"
                 >
                   <Check className="size-3" strokeWidth={3} />
                 </span>
@@ -65,15 +81,52 @@ export function AboutPreview() {
 
           <Button
             asChild
-            variant="outline"
             size="lg"
-            className="mt-9 rounded-full border-primary-500 text-primary-600 hover:bg-primary-50"
+            className="mt-9 rounded-full bg-primary-700 font-semibold text-cream-50 hover:bg-primary-800"
           >
             <Link href="/sobre-el-centro">
-              Conocer el centro
+              Conocé más sobre nosotros
               <ArrowRight className="size-4" aria-hidden />
             </Link>
           </Button>
+        </Reveal>
+
+        <Reveal from="right" className="order-1 lg:order-2">
+          <div className="relative">
+            <div
+              aria-hidden
+              className="absolute -top-6 -right-6 size-40 rounded-full bg-primary-200/60 blur-2xl"
+            />
+
+            <div className="relative aspect-4/3 overflow-hidden rounded-[2.5rem] shadow-xl">
+              <Image
+                src="https://images.unsplash.com/photo-1505410603994-c3ac6269711f?q=80&w=1400&auto=format&fit=crop"
+                alt="Recepción del centro AURIS"
+                fill
+                sizes="(max-width: 1024px) 92vw, 620px"
+                placeholder="blur"
+                blurDataURL={BLUR_DATA_URL}
+                className="object-cover"
+              />
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-primary-900/25"
+              />
+
+              <Link
+                href="/sobre-el-centro#recorrido-virtual"
+                aria-label="Ver el recorrido virtual del centro"
+                className="group absolute inset-0 flex items-center justify-center focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+              >
+                <span
+                  aria-hidden
+                  className="inline-flex size-18 items-center justify-center rounded-full bg-cream-50/95 text-primary-700 shadow-lg transition-transform duration-300 group-hover:scale-110"
+                >
+                  <Play className="ml-1 size-7 fill-current" strokeWidth={0} />
+                </span>
+              </Link>
+            </div>
+          </div>
         </Reveal>
       </div>
     </section>

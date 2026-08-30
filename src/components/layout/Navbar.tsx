@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MobileMenu } from "./MobileMenu";
+import { Logo } from "@/components/shared/Logo";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { mainNav, siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
@@ -31,10 +32,10 @@ export function Navbar() {
       <div className="container-auris flex h-18 items-center justify-between gap-6">
         <Link
           href="/"
-          className="rounded-md font-serif text-2xl leading-none tracking-tight text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
+          aria-label={`${siteConfig.name} — ${siteConfig.tagline}`}
+          className="rounded-md focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
         >
-          {siteConfig.name}
-          <span className="sr-only"> — {siteConfig.tagline}</span>
+          <Logo priority />
         </Link>
 
         <nav
@@ -52,8 +53,8 @@ export function Navbar() {
                 className={cn(
                   "relative rounded-full px-3.5 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none",
                   active
-                    ? "text-primary-600"
-                    : "text-ink-700/80 hover:text-primary-600",
+                    ? "text-primary-700"
+                    : "text-ink-700/80 hover:text-primary-700",
                 )}
               >
                 {item.label}
@@ -68,7 +69,7 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <Link
             href="/contacto"
-            className="hidden rounded-full px-3.5 py-2 text-sm font-medium text-ink-700/80 transition-colors hover:text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none lg:inline-flex"
+            className="hidden rounded-full px-3.5 py-2 text-sm font-medium text-ink-700/80 transition-colors hover:text-primary-800 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none lg:inline-flex"
           >
             Contacto
           </Link>

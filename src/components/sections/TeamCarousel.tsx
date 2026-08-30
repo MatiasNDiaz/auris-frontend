@@ -1,13 +1,16 @@
 "use client";
 
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Users } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ProfessionalCard } from "@/components/shared/ProfessionalCard";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Button } from "@/components/ui/button";
-import { professionals } from "@/lib/data/professionals";
+import { CAROUSEL_LIMIT, professionals } from "@/lib/data/professionals";
 import { cn } from "@/lib/utils";
+
+/** El carousel es una muestra: el listado completo vive en /profesionales. */
+const featured = professionals.slice(0, CAROUSEL_LIMIT);
 
 /**
  * Carousel con scroll nativo (snap) en lugar de transform manual: mantiene el
@@ -81,7 +84,7 @@ export function TeamCarousel() {
               onClick={() => scrollByCards(-1)}
               disabled={!canScroll.prev}
               aria-label="Ver profesionales anteriores"
-              className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-card text-ink-700 transition-colors hover:bg-primary-50 hover:text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none disabled:opacity-35 disabled:hover:bg-card"
+              className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-card text-ink-700 transition-colors hover:bg-primary-50 hover:text-primary-800 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none disabled:opacity-35 disabled:hover:bg-card"
             >
               <ChevronLeft className="size-5" aria-hidden />
             </button>
@@ -90,7 +93,7 @@ export function TeamCarousel() {
               onClick={() => scrollByCards(1)}
               disabled={!canScroll.next}
               aria-label="Ver profesionales siguientes"
-              className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-card text-ink-700 transition-colors hover:bg-primary-50 hover:text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none disabled:opacity-35 disabled:hover:bg-card"
+              className="inline-flex size-11 items-center justify-center rounded-full border border-border bg-card text-ink-700 transition-colors hover:bg-primary-50 hover:text-primary-800 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none disabled:opacity-35 disabled:hover:bg-card"
             >
               <ChevronRight className="size-5" aria-hidden />
             </button>
@@ -101,9 +104,9 @@ export function TeamCarousel() {
       <div className="mt-12">
         <ul
           ref={trackRef}
-          className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-5 pb-4 [scrollbar-width:none] sm:px-8 lg:px-12 [&::-webkit-scrollbar]:hidden"
+          className="scrollbar-none flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-5 pb-4 sm:px-8 lg:px-12 [&::-webkit-scrollbar]:hidden"
         >
-          {professionals.map((professional) => (
+          {featured.map((professional) => (
             <li
               key={professional.slug}
               className="w-[78vw] max-w-xs shrink-0 snap-start sm:w-[45vw] lg:w-[calc((min(80rem,100vw)-6rem-4.5rem)/4)]"
@@ -114,11 +117,38 @@ export function TeamCarousel() {
               />
             </li>
           ))}
+
+          {/* Cierra el recorrido del carousel con el acceso al listado completo. */}
+          <li className="w-[78vw] max-w-xs shrink-0 snap-start sm:w-[45vw] lg:w-[calc((min(80rem,100vw)-6rem-4.5rem)/4)]">
+            <div className="flex h-full flex-col items-center justify-center rounded-3xl border border-primary-200 bg-primary-50 p-8 text-center">
+              <span
+                aria-hidden
+                className="inline-flex size-14 items-center justify-center rounded-2xl bg-primary-600 text-cream-50"
+              >
+                <Users className="size-7" strokeWidth={1.5} />
+              </span>
+              <p className="mt-5 font-serif text-xl text-primary-800">
+                Conocé a todo nuestro equipo
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-ink-700/75">
+                Profesionales en cada área para acompañarte.
+              </p>
+              <Button
+                asChild
+                className="mt-5 rounded-full bg-primary-700 font-semibold text-cream-50 hover:bg-primary-800"
+              >
+                <Link href="/profesionales">
+                  Ver todos
+                  <ArrowRight className="size-4" aria-hidden />
+                </Link>
+              </Button>
+            </div>
+          </li>
         </ul>
 
         <div className="container-auris mt-8 flex flex-col items-center gap-6">
           <div className="flex items-center gap-2" role="tablist" aria-label="Ir a un profesional">
-            {professionals.map((professional, index) => (
+            {featured.map((professional, index) => (
               <button
                 key={professional.slug}
                 type="button"
@@ -129,7 +159,7 @@ export function TeamCarousel() {
                 className={cn(
                   "h-2 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none",
                   index === activeIndex
-                    ? "w-7 bg-primary-500"
+                    ? "w-7 bg-primary-600"
                     : "w-2 bg-primary-200 hover:bg-primary-300",
                 )}
               />
@@ -139,7 +169,7 @@ export function TeamCarousel() {
           <Button
             asChild
             variant="ghost"
-            className="rounded-full text-primary-600 hover:bg-primary-50"
+            className="rounded-full text-primary-700 hover:bg-primary-50"
           >
             <Link href="/profesionales">
               Ver todo el equipo

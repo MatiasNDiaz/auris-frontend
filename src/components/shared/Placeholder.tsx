@@ -7,12 +7,12 @@ import { cn } from "@/lib/utils";
  * Cuando lleguen las fotos reales se reemplaza por `next/image`.
  */
 const palettes = [
-  ["#c5d5c5", "#4a6b52"],
-  ["#f6c6a3", "#c1522f"],
-  ["#e2eae2", "#749574"],
-  ["#fbe4d2", "#e8845a"],
-  ["#9fb89f", "#324638"],
-  ["#f5e9dc", "#9fb89f"],
+  ["#cee5b0", "#46682c"],
+  ["#fdd26e", "#b87215"],
+  ["#e6f2d6", "#6fa03d"],
+  ["#eed8b1", "#a9947c"],
+  ["#aed486", "#3a5528"],
+  ["#f8f2e6", "#88b94f"],
 ];
 
 function hashSeed(seed: string) {

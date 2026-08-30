@@ -113,7 +113,7 @@ export default function SobreElCentroPage() {
                 <div className="h-full rounded-3xl border border-border bg-card p-7 shadow-sm">
                   <span
                     aria-hidden
-                    className="inline-flex size-12 items-center justify-center rounded-2xl bg-primary-50 text-primary-500"
+                    className="inline-flex size-12 items-center justify-center rounded-2xl bg-primary-50 text-primary-700"
                   >
                     <value.icon className="size-6" strokeWidth={1.5} />
                   </span>
