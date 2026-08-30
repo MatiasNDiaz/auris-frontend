@@ -51,16 +51,24 @@ export function Navbar() {
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "relative rounded-full px-3.5 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none",
+                  "group relative rounded-full px-3.5 py-2 text-sm font-medium whitespace-nowrap transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none",
                   active
                     ? "text-primary-700"
                     : "text-ink-700/80 hover:text-primary-700",
                 )}
               >
                 {item.label}
-                {active && (
-                  <span className="absolute inset-x-3.5 -bottom-0.5 h-px bg-primary-400" />
-                )}
+                {/* Subrayado que crece desde el centro; en la activa ya está
+                    desplegado. `scale-x` anima sin provocar reflow. */}
+                <span
+                  aria-hidden
+                  className={cn(
+                    "absolute inset-x-3.5 bottom-1 h-0.5 origin-center rounded-full bg-primary-500 transition-transform duration-300 ease-out",
+                    active
+                      ? "scale-x-100"
+                      : "scale-x-0 group-hover:scale-x-100 group-focus-visible:scale-x-100",
+                  )}
+                />
               </Link>
             );
           })}
@@ -69,9 +77,13 @@ export function Navbar() {
         <div className="flex items-center gap-2">
           <Link
             href="/contacto"
-            className="hidden rounded-full px-3.5 py-2 text-sm font-medium text-ink-700/80 transition-colors hover:text-primary-800 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none lg:inline-flex"
+            className="group relative hidden rounded-full px-3.5 py-2 text-sm font-medium whitespace-nowrap text-ink-700/80 transition-colors duration-200 hover:text-primary-700 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none lg:inline-flex"
           >
             Contacto
+            <span
+              aria-hidden
+              className="absolute inset-x-3.5 bottom-1 h-0.5 origin-center scale-x-0 rounded-full bg-primary-500 transition-transform duration-300 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100"
+            />
           </Link>
           <WhatsAppButton size="default" className="hidden sm:inline-flex" />
           <MobileMenu />

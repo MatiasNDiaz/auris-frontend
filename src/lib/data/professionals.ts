@@ -8,7 +8,7 @@ export const professionals: Professional[] = [
     specialty: "Psicología clínica",
     serviceSlug: "psicologia",
     photoUrl:
-      "https://images.unsplash.com/photo-1659353888906-adb3e0041693?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1758600587839-56ba05596c69?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Acompaña procesos terapéuticos con adolescentes y adultos desde un enfoque integrador. Se especializa en trastornos de ansiedad y en el trabajo sobre autoestima y vínculos, con especial atención al momento vital de cada consultante.",
     education: [
       "Licenciatura en Psicología — Universidad de Buenos Aires",
@@ -26,7 +26,7 @@ export const professionals: Professional[] = [
     specialty: "Psicología — pareja y familia",
     serviceSlug: "psicologia",
     photoUrl:
-      "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1767175620484-1ed37931a0d1?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Coordina espacios de terapia de pareja y orientación familiar. Trabaja sobre la comunicación, los acuerdos y las transiciones familiares, y coordina además los encuentros grupales del centro.",
     education: [
       "Licenciatura en Psicología — Universidad Nacional de La Plata",
@@ -44,7 +44,7 @@ export const professionals: Professional[] = [
     specialty: "Odontología general y estética",
     serviceSlug: "odontologia",
     photoUrl:
-      "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1736289173074-df6009da27c9?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Orienta su práctica a la odontología preventiva y mínimamente invasiva. Realiza restauraciones estéticas y tratamientos de blanqueamiento, con foco en explicar cada paso antes de iniciarlo.",
     education: [
       "Odontología — Universidad de Buenos Aires",
@@ -62,7 +62,7 @@ export const professionals: Professional[] = [
     specialty: "Cosmetología y estética integral",
     serviceSlug: "estetica-facial-y-corporal",
     photoUrl:
-      "https://images.unsplash.com/photo-1673865641073-4479f93a7776?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1758600436770-821223436cdc?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Diseña planes de tratamiento facial y corporal a partir de un diagnóstico de piel detallado. Prioriza resultados progresivos y sostenibles, acompañados de pautas claras de cuidado en casa.",
     education: [
       "Tecnicatura en Cosmetología — Instituto Superior de Estética",
@@ -80,7 +80,7 @@ export const professionals: Professional[] = [
     specialty: "Nutrición clínica y deportiva",
     serviceSlug: "nutricion",
     photoUrl:
-      "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1767175473698-859bc73e8e64?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Trabaja el cambio de hábitos alimentarios desde una mirada realista y sin restricciones innecesarias. Acompaña objetivos de salud, composición corporal y rendimiento deportivo.",
     education: [
       "Licenciatura en Nutrición — Universidad de Buenos Aires",
@@ -98,7 +98,7 @@ export const professionals: Professional[] = [
     specialty: "Nutrición y trastornos alimentarios",
     serviceSlug: "nutricion",
     photoUrl:
-      "https://images.unsplash.com/photo-1623854767648-e7bb8009f0db?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1736289189363-4af449f7e6fc?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Aborda la alimentación desde una perspectiva integral y no restrictiva, en articulación con el equipo de psicología del centro. Se especializa en la relación con la comida y en patologías digestivas.",
     education: [
       "Licenciatura en Nutrición — Universidad Nacional de Rosario",
@@ -116,7 +116,7 @@ export const professionals: Professional[] = [
     specialty: "Kinesiología y rehabilitación deportiva",
     serviceSlug: "kinesiologia",
     photoUrl:
-      "https://images.unsplash.com/photo-1582750433449-648ed127bb54?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1768677129657-bb93b8216570?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Combina terapia manual y ejercicio terapéutico para tratar el dolor y recuperar la función. Se especializa en rehabilitación post quirúrgica de rodilla y hombro, y en prevención de lesiones deportivas.",
     education: [
       "Licenciatura en Kinesiología y Fisiatría — Universidad Favaloro",
@@ -134,7 +134,7 @@ export const professionals: Professional[] = [
     specialty: "Fonoaudiología",
     serviceSlug: "fonoaudiologia",
     photoUrl:
-      "https://images.unsplash.com/photo-1589784294954-2904f68cb673?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1678695972687-033fa0bdbac9?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Evalúa y trata dificultades del lenguaje, la voz y la audición en pacientes de todas las edades. Sostiene un trabajo articulado con la familia y con las instituciones educativas cuando el tratamiento lo requiere.",
     education: [
       "Licenciatura en Fonoaudiología — Universidad del Museo Social Argentino",
@@ -152,7 +152,7 @@ export const professionals: Professional[] = [
     specialty: "Coordinación de talleres para adultos mayores",
     serviceSlug: "taller-de-adultos-mayores",
     photoUrl:
-      "https://images.unsplash.com/photo-1612531386530-97286d97c2d2?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1730597842283-943c7986ee2c?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Coordina los talleres para adultos mayores del centro, orientados a la estimulación cognitiva, la autonomía y el vínculo social. Diseña las dinámicas de cada encuentro adaptándolas al ritmo del grupo.",
     education: [
       "Licenciatura en Psicología — Universidad de Belgrano",
@@ -171,7 +171,7 @@ export const professionals: Professional[] = [
     specialty: "Odontopediatría",
     serviceSlug: "odontologia",
     photoUrl:
-      "https://images.unsplash.com/photo-1623854766464-c3645e6841d8?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Atiende a niños y adolescentes con un enfoque centrado en que la primera experiencia odontológica sea buena. Trabaja la prevención junto a las familias desde la primera consulta.",
     education: [
       "Odontología — Universidad Nacional de Córdoba",
@@ -189,7 +189,7 @@ export const professionals: Professional[] = [
     specialty: "Kinesiología y reeducación postural",
     serviceSlug: "kinesiologia",
     photoUrl:
-      "https://images.unsplash.com/photo-1642975967602-653d378f3b5b?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1758613654360-45f1ff78c0cf?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Se orienta al tratamiento del dolor crónico de columna y a la reeducación postural en personas con trabajo de oficina. Combina terapia manual con planes de ejercicio domiciliario.",
     education: [
       "Licenciatura en Kinesiología y Fisiatría — Universidad de Buenos Aires",
@@ -207,7 +207,7 @@ export const professionals: Professional[] = [
     specialty: "Estética corporal y aparatología",
     serviceSlug: "estetica-facial-y-corporal",
     photoUrl:
-      "https://images.unsplash.com/photo-1618294454352-eb84462415b0?q=80&w=800&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1770058443069-e384cd001e9b?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Se especializa en tratamientos corporales y en el uso de aparatología estética. Arma planes por ciclos con evaluación de resultados en cada etapa, sin prometer cambios inmediatos.",
     education: [
       "Tecnicatura en Estética Integral — Instituto Argentino de Estética",

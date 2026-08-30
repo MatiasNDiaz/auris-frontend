@@ -119,7 +119,9 @@ export function ServiceFan({
               transition={
                 reduceMotion
                   ? { duration: 0 }
-                  : { type: "spring", stiffness: 180, damping: 26, mass: 0.9 }
+                  : // Rígido a propósito: con autoplay de 2s la card tiene que
+                    // asentarse antes del siguiente cambio.
+                    { type: "spring", stiffness: 280, damping: 32, mass: 0.7 }
               }
               aria-hidden={!isFront}
               className={cn(
@@ -138,7 +140,7 @@ export function ServiceFan({
               />
               <div
                 aria-hidden
-                className="absolute inset-0 bg-linear-to-t from-primary-900/90 via-primary-900/25 to-primary-900/5"
+                className="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-black/5"
               />
 
               <span
@@ -160,7 +162,7 @@ export function ServiceFan({
               >
                 <motion.span
                   animate={{ opacity: isFront ? 1 : 0 }}
-                  transition={{ duration: reduceMotion ? 0 : 0.35 }}
+                  transition={{ duration: reduceMotion ? 0 : 0.25 }}
                   className="block font-serif text-base leading-tight text-balance text-cream-50 md:text-lg"
                 >
                   {service.name}

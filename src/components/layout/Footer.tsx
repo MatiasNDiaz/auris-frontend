@@ -19,9 +19,9 @@ export function Footer() {
     <footer className="mt-24 bg-primary-700 text-primary-100">
       <div className="container-auris grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="w-fit rounded-2xl bg-cream-50 px-4 py-3">
-            <Logo variant="full" className="w-32" />
-          </div>
+          {/* El isotipo va suelto sobre el verde: el logo completo trae el
+              texto en gris oscuro y no se leería sin una tarjeta clara. */}
+          <Logo markWidth={56} tone="light" />
           <p className="mt-5 text-sm leading-relaxed text-primary-100">
             {siteConfig.tagline}. Atención integral con un enfoque humano,
             profesional y personalizado.
@@ -33,7 +33,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram de AURIS"
-              className="inline-flex size-10 items-center justify-center rounded-full bg-primary-600 transition-colors hover:bg-accent-500 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+              className="inline-flex size-10 items-center justify-center rounded-full bg-primary-600 text-cream-50 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:bg-accent-400 hover:text-ink-900 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
             >
               <InstagramIcon className="size-4" />
             </a>
@@ -42,7 +42,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook de AURIS"
-              className="inline-flex size-10 items-center justify-center rounded-full bg-primary-600 transition-colors hover:bg-accent-500 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+              className="inline-flex size-10 items-center justify-center rounded-full bg-primary-600 text-cream-50 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:bg-accent-400 hover:text-ink-900 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
             >
               <FacebookIcon className="size-4" />
             </a>
@@ -61,9 +61,13 @@ export function Footer() {
               <li key={service.slug}>
                 <Link
                   href={`/servicios/${service.slug}`}
-                  className="text-primary-200 transition-colors hover:text-cream-50"
+                  className="group relative inline-flex w-fit text-primary-200 transition-all duration-200 hover:translate-x-1 hover:text-cream-50 focus-visible:ring-2 focus-visible:ring-cream-50/60 focus-visible:outline-none"
                 >
                   {service.name}
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-cream-50/70 transition-transform duration-300 ease-out group-hover:scale-x-100"
+                  />
                 </Link>
               </li>
             ))}
@@ -82,9 +86,13 @@ export function Footer() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-primary-200 transition-colors hover:text-cream-50"
+                  className="group relative inline-flex w-fit text-primary-200 transition-all duration-200 hover:translate-x-1 hover:text-cream-50 focus-visible:ring-2 focus-visible:ring-cream-50/60 focus-visible:outline-none"
                 >
                   {item.label}
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-0 -bottom-0.5 h-px origin-left scale-x-0 bg-cream-50/70 transition-transform duration-300 ease-out group-hover:scale-x-100"
+                  />
                 </Link>
               </li>
             ))}
@@ -111,7 +119,7 @@ export function Footer() {
               <Phone className="mt-0.5 size-4 shrink-0" aria-hidden />
               <a
                 href={`tel:${siteConfig.phone.replace(/\s/g, "")}`}
-                className="transition-colors hover:text-cream-50"
+                className="underline-offset-4 transition-colors duration-200 hover:text-cream-50 hover:underline"
               >
                 {siteConfig.phone}
               </a>
@@ -120,7 +128,7 @@ export function Footer() {
               <Mail className="mt-0.5 size-4 shrink-0" aria-hidden />
               <a
                 href={`mailto:${siteConfig.email}`}
-                className="transition-colors hover:text-cream-50"
+                className="underline-offset-4 transition-colors duration-200 hover:text-cream-50 hover:underline"
               >
                 {siteConfig.email}
               </a>

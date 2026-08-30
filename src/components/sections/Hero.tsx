@@ -3,15 +3,14 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, HeartHandshake, Leaf, ShieldCheck, Sparkles } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { ServiceFan } from "./ServiceFan";
+import { ShineButton } from "@/components/shared/ShineButton";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
-import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { services } from "@/lib/data/services";
 
-const AUTOPLAY_MS = 4500;
+const AUTOPLAY_MS = 2000;
 
 const container = {
   hidden: {},
@@ -63,13 +62,13 @@ export function Hero() {
       onTouchStart={() => setPaused(true)}
     >
       {/* Capa 1 — fondo full-bleed con crossfade entre servicios. */}
-      <div aria-hidden className="absolute inset-0 -z-20 bg-primary-900">
+      <div aria-hidden className="absolute inset-0 -z-20 bg-ink-900">
         {services.map((service, index) => (
           <motion.div
             key={service.slug}
             initial={false}
             animate={{ opacity: index === active ? 1 : 0 }}
-            transition={{ duration: reduceMotion ? 0 : 0.9, ease: "easeInOut" }}
+            transition={{ duration: reduceMotion ? 0 : 0.6, ease: "easeInOut" }}
             className="absolute inset-0"
           >
             <Image
@@ -84,14 +83,15 @@ export function Hero() {
         ))}
       </div>
 
-      {/* Capa 2 — degradés: más denso a la izquierda, donde va el texto. */}
+      {/* Capa 2 — degradés neutros: el tinte verde ensuciaba el color de las
+          fotos, así que el oscurecido va en negro y no altera los tonos. */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-linear-to-r from-primary-900/95 via-primary-900/70 to-primary-900/20"
+        className="absolute inset-0 -z-10 bg-linear-to-r from-black/80 via-black/50 to-black/10"
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-linear-to-t from-primary-900/70 via-transparent to-primary-900/25"
+        className="absolute inset-0 -z-10 bg-linear-to-t from-black/55 via-transparent to-black/25"
       />
 
       <div className="container-auris relative flex flex-1 flex-col justify-center gap-14 py-20 lg:gap-0 lg:py-24">
@@ -130,16 +130,13 @@ export function Hero() {
             variants={item}
             className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
           >
-            <Button
-              asChild
-              size="lg"
-              className="rounded-full bg-primary-600 font-semibold text-cream-50 shadow-lg transition-transform duration-200 hover:-translate-y-0.5 hover:bg-primary-700"
-            >
-              <Link href="/servicios">
-                Conocé nuestros servicios
-                <ArrowRight className="size-4" aria-hidden />
-              </Link>
-            </Button>
+            <ShineButton href="/servicios" tone="primary">
+              Conocé nuestros servicios
+              <ArrowRight
+                className="size-4 transition-transform duration-300 group-hover:translate-x-1"
+                aria-hidden
+              />
+            </ShineButton>
             <WhatsAppButton label="Contactanos por WhatsApp" variant="onDark" />
           </motion.div>
 

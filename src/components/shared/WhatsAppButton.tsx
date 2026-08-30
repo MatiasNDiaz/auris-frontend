@@ -1,13 +1,13 @@
 import { MessageCircle } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ShineButton } from "./ShineButton";
 import { siteConfig } from "@/config/site";
-import { cn, whatsappLink } from "@/lib/utils";
+import { whatsappLink } from "@/lib/utils";
 
 type WhatsAppButtonProps = {
   label?: string;
   message?: string;
   className?: string;
-  size?: "default" | "sm" | "lg";
+  size?: "default" | "lg";
   /** `onDark` es la variante para el hero, sobre la foto de fondo. */
   variant?: "solid" | "outline" | "onDark";
 };
@@ -20,32 +20,24 @@ export function WhatsAppButton({
   size = "lg",
   variant = "solid",
 }: WhatsAppButtonProps) {
+  // El ámbar del isotipo no contrasta con texto blanco, así que va con texto
+  // oscuro; sobre la foto del hero se usa el contorno claro.
+  const tone =
+    variant === "onDark" ? "outlineLight" : variant === "outline" ? "light" : "accent";
+
   return (
-    <Button
-      asChild
+    <ShineButton
+      href={whatsappLink(siteConfig.whatsapp, message)}
+      external
+      tone={tone}
       size={size}
-      className={cn(
-        "rounded-full font-semibold shadow-sm transition-transform duration-200 hover:-translate-y-0.5",
-        // El ámbar del isotipo no da contraste con texto blanco, así que sobre
-        // fondo claro va con texto oscuro (solid) o en tono 700 (outline).
-        // Sobre la foto del hero el ámbar claro sí contrasta y se usa en línea.
-        variant === "solid" &&
-          "bg-accent-400 text-ink-900 hover:bg-accent-300",
-        variant === "outline" &&
-          "border border-accent-400 bg-cream-50 text-accent-700 hover:bg-accent-50",
-        variant === "onDark" &&
-          "border border-accent-300 bg-transparent text-accent-200 backdrop-blur-sm hover:bg-accent-400 hover:text-ink-900",
-        className,
-      )}
+      className={className}
     >
-      <a
-        href={whatsappLink(siteConfig.whatsapp, message)}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <MessageCircle className="size-4" aria-hidden />
-        {label}
-      </a>
-    </Button>
+      <MessageCircle
+        className="size-4 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110"
+        aria-hidden
+      />
+      {label}
+    </ShineButton>
   );
 }

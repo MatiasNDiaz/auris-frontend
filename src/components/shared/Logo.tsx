@@ -3,18 +3,22 @@ import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 /**
- * El archivo `/LogoAuris.png` es cuadrado y trae isotipo + texto apilados, así
- * que a tamaños chicos la bajada queda ilegible. Estas fracciones recortan solo
- * la hoja, medidas sobre el PNG original.
+ * Assets derivados de `/LogoAuris.png`, ya recortados al contenido y con el
+ * fondo transparente intacto.
+ *
+ * Van con `unoptimized` a propósito: el optimizador de next/image devuelve un
+ * WebP sin canal alfa para este archivo, y la transparencia se aplasta contra
+ * blanco (se ve un rectángulo detrás del logo). Como los assets ya están
+ * dimensionados y comprimidos, servirlos tal cual no cuesta nada.
  */
-const LEAF = { x: 0.19, y: 0.168, w: 0.668, h: 0.312 };
-const LEAF_RATIO = LEAF.h / LEAF.w;
+const MARK = { src: "/logo-auris-mark.png", width: 320, height: 143 };
+const FULL = { src: "/logo-auris-full.png", width: 640, height: 459 };
 
 type LogoProps = {
-  /** `mark`: solo la hoja, junto al nombre. `full`: el PNG completo. */
+  /** `mark`: solo el isotipo, junto al nombre. `full`: el logo completo. */
   variant?: "mark" | "full";
   className?: string;
-  /** Alto en px del isotipo (solo `mark`). */
+  /** Ancho en px del isotipo (solo `mark`). */
   markWidth?: number;
   /** Color del texto en la variante `mark`. */
   tone?: "dark" | "light";
@@ -24,18 +28,19 @@ type LogoProps = {
 export function Logo({
   variant = "mark",
   className,
-  markWidth = 44,
+  markWidth = 46,
   tone = "dark",
   priority = false,
 }: LogoProps) {
   if (variant === "full") {
     return (
       <Image
-        src="/LogoAuris.png"
+        src={FULL.src}
         alt={`${siteConfig.name} — ${siteConfig.tagline}`}
-        width={220}
-        height={220}
+        width={FULL.width}
+        height={FULL.height}
         priority={priority}
+        unoptimized
         className={cn("h-auto w-full object-contain", className)}
       />
     );
@@ -43,29 +48,16 @@ export function Logo({
 
   return (
     <span className={cn("flex items-center gap-2.5", className)}>
-      <span
-        className="relative block shrink-0 overflow-hidden"
-        style={{ width: markWidth, height: markWidth * LEAF_RATIO }}
-      >
-        <span
-          className="absolute block"
-          style={{
-            width: `${(1 / LEAF.w) * 100}%`,
-            aspectRatio: "1 / 1",
-            left: `${(-LEAF.x / LEAF.w) * 100}%`,
-            top: `${(-LEAF.y / LEAF.h) * 100}%`,
-          }}
-        >
-          <Image
-            src="/LogoAuris.png"
-            alt=""
-            fill
-            sizes="120px"
-            priority={priority}
-            className="object-contain"
-          />
-        </span>
-      </span>
+      <Image
+        src={MARK.src}
+        alt=""
+        width={MARK.width}
+        height={MARK.height}
+        priority={priority}
+        unoptimized
+        className="h-auto shrink-0"
+        style={{ width: markWidth }}
+      />
 
       <span className="flex flex-col leading-none">
         <span
@@ -78,7 +70,7 @@ export function Logo({
         </span>
         <span
           className={cn(
-            "mt-1 text-[0.6rem] tracking-[0.14em] uppercase",
+            "mt-1 text-[0.6rem] tracking-[0.14em] whitespace-nowrap uppercase",
             tone === "light" ? "text-primary-100" : "text-sand-500",
           )}
         >

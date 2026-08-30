@@ -1,8 +1,7 @@
 import { CalendarCheck, Leaf } from "lucide-react";
-import Link from "next/link";
 import { Reveal } from "@/components/shared/Reveal";
+import { ShineButton } from "@/components/shared/ShineButton";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
-import { Button } from "@/components/ui/button";
 
 type CtaBannerProps = {
   title?: string;
@@ -47,16 +46,13 @@ export function CtaBanner({
             </div>
 
             <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
-              <Button
-                asChild
-                size="lg"
-                className="rounded-full bg-cream-50 font-semibold text-primary-800 shadow-sm transition-transform duration-200 hover:-translate-y-0.5 hover:bg-cream-100"
-              >
-                <Link href="/contacto">
-                  Solicitar turno
-                  <CalendarCheck className="size-4" aria-hidden />
-                </Link>
-              </Button>
+              <ShineButton href="/contacto" tone="light">
+                Solicitar turno
+                <CalendarCheck
+                  className="size-4 transition-transform duration-300 group-hover:scale-110"
+                  aria-hidden
+                />
+              </ShineButton>
               <WhatsAppButton label="Hablar por WhatsApp" />
             </div>
           </div>

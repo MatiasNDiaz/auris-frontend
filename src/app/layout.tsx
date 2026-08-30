@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function RootLayout({ children, modal }: LayoutProps<"/">) {
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="es-AR"
@@ -64,8 +64,6 @@ export default function RootLayout({ children, modal }: LayoutProps<"/">) {
         <main id="contenido" className="flex-1">
           {children}
         </main>
-        {/* Slot de la intercepting route del detalle de profesionales. */}
-        {modal}
         <Footer />
       </body>
     </html>

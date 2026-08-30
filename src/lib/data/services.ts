@@ -11,7 +11,7 @@ export const services: Service[] = [
     fullDescription:
       "Nuestro equipo de psicología acompaña procesos de cambio personal desde un enfoque integrador, respetando el tiempo y la singularidad de cada persona. Trabajamos sobre ansiedad, estados de ánimo, duelos, vínculos y crisis vitales, tanto en formato individual como de pareja y familia. Cada proceso comienza con entrevistas de admisión donde definimos objetivos claros y elegimos juntos el encuadre más adecuado.",
     imageUrl:
-      "https://images.unsplash.com/photo-1573495804664-b1c0849525af?q=80&w=1920&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1714976694810-85add1a29c96?q=80&w=1920&auto=format&fit=crop",
     features: [
       "Terapia individual para adolescentes y adultos",
       "Terapia de pareja y orientación familiar",
