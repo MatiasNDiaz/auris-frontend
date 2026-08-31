@@ -33,29 +33,31 @@ La primera consulta es un espacio de encuentro, no un interrogatorio. Se convers
 Empezar no implica un compromiso indefinido. Implica darte la oportunidad de mirar lo que te pasa con alguien formado para acompañarte.`,
   },
   {
-    slug: "alimentacion-consciente-mas-alla-de-la-dieta",
-    title: "Alimentación consciente: más allá de la dieta",
+    slug: "cuando-consultar-por-el-lenguaje-de-un-chico",
+    title: "Cuándo consultar por el lenguaje de un chico",
     excerpt:
-      "Por qué los planes restrictivos fallan a largo plazo y cómo construir hábitos alimentarios que se sostengan en el tiempo real de tu rutina.",
-    coverImageUrl: "/images/blog/alimentacion-consciente.jpg",
+      "«Ya va a hablar» es el consejo más repetido y el que más consultas demora. Repasamos qué es esperable a cada edad y cuándo conviene una evaluación.",
+    coverImageUrl: "/images/blog/lenguaje-infantil.jpg",
     publishedAt: "2025-06-02",
-    content: `La mayoría de las personas que llegan a la consulta nutricional ya hicieron varias dietas. Y casi todas cuentan la misma historia: funcionó unas semanas, después se volvió imposible de sostener y el peso volvió, muchas veces con culpa agregada.
+    content: `La frase se escucha en casi todas las primeras entrevistas: alguien de la familia dijo que no había que preocuparse, que ya iba a hablar. A veces es cierto. El problema es que, cuando no lo es, esa espera se lleva meses en los que el tratamiento habría sido mucho más corto.
 
-## El problema no es la fuerza de voluntad
+## Los rangos son amplios, pero existen
 
-Un plan que exige cocinar tres veces por día, medir cada porción y renunciar a toda comida social no fracasa por falta de disciplina. Fracasa porque está diseñado contra la vida real de quien lo tiene que cumplir.
+Cada chico tiene su tiempo y las diferencias entre hermanos son normales. Aun así hay referencias razonables: hacia el año suelen aparecer las primeras palabras con intención, cerca de los dos años empiezan las combinaciones de dos palabras, y alrededor de los tres el habla ya se entiende para alguien de afuera de la familia.
 
-La alimentación consciente propone otra cosa: recuperar la atención sobre qué comemos, cuándo y por qué, sin convertir cada comida en una evaluación.
+No cumplir uno de esos puntos no es un diagnóstico. Es motivo de consulta, que es otra cosa.
 
-## Tres cambios que sí se sostienen
+## Señales que conviene mirar
 
-Empezá por la estructura antes que por el contenido: comer en horarios más o menos regulares ordena el apetito más que cualquier restricción. Después, trabajá sobre el entorno —lo que está a mano se come— antes que sobre la voluntad.
+Más que el vocabulario, miramos la intención comunicativa: si el chico busca la mirada, señala lo que quiere, responde a su nombre y comparte la atención con el adulto. Un chico con pocas palabras pero mucha intención comunicativa preocupa menos que uno que dejó de intentarlo.
 
-Por último, incorporá en lugar de eliminar. Sumar verduras, proteínas y agua desplaza naturalmente otras opciones, sin la carga psicológica de la prohibición.
+También prestamos atención a los retrocesos: perder palabras que ya usaba siempre amerita una consulta, a cualquier edad.
 
-## El acompañamiento importa
+## Qué pasa en una evaluación
 
-Los cambios de hábito llevan meses, no semanas. Por eso el seguimiento periódico no es un detalle administrativo: es el mecanismo que permite ajustar el plan cuando la vida cambia, y sostenerlo cuando aparece el desánimo.`,
+No es un examen ni el chico tiene que rendir nada. Se juega, se observa cómo se comunica y se conversa con la familia sobre la historia y la rutina. De ahí sale una devolución concreta: si hay que tratar, si alcanza con pautas para casa o si simplemente hay que volver a mirar en unos meses.
+
+Consultar temprano no adelanta un problema. En la mayoría de los casos lo que hace es descartarlo.`,
   },
   {
     slug: "como-prevenir-lesiones-si-volves-a-entrenar",

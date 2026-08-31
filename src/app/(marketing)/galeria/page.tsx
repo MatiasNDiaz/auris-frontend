@@ -14,6 +14,9 @@ export default function GaleriaPage() {
   return (
     <>
       <PageHeader
+        surface="sand"
+        wave="shoulder"
+        waveTone="base"
         eyebrow="Galería"
         title="Nuestros espacios"
         description="Consultorios amplios, luz natural y áreas comunes pensadas para que la espera también sea agradable."

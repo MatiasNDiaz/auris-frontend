@@ -1,5 +1,6 @@
 import { ArrowLeft, Check } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CtaBanner } from "@/components/sections/CtaBanner";
@@ -40,38 +41,51 @@ export default async function ServicioDetallePage({
 
   return (
     <>
-      <header className="relative overflow-hidden bg-cream-100 py-16 lg:py-24">
+      {/* Banner del servicio: foto full-bleed con el nombre superpuesto, con
+          el mismo criterio de overlay neutro que usa el Hero. */}
+      <header className="relative isolate flex min-h-100 items-end overflow-hidden lg:min-h-120">
+        <Image
+          src={service.imageUrl}
+          alt=""
+          fill
+          sizes="100vw"
+          priority
+          className="-z-20 object-cover"
+        />
         <div
           aria-hidden
-          className="pointer-events-none absolute -top-28 -right-24 size-96 rounded-full bg-primary-100/70 blur-3xl"
+          className="absolute inset-0 -z-10 bg-linear-to-t from-black/85 via-black/45 to-black/25"
         />
 
-        <div className="container-auris relative">
+        <div className="container-auris relative w-full pt-24 pb-14 lg:pt-28 lg:pb-16">
           <Link
             href="/servicios"
-            className="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-primary-700 transition-colors hover:text-primary-800 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
+            className="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-cream-100 transition-colors hover:text-cream-50 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
           >
             <ArrowLeft className="size-4" aria-hidden />
             Todos los servicios
           </Link>
 
-          <Reveal className="mt-8 max-w-3xl">
+          <Reveal className="mt-8 text-center">
             <span
               aria-hidden
-              className="inline-flex size-14 items-center justify-center rounded-2xl bg-primary-700 text-cream-50"
+              className="inline-flex size-16 items-center justify-center rounded-2xl bg-cream-50/95 text-primary-700 shadow-lg"
             >
               {renderServiceIcon(service.icon, {
-                className: "size-7",
+                className: "size-8",
                 strokeWidth: 1.5,
               })}
             </span>
-            <h1 className="mt-6 font-serif text-4xl leading-tight text-balance text-ink-900 sm:text-5xl">
-              {service.name}
-            </h1>
-            <p className="mt-5 text-lg leading-relaxed text-pretty text-ink-700/85">
-              {service.shortDescription}
-            </p>
           </Reveal>
+
+          <SectionHeading
+            as="h1"
+            eyebrow={service.tagline}
+            title={service.name}
+            description={service.shortDescription}
+            tone="light"
+            className="mt-6"
+          />
         </div>
       </header>
 
@@ -117,12 +131,11 @@ export default async function ServicioDetallePage({
       </section>
 
       {team.length > 0 && (
-        <section className="bg-cream-100 py-20 lg:py-24">
+        <section className="bg-surface-sand py-20 lg:py-24">
           <div className="container-auris">
             <SectionHeading
               eyebrow="Equipo"
               title={`Profesionales de ${service.name.toLowerCase()}`}
-              align="left"
               className="mb-12"
             />
 

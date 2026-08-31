@@ -1,5 +1,7 @@
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import { LeafScatter } from "@/components/shared/LeafScatter";
+import { LeafSprig } from "@/components/shared/LeafSprig";
 import { Logo } from "@/components/shared/Logo";
 import {
   FacebookIcon,
@@ -16,7 +18,11 @@ export function Footer() {
   const { address } = siteConfig;
 
   return (
-    <footer className="mt-24 bg-primary-700 text-primary-100">
+    <footer className="relative mt-24 overflow-hidden bg-primary-700 text-primary-100">
+      {/* Pocas hojas y grandes: sobre el verde del footer el follaje compite
+          con la lectura, así que se prioriza el detalle antes que la cantidad. */}
+      <LeafScatter pattern="b" palette="cream" count={2} className="opacity-30" />
+      <LeafSprig palette="cream" size="md" flip className="-top-4 right-6 h-44 opacity-35" />
       <div className="container-auris grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
           {/* El isotipo va suelto sobre el verde: el logo completo trae el
@@ -33,7 +39,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram de AURIS"
-              className="inline-flex size-10 items-center justify-center rounded-full bg-primary-600 text-cream-50 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:bg-accent-400 hover:text-ink-900 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+              className="inline-flex size-10 items-center justify-center rounded-full bg-primary-600 text-cream-50 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:bg-accent-500 hover:text-cream-50 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
             >
               <InstagramIcon className="size-4" />
             </a>
@@ -42,7 +48,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook de AURIS"
-              className="inline-flex size-10 items-center justify-center rounded-full bg-primary-600 text-cream-50 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:bg-accent-400 hover:text-ink-900 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+              className="inline-flex size-10 items-center justify-center rounded-full bg-primary-600 text-cream-50 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:bg-accent-500 hover:text-cream-50 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
             >
               <FacebookIcon className="size-4" />
             </a>

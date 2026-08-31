@@ -20,10 +20,15 @@ export function WhatsAppButton({
   size = "lg",
   variant = "solid",
 }: WhatsAppButtonProps) {
-  // El ámbar del isotipo no contrasta con texto blanco, así que va con texto
-  // oscuro; sobre la foto del hero se usa el contorno claro.
+  // WhatsApp y "Solicitar turno" son la acción principal del sitio: el CTA
+  // sólido va en el verde institucional. Sobre fondos verdes o fotos oscuras
+  // se usan las variantes clara (`outline`) y de contorno (`onDark`).
   const tone =
-    variant === "onDark" ? "outlineLight" : variant === "outline" ? "light" : "accent";
+    variant === "onDark"
+      ? "outlineLight"
+      : variant === "outline"
+        ? "light"
+        : "primary";
 
   return (
     <ShineButton

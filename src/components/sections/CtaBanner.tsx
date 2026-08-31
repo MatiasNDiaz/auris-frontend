@@ -1,5 +1,8 @@
 import { CalendarCheck, Leaf } from "lucide-react";
+import { LeafScatter } from "@/components/shared/LeafScatter";
+import { LeafSprig } from "@/components/shared/LeafSprig";
 import { Reveal } from "@/components/shared/Reveal";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import { ShineButton } from "@/components/shared/ShineButton";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 
@@ -24,28 +27,24 @@ export function CtaBanner({
                 "radial-gradient(circle at 12% 20%, rgba(136,185,79,.85), transparent 45%), radial-gradient(circle at 88% 85%, rgba(253,210,110,.5), transparent 42%)",
             }}
           />
-          <Leaf
-            aria-hidden
-            className="absolute -top-6 -left-4 size-32 rotate-12 text-primary-500/25"
-            strokeWidth={1}
-          />
+          {/* Igual que el footer: el banner es el cierre de la página y el
+              CTA tiene que ganar por encima del follaje. */}
+          <LeafScatter pattern="c" palette="cream" count={2} className="opacity-35" />
+          <LeafSprig palette="cream" size="md" className="-bottom-6 left-4 h-40 opacity-40" />
           <Leaf
             aria-hidden
             className="absolute -right-6 -bottom-8 size-40 -rotate-12 text-primary-500/20"
             strokeWidth={1}
           />
 
-          <div className="relative flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
-            <div className="max-w-xl">
-              <h2 className="flex items-center gap-3 font-serif text-3xl leading-tight text-balance text-cream-50 sm:text-4xl">
-                {title}
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-pretty text-primary-100">
-                {description}
-              </p>
-            </div>
+          <div className="relative flex flex-col items-center gap-9 text-center">
+            <SectionHeading
+              title={title}
+              description={description}
+              tone="light"
+            />
 
-            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <ShineButton href="/contacto" tone="light">
                 Solicitar turno
                 <CalendarCheck
@@ -53,7 +52,7 @@ export function CtaBanner({
                   aria-hidden
                 />
               </ShineButton>
-              <WhatsAppButton label="Hablar por WhatsApp" />
+              <WhatsAppButton label="Hablar por WhatsApp" variant="onDark" />
             </div>
           </div>
         </div>

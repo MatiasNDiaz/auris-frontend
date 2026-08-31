@@ -1,6 +1,5 @@
 import {
   Activity,
-  Apple,
   Brain,
   Ear,
   Smile,
@@ -19,7 +18,6 @@ import type { ReactNode } from "react";
  */
 const iconMap: Record<string, (props: LucideProps) => ReactNode> = {
   activity: (props) => <Activity {...props} />,
-  apple: (props) => <Apple {...props} />,
   brain: (props) => <Brain {...props} />,
   ear: (props) => <Ear {...props} />,
   smile: (props) => <Smile {...props} />,

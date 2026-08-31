@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
  * blanco (se ve un rectángulo detrás del logo). Como los assets ya están
  * dimensionados y comprimidos, servirlos tal cual no cuesta nada.
  */
-const MARK = { src: "/logo-auris-mark.png", width: 320, height: 143 };
+export const MARK = { src: "/logo-auris-mark.png", width: 320, height: 143 };
 const FULL = { src: "/logo-auris-full.png", width: 640, height: 459 };
 
 type LogoProps = {
@@ -71,7 +71,7 @@ export function Logo({
         <span
           className={cn(
             "mt-1 text-[0.6rem] tracking-[0.14em] whitespace-nowrap uppercase",
-            tone === "light" ? "text-primary-100" : "text-sand-500",
+            tone === "light" ? "text-primary-100" : "text-primary-600/75",
           )}
         >
           {siteConfig.tagline}

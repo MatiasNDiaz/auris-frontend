@@ -46,6 +46,9 @@ export default function SobreElCentroPage() {
   return (
     <>
       <PageHeader
+        surface="sand"
+        wave="valley"
+        waveTone="base"
         eyebrow="Sobre el centro"
         title="Un lugar donde la salud se piensa completa"
         description="AURIS nació de una idea simple: que las distintas disciplinas del cuidado no deberían trabajar aisladas. Hoy somos un equipo interdisciplinario con un mismo modo de acompañar."
@@ -54,7 +57,7 @@ export default function SobreElCentroPage() {
       <section className="container-auris py-20 lg:py-24">
         <div className="grid gap-14 lg:grid-cols-2 lg:items-center">
           <Reveal>
-            <h2 className="font-serif text-3xl leading-tight text-balance text-ink-900 sm:text-4xl">
+            <h2 className="text-center font-serif text-3xl leading-tight text-balance text-primary-800 sm:text-4xl">
               Nuestra historia
             </h2>
             <div className="mt-6 space-y-5 text-base leading-relaxed text-pretty text-ink-700/85">
@@ -66,8 +69,8 @@ export default function SobreElCentroPage() {
                 entre sí sobre cómo acompañar a una misma persona.
               </p>
               <p>
-                Con los años sumamos odontología, nutrición, estética,
-                fonoaudiología y los talleres grupales, siempre con el mismo
+                Con los años sumamos odontología, estética, fonoaudiología y
+                los talleres grupales, siempre con el mismo
                 criterio de selección: profesionales formados que entienden el
                 cuidado como un proceso compartido con quien consulta.
               </p>
@@ -98,7 +101,7 @@ export default function SobreElCentroPage() {
         </div>
       </section>
 
-      <section className="bg-cream-100 py-20 lg:py-24">
+      <section className="bg-surface-sage py-20 lg:py-24">
         <div className="container-auris">
           <SectionHeading
             eyebrow="Enfoque y valores"

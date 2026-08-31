@@ -24,7 +24,7 @@ export function MobileMenu() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
         aria-label="Abrir menú de navegación"
-        className="inline-flex size-11 items-center justify-center rounded-full text-ink-900 transition-colors hover:bg-cream-200 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none lg:hidden"
+        className="inline-flex size-11 items-center justify-center rounded-full text-primary-800 transition-all duration-200 ease-out hover:-translate-y-px hover:bg-primary-50 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none motion-reduce:hover:translate-y-0 xl:hidden"
       >
         <Menu className="size-5" aria-hidden />
       </SheetTrigger>
@@ -52,10 +52,10 @@ export function MobileMenu() {
                 // El Sheet sobrevive a la navegación, así que lo cerramos acá.
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "rounded-xl px-4 py-3 text-base font-medium transition-colors",
+                  "rounded-full px-4 py-3 text-base font-medium transition-colors duration-200",
                   active
-                    ? "bg-primary-50 text-primary-700"
-                    : "text-ink-700 hover:bg-cream-100",
+                    ? "bg-primary-100 text-primary-900"
+                    : "text-primary-700/85 hover:bg-primary-50 hover:text-primary-900",
                 )}
               >
                 {item.label}

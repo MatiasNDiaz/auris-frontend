@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, Manrope } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
+import { ViewTransitionProvider } from "@/components/providers/ViewTransitionProvider";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -30,7 +31,6 @@ export const metadata: Metadata = {
     "bienestar integral",
     "psicología",
     "odontología",
-    "nutrición",
     "kinesiología",
     "fonoaudiología",
     siteConfig.address.city,
@@ -60,11 +60,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           Saltar al contenido
         </a>
 
-        <Navbar />
-        <main id="contenido" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        {/* Coordina las View Transitions. Va acá, en el layout raíz, porque
+            tiene que sobrevivir a los cambios de ruta. */}
+        <ViewTransitionProvider>
+          <Navbar />
+          <main id="contenido" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </ViewTransitionProvider>
       </body>
     </html>
   );

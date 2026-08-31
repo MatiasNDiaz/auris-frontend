@@ -17,6 +17,9 @@ export default function BlogPage() {
   return (
     <>
       <PageHeader
+        surface="sage"
+        wave="ripple"
+        waveTone="base"
         eyebrow="Blog"
         title="Notas del equipo"
         description="Escribimos sobre lo que más nos consultan: cuándo pedir ayuda, cómo sostener un cambio de hábitos y qué esperar de cada tratamiento."

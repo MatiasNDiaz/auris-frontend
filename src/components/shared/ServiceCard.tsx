@@ -26,12 +26,14 @@ export function ServiceCard({
       whileHover={{ y: -6 }}
       transition={{ type: "spring", stiffness: 300, damping: 24 }}
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-primary-100 bg-card shadow-sm transition-shadow hover:border-primary-200 hover:shadow-lg",
+        "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-primary-100 bg-card shadow-sm transition-[box-shadow,border-color] duration-300 ease-out hover:border-primary-200 hover:shadow-xl",
         className,
       )}
     >
       {variant === "photo" && (
-        <div className="relative h-40 w-full overflow-hidden">
+        // 16:10 en vez de una altura fija: la foto gana peso en la tarjeta y
+        // acompaña el ancho de la columna en cada breakpoint del grid.
+        <div className="relative aspect-16/10 w-full overflow-hidden">
           <Image
             src={service.imageUrl}
             alt=""
@@ -39,11 +41,12 @@ export function ServiceCard({
             sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 360px"
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           />
+          {/* Se oscurece solo el pie de la foto: es donde apoya el ícono. */}
           <div
             aria-hidden
-            className="absolute inset-0 bg-linear-to-t from-primary-900/50 to-transparent"
+            className="absolute inset-0 bg-linear-to-t from-ink-900/45 via-ink-900/5 to-transparent"
           />
         </div>
       )}
@@ -54,8 +57,12 @@ export function ServiceCard({
         <span
           aria-hidden
           className={cn(
-            "inline-flex size-12 items-center justify-center rounded-2xl bg-primary-100 text-primary-700 transition-colors duration-300 group-hover:bg-primary-600 group-hover:text-cream-50",
-            variant === "photo" && "-mt-13 mb-4 border-4 border-card bg-cream-50 shadow-md",
+            "inline-flex size-12 items-center justify-center self-center rounded-2xl bg-primary-100 text-primary-700 transition-[background-color,color,transform] duration-300 ease-out group-hover:bg-primary-600 group-hover:text-cream-50",
+            // En la variante con foto el ícono flota sobre el borde inferior de
+            // la imagen: el fondo semitransparente con blur deja ver la foto
+            // por detrás y el anillo lo despega sin el borde grueso de antes.
+            variant === "photo" &&
+              "-mt-13 mb-5 bg-white/90 shadow-md ring-1 ring-primary-200/70 backdrop-blur-sm group-hover:-translate-y-0.5 motion-reduce:group-hover:translate-y-0",
           )}
         >
           {renderServiceIcon(service.icon, {
@@ -66,7 +73,7 @@ export function ServiceCard({
 
         <h3
           className={cn(
-            "font-serif text-xl text-ink-900",
+            "font-serif text-[1.375rem] leading-snug font-semibold text-ink-900 transition-colors duration-300 group-hover:text-primary-800",
             variant === "compact" && "mt-6",
           )}
         >

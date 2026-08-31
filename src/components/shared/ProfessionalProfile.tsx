@@ -1,166 +1,397 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Award, GraduationCap, Briefcase } from "lucide-react";
+import { Award, BadgeCheck, Briefcase, GraduationCap, Quote } from "lucide-react";
 import Link from "next/link";
 import { AnimatedProfessionalImage } from "./AnimatedProfessionalImage";
+import { LeafSprig } from "./LeafSprig";
+import { ProfessionalBackLinks } from "./ProfessionalBackLinks";
 import { WhatsAppButton } from "./WhatsAppButton";
+import { siteConfig } from "@/config/site";
 import type { Professional, Service } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 /**
- * Perfil completo de un profesional. Se comparte entre la página
- * `/profesionales/[slug]` y la intercepting route que la muestra como overlay,
- * para que la foto conserve el mismo `layoutId` en ambos contextos.
+ * Ficha completa de un profesional.
+ *
+ * La foto es el destino del shared element transition; el resto del contenido
+ * entra escalonado después, para que el movimiento quede en la imagen.
  */
-
-// El contenido entra después de que la imagen termina de morfear, para que el
-// protagonismo del movimiento quede en la foto.
 const content = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 22 },
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, delay, ease: [0.21, 0.47, 0.32, 0.98] as const },
+    transition: { duration: 0.7, delay, ease: [0.16, 0.68, 0.3, 1] as const },
   }),
 };
 
-const detailBlocks = [
-  { key: "education", icon: GraduationCap, title: "Formación académica" },
-  { key: "certifications", icon: Award, title: "Certificaciones" },
-] as const;
+/**
+ * Cada ficha toma su acento del profesional: azul profundo para varones, rosa
+ * violáceo para mujeres. El encabezado es un único degradé continuo de arriba
+ * abajo — antes eran una banda plana más el degradé, y el empalme entre las
+ * dos se veía como un corte horizontal de color.
+ */
+const palettes = {
+  female: {
+    name: "text-rose-900",
+    label: "text-rose-700",
+    badge: "bg-rose-200/80 text-rose-900 hover:bg-rose-300/80",
+    softBadge: "bg-rose-100 text-rose-700 ring-1 ring-rose-200",
+    rule: "bg-rose-500",
+    quote: "text-rose-400",
+    iconBox: "bg-rose-100 text-rose-700 ring-1 ring-rose-200",
+    border: "border-rose-200",
+    band: "bg-rose-50",
+    panel: "bg-rose-100/70",
+    ring: "ring-rose-300/60",
+    card: "bg-rose-50/80",
+    header:
+      "linear-gradient(180deg, #fae4ef 0%, #fdf3f8 55%, #fdfbf6 100%), radial-gradient(80% 60% at 85% 8%, rgba(212,112,159,.28), transparent 70%)",
+    ctaGlow:
+      "radial-gradient(circle at 15% 20%, rgba(231,158,194,.75), transparent 45%), radial-gradient(circle at 85% 80%, rgba(76,122,65,.5), transparent 45%)",
+  },
+  male: {
+    name: "text-clinic-900",
+    label: "text-clinic-700",
+    badge: "bg-clinic-200/80 text-clinic-900 hover:bg-clinic-300/80",
+    softBadge: "bg-clinic-100 text-clinic-700 ring-1 ring-clinic-200",
+    rule: "bg-clinic-500",
+    quote: "text-clinic-400",
+    iconBox: "bg-clinic-100 text-clinic-700 ring-1 ring-clinic-200",
+    border: "border-clinic-200",
+    band: "bg-clinic-50",
+    panel: "bg-clinic-100/70",
+    ring: "ring-clinic-300/60",
+    card: "bg-clinic-50/80",
+    header:
+      "linear-gradient(180deg, #dfe7f4 0%, #f0f4fa 55%, #fdfbf6 100%), radial-gradient(80% 60% at 85% 8%, rgba(100,128,180,.26), transparent 70%)",
+    ctaGlow:
+      "radial-gradient(circle at 15% 20%, rgba(147,170,210,.75), transparent 45%), radial-gradient(circle at 85% 80%, rgba(76,122,65,.5), transparent 45%)",
+  },
+} as const;
 
 type ProfessionalProfileProps = {
   professional: Professional;
   service?: Service;
   className?: string;
-  /** En el overlay el encabezado va más compacto que en la página completa. */
-  compact?: boolean;
 };
 
 export function ProfessionalProfile({
   professional,
   service,
   className,
-  compact = false,
 }: ProfessionalProfileProps) {
+  const firstName = professional.name.split(" ").slice(1).join(" ");
+  const c = palettes[professional.gender];
+
   return (
-    <div className={cn("grid gap-10 lg:grid-cols-[0.85fr_1.15fr]", className)}>
-      <AnimatedProfessionalImage
-        slug={professional.slug}
-        src={professional.photoUrl}
-        alt={`Retrato de ${professional.name}`}
-        priority
-        sizes="(max-width: 1024px) 90vw, 420px"
-        className={cn(
-          "w-full rounded-3xl shadow-lg",
-          compact ? "aspect-4/5 max-w-xs" : "aspect-4/5",
-        )}
-      />
+    <div className={className}>
+      {/* Presentación. Los enlaces de vuelta viven dentro de esta sección para
+          que compartan el mismo fondo y no quede una costura de color. */}
+      <section
+        className="relative overflow-hidden pt-6 pb-20 lg:pb-24"
+        style={{ backgroundImage: c.header }}
+      >
+        <LeafSprig palette="green" size="sm" flip className="-top-2 right-4 h-32 opacity-35" />
 
-      <div>
-        <motion.div
-          variants={content}
-          initial="hidden"
-          animate="visible"
-          custom={0.25}
-        >
-          {service && (
-            <Link
-              href={`/servicios/${service.slug}`}
-              className="inline-flex rounded-full bg-primary-50 px-3.5 py-1.5 text-xs font-semibold tracking-[0.14em] text-primary-700 uppercase transition-colors hover:bg-primary-100 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
-            >
-              {service.name}
-            </Link>
-          )}
+        <div className="container-auris relative">
+          <ProfessionalBackLinks />
 
-          <h1
+          <div className="mt-10 grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
+            <AnimatedProfessionalImage
+              src={professional.photoUrl}
+              alt={`Retrato de ${professional.name}`}
+              priority
+              isTransitionTarget
+              sizes="(max-width: 1024px) 90vw, 460px"
+              className={cn("aspect-4/5 w-full rounded-3xl shadow-2xl ring-1", c.ring)}
+            />
+
+            <div>
+              <motion.div
+                variants={content}
+                initial="hidden"
+                animate="visible"
+                custom={0.15}
+              >
+                <p
+                  className={cn(
+                    "text-xs font-semibold tracking-[0.24em] uppercase",
+                    c.label,
+                  )}
+                >
+                  Equipo AURIS
+                </p>
+
+                <h1
+                  className={cn(
+                    "mt-4 font-serif text-[2.6rem] leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl",
+                    c.name,
+                  )}
+                >
+                  {professional.name}
+                </h1>
+
+                <span
+                  aria-hidden
+                  className={cn("mt-6 block h-1 w-20 rounded-full", c.rule)}
+                />
+
+                {/* Área y servicio, debajo del nombre. */}
+                <div className="mt-6 flex flex-wrap items-center gap-2.5">
+                  <span
+                    className={cn(
+                      "inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-sm font-semibold",
+                      c.softBadge,
+                    )}
+                  >
+                    <BadgeCheck className="size-4" strokeWidth={2} aria-hidden />
+                    {professional.specialty}
+                  </span>
+
+                  {service && (
+                    <Link
+                      href={`/servicios/${service.slug}`}
+                      className={cn(
+                        "inline-flex rounded-full px-4 py-1.5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none",
+                        c.badge,
+                      )}
+                    >
+                      {service.name}
+                    </Link>
+                  )}
+                </div>
+              </motion.div>
+
+              {/* Frase en primera persona. */}
+              <motion.figure
+                variants={content}
+                initial="hidden"
+                animate="visible"
+                custom={0.3}
+                className="mt-8 max-w-xl"
+              >
+                <Quote
+                  aria-hidden
+                  className={cn("size-6", c.quote)}
+                  strokeWidth={1.6}
+                />
+                <blockquote className="mt-2 font-serif text-xl leading-snug text-pretty text-ink-900 sm:text-2xl">
+                  {professional.motto}
+                </blockquote>
+              </motion.figure>
+
+              <motion.p
+                variants={content}
+                initial="hidden"
+                animate="visible"
+                custom={0.4}
+                className="mt-6 max-w-xl text-base leading-relaxed text-pretty text-ink-700/85"
+              >
+                {professional.bio}
+              </motion.p>
+
+              <motion.div
+                variants={content}
+                initial="hidden"
+                animate="visible"
+                custom={0.5}
+                className="mt-9"
+              >
+                <WhatsAppButton
+                  label={`Solicitar turno con ${firstName}`}
+                  message={`¡Hola AURIS! Quisiera solicitar un turno con ${professional.name} (${professional.specialty}).`}
+                />
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Experiencia. */}
+      <section className={cn("py-14", c.band)}>
+        <div className="container-auris">
+          <motion.div
+            variants={content}
+            initial="hidden"
+            animate="visible"
+            custom={0.55}
             className={cn(
-              "mt-4 font-serif leading-tight text-balance text-ink-900",
-              compact ? "text-3xl" : "text-4xl sm:text-5xl",
+              "mx-auto flex max-w-3xl items-start gap-5 rounded-3xl border bg-cream-50 p-8 shadow-sm",
+              c.border,
             )}
           >
-            {professional.name}
-          </h1>
-          <p className="mt-2 text-lg text-ink-700/80">
-            {professional.specialty}
-          </p>
-        </motion.div>
-
-        <motion.p
-          variants={content}
-          initial="hidden"
-          animate="visible"
-          custom={0.35}
-          className="mt-6 text-base leading-relaxed text-pretty text-ink-700/85"
-        >
-          {professional.bio}
-        </motion.p>
-
-        <motion.div
-          variants={content}
-          initial="hidden"
-          animate="visible"
-          custom={0.45}
-          className="mt-8 flex items-start gap-3 rounded-2xl border border-border bg-cream-100 p-5"
-        >
-          <Briefcase
-            className="mt-0.5 size-5 shrink-0 text-primary-700"
-            strokeWidth={1.6}
-            aria-hidden
-          />
-          <div>
-            <p className="text-sm font-semibold text-ink-900">Experiencia</p>
-            <p className="mt-1 text-sm leading-relaxed text-ink-700/80">
-              {professional.experience}
-            </p>
-          </div>
-        </motion.div>
-
-        <div className="mt-8 grid gap-6 sm:grid-cols-2">
-          {detailBlocks.map((block, index) => (
-            <motion.section
-              key={block.key}
-              variants={content}
-              initial="hidden"
-              animate="visible"
-              custom={0.55 + index * 0.08}
+            <span
+              aria-hidden
+              className={cn(
+                "inline-flex size-12 shrink-0 items-center justify-center rounded-2xl",
+                c.iconBox,
+              )}
             >
-              <h2 className="flex items-center gap-2 text-sm font-semibold text-ink-900">
-                <block.icon
-                  className="size-4 text-primary-700"
-                  strokeWidth={1.7}
-                  aria-hidden
-                />
-                {block.title}
-              </h2>
-              <ul className="mt-3 space-y-2.5">
-                {professional[block.key].map((entry) => (
-                  <li
-                    key={entry}
-                    className="border-l-2 border-primary-200 pl-3 text-sm leading-relaxed text-ink-700/80"
-                  >
-                    {entry}
-                  </li>
-                ))}
-              </ul>
-            </motion.section>
-          ))}
+              <Briefcase className="size-6" strokeWidth={1.6} />
+            </span>
+            <div>
+              <p
+                className={cn(
+                  "text-xs font-semibold tracking-[0.18em] uppercase",
+                  c.label,
+                )}
+              >
+                Experiencia
+              </p>
+              <p className="mt-2 text-lg leading-relaxed text-pretty text-ink-900">
+                {professional.experience}
+              </p>
+            </div>
+          </motion.div>
         </div>
+      </section>
 
-        <motion.div
-          variants={content}
-          initial="hidden"
-          animate="visible"
-          custom={0.75}
-          className="mt-9"
-        >
-          <WhatsAppButton
-            label={`Solicitar turno con ${professional.name.split(" ").slice(1).join(" ")}`}
-            message={`¡Hola AURIS! Quisiera solicitar un turno con ${professional.name} (${professional.specialty}).`}
-          />
-        </motion.div>
-      </div>
+      {/* Credenciales, presentadas como diplomas. */}
+      <section className={cn("relative overflow-hidden py-16 lg:py-20", c.panel)}>
+
+
+        <div className="container-auris relative">
+          <motion.div
+            variants={content}
+            initial="hidden"
+            animate="visible"
+            custom={0.6}
+            className="text-center"
+          >
+            <p
+              className={cn(
+                "text-xs font-semibold tracking-[0.24em] uppercase",
+                c.label,
+              )}
+            >
+              Formación y certificaciones
+            </p>
+            <h2 className="mt-3 font-serif text-3xl text-balance text-ink-900 sm:text-4xl">
+              Títulos que respaldan su práctica
+            </h2>
+            <span
+              aria-hidden
+              className={cn("mx-auto mt-5 block h-0.5 w-16 rounded-full", c.rule)}
+            />
+          </motion.div>
+
+          <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {professional.credentials.map((cred, index) => (
+              <motion.li
+                key={`${cred.title}-${cred.year}`}
+                variants={content}
+                initial="hidden"
+                animate="visible"
+                custom={0.65 + index * 0.06}
+              >
+                {/* Diploma estilizado: no es un escaneo real, es una
+                    representación con los datos del título. */}
+                <article
+                  className={cn(
+                    "flex h-full flex-col rounded-2xl border-2 bg-cream-50 p-6 shadow-sm",
+                    c.border,
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "flex items-center justify-between rounded-xl px-4 py-3",
+                      c.card,
+                    )}
+                  >
+                    <span
+                      aria-hidden
+                      className={cn(
+                        "inline-flex size-9 items-center justify-center rounded-lg",
+                        c.iconBox,
+                      )}
+                    >
+                      {index === 0 ? (
+                        <GraduationCap className="size-4.5" strokeWidth={1.7} />
+                      ) : (
+                        <Award className="size-4.5" strokeWidth={1.7} />
+                      )}
+                    </span>
+                    <span
+                      className={cn(
+                        "font-serif text-lg tabular-nums",
+                        c.label,
+                      )}
+                    >
+                      {cred.year}
+                    </span>
+                  </div>
+
+                  <h3 className="mt-5 font-serif text-lg leading-snug text-balance text-ink-900">
+                    {cred.title}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-700/80">
+                    {cred.institution}
+                  </p>
+
+                  <p
+                    className={cn(
+                      "mt-5 border-t pt-4 text-[0.7rem] tracking-[0.16em] uppercase",
+                      c.border,
+                      c.label,
+                    )}
+                  >
+                    {siteConfig.name} · Documentación verificada
+                  </p>
+                </article>
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      {/* Cierre: contacto. */}
+      <section className={cn("py-16 lg:py-20", c.band)}>
+        <div className="container-auris">
+          <motion.div
+            variants={content}
+            initial="hidden"
+            animate="visible"
+            custom={0.85}
+            className="relative mx-auto max-w-3xl overflow-hidden rounded-[2rem] bg-primary-800 px-8 py-12 text-center"
+          >
+            <div
+              aria-hidden
+              className="absolute inset-0 opacity-35"
+              style={{ backgroundImage: c.ctaGlow }}
+            />
+
+            <div className="relative">
+              <h2 className="font-serif text-2xl text-balance text-cream-50 sm:text-3xl">
+                ¿Querés coordinar una consulta con {firstName}?
+              </h2>
+              <p className="mx-auto mt-4 max-w-lg text-pretty text-primary-100">
+                Escribinos y te confirmamos la disponibilidad. También podés ver
+                los horarios y la ubicación del centro.
+              </p>
+
+              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+                <WhatsAppButton
+                  label="Escribinos por WhatsApp"
+                  variant="outline"
+                  message={`¡Hola AURIS! Quisiera solicitar un turno con ${professional.name} (${professional.specialty}).`}
+                />
+                <Link
+                  href="/contacto"
+                  className="inline-flex h-13 items-center justify-center rounded-full border border-cream-50/45 px-7 font-semibold whitespace-nowrap text-cream-50 transition-colors duration-300 hover:bg-cream-50/15 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+                >
+                  Ver datos de contacto
+                </Link>
+              </div>
+
+              <p className="mt-6 text-sm text-primary-200">
+                {siteConfig.address.street}, {siteConfig.address.city}
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }

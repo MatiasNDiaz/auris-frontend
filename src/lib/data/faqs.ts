@@ -23,7 +23,7 @@ export const faqs: FAQ[] = [
     category: "Turnos y consultas",
     question: "¿Atienden por videollamada?",
     answer:
-      "Sí. Psicología y nutrición ofrecen sesiones online con la misma modalidad y duración que las presenciales. El resto de los servicios requiere atención presencial.",
+      "Sí. Psicología y fonoaudiología ofrecen sesiones online con la misma modalidad y duración que las presenciales. El resto de los servicios requiere atención presencial.",
   },
   {
     category: "Servicios y tratamientos",
@@ -41,7 +41,7 @@ export const faqs: FAQ[] = [
     category: "Servicios y tratamientos",
     question: "¿Atienden niños y adolescentes?",
     answer:
-      "Sí. Psicología, fonoaudiología, odontología y nutrición atienden pacientes pediátricos y adolescentes, siempre con acompañamiento de un adulto responsable en la primera entrevista.",
+      "Sí. Psicología, fonoaudiología, odontología y kinesiología atienden pacientes pediátricos y adolescentes, siempre con acompañamiento de un adulto responsable en la primera entrevista.",
   },
   {
     category: "Pagos y cobertura",

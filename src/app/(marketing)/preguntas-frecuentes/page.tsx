@@ -23,6 +23,9 @@ export default function PreguntasFrecuentesPage() {
   return (
     <>
       <PageHeader
+        surface="sage"
+        wave="soft"
+        waveTone="base"
         eyebrow="Preguntas frecuentes"
         title="Lo que más nos consultan"
         description="Reunimos las dudas que aparecen con más frecuencia. Si no encontrás la tuya, escribinos y te respondemos."
@@ -32,7 +35,13 @@ export default function PreguntasFrecuentesPage() {
         <div className="mx-auto max-w-3xl space-y-14">
           {Object.entries(grouped).map(([category, items], index) => (
             <Reveal key={category} delay={index * 0.06}>
-              <h2 className="font-serif text-2xl text-ink-900">{category}</h2>
+              <h2 className="text-center font-serif text-2xl text-primary-800">
+                {category}
+                <span
+                  aria-hidden
+                  className="mx-auto mt-4 block h-0.5 w-12 rounded-full bg-primary-500"
+                />
+              </h2>
 
               <Accordion type="single" collapsible className="mt-5">
                 {items.map((faq) => (

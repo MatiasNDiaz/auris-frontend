@@ -1,7 +1,17 @@
-import { ArrowRight, Building2, Check, HeartPulse, Play, Users } from "lucide-react";
+import {
+  ArrowRight,
+  Building2,
+  Check,
+  HeartPulse,
+  Play,
+  Users,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { LeafScatter } from "@/components/shared/LeafScatter";
+import { LeafSprig } from "@/components/shared/LeafSprig";
 import { Reveal } from "@/components/shared/Reveal";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { BLUR_DATA_URL } from "@/lib/blur";
 
@@ -31,22 +41,21 @@ const values = [
 
 export function AboutPreview() {
   return (
-    <section className="bg-cream-50 py-20 lg:py-28">
+    <section className="relative overflow-hidden bg-surface-base py-20 lg:py-28">
+      <LeafScatter pattern="a" />
+      <LeafSprig palette="green" size="lg" className="-bottom-8 left-2 h-56 opacity-60 lg:h-72" />
+      <div className="container-auris relative">
+        <SectionHeading
+          eyebrow="Sobre AURIS"
+          title="Sobre el centro"
+          description="Somos un espacio de salud y bienestar integral que busca promover la calidad de vida a través de un enfoque humano, profesional y personalizado."
+          className="mb-16"
+        />
+      </div>
+
       <div className="container-auris grid items-center gap-14 lg:grid-cols-2">
         <Reveal from="left" className="order-2 lg:order-1">
-          <p className="text-sm font-semibold tracking-[0.18em] text-primary-700 uppercase">
-            Sobre AURIS
-          </p>
-          <h2 className="mt-3 font-serif text-3xl leading-tight text-balance text-ink-900 sm:text-4xl">
-            Sobre el centro
-          </h2>
-          <p className="mt-5 text-base leading-relaxed text-pretty text-ink-700/85">
-            Somos un espacio de salud y bienestar integral que busca promover la
-            calidad de vida a través de un enfoque humano, profesional y
-            personalizado.
-          </p>
-
-          <ul className="mt-8 space-y-5">
+          <ul className="space-y-5">
             {pillars.map((pillar) => (
               <li key={pillar.title} className="flex gap-4">
                 <span
@@ -67,7 +76,10 @@ export function AboutPreview() {
 
           <ul className="mt-8 space-y-2.5 border-t border-primary-100 pt-7">
             {values.map((value) => (
-              <li key={value} className="flex items-start gap-3 text-ink-700/85">
+              <li
+                key={value}
+                className="flex items-start gap-3 text-ink-700/85"
+              >
                 <span
                   aria-hidden
                   className="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-primary-600 text-cream-50"
@@ -108,10 +120,7 @@ export function AboutPreview() {
                 blurDataURL={BLUR_DATA_URL}
                 className="object-cover"
               />
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-primary-900/25"
-              />
+              <div aria-hidden className="absolute inset-0 bg-primary-900/25" />
 
               <Link
                 href="/sobre-el-centro#recorrido-virtual"

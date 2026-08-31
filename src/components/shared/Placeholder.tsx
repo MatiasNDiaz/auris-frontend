@@ -37,7 +37,9 @@ export function Placeholder({ seed, className, label }: PlaceholderProps) {
   return (
     <div
       className={cn("relative overflow-hidden bg-cream-100", className)}
-      style={{ backgroundImage: `linear-gradient(${angle}deg, ${from}, ${to})` }}
+      style={{
+        backgroundImage: `linear-gradient(${angle}deg, ${from}, ${to})`,
+      }}
       role={label ? "img" : "presentation"}
       aria-label={label}
     >

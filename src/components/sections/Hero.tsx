@@ -1,16 +1,23 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, HeartHandshake, Leaf, ShieldCheck, Sparkles } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import {
+  ArrowRight,
+  HeartHandshake,
+  Leaf,
+  ShieldCheck,
+  Sparkles,
+} from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { ServiceFan } from "./ServiceFan";
 import { ShineButton } from "@/components/shared/ShineButton";
+import { WaveDivider } from "@/components/shared/WaveDivider";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { siteConfig } from "@/config/site";
 import { services } from "@/lib/data/services";
 
-const AUTOPLAY_MS = 2000;
+const AUTOPLAY_MS = 4000;
 
 const container = {
   hidden: {},
@@ -29,7 +36,7 @@ const item = {
 const highlights = [
   { icon: HeartHandshake, label: "Atención humana y personalizada" },
   { icon: ShieldCheck, label: "Equipo matriculado y con experiencia" },
-  { icon: Sparkles, label: "Siete especialidades en un mismo lugar" },
+  { icon: Sparkles, label: "Seis especialidades en un mismo lugar" },
 ];
 
 /**
@@ -43,7 +50,9 @@ export function Hero() {
   const reduceMotion = useReducedMotion() ?? false;
 
   const step = useCallback((delta: number) => {
-    setActive((current) => (current + delta + services.length) % services.length);
+    setActive(
+      (current) => (current + delta + services.length) % services.length,
+    );
   }, []);
 
   useEffect(() => {
@@ -54,7 +63,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative isolate flex min-h-184 flex-col overflow-hidden lg:min-h-176"
+      className="relative isolate flex min-h-184 flex-col overflow-hidden lg:min-h-172"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
@@ -87,14 +96,15 @@ export function Hero() {
           fotos, así que el oscurecido va en negro y no altera los tonos. */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-linear-to-r from-black/80 via-black/50 to-black/10"
+        className="absolute inset-0 -z-10 bg-linear-to-r from-black/42 via-black/18 to-transparent"
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-linear-to-t from-black/55 via-transparent to-black/25"
+        className="absolute inset-0 -z-10 bg-linear-to-t from-black/32 via-transparent to-black/12"
       />
 
-      <div className="container-auris relative flex flex-1 flex-col justify-center gap-14 py-20 lg:gap-0 lg:py-24">
+
+      <div className="container-auris relative flex flex-1 flex-col justify-center gap-12 pt-16 pb-28 lg:gap-0 lg:pt-20 lg:pb-36">
         {/* Capa 3 — contenido, en claro sobre el overlay. */}
         <motion.div
           variants={container}
@@ -110,25 +120,44 @@ export function Hero() {
             Bienvenidos a {siteConfig.name}
           </motion.p>
 
-          <motion.h1
-            variants={item}
-            className="mt-6 font-serif text-4xl leading-[1.08] text-balance text-cream-50 sm:text-5xl lg:text-6xl"
-          >
-            Tu bienestar,{" "}
-            <span className="text-primary-200">nuestra prioridad</span>
-          </motion.h1>
-
-          <motion.p
-            variants={item}
-            className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-cream-100/90"
-          >
-            Un espacio integral para cuidar tu salud física, mental y emocional,
-            con un equipo de profesionales comprometidos con vos.
-          </motion.p>
+          {/* Titular y bajada del servicio activo. Se remontan con `key`, así
+              cada cambio entra desde abajo en vez de reemplazarse de golpe. */}
+          {/* Sin `mode="wait"`: esperar la salida del titular anterior lo dejaba
+              un paso atrás del fondo. Entrada y salida corren a la vez, y el
+              texto saliente va en absolute para no empujar el layout. */}
+          <div className="relative mt-5 min-h-52 sm:min-h-56 lg:min-h-58">
+            <AnimatePresence initial={false}>
+              <motion.div
+                key={active}
+                initial={reduceMotion ? false : { opacity: 0, y: 28 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={
+                  reduceMotion
+                    ? undefined
+                    : { opacity: 0, y: -18, position: "absolute" }
+                }
+                transition={{
+                  duration: reduceMotion ? 0 : 0.45,
+                  ease: [0.21, 0.47, 0.32, 0.98],
+                }}
+                className="inset-x-0 top-0"
+              >
+                <p className="text-sm font-semibold tracking-[0.2em] text-primary-200 uppercase">
+                  {services[active].name}
+                </p>
+                <h1 className="mt-3 font-serif text-4xl leading-[1.08] text-balance text-cream-50 sm:text-5xl lg:text-6xl">
+                  {services[active].heroTitle}
+                </h1>
+                <p className="mt-5 max-w-xl text-lg leading-relaxed text-pretty text-cream-100/90">
+                  {services[active].heroSubtitle}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
           <motion.div
             variants={item}
-            className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
+            className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center"
           >
             <ShineButton href="/servicios" tone="primary">
               Conocé nuestros servicios
@@ -143,7 +172,7 @@ export function Hero() {
           {/* Acotado a max-w-xl para no quedar debajo del abanico en desktop. */}
           <motion.ul
             variants={item}
-            className="mt-10 grid max-w-xl gap-3 sm:grid-cols-3"
+            className="mt-8 grid max-w-xl gap-3 sm:grid-cols-3"
           >
             {highlights.map(({ icon: Icon, label }) => (
               <li
@@ -167,7 +196,9 @@ export function Hero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-          className="lg:absolute lg:right-12 lg:bottom-14"
+          // Por encima del alto de la onda, para que la curva no le muerda el
+          // pie a las cards.
+          className="lg:absolute lg:right-12 lg:bottom-28"
         >
           <ServiceFan
             active={active}
@@ -177,6 +208,17 @@ export function Hero() {
           />
         </motion.div>
       </div>
+
+      {/*
+        Cierre curvo del hero: el color es el de la sección que sigue.
+
+        Una sola capa a propósito. Se probó un apilado de tres ondas y no
+        funciona: el relieve entre capas solo se percibe si hay diferencia de
+        valor, y en tonos neutros esa diferencia no existe, así que las curvas
+        se empastan en una sola mancha. Con color sí se leen, pero el pie del
+        hero termina pesando más que el titular.
+      */}
+      <WaveDivider variant="hero" className="text-surface-base" />
     </section>
   );
 }

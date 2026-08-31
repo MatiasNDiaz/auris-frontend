@@ -11,25 +11,29 @@
    El verde 400 es el #88B94F de marca; del 600 al 900 va hacia el verde bosque
    del logo, que es el que sostiene las superficies grandes y el texto. */
 @theme {
-  --color-primary-50: #f4f9ed;
-  --color-primary-100: #e6f2d6;
-  --color-primary-200: #cee5b0;
-  --color-primary-300: #aed486;
-  --color-primary-400: #88b94f;
-  --color-primary-500: #6fa03d;
-  --color-primary-600: #578231;
-  --color-primary-700: #46682c;
-  --color-primary-800: #3a5528;
-  --color-primary-900: #2b4020;
+  /* Verde institucional del logo (#4C7A41) en el 600; el resto de la escala
+     se abre hacia arriba para fondos y hacia abajo para texto. */
+  --color-primary-50: #f2f7ef;
+  --color-primary-100: #e0edda;
+  --color-primary-200: #c3dbb7;
+  --color-primary-300: #9cc28c;
+  --color-primary-400: #74a563;
+  --color-primary-500: #5b8c4c;
+  --color-primary-600: #4c7a41;
+  --color-primary-700: #3d6234;
+  --color-primary-800: #324f2b;
+  --color-primary-900: #263c21;
 
-  --color-accent-50: #fff8ea;
-  --color-accent-100: #fdeecb;
-  --color-accent-200: #fdd26e;
-  --color-accent-300: #f9c04c;
-  --color-accent-400: #f2a62d;
-  --color-accent-500: #dc8f1c;
-  --color-accent-600: #b87215;
-  --color-accent-700: #8f5711;
+  /* Marrón oscuro del logo (#9A6A37): es el color de los botones de acción.
+     Reemplaza al ámbar anterior, que con texto claro no daba contraste. */
+  --color-accent-50: #fbf5ec;
+  --color-accent-100: #f4e6cf;
+  --color-accent-200: #e6cba1;
+  --color-accent-300: #d0a86d;
+  --color-accent-400: #b3843f;
+  --color-accent-500: #9a6a37;
+  --color-accent-600: #82582d;
+  --color-accent-700: #654322;
 
   --color-cream-50: #fdfbf6;
   --color-cream-100: #f8f2e6;
@@ -39,9 +43,55 @@
   --color-sand-400: #c0ab93;
   --color-sand-500: #a9947c;
 
-  --color-ink-700: #45483d;
-  --color-ink-900: #262a20;
+  /* Superficies de sección. Alternarlas es lo que le da estructura a la página:
+     cada bloque se lee como una unidad sin necesidad de bordes ni cajas. */
+  --color-surface-base: #f8f6ef;
+  --color-surface-sage: #dfe9d3;
+  --color-surface-sand: #ecdcc2;
+
+  /* Marrón claro / durazno del logo (#DEBD93) en el 200. Es el acento cálido
+     general de la landing; antes acá vivía un tono durazno rosado. */
+  --color-warm-50: #faf3e8;
+  --color-warm-100: #f2e4cf;
+  --color-warm-200: #debd93;
+  --color-warm-300: #cda471;
+  --color-warm-400: #b98a52;
+  --color-warm-500: #9a6a37;
+  --color-warm-700: #6d4b26;
+
+  /* Rosa-violeta intenso: ficha de profesionales mujeres. */
+  --color-rose-50: #fdf3f8;
+  --color-rose-100: #fae4ef;
+  --color-rose-200: #f3c6dd;
+  --color-rose-300: #e79ec2;
+  --color-rose-400: #d4709f;
+  --color-rose-500: #b5487e;
+  --color-rose-700: #7e2f58;
+  --color-rose-900: #55203c;
+
+  /* Azul profundo: ficha de profesionales varones. */
+  --color-clinic-50: #f0f4fa;
+  --color-clinic-100: #dfe7f4;
+  --color-clinic-200: #bfcde7;
+  --color-clinic-300: #93aad2;
+  --color-clinic-400: #6480b4;
+  --color-clinic-500: #445f95;
+  --color-clinic-700: #27406c;
+  --color-clinic-900: #16294a;
+
+  /* Gris del wordmark del logo (#454542). */
+  --color-ink-700: #454542;
+  --color-ink-900: #2b2b28;
+
+  /* Dorado de las reseñas. Emparentado con el marrón del logo pero bastante
+     más luminoso: en un color plano las estrellas se leían como ámbar apagado,
+     así que la escala se usa como degradé (claro arriba, profundo abajo). */
+  --color-gold-200: #f7e3ae;
+  --color-gold-300: #f0cd77;
+  --color-gold-400: #e3ad3f;
+  --color-gold-500: #c98f24;
 }
+
 
 @theme inline {
   --color-background: var(--background);
@@ -88,33 +138,284 @@
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-fraunces), ui-serif, Georgia, "Times New Roman", serif;
 
-  --background: #fdfbf6;
-  --foreground: #262a20;
+  --background: #faf9f5;
+  --foreground: #2b2b28;
   --card: #ffffff;
-  --card-foreground: #262a20;
+  --card-foreground: #2b2b28;
   --popover: #ffffff;
-  --popover-foreground: #262a20;
-  --primary: #46682c;
+  --popover-foreground: #2b2b28;
+  --primary: #3d6234;
   --primary-foreground: #fdfbf6;
-  --secondary: #e6f2d6;
-  --secondary-foreground: #3a5528;
+  --secondary: #e0edda;
+  --secondary-foreground: #324f2b;
   --muted: #f8f2e6;
-  --muted-foreground: #5f6552;
-  --accent: #e6f2d6;
-  --accent-foreground: #3a5528;
+  --muted-foreground: #5f6058;
+  --accent: #e0edda;
+  --accent-foreground: #324f2b;
   --destructive: #b23c22;
   --border: #e6ddcc;
   --input: #d9cdb8;
-  --ring: #88b94f;
+  --ring: #74a563;
   --radius: 1rem;
   --sidebar: #f8f2e6;
-  --sidebar-foreground: #262a20;
-  --sidebar-primary: #46682c;
+  --sidebar-foreground: #2b2b28;
+  --sidebar-primary: #3d6234;
   --sidebar-primary-foreground: #fdfbf6;
-  --sidebar-accent: #e6f2d6;
-  --sidebar-accent-foreground: #3a5528;
+  --sidebar-accent: #e0edda;
+  --sidebar-accent-foreground: #324f2b;
   --sidebar-border: #e6ddcc;
-  --sidebar-ring: #88b94f;
+  --sidebar-ring: #74a563;
+}
+
+/* Brillo de los CTA -------------------------------------------------------- */
+
+/* Se resuelve con una animación de una sola pasada, no con un `translate` de
+   estado hover: al ser un estado, el brillo se quedaba clavado en su posición
+   final mientras el puntero siguiera encima y dejaba una mancha en la punta
+   del botón. Como animación, entra por izquierda, sale por derecha y no queda
+   nada visible al terminar. */
+@keyframes auris-shine {
+  from {
+    transform: translateX(-160%) skewX(-14deg);
+  }
+  to {
+    transform: translateX(420%) skewX(-14deg);
+  }
+}
+
+.auris-shine {
+  transform: translateX(-160%) skewX(-14deg);
+}
+
+.group:hover .auris-shine,
+.group:focus-visible .auris-shine {
+  animation: auris-shine 0.75s cubic-bezier(0.3, 0, 0.2, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .auris-shine,
+  .group:focus-visible .auris-shine {
+    animation: none;
+  }
+}
+
+/* Follaje: balanceo en bucle ----------------------------------------------- */
+
+/* Dos capas de movimiento, que es lo que evita que se lea como un GIF: el
+ * tallo entero cabecea muy lento y cada hoja aletea encima con su propio
+ * desfasaje. Ambas animan solo `rotate`, sobre elementos que ya están en su
+ * propia capa, así que no hay reflow ni repintado del contenido.
+ *
+ * El giro va sobre la base de cada pieza (`transform-origin`), no sobre su
+ * centro: una hoja que pivotea desde el pecíolo se mueve como una hoja; desde
+ * el centro parece una hélice. */
+@keyframes auris-stem-sway {
+  0% {
+    transform: rotate(-4deg);
+  }
+  38% {
+    transform: rotate(2.4deg);
+  }
+  64% {
+    transform: rotate(-1.6deg);
+  }
+  100% {
+    transform: rotate(4.4deg);
+  }
+}
+
+@keyframes auris-leaf-flutter {
+  0% {
+    transform: rotate(-9deg);
+  }
+  30% {
+    transform: rotate(5deg);
+  }
+  55% {
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(10deg);
+  }
+}
+
+.auris-stem-sway,
+.auris-leaf-flutter {
+  /* En SVG el origen se mide sobre la caja del propio dibujo, no sobre el
+     viewBox entero; sin esto todo pivotea desde la esquina del lienzo. */
+  transform-box: fill-box;
+  will-change: transform;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.auris-stem-sway {
+  transform-origin: 50% 100%;
+  animation-name: auris-stem-sway;
+  animation-duration: var(--sway-duration, 5.5s);
+}
+
+.auris-leaf-flutter {
+  /* Pivota sobre el pecíolo, en el extremo izquierdo de la hoja. */
+  transform-origin: 4% 50%;
+  animation-name: auris-leaf-flutter;
+  animation-duration: var(--flutter-duration, 3.6s);
+}
+
+/* Hojas sueltas: vuelo en bucle hacia la derecha --------------------------- */
+
+/* Cada hoja cruza la sección entera empujada por el viento. La trayectoria no
+ * es una recta: sube y baja en el camino y va girando, que es lo que la separa
+ * de un simple desplazamiento lateral.
+ *
+ * Los parámetros de cada hoja llegan como custom properties inline —giro
+ * inicial, amplitud del vaivén, opacidad, espejado— así que un solo keyframe
+ * sirve para todas y no hace falta una regla CSS por hoja. */
+@keyframes auris-leaf-fly {
+  0% {
+    transform: translate3d(-20vw, 0, 0) rotate(var(--leaf-rot))
+      scaleX(var(--leaf-flip));
+    opacity: 0;
+  }
+  9% {
+    opacity: var(--leaf-alpha);
+  }
+  27% {
+    transform: translate3d(14vw, calc(var(--leaf-amp) * -1), 0)
+      rotate(calc(var(--leaf-rot) + 46deg)) scaleX(var(--leaf-flip));
+  }
+  52% {
+    transform: translate3d(46vw, var(--leaf-amp), 0)
+      rotate(calc(var(--leaf-rot) + 104deg)) scaleX(var(--leaf-flip));
+  }
+  76% {
+    transform: translate3d(80vw, calc(var(--leaf-amp) * -0.65), 0)
+      rotate(calc(var(--leaf-rot) + 158deg)) scaleX(var(--leaf-flip));
+  }
+  90% {
+    opacity: var(--leaf-alpha);
+  }
+  100% {
+    transform: translate3d(122vw, calc(var(--leaf-amp) * 0.3), 0)
+      rotate(calc(var(--leaf-rot) + 212deg)) scaleX(var(--leaf-flip));
+    opacity: 0;
+  }
+}
+
+.auris-leaf-fly {
+  will-change: transform, opacity;
+  animation-name: auris-leaf-fly;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auris-stem-sway,
+  .auris-leaf-flutter,
+  .auris-leaf-fly {
+    animation: none;
+    will-change: auto;
+  }
+  /* Sin vuelo, la hoja se queda donde la dejó su posición base. */
+  .auris-leaf-fly {
+    transform: rotate(var(--leaf-rot)) scaleX(var(--leaf-flip));
+    opacity: var(--leaf-alpha);
+  }
+}
+
+/* Cinta de reseñas --------------------------------------------------------- */
+
+/* Bucle continuo hacia la derecha.
+ *
+ * La cinta lleva tres copias de la lista, una al lado de la otra, y se
+ * desplaza exactamente el ancho de una copia —un tercio del total—. Al
+ * reiniciarse, la copia que entra por la izquierda es idéntica a la que acaba
+ * de salir, así que la costura no se ve. Tres y no dos: con dos, el ancho del
+ * recorrido queda por debajo del de una pantalla ancha y el salto se nota.
+ *
+ * Anima `transform`, que corre en la capa de composición y no repinta. */
+@keyframes auris-marquee-right {
+  from {
+    transform: translate3d(-33.3333%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.auris-marquee-track {
+  animation: auris-marquee-right var(--marquee-duration, 60s) linear infinite;
+  will-change: transform;
+}
+
+/* Se frena con el puntero encima o al tabular una tarjeta: si no, no hay forma
+   de terminar de leer una reseña. */
+.auris-marquee:hover .auris-marquee-track,
+.auris-marquee:focus-within .auris-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sin movimiento automático la cinta pasa a recorrerse a mano. */
+  .auris-marquee-track {
+    animation: none;
+  }
+  .auris-marquee {
+    overflow-x: auto;
+  }
+}
+
+/* View Transitions nativas ------------------------------------------------ */
+
+/* Durante una transición el scroll tiene que ser instantáneo: si el
+   scroll-to-top de Next hereda el `scroll-behavior: smooth` del sitio, se
+   anima por fuera del morph y se percibe como un salto. */
+html.vt-active {
+  scroll-behavior: auto;
+}
+
+/* El fondo cruza con un fundido corto: es lo que evita que el reset de scroll
+   de App Router se perciba como un corte al navegar. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  /* Casi igual que el morph de la foto: con un fundido mucho más corto, la
+     vista nueva ya estaba completa mientras la imagen seguía viajando y se
+     percibía como una foto gigante pegada encima. */
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.33, 0, 0.2, 1);
+}
+
+/* La foto del profesional es el elemento compartido: el navegador interpola su
+   posición y tamaño entre la card de origen y la ficha de destino. */
+::view-transition-group(auris-professional-photo) {
+  border-radius: var(--radius-3xl);
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.22, 0.68, 0.24, 1);
+}
+
+/* La card y la ficha no tienen exactamente el mismo aspect ratio, así que el
+   cross-fade por defecto se conserva: sin él el navegador estira una foto
+   sobre la otra y el morph se ve entrecortado. `object-fit: cover` mantiene
+   el encuadre mientras la caja cambia de proporción. */
+::view-transition-old(auris-professional-photo),
+::view-transition-new(auris-professional-photo) {
+  height: 100%;
+  object-fit: cover;
+  /* El snapshot no hereda el `border-radius` del elemento: sin esto la foto
+     se ve rectangular durante todo el recorrido del morph. */
+  border-radius: var(--radius-3xl);
+  overflow: clip;
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.22, 0.68, 0.24, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -139,7 +440,9 @@
   }
   html {
     @apply font-sans;
-    scroll-behavior: smooth;
+    /* Sin `scroll-behavior: smooth` global: hacía que la restauración de
+       scroll al volver atrás se animara en ~60 pasos, compitiendo con la
+       transición. El scroll suave se pide puntualmente donde hace falta. */
   }
   h1,
   h2,

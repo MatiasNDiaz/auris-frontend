@@ -107,9 +107,9 @@ export default async function BlogPostPage({
       </article>
 
       {related.length > 0 && (
-        <section className="bg-cream-100 py-20 lg:py-24">
+        <section className="bg-surface-sage py-20 lg:py-24">
           <div className="container-auris">
-            <h2 className="font-serif text-2xl text-ink-900 sm:text-3xl">
+            <h2 className="text-center font-serif text-2xl text-primary-800 sm:text-3xl">
               Seguí leyendo
             </h2>
 

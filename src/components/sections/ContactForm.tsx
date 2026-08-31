@@ -46,7 +46,13 @@ export function ContactForm() {
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<ContactValues>({
     resolver: zodResolver(contactSchema),
-    defaultValues: { fullName: "", email: "", phone: "", message: "", website: "" },
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      message: "",
+      website: "",
+    },
   });
 
   const onSubmit = async (values: ContactValues) => {
@@ -175,7 +181,9 @@ export function ContactForm() {
                   maxLength={1000}
                   placeholder="Contanos en qué podemos ayudarte…"
                   aria-invalid={Boolean(errors.message)}
-                  aria-describedby={errors.message ? "message-error" : undefined}
+                  aria-describedby={
+                    errors.message ? "message-error" : undefined
+                  }
                   className="mt-2 resize-y rounded-xl bg-cream-50"
                   {...register("message")}
                 />

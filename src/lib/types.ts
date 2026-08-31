@@ -15,6 +15,9 @@ export type Service = {
   shortDescription: string;
   /** Frase de una línea, usada en el carousel del hero. */
   tagline: string;
+  /** Titular y bajada que muestra el hero cuando este servicio está activo. */
+  heroTitle: string;
+  heroSubtitle: string;
   fullDescription: string;
   imageUrl: string;
   features: string[];
@@ -22,11 +25,17 @@ export type Service = {
 
 export type Professional = {
   slug: string;
+  /** Define la paleta de su ficha: rosada o verde agua de consultorio. */
+  gender: "female" | "male";
   name: string;
   specialty: string;
   serviceSlug: string;
   photoUrl: string;
   bio: string;
+  /** Frase profesional o personal, en primera persona. */
+  motto: string;
+  /** Títulos y certificaciones, con institución y año. */
+  credentials: { title: string; institution: string; year: string }[];
   education: string[];
   experience: string;
   certifications: string[];

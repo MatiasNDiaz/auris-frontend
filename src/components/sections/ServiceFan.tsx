@@ -119,8 +119,8 @@ export function ServiceFan({
               transition={
                 reduceMotion
                   ? { duration: 0 }
-                  : // Rígido a propósito: con autoplay de 2s la card tiene que
-                    // asentarse antes del siguiente cambio.
+                  : // Rígido a propósito: la card tiene que asentarse bastante
+                    // antes del siguiente cambio del autoplay.
                     { type: "spring", stiffness: 280, damping: 32, mass: 0.7 }
               }
               aria-hidden={!isFront}
