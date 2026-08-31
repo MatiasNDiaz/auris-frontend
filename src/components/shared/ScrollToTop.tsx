@@ -44,10 +44,12 @@ export function ScrollToTop() {
       tabIndex={visible ? undefined : -1}
       aria-hidden={!visible}
       className={cn(
-        "auris-btn group fixed right-5 bottom-5 z-50 inline-flex size-13 items-center justify-center overflow-hidden rounded-full sm:right-8 sm:bottom-8",
-        "bg-linear-to-br from-primary-600 to-primary-800 text-cream-50 shadow-lg shadow-primary-900/30",
-        "transition-[opacity,transform,box-shadow] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
-        "hover:-translate-y-1 hover:shadow-xl hover:shadow-primary-900/45 active:translate-y-0 active:duration-150",
+        "group fixed right-5 bottom-5 z-50 inline-flex size-11 items-center justify-center rounded-full sm:right-7 sm:bottom-7",
+        // Verde plano, no degradé: a 44px un degradé se lee como una mancha.
+        // El aro claro lo despega del fondo sin necesidad de una sombra grande.
+        "bg-primary-700 text-cream-50 ring-1 ring-cream-50/25 shadow-md shadow-ink-900/20 backdrop-blur-sm",
+        "transition-[opacity,transform,background-color,box-shadow] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
+        "hover:-translate-y-1 hover:bg-primary-800 hover:shadow-lg hover:shadow-ink-900/28 active:translate-y-0 active:duration-150",
         "focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:outline-none",
         "motion-reduce:transition-none motion-reduce:hover:translate-y-0",
         visible
@@ -55,15 +57,10 @@ export function ScrollToTop() {
           : "pointer-events-none translate-y-3 opacity-0",
       )}
     >
-      {/* Mismo halo que los CTA con `effect="halo"`, para que el botón se lea
-          como parte de la misma familia. */}
-      <span
-        aria-hidden
-        className="auris-btn-fx auris-fx-halo pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,.5),transparent_65%)]"
-      />
+      {/* La flecha acompaña el gesto del botón: sube un poco al pasar el mouse. */}
       <ArrowUp
-        className="relative size-5 transition-transform duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0"
-        strokeWidth={2.2}
+        className="size-4.5 transition-transform duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0"
+        strokeWidth={2.4}
         aria-hidden
       />
     </button>

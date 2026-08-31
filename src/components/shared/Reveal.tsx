@@ -37,6 +37,11 @@ export function Reveal({
     <Tag
       className={cn(className)}
       data-reveal={from}
+      // El script de `RevealScript` corre antes de que React hidrate y le pone
+      // `data-reveal-shown` a lo que ya está en pantalla. React ve un atributo
+      // que no venía del servidor y lo reporta como desajuste; acá le avisamos
+      // que este nodo se toca por fuera. Silencia solo este elemento.
+      suppressHydrationWarning
       style={delay ? ({ "--reveal-delay": `${delay}s` } as object) : undefined}
     >
       {children}

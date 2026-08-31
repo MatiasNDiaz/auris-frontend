@@ -270,9 +270,19 @@
  * root y anula el `backdrop-filter` de todo lo que tenga adentro — que es
  * justamente lo que dejaba sin desenfoque al CTA transparente del hero. Es una
  * animación de una sola pasada; el ahorro no compensa romper eso. */
+/* `backwards` y no `both`.
+ *
+ * `both` incluye `forwards`, y eso deja la opacidad del último keyframe fijada
+ * como valor animado para siempre. Un elemento con opacidad animada es un
+ * backdrop root, así que anulaba el `backdrop-filter` de todo lo que tuviera
+ * adentro: por eso el CTA transparente del hero no se veía borroso.
+ *
+ * Con `backwards` el estado inicial igual se sostiene durante el retardo —que
+ * es lo único que necesitábamos— y al terminar el elemento vuelve a sus
+ * estilos normales, que ya son opacidad 1 y sin transform. Se ve idéntico. */
 .auris-rise {
   animation: auris-rise var(--rise-duration, 0.7s)
-    cubic-bezier(0.21, 0.47, 0.32, 0.98) var(--rise-delay, 0s) both;
+    cubic-bezier(0.21, 0.47, 0.32, 0.98) var(--rise-delay, 0s) backwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
