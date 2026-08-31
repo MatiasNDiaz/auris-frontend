@@ -107,22 +107,52 @@ export function WindReveal({
 
   const inView = useInView(ref, { once: true, margin: "-15%" });
 
-  // La clave se escribe cuando la primera ráfaga ya se disparó.
+  /**
+   * Salvavidas: pasado el plazo el contenido se muestra sí o sí.
+   *
+   * `useInView` solo engancha su observer una vez, con el nodo que encuentre en
+   * el ref en ese momento. Si por lo que sea no llega a observar, sin esto la
+   * sección se queda en `opacity:0` para siempre — que es exactamente el bug
+   * que dejó la landing en blanco en producción. El contenido nunca puede
+   * depender de que un observer dispare.
+   */
+  const [rescued, setRescued] = useState(false);
   useEffect(() => {
-    if (armed && inView) markSeen();
+    if (!armed || inView) return;
+    const timer = setTimeout(() => setRescued(true), 1200);
+    return () => clearTimeout(timer);
   }, [armed, inView]);
 
-  if (!armed) return <div className={className}>{children}</div>;
+  const shown = inView || rescued;
 
+  // La clave se escribe cuando la primera ráfaga ya se disparó.
+  useEffect(() => {
+    if (armed && shown) markSeen();
+  }, [armed, shown]);
+
+  // El `ref` va SIEMPRE en el mismo nodo, esté armada o no la ráfaga.
+  //
+  // Acá estaba el bug que dejaba la landing en blanco: con `armed` en false en
+  // el primer render —el snapshot de servidor de `useSyncExternalStore`— este
+  // div no existía y el ref quedaba en null. `useInView` engancha su observer
+  // una sola vez, en su efecto de montaje, así que al pasar `armed` a true tras
+  // hidratar ya no volvía a mirar: `inView` se quedaba en false para siempre y
+  // el contenido, en `opacity:0`.
+  //
+  // Por eso las secciones aparecían recién al navegar desde la navbar: en una
+  // navegación de cliente no hay snapshot de servidor, `armed` es true desde el
+  // primer render y el ref existe cuando el efecto corre.
   return (
-    <div ref={ref} className={cn("relative", className)}>
+    <div ref={ref} className={cn(armed && "relative", className)}>
       {/* Capa de hojas: por encima del contenido mientras lo descubre, y fuera
-          del flujo, así que no puede provocar layout shift. */}
+          del flujo, así que no puede provocar layout shift. Solo existe cuando
+          la ráfaga corre de verdad. */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-20 overflow-hidden"
       >
-        {inView &&
+        {armed &&
+          inView &&
           gust.map((leaf, index) => (
             <motion.svg
               key={index}
@@ -164,7 +194,9 @@ export function WindReveal({
           ser true—, así que visualmente el resultado es el mismo. */}
       <motion.div
         initial={false}
-        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+        animate={
+          !armed || shown ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }
+        }
         transition={{ duration: 0.75, delay: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
       >
         {children}
