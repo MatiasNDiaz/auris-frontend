@@ -1,11 +1,10 @@
 import { ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { LeafScatter } from "@/components/shared/LeafScatter";
 import { LeafSprig } from "@/components/shared/LeafSprig";
 import { Reveal } from "@/components/shared/Reveal";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { ServiceCard } from "@/components/shared/ServiceCard";
-import { Button } from "@/components/ui/button";
+import { ShineButton } from "@/components/shared/ShineButton";
 import { services } from "@/lib/data/services";
 
 type ServicesGridProps = {
@@ -44,15 +43,18 @@ export function ServicesGrid({ withHeading = true }: ServicesGridProps) {
                 <p className="mt-3 text-sm leading-relaxed text-primary-100">
                   Escribinos y te orientamos hacia la especialidad adecuada.
                 </p>
-                <Button
-                  asChild
-                  className="mx-auto mt-6 w-fit rounded-full bg-cream-50 font-semibold text-primary-800 hover:bg-cream-100"
+                <ShineButton
+                  href="/contacto"
+                  tone="light"
+                  effect="halo"
+                  className="mx-auto mt-6 w-fit"
                 >
-                  <Link href="/contacto">
-                    Hacer una consulta
-                    <ArrowRight className="size-4" aria-hidden />
-                  </Link>
-                </Button>
+                  Hacer una consulta
+                  <ArrowRight
+                    className="size-4 transition-transform duration-300 group-hover:translate-x-1"
+                    aria-hidden
+                  />
+                </ShineButton>
               </div>
             </Reveal>
           )}

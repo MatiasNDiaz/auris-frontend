@@ -4,6 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { ViewTransitionProvider } from "@/components/providers/ViewTransitionProvider";
 import { RevealScript } from "@/components/shared/RevealScript";
+import { ScrollToTop } from "@/components/shared/ScrollToTop";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -52,6 +53,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="es-AR"
       className={`${manrope.variable} ${fraunces.variable} h-full antialiased`}
+      // `RevealScript` agrega la clase `js-reveal` a este mismo nodo antes de
+      // que React hidrate, así que el `className` del servidor y el del cliente
+      // no coinciden. Es el patrón estándar para scripts que corren antes de la
+      // hidratación —el mismo que usan los switches de tema— y solo silencia
+      // este nodo, no el árbol.
+      suppressHydrationWarning
     >
       <head>
         {/* Antes del primer pintado: activa el scroll-reveal y lo dispara sin
@@ -74,6 +81,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             {children}
           </main>
           <Footer />
+          {/* Flotante, en todas las páginas. */}
+          <ScrollToTop />
         </ViewTransitionProvider>
       </body>
     </html>

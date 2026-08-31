@@ -7,7 +7,7 @@ type WhatsAppButtonProps = {
   label?: string;
   message?: string;
   className?: string;
-  size?: "default" | "lg";
+  size?: "default" | "compact";
   /** `onDark` es la variante para el hero, sobre la foto de fondo. */
   variant?: "solid" | "outline" | "onDark";
 };
@@ -17,7 +17,7 @@ export function WhatsAppButton({
   label = "Solicitar turno",
   message = siteConfig.whatsappMessage,
   className,
-  size = "lg",
+  size = "default",
   variant = "solid",
 }: WhatsAppButtonProps) {
   // WhatsApp y "Solicitar turno" son la acción principal del sitio: el CTA

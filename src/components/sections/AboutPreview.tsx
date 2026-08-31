@@ -12,7 +12,7 @@ import { LeafScatter } from "@/components/shared/LeafScatter";
 import { LeafSprig } from "@/components/shared/LeafSprig";
 import { Reveal } from "@/components/shared/Reveal";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-import { Button } from "@/components/ui/button";
+import { ShineButton } from "@/components/shared/ShineButton";
 import { BLUR_DATA_URL } from "@/lib/blur";
 
 const pillars = [
@@ -91,16 +91,18 @@ export function AboutPreview() {
             ))}
           </ul>
 
-          <Button
-            asChild
-            size="lg"
-            className="mt-9 rounded-full bg-primary-700 font-semibold text-cream-50 hover:bg-primary-800"
+          <ShineButton
+            href="/sobre-el-centro"
+            tone="primary"
+            effect="fill"
+            className="mt-9"
           >
-            <Link href="/sobre-el-centro">
-              Conocé más sobre nosotros
-              <ArrowRight className="size-4" aria-hidden />
-            </Link>
-          </Button>
+            Conocé más sobre nosotros
+            <ArrowRight
+              className="size-4 transition-transform duration-300 group-hover:translate-x-1"
+              aria-hidden
+            />
+          </ShineButton>
         </Reveal>
 
         <Reveal from="right" className="order-1 lg:order-2">

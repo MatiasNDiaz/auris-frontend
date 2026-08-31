@@ -4,7 +4,7 @@ import { ContactForm } from "@/components/sections/ContactForm";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { Reveal } from "@/components/shared/Reveal";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
-import { Button } from "@/components/ui/button";
+import { ShineButton } from "@/components/shared/ShineButton";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
@@ -138,20 +138,17 @@ export default function ContactoPage() {
 
                   <div className="absolute right-4 bottom-4 left-4 flex flex-col gap-3 rounded-2xl bg-cream-50/95 p-4 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-sm text-ink-700/85">{fullAddress}</p>
-                    <Button
-                      asChild
-                      size="sm"
-                      className="shrink-0 rounded-full bg-primary-700 text-cream-50 hover:bg-primary-800"
+                    <ShineButton
+                      href={directionsUrl}
+                      external
+                      tone="primary"
+                      size="compact"
+                      effect="shine"
+                      className="shrink-0"
                     >
-                      <a
-                        href={directionsUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Navigation className="size-4" aria-hidden />
-                        Cómo llegar
-                      </a>
-                    </Button>
+                      <Navigation className="size-4" aria-hidden />
+                      Cómo llegar
+                    </ShineButton>
                   </div>
                 </div>
               </div>

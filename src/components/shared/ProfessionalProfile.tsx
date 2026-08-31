@@ -6,6 +6,7 @@ import Link from "next/link";
 import { AnimatedProfessionalImage } from "./AnimatedProfessionalImage";
 import { LeafSprig } from "./LeafSprig";
 import { ProfessionalBackLinks } from "./ProfessionalBackLinks";
+import { ShineButton } from "./ShineButton";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { siteConfig } from "@/config/site";
 import type { Professional, Service } from "@/lib/types";
@@ -377,12 +378,13 @@ export function ProfessionalProfile({
                   variant="outline"
                   message={`¡Hola AURIS! Quisiera solicitar un turno con ${professional.name} (${professional.specialty}).`}
                 />
-                <Link
+                <ShineButton
                   href="/contacto"
-                  className="inline-flex h-13 items-center justify-center rounded-full border border-cream-50/45 px-7 font-semibold whitespace-nowrap text-cream-50 transition-colors duration-300 hover:bg-cream-50/15 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+                  tone="outlineLight"
+                  effect="fill"
                 >
                   Ver datos de contacto
-                </Link>
+                </ShineButton>
               </div>
 
               <p className="mt-6 text-sm text-primary-200">

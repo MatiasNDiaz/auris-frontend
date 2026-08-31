@@ -2,12 +2,12 @@ import {
   Activity,
   Brain,
   Ear,
-  Smile,
   Sparkles,
   Users,
   type LucideProps,
 } from "lucide-react";
 import type { ReactNode } from "react";
+import { ToothIcon } from "@/components/shared/ToothIcon";
 
 /**
  * Mapea la clave `icon` de cada servicio a su ícono de lucide-react.
@@ -20,7 +20,7 @@ const iconMap: Record<string, (props: LucideProps) => ReactNode> = {
   activity: (props) => <Activity {...props} />,
   brain: (props) => <Brain {...props} />,
   ear: (props) => <Ear {...props} />,
-  smile: (props) => <Smile {...props} />,
+  tooth: (props) => <ToothIcon {...props} />,
   sparkles: (props) => <Sparkles {...props} />,
   users: (props) => <Users {...props} />,
 };

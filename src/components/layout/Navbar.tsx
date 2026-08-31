@@ -126,7 +126,7 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3 xl:justify-self-end">
-          <WhatsAppButton size="default" className="hidden sm:inline-flex" />
+          <WhatsAppButton className="hidden sm:inline-flex" />
           <MobileMenu />
         </div>
       </div>

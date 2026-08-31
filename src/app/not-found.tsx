@@ -1,6 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { ShineButton } from "@/components/shared/ShineButton";
 
 export default function NotFound() {
   return (
@@ -15,24 +14,16 @@ export default function NotFound() {
       </p>
 
       <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-        <Button
-          asChild
-          size="lg"
-          className="rounded-full bg-primary-700 text-cream-50 hover:bg-primary-800"
-        >
-          <Link href="/">
-            <ArrowLeft className="size-4" aria-hidden />
-            Volver al inicio
-          </Link>
-        </Button>
-        <Button
-          asChild
-          variant="outline"
-          size="lg"
-          className="rounded-full border-primary-700 text-primary-700 hover:bg-primary-50"
-        >
-          <Link href="/contacto">Ir a contacto</Link>
-        </Button>
+        <ShineButton href="/" tone="primary" effect="shine">
+          <ArrowLeft
+            className="size-4 transition-transform duration-300 group-hover:-translate-x-1"
+            aria-hidden
+          />
+          Volver al inicio
+        </ShineButton>
+        <ShineButton href="/contacto" tone="outlinePrimary" effect="fill">
+          Ir a contacto
+        </ShineButton>
       </div>
     </section>
   );

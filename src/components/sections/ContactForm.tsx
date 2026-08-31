@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
+import { ShineButton } from "@/components/shared/ShineButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -111,14 +111,15 @@ export function ContactForm() {
               Te vamos a responder dentro de las próximas 24 horas hábiles.
               Gracias por escribirnos.
             </p>
-            <Button
+            <ShineButton
               type="button"
-              variant="ghost"
+              tone="soft"
+              effect="ring"
               onClick={() => reset()}
-              className="mt-6 rounded-full text-primary-700 hover:bg-primary-50"
+              className="mt-6"
             >
               Enviar otra consulta
-            </Button>
+            </ShineButton>
           </motion.div>
         ) : (
           <motion.form
@@ -211,11 +212,12 @@ export function ContactForm() {
               />
             </div>
 
-            <Button
+            <ShineButton
               type="submit"
-              size="lg"
+              tone="primary"
+              effect="fill"
               disabled={isSubmitting}
-              className="mt-8 w-full rounded-full bg-primary-700 font-semibold text-cream-50 hover:bg-primary-800 sm:w-auto"
+              className="mt-8 w-full sm:w-auto"
             >
               {isSubmitting ? (
                 <>
@@ -224,11 +226,11 @@ export function ContactForm() {
                 </>
               ) : (
                 <>
-                  <Send className="size-4" aria-hidden />
+                  <Send className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
                   Enviar consulta
                 </>
               )}
-            </Button>
+            </ShineButton>
 
             <p className="mt-4 text-xs leading-relaxed text-ink-700/60">
               Al enviar aceptás que nos contactemos con vos por los datos

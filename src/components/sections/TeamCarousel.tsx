@@ -8,7 +8,7 @@ import { AnimatedProfessionalImage } from "@/components/shared/AnimatedProfessio
 import { LeafScatter } from "@/components/shared/LeafScatter";
 import { LeafSprig } from "@/components/shared/LeafSprig";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-import { Button } from "@/components/ui/button";
+import { ShineButton } from "@/components/shared/ShineButton";
 import { CAROUSEL_LIMIT, professionals } from "@/lib/data/professionals";
 import { getServiceBySlug } from "@/lib/data/services";
 import { useMediaQuery } from "@/lib/use-media-query";
@@ -175,16 +175,13 @@ export function TeamCarousel() {
       </ul>
 
       <div className="container-auris mt-10 flex justify-center">
-        <Button
-          asChild
-          variant="ghost"
-          className="rounded-full text-primary-700 hover:bg-primary-100"
-        >
-          <Link href="/profesionales">
-            Ver todo el equipo
-            <ArrowRight className="size-4" aria-hidden />
-          </Link>
-        </Button>
+        <ShineButton href="/profesionales" tone="soft" effect="ring">
+          Ver todo el equipo
+          <ArrowRight
+            className="size-4 transition-transform duration-300 group-hover:translate-x-1"
+            aria-hidden
+          />
+        </ShineButton>
       </div>
     </section>
   );

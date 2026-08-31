@@ -147,7 +147,7 @@ export function Hero() {
             style={{ "--rise-delay": RISE_DELAY.cta } as CSSProperties}
             className="auris-rise mt-7 flex flex-col gap-3 sm:flex-row sm:items-center"
           >
-            <ShineButton href="/servicios" tone="primary">
+            <ShineButton href="/servicios" tone="primary" effect="shine">
               Conocé nuestros servicios
               <ArrowRight
                 className="size-4 transition-transform duration-300 group-hover:translate-x-1"

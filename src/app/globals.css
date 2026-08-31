@@ -167,35 +167,81 @@
   --sidebar-ring: #74a563;
 }
 
-/* Brillo de los CTA -------------------------------------------------------- */
+/* Efectos de los CTA ------------------------------------------------------- */
 
-/* Se resuelve con una animación de una sola pasada, no con un `translate` de
-   estado hover: al ser un estado, el brillo se quedaba clavado en su posición
-   final mientras el puntero siguiera encima y dejaba una mancha en la punta
-   del botón. Como animación, entra por izquierda, sale por derecha y no queda
-   nada visible al terminar. */
-@keyframes auris-shine {
-  from {
-    transform: translateX(-160%) skewX(-14deg);
-  }
-  to {
-    transform: translateX(420%) skewX(-14deg);
-  }
+/* Todos los efectos son `transition`, nunca `animation`.
+ *
+ * Es la decisión central de este bloque: una transición es reversible por
+ * definición, así que al sacar el cursor el efecto vuelve solo por donde vino
+ * —el brillo regresa de derecha a izquierda, el relleno baja, el halo se
+ * apaga— sin una sola línea de JS. Con `animation` habría que disparar una
+ * segunda pasada invertida a mano.
+ *
+ * El barrido termina fuera de la caja del botón (430% de su propio ancho, que
+ * es un tercio del botón: 143% del ancho total), y el botón recorta con
+ * `overflow-hidden`. Por eso no queda ninguna mancha detenida en la punta
+ * mientras el puntero sigue encima. */
+
+.auris-btn-fx {
+  will-change: transform, opacity;
 }
 
-.auris-shine {
-  transform: translateX(-160%) skewX(-14deg);
+/* Barrido de luz diagonal. */
+.auris-fx-shine {
+  transform: translateX(-175%) skewX(-14deg);
+  transition: transform 1.15s cubic-bezier(0.36, 0, 0.14, 1);
+}
+.auris-btn:hover .auris-fx-shine,
+.auris-btn:focus-visible .auris-fx-shine {
+  transform: translateX(430%) skewX(-14deg);
 }
 
-.group:hover .auris-shine,
-.group:focus-visible .auris-shine {
-  animation: auris-shine 0.75s cubic-bezier(0.3, 0, 0.2, 1);
+/* Relleno que sube desde el borde inferior. */
+.auris-fx-fill {
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.auris-btn:hover .auris-fx-fill,
+.auris-btn:focus-visible .auris-fx-fill {
+  transform: scaleY(1);
+}
+
+/* Halo difuso que florece por detrás. */
+.auris-fx-halo {
+  opacity: 0;
+  transform: scale(0.72);
+  transition:
+    opacity 0.5s ease-out,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.auris-btn:hover .auris-fx-halo,
+.auris-btn:focus-visible .auris-fx-halo {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Aro que se expande desde el borde. */
+.auris-fx-ring {
+  opacity: 0;
+  transform: scale(0.94);
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.auris-btn:hover .auris-fx-ring,
+.auris-btn:focus-visible .auris-fx-ring {
+  opacity: 1;
+  transform: scale(1.06);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .group:hover .auris-shine,
-  .group:focus-visible .auris-shine {
-    animation: none;
+  .auris-fx-shine,
+  .auris-fx-fill,
+  .auris-fx-halo,
+  .auris-fx-ring {
+    transition: none;
+    will-change: auto;
   }
 }
 
@@ -220,10 +266,13 @@
   }
 }
 
+/* Sin `will-change`: al declarar `opacity` el elemento pasa a ser backdrop
+ * root y anula el `backdrop-filter` de todo lo que tenga adentro — que es
+ * justamente lo que dejaba sin desenfoque al CTA transparente del hero. Es una
+ * animación de una sola pasada; el ahorro no compensa romper eso. */
 .auris-rise {
   animation: auris-rise var(--rise-duration, 0.7s)
     cubic-bezier(0.21, 0.47, 0.32, 0.98) var(--rise-delay, 0s) both;
-  will-change: transform, opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -247,7 +296,9 @@
  * `js-reveal` que un script inline del `<head>` pone en `<html>` antes del
  * primer pintado, y el mismo script observa y revela. Si el JS falla o tarda,
  * el contenido simplemente ya está ahí. */
-[data-reveal] {
+/* Solo mientras está pendiente: `will-change: opacity` crea un backdrop root
+ * y anularía el `backdrop-filter` de los botones que viven dentro. */
+.js-reveal [data-reveal]:not([data-reveal-shown]) {
   will-change: transform, opacity;
 }
 

@@ -24,7 +24,7 @@ export const services: Service[] = [
   {
     slug: "odontologia",
     name: "Odontología",
-    icon: "smile",
+    icon: "tooth",
     shortDescription:
       "Salud bucal integral: prevención, tratamientos restauradores y estética dental.",
     tagline: "Prevención antes que tratamiento",
