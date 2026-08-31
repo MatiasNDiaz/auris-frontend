@@ -54,8 +54,8 @@ export function MobileMenu() {
                 className={cn(
                   "rounded-full px-4 py-3 text-base font-medium transition-colors duration-200",
                   active
-                    ? "bg-primary-100 text-primary-900"
-                    : "text-primary-700/85 hover:bg-primary-50 hover:text-primary-900",
+                    ? "bg-primary-300 text-primary-900"
+                    : "text-primary-700/85 hover:bg-primary-200 hover:text-primary-900",
                 )}
               >
                 {item.label}

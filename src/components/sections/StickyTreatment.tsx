@@ -37,7 +37,7 @@ export function StickyTreatment() {
     <section className="relative bg-ink-900">
       <div className="sticky top-0 z-0 h-screen overflow-hidden">
         <Image
-          src="/ChicaTratamiento.png"
+          src="/ChicaTratamiento.webp"
           alt="Paciente durante un tratamiento facial en AURIS"
           fill
           sizes="100vw"

@@ -9,7 +9,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import { ServiceFan } from "./ServiceFan";
 import { ShineButton } from "@/components/shared/ShineButton";
 import { WaveDivider } from "@/components/shared/WaveDivider";
@@ -19,19 +19,12 @@ import { services } from "@/lib/data/services";
 
 const AUTOPLAY_MS = 4000;
 
-const container = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.11, delayChildren: 0.1 } },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 26 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] as const },
-  },
-};
+/**
+ * Escalonado de la entrada, replicando el `staggerChildren` que antes hacía
+ * Framer: 0.1s de arranque y 0.11s entre elementos. Se aplica como
+ * `--rise-delay` sobre la clase `auris-rise` de `globals.css`.
+ */
+const RISE_DELAY = { eyebrow: "0.1s", cta: "0.21s", highlights: "0.32s" };
 
 const highlights = [
   { icon: HeartHandshake, label: "Atención humana y personalizada" },
@@ -106,19 +99,14 @@ export function Hero() {
 
       <div className="container-auris relative flex flex-1 flex-col justify-center gap-12 pt-16 pb-28 lg:gap-0 lg:pt-20 lg:pb-36">
         {/* Capa 3 — contenido, en claro sobre el overlay. */}
-        <motion.div
-          variants={container}
-          initial="hidden"
-          animate="visible"
-          className="max-w-2xl"
-        >
-          <motion.p
-            variants={item}
-            className="inline-flex items-center gap-2 rounded-full border border-cream-50/35 bg-cream-50/10 px-4 py-1.5 text-xs font-semibold tracking-[0.14em] text-cream-50 uppercase backdrop-blur-sm"
+        <div className="max-w-2xl">
+          <p
+            style={{ "--rise-delay": RISE_DELAY.eyebrow } as CSSProperties}
+            className="auris-rise inline-flex items-center gap-2 rounded-full border border-cream-50/35 bg-cream-50/10 px-4 py-1.5 text-xs font-semibold tracking-[0.14em] text-cream-50 uppercase backdrop-blur-sm"
           >
             <Leaf className="size-3.5" strokeWidth={2} aria-hidden />
             Bienvenidos a {siteConfig.name}
-          </motion.p>
+          </p>
 
           {/* Titular y bajada del servicio activo. Se remontan con `key`, así
               cada cambio entra desde abajo en vez de reemplazarse de golpe. */}
@@ -155,9 +143,9 @@ export function Hero() {
             </AnimatePresence>
           </div>
 
-          <motion.div
-            variants={item}
-            className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center"
+          <div
+            style={{ "--rise-delay": RISE_DELAY.cta } as CSSProperties}
+            className="auris-rise mt-7 flex flex-col gap-3 sm:flex-row sm:items-center"
           >
             <ShineButton href="/servicios" tone="primary">
               Conocé nuestros servicios
@@ -167,12 +155,12 @@ export function Hero() {
               />
             </ShineButton>
             <WhatsAppButton label="Contactanos por WhatsApp" variant="onDark" />
-          </motion.div>
+          </div>
 
           {/* Acotado a max-w-xl para no quedar debajo del abanico en desktop. */}
-          <motion.ul
-            variants={item}
-            className="mt-8 grid max-w-xl gap-3 sm:grid-cols-3"
+          <ul
+            style={{ "--rise-delay": RISE_DELAY.highlights } as CSSProperties}
+            className="auris-rise mt-8 grid max-w-xl gap-3 sm:grid-cols-3"
           >
             {highlights.map(({ icon: Icon, label }) => (
               <li
@@ -188,17 +176,21 @@ export function Hero() {
                 {label}
               </li>
             ))}
-          </motion.ul>
-        </motion.div>
+          </ul>
+        </div>
 
         {/* Capa 4 — abanico de servicios. */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+        <div
+          style={
+            {
+              "--rise-delay": "0.5s",
+              "--rise-duration": "0.8s",
+              "--rise-y": "30px",
+            } as CSSProperties
+          }
           // Por encima del alto de la onda, para que la curva no le muerda el
           // pie a las cards.
-          className="lg:absolute lg:right-12 lg:bottom-28"
+          className="auris-rise lg:absolute lg:right-12 lg:bottom-28"
         >
           <ServiceFan
             active={active}
@@ -206,7 +198,7 @@ export function Hero() {
             onStep={step}
             reduceMotion={reduceMotion}
           />
-        </motion.div>
+        </div>
       </div>
 
       {/*

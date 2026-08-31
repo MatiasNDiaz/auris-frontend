@@ -115,8 +115,8 @@ export function Navbar() {
                 className={cn(
                   "rounded-full px-3.5 py-2 text-sm font-medium whitespace-nowrap transition-[color,background-color,transform] duration-200 ease-out hover:-translate-y-px focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none motion-reduce:hover:translate-y-0",
                   active
-                    ? "bg-primary-100 text-primary-900"
-                    : "text-primary-700 hover:bg-primary-50 hover:text-primary-900",
+                    ? "bg-primary-300 text-primary-900"
+                    : "text-primary-700 hover:bg-primary-200 hover:text-primary-900",
                 )}
               >
                 {item.label}

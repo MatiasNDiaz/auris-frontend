@@ -199,6 +199,97 @@
   }
 }
 
+/* Entrada del hero --------------------------------------------------------- */
+
+/* Réplica del stagger de entrada que antes hacía Framer en el hero: mismos
+ * 26px, misma duración y misma curva, con el escalonado en `--rise-delay`.
+ *
+ * En CSS y no en JS porque esto está sobre el pliegue: con Framer el eyebrow,
+ * los botones y los highlights llegaban con `opacity:0` en el HTML y no
+ * aparecían hasta que se hidrataba React. `animation-fill-mode: both` sostiene
+ * el estado inicial durante el retardo, así que el resultado se ve igual pero
+ * ya no depende de que baje el bundle. */
+@keyframes auris-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--rise-y, 26px));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.auris-rise {
+  animation: auris-rise var(--rise-duration, 0.7s)
+    cubic-bezier(0.21, 0.47, 0.32, 0.98) var(--rise-delay, 0s) both;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auris-rise {
+    animation: none;
+    will-change: auto;
+  }
+}
+
+/* Scroll-reveal ------------------------------------------------------------ */
+
+/* Réplica exacta del `Reveal` que antes hacía Framer Motion —misma distancia
+ * (24px), misma duración (0.6s) y misma curva— pero en CSS.
+ *
+ * El motivo del cambio es de carga, no visual: Framer serializa su `initial` en
+ * el HTML del servidor, así que las secciones llegaban con `opacity:0` grabado
+ * y no se volvían visibles hasta que bajaba y se hidrataba todo el bundle. Con
+ * conexión lenta eso son secciones en blanco durante segundos.
+ *
+ * Acá el estado por defecto es VISIBLE. El estado oculto lo activa la clase
+ * `js-reveal` que un script inline del `<head>` pone en `<html>` antes del
+ * primer pintado, y el mismo script observa y revela. Si el JS falla o tarda,
+ * el contenido simplemente ya está ahí. */
+[data-reveal] {
+  will-change: transform, opacity;
+}
+
+.js-reveal [data-reveal]:not([data-reveal-shown]) {
+  opacity: 0;
+}
+
+.js-reveal [data-reveal="up"]:not([data-reveal-shown]) {
+  transform: translateY(24px);
+}
+.js-reveal [data-reveal="down"]:not([data-reveal-shown]) {
+  transform: translateY(-24px);
+}
+.js-reveal [data-reveal="left"]:not([data-reveal-shown]) {
+  transform: translateX(24px);
+}
+.js-reveal [data-reveal="right"]:not([data-reveal-shown]) {
+  transform: translateX(-24px);
+}
+
+.js-reveal [data-reveal] {
+  transition:
+    opacity 0.6s cubic-bezier(0.21, 0.47, 0.32, 0.98),
+    transform 0.6s cubic-bezier(0.21, 0.47, 0.32, 0.98);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.js-reveal [data-reveal][data-reveal-shown] {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sin movimiento el contenido aparece directamente, como hacía Framer con
+     su config de motion reducida. */
+  .js-reveal [data-reveal]:not([data-reveal-shown]) {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Follaje: balanceo en bucle ----------------------------------------------- */
 
 /* Dos capas de movimiento, que es lo que evita que se lea como un GIF: el

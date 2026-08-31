@@ -13,7 +13,7 @@ export const services: Service[] = [
       "Terapia individual, de pareja y familiar, con la escucha y el encuadre que cada proceso necesita.",
     fullDescription:
       "Nuestro equipo de psicología acompaña procesos de cambio personal desde un enfoque integrador, respetando el tiempo y la singularidad de cada persona. Trabajamos sobre ansiedad, estados de ánimo, duelos, vínculos y crisis vitales, tanto en formato individual como de pareja y familia. Cada proceso comienza con entrevistas de admisión donde definimos objetivos claros y elegimos juntos el encuadre más adecuado.",
-    imageUrl: "/Piscologia.png",
+    imageUrl: "/Piscologia.webp",
     features: [
       "Terapia individual para adolescentes y adultos",
       "Terapia de pareja y orientación familiar",
@@ -54,7 +54,7 @@ export const services: Service[] = [
       "Planes faciales y corporales diseñados sobre un diagnóstico real, sin promesas desmedidas.",
     fullDescription:
       "Diseñamos planes de tratamiento personalizados a partir de un diagnóstico de piel y de los objetivos de cada persona. Priorizamos procedimientos seguros, con evidencia y resultados sostenibles en el tiempo, evitando promesas desmedidas. El seguimiento posterior es parte del tratamiento: acompañamos con pautas de cuidado domiciliario para que los resultados se mantengan.",
-    imageUrl: "/EsteticaCorporal.png",
+    imageUrl: "/EsteticaCorporal.webp",
     features: [
       "Diagnóstico y limpieza facial profunda",
       "Tratamientos de hidratación y renovación cutánea",
@@ -74,7 +74,7 @@ export const services: Service[] = [
       "Encuentros grupales que sostienen la memoria, la autonomía y el vínculo social.",
     fullDescription:
       "Un espacio grupal pensado para personas mayores, coordinado por profesionales del equipo. Los encuentros combinan estimulación cognitiva, actividad física suave adaptada y dinámicas de participación que fortalecen el vínculo social. El objetivo es sostener la autonomía en la vida cotidiana y acompañar esta etapa desde el encuentro con otros, en grupos reducidos donde cada persona avanza a su ritmo.",
-    imageUrl: "/TallerAdultos.png",
+    imageUrl: "/TallerAdultos.webp",
     features: [
       "Estimulación cognitiva y de la memoria",
       "Actividad física suave y adaptada",
@@ -115,7 +115,7 @@ export const services: Service[] = [
       "Lenguaje, voz, audición y deglución, con evaluación diagnóstica y trabajo articulado.",
     fullDescription:
       "Atendemos a niños, adolescentes y adultos en dificultades del lenguaje, el habla, la voz, la audición y la deglución. El proceso comienza con una evaluación diagnóstica detallada y, cuando corresponde, se articula con la familia, la escuela o el equipo médico tratante. Los tratamientos se planifican en ciclos con revisión periódica de objetivos.",
-    imageUrl: "/Fonoaudiologia.png",
+    imageUrl: "/Fonoaudiologia.webp",
     features: [
       "Evaluación del lenguaje y el habla",
       "Tratamiento de la voz profesional",

@@ -1,29 +1,28 @@
-"use client";
-
-import { motion, type Variants } from "framer-motion";
-import type { ReactNode } from "react";
+import type { ElementType, ReactNode } from "react";
 import { cn } from "@/lib/utils";
-
-const directions = {
-  up: { y: 24, x: 0 },
-  down: { y: -24, x: 0 },
-  left: { x: 24, y: 0 },
-  right: { x: -24, y: 0 },
-  none: { x: 0, y: 0 },
-} as const;
 
 type RevealProps = {
   children: ReactNode;
   className?: string;
   /** Retraso en segundos, para escalonar elementos de una misma sección. */
   delay?: number;
-  from?: keyof typeof directions;
+  from?: "up" | "down" | "left" | "right" | "none";
   as?: "div" | "section" | "li" | "article" | "header";
 };
 
 /**
- * Scroll-reveal reutilizable. Anima una sola vez al entrar en viewport y
- * respeta `prefers-reduced-motion` a través de la config global de Framer.
+ * Scroll-reveal reutilizable: anima una sola vez al entrar en viewport.
+ *
+ * Es un componente de servidor y no trae JS propio. Solo marca el elemento con
+ * `data-reveal`; el estado oculto, la transición y el disparo viven en
+ * `globals.css` y en el script inline de `RevealScript`.
+ *
+ * Antes esto era Framer Motion, y ese era el origen del bug de secciones en
+ * blanco: Framer escribe su `initial` como estilo inline en el HTML del
+ * servidor, así que el contenido llegaba con `opacity:0` y no aparecía hasta
+ * que se descargaba e hidrataba todo el bundle. La animación resultante es la
+ * misma —24px, 0.6s, misma curva—, pero ahora el contenido existe visualmente
+ * sin depender de React.
  */
 export function Reveal({
   children,
@@ -32,27 +31,15 @@ export function Reveal({
   from = "up",
   as = "div",
 }: RevealProps) {
-  const MotionTag = motion[as];
-
-  const variants: Variants = {
-    hidden: { opacity: 0, ...directions[from] },
-    visible: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      transition: { duration: 0.6, delay, ease: [0.21, 0.47, 0.32, 0.98] },
-    },
-  };
+  const Tag = as as ElementType;
 
   return (
-    <MotionTag
+    <Tag
       className={cn(className)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
-      variants={variants}
+      data-reveal={from}
+      style={delay ? ({ "--reveal-delay": `${delay}s` } as object) : undefined}
     >
       {children}
-    </MotionTag>
+    </Tag>
   );
 }

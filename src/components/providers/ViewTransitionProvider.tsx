@@ -55,6 +55,33 @@ export function isViewTransitionActive() {
   return viewTransitionActive;
 }
 
+/**
+ * Revela de inmediato el scroll-reveal que ya está en pantalla.
+ *
+ * Se llama justo después de que React commitea la ruta nueva y justo ANTES de
+ * resolver la promesa de `startViewTransition`, que es el instante en que el
+ * navegador fotografía el estado destino.
+ *
+ * Sin esto la foto sale en blanco: los `[data-reveal]` de la ruta entrante son
+ * nodos nuevos, todavía sin `data-reveal-shown`, y el CSS los tiene en
+ * `opacity:0` hasta que dispare el IntersectionObserver — que es asíncrono y
+ * corre un frame más tarde, o sea después de la captura.
+ *
+ * Solo alcanza a lo que entra en el viewport: lo de más abajo conserva su
+ * revelado por scroll.
+ */
+function revealVisibleNow() {
+  const height = window.innerHeight;
+  document
+    .querySelectorAll<HTMLElement>("[data-reveal]:not([data-reveal-shown])")
+    .forEach((el) => {
+      const box = el.getBoundingClientRect();
+      if (box.bottom > 0 && box.top < height) {
+        el.setAttribute("data-reveal-shown", "");
+      }
+    });
+}
+
 type NavigateFn = (href: string, sharedElement?: HTMLElement | null) => void;
 
 type ViewTransitionApi = {
@@ -106,6 +133,10 @@ export function ViewTransitionProvider({ children }: { children: ReactNode }) {
       window.scrollTo({ top: originScrollRef.current, behavior: "instant" });
       returningRef.current = false;
     }
+
+    // Después de restaurar el scroll —así se mide contra el viewport final— y
+    // antes de resolver, que es cuando el navegador saca la foto del destino.
+    revealVisibleNow();
 
     pendingRef.current?.();
     pendingRef.current = null;

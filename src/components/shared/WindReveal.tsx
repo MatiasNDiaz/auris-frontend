@@ -1,7 +1,14 @@
 "use client";
 
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
+import { isViewTransitionActive } from "@/components/providers/ViewTransitionProvider";
 import { LeafShape, type LeafPalette } from "./leaf-art";
 import { cn } from "@/lib/utils";
 
@@ -87,7 +94,16 @@ export function WindReveal({
     shouldPlay,
     () => false,
   );
-  const armed = firstVisit && !reduceMotion;
+
+  // Si esta sección monta en medio de una View Transition —volviendo de la
+  // ficha de un profesional— la ráfaga no corre. Armarla dejaría el contenido
+  // en `opacity:0` esperando al IntersectionObserver, y el navegador fotografía
+  // el destino antes de que ese observer dispare: esa foto en blanco es el
+  // salto que se ve al volver. Se lee una sola vez, en el montaje, igual que en
+  // `app/template.tsx`.
+  const [duringTransition] = useState(() => isViewTransitionActive());
+
+  const armed = firstVisit && !reduceMotion && !duringTransition;
 
   const inView = useInView(ref, { once: true, margin: "-15%" });
 
@@ -138,9 +154,16 @@ export function WindReveal({
       </div>
 
       {/* El contenido se revela detrás de la ráfaga, con el retardo justo para
-          que las primeras hojas ya lo estén cruzando. */}
+          que las primeras hojas ya lo estén cruzando.
+
+          `initial={false}` es deliberado: sin eso Framer graba `opacity:0` como
+          estilo inline en el HTML del servidor y la sección llega invisible,
+          esperando a que baje e hidrate todo el bundle. Con `false` el primer
+          fotograma es el estado visible y la animación arranca recién cuando
+          este componente ya está montado —que es justo cuando `armed` puede
+          ser true—, así que visualmente el resultado es el mismo. */}
       <motion.div
-        initial={{ opacity: 0, y: 18 }}
+        initial={false}
         animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
         transition={{ duration: 0.75, delay: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
       >

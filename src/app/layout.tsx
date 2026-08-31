@@ -3,6 +3,7 @@ import { Fraunces, Manrope } from "next/font/google";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { ViewTransitionProvider } from "@/components/providers/ViewTransitionProvider";
+import { RevealScript } from "@/components/shared/RevealScript";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
@@ -52,6 +53,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es-AR"
       className={`${manrope.variable} ${fraunces.variable} h-full antialiased`}
     >
+      <head>
+        {/* Antes del primer pintado: activa el scroll-reveal y lo dispara sin
+            esperar a que se hidrate React. Ver `RevealScript`. */}
+        <RevealScript />
+      </head>
       <body className="flex min-h-full flex-col">
         <a
           href="#contenido"
