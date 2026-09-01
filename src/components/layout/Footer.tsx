@@ -1,14 +1,12 @@
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import Link from "next/link";
 import { LeafScatter } from "@/components/shared/LeafScatter";
 import { LeafSprig } from "@/components/shared/LeafSprig";
 import { Logo } from "@/components/shared/Logo";
-import {
-  FacebookIcon,
-  InstagramIcon,
-} from "@/components/shared/SocialIcons";
+import { InstagramIcon } from "@/components/shared/SocialIcons";
 import { services } from "@/lib/data/services";
 import { mainNav, siteConfig } from "@/config/site";
+import { whatsappLink } from "@/lib/utils";
 
 const institutionalLinks = mainNav.filter(
   (item) => !["/", "/servicios"].includes(item.href),
@@ -44,13 +42,13 @@ export function Footer() {
               <InstagramIcon className="size-4" />
             </a>
             <a
-              href={siteConfig.social.facebook}
+              href={whatsappLink(siteConfig.whatsapp, siteConfig.whatsappMessage)}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Facebook de AURIS"
+              aria-label="WhatsApp de AURIS"
               className="inline-flex size-10 items-center justify-center rounded-full bg-primary-600 text-cream-50 transition-all duration-300 hover:-translate-y-1 hover:scale-110 hover:bg-accent-500 hover:text-cream-50 hover:shadow-lg focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
             >
-              <FacebookIcon className="size-4" />
+              <MessageCircle className="size-4" />
             </a>
           </div>
         </div>
@@ -115,11 +113,16 @@ export function Footer() {
           <ul className="mt-5 space-y-4 text-sm text-primary-200">
             <li className="flex gap-3">
               <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden />
-              <span>
+              <a
+                href={address.mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline-offset-4 transition-colors duration-200 hover:text-cream-50 hover:underline"
+              >
                 {address.street}
                 <br />
-                {address.city}, {address.country}
-              </span>
+                {address.neighborhood}, {address.city}
+              </a>
             </li>
             <li className="flex gap-3">
               <Phone className="mt-0.5 size-4 shrink-0" aria-hidden />
@@ -128,6 +131,17 @@ export function Footer() {
                 className="underline-offset-4 transition-colors duration-200 hover:text-cream-50 hover:underline"
               >
                 {siteConfig.phone}
+              </a>
+            </li>
+            <li className="flex gap-3">
+              <MessageCircle className="mt-0.5 size-4 shrink-0" aria-hidden />
+              <a
+                href={whatsappLink(siteConfig.whatsapp, siteConfig.whatsappMessage)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline-offset-4 transition-colors duration-200 hover:text-cream-50 hover:underline"
+              >
+                {siteConfig.whatsapp}
               </a>
             </li>
             <li className="flex gap-3">

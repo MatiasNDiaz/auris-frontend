@@ -1,4 +1,4 @@
-import { Clock, Mail, MapPin, Navigation, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { PageHeader } from "@/components/shared/PageHeader";
@@ -6,6 +6,7 @@ import { Reveal } from "@/components/shared/Reveal";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { ShineButton } from "@/components/shared/ShineButton";
 import { siteConfig } from "@/config/site";
+import { whatsappLink } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Contacto",
@@ -16,8 +17,12 @@ export const metadata: Metadata = {
 
 export default function ContactoPage() {
   const { address } = siteConfig;
-  const fullAddress = `${address.street}, ${address.city}, ${address.country}`;
-  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(fullAddress)}`;
+  const fullAddress = `${address.street}, ${address.neighborhood}, ${address.city}`;
+  // Se apunta a las coordenadas reales, no a la dirección como texto: evita que
+  // Google resuelva mal la calle y mande a otra cuadra.
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${address.lat},${address.lng}`;
+  // Mapa embebido centrado en el centro, con marcador.
+  const embedUrl = `https://www.google.com/maps?q=${address.lat},${address.lng}&z=16&output=embed`;
 
   const details = [
     {
@@ -25,6 +30,12 @@ export default function ContactoPage() {
       title: "Teléfono",
       value: siteConfig.phone,
       href: `tel:${siteConfig.phone.replace(/\s/g, "")}`,
+    },
+    {
+      icon: MessageCircle,
+      title: "WhatsApp",
+      value: siteConfig.whatsapp,
+      href: whatsappLink(siteConfig.whatsapp, siteConfig.whatsappMessage),
     },
     {
       icon: Mail,
@@ -113,28 +124,15 @@ export default function ContactoPage() {
 
                 <WhatsAppButton className="w-full sm:w-auto" />
 
-                {/*
-                Mapa: placeholder hasta definir el proveedor (Google Maps embed
-                o Leaflet). El botón "Cómo llegar" ya usa la dirección real.
-              */}
+                {/* Mapa real, embebido sobre las coordenadas del centro. */}
                 <div className="relative overflow-hidden rounded-3xl border border-border">
-                  <div
-                    role="img"
-                    aria-label={`Mapa de ubicación de ${siteConfig.name} en ${fullAddress}`}
-                    className="aspect-4/3 w-full bg-primary-100"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(135deg, #e2eae2 0%, #c5d5c5 55%, #9fb89f 100%)",
-                    }}
+                  <iframe
+                    src={embedUrl}
+                    title={`Mapa de ubicación de ${siteConfig.name} en ${fullAddress}`}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="aspect-4/3 w-full border-0"
                   />
-                  <div
-                    aria-hidden
-                    className="absolute inset-0 flex items-center justify-center"
-                  >
-                    <span className="inline-flex size-12 items-center justify-center rounded-full bg-accent-500 text-white shadow-lg">
-                      <MapPin className="size-6" strokeWidth={1.8} />
-                    </span>
-                  </div>
 
                   <div className="absolute right-4 bottom-4 left-4 flex flex-col gap-3 rounded-2xl bg-cream-50/95 p-4 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-sm text-ink-700/85">{fullAddress}</p>

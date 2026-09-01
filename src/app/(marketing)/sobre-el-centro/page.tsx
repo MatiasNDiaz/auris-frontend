@@ -2,11 +2,12 @@ import { Compass, HeartHandshake, Leaf, Users } from "lucide-react";
 import type { Metadata } from "next";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { PageHeader } from "@/components/shared/PageHeader";
-import { Placeholder } from "@/components/shared/Placeholder";
+import Image from "next/image";
 import { Reveal } from "@/components/shared/Reveal";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { cn } from "@/lib/utils";
 import { VirtualTour } from "@/components/sections/VirtualTour";
-import { gallery } from "@/lib/data/gallery";
+import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Sobre el centro",
@@ -14,6 +15,26 @@ export const metadata: Metadata = {
     "Conocé la historia, el enfoque de atención y los valores de AURIS, centro de salud y bienestar integral.",
   alternates: { canonical: "/sobre-el-centro" },
 };
+
+/** Fotos que acompañan la historia, en el orden en que se entra al centro. */
+const storyPhotos = [
+  {
+    src: "/images/galeria/ingreso-01.webp",
+    alt: "Cartel de AURIS en el frente del centro",
+  },
+  {
+    src: "/images/galeria/recepcion-02.webp",
+    alt: "Sala de espera con el logo de AURIS en la pared",
+  },
+  {
+    src: "/images/galeria/pasillo-01.webp",
+    alt: "Pasillo del centro hacia los consultorios",
+  },
+  {
+    src: "/images/galeria/odontologia-1-01.webp",
+    alt: "Consultorio odontológico del centro",
+  },
+];
 
 const values = [
   {
@@ -51,7 +72,7 @@ export default function SobreElCentroPage() {
         waveTone="base"
         eyebrow="Sobre el centro"
         title="Un lugar donde la salud se piensa completa"
-        description="AURIS nació de una idea simple: que las distintas disciplinas del cuidado no deberían trabajar aisladas. Hoy somos un equipo interdisciplinario con un mismo modo de acompañar."
+        description="Empezamos como Kúspide, consultorios odontológicos en Cerro de las Rosas. Hoy somos AURIS: el mismo equipo, el mismo lugar y una idea más grande de lo que significa cuidar a alguien."
       />
 
       <section className="container-auris py-20 lg:py-24">
@@ -62,39 +83,50 @@ export default function SobreElCentroPage() {
             </h2>
             <div className="mt-6 space-y-5 text-base leading-relaxed text-pretty text-ink-700/85">
               <p>
-                Empezamos como un consultorio de psicología y kinesiología que
-                compartía una sala de espera. Lo que parecía una casualidad
-                administrativa terminó siendo el origen del proyecto: las
-                consultas se enriquecían cuando los profesionales conversaban
-                entre sí sobre cómo acompañar a una misma persona.
+                Durante años fuimos <strong className="font-semibold text-primary-800">Kúspide,
+                consultorios odontológicos</strong>. Con el tiempo pasó algo que no
+                estaba en el plan: quienes venían por una consulta dental
+                empezaron a preguntarnos por un kinesiólogo, por alguien que
+                los escuchara, por un tratamiento de piel. Y nosotros
+                empezamos a notar que detrás de cada síntoma había una historia
+                más larga que la que entraba en una ficha odontológica.
               </p>
               <p>
-                Con los años sumamos odontología, estética, fonoaudiología y
-                los talleres grupales, siempre con el mismo
-                criterio de selección: profesionales formados que entienden el
-                cuidado como un proceso compartido con quien consulta.
+                Así fuimos sumando kinesiología, estética facial y corporal,
+                psicología y fonoaudiología. En algún momento quedó claro que el
+                nombre se nos había quedado chico: seguíamos siendo los mismos,
+                pero ya no éramos un consultorio odontológico.
               </p>
               <p>
-                Hoy atendemos a más de dos mil quinientas personas por año en un
-                espacio diseñado para que la visita al centro de salud deje de
-                sentirse como un trámite.
+                De ahí nace{" "}
+                <strong className="font-semibold text-primary-800">AURIS</strong>. Un
+                nombre nuevo para la misma esencia: acompañarte en tu salud y tu
+                bienestar, con el equipo de siempre y en el mismo lugar de
+                siempre, sobre {siteConfig.address.street}.
               </p>
             </div>
           </Reveal>
 
           <Reveal from="left" delay={0.1}>
+            {/* Cuatro fotos reales del centro: la fachada, la recepción con el
+                logo nuevo, el pasillo y un consultorio. */}
             <div className="grid grid-cols-2 gap-4">
-              {gallery.slice(0, 4).map((item, index) => (
-                <Placeholder
-                  key={item.id}
-                  seed={item.id}
-                  label={item.title}
-                  className={
-                    index % 3 === 0
-                      ? "aspect-4/5 rounded-3xl"
-                      : "aspect-square rounded-3xl"
-                  }
-                />
+              {storyPhotos.map((photo, index) => (
+                <div
+                  key={photo.src}
+                  className={cn(
+                    "relative overflow-hidden rounded-3xl bg-cream-100 shadow-sm",
+                    index % 3 === 0 ? "aspect-4/5" : "aspect-square",
+                  )}
+                >
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    fill
+                    sizes="(max-width: 1024px) 45vw, 300px"
+                    className="object-cover"
+                  />
+                </div>
               ))}
             </div>
           </Reveal>
