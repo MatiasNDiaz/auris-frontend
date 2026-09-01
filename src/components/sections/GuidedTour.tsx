@@ -73,10 +73,13 @@ export function GuidedTour() {
           {/* Planta: el pasillo como eje y las paradas a los costados. */}
           <nav aria-label="Espacios del centro" className="relative">
             <ol className="relative space-y-1">
-              {/* Línea del pasillo, por detrás de las paradas. */}
+              {/* Línea del pasillo, por detrás de las paradas.
+                  `left-2.75` la deja centrada bajo los puntos: el punto mide
+                  24px y arranca pegado al borde, así que su eje cae en 12px, y
+                  la línea mide 2px. */}
               <span
                 aria-hidden
-                className="absolute top-4 bottom-4 left-[0.6875rem] w-0.5 rounded-full bg-primary-300"
+                className="absolute top-4 bottom-4 left-2.75 w-0.5 rounded-full bg-primary-300"
               />
 
               {tourStops.map((item, index) => {
@@ -93,13 +96,15 @@ export function GuidedTour() {
                         active ? "bg-primary-100/70" : "hover:bg-primary-100/40",
                       )}
                     >
-                      {/* Punto sobre la línea. El activo se agranda y se llena. */}
+                      {/* Punto sobre la línea. El activo se llena y muestra el
+                          pin. Sin margen izquierdo: su eje tiene que caer justo
+                          sobre la línea del pasillo. */}
                       <span
                         aria-hidden
                         className={cn(
-                          "relative mt-0.5 ml-1 grid size-6 shrink-0 place-items-center rounded-full border-2 transition-[background-color,border-color,transform] duration-300 ease-out",
+                          "relative mt-0.5 grid size-6 shrink-0 place-items-center rounded-full border-2 transition-[background-color,border-color] duration-300 ease-out",
                           active
-                            ? "scale-110 border-primary-700 bg-primary-700"
+                            ? "border-primary-700 bg-primary-700"
                             : "border-primary-300 bg-cream-50 group-hover:border-primary-500",
                         )}
                       >
@@ -143,6 +148,68 @@ export function GuidedTour() {
                         </span>
                       ) : null}
                     </button>
+
+                    {/* Sub-paradas: una por foto del espacio abierto. Van fuera
+                        del botón de arriba —un botón no puede contener otro— y
+                        sangradas para que se lean como una rama del pasillo.
+                        Solo aparecen si hay más de una foto que elegir. */}
+                    {active && item.photos.length > 1 && (
+                      <ol className="relative mt-0.5 mb-1 ml-8 space-y-0.5">
+                        {/* Rama corta que cuelga del punto de la parada. */}
+                        <span
+                          aria-hidden
+                          className="absolute top-0 bottom-3 -left-3.5 w-px rounded-full bg-primary-300"
+                        />
+
+                        {item.photos.map((sub, subIndex) => {
+                          const current = subIndex === photoIndex;
+
+                          return (
+                            <li key={sub.src} className="relative">
+                              {/* Tramo horizontal hasta el punto chico. */}
+                              <span
+                                aria-hidden
+                                className="absolute top-1/2 -left-3.5 w-2.5 border-t border-primary-300"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setDir(subIndex > photoIndex ? 1 : -1);
+                                  setPhotoIndex(subIndex);
+                                }}
+                                aria-current={current ? "true" : undefined}
+                                className={cn(
+                                  "group/sub flex w-full items-center gap-2.5 rounded-xl py-1 pr-2 text-left transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-none",
+                                  current
+                                    ? "bg-primary-200/50"
+                                    : "hover:bg-primary-100/50",
+                                )}
+                              >
+                                <span
+                                  aria-hidden
+                                  className={cn(
+                                    "size-2.5 shrink-0 rounded-full border transition-colors duration-300",
+                                    current
+                                      ? "border-primary-700 bg-primary-700"
+                                      : "border-primary-400 bg-cream-50 group-hover/sub:border-primary-600",
+                                  )}
+                                />
+                                <span
+                                  className={cn(
+                                    "line-clamp-1 text-xs transition-colors",
+                                    current
+                                      ? "font-medium text-primary-900"
+                                      : "text-ink-700/70",
+                                  )}
+                                >
+                                  {sub.alt}
+                                </span>
+                              </button>
+                            </li>
+                          );
+                        })}
+                      </ol>
+                    )}
                   </li>
                 );
               })}
