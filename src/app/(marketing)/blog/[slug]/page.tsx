@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BlogCard } from "@/components/shared/BlogCard";
 import { CtaBanner } from "@/components/sections/CtaBanner";
-import { Placeholder } from "@/components/shared/Placeholder";
+import Image from "next/image";
 import { Reveal } from "@/components/shared/Reveal";
 import {
   blogPosts,
@@ -78,11 +78,16 @@ export default async function BlogPostPage({
         </Reveal>
 
         <Reveal delay={0.1}>
-          <Placeholder
-            seed={post.slug}
-            label={`Imagen de portada de ${post.title}`}
-            className="mx-auto mt-12 aspect-16/9 w-full max-w-4xl rounded-[2.5rem]"
-          />
+          <div className="relative mx-auto mt-12 aspect-16/9 w-full max-w-4xl overflow-hidden rounded-[2.5rem] bg-cream-100">
+            <Image
+              src={post.coverImageUrl}
+              alt=""
+              fill
+              sizes="(max-width: 1024px) 92vw, 896px"
+              priority
+              className="object-cover"
+            />
+          </div>
         </Reveal>
 
         <div className="mx-auto mt-14 max-w-3xl">
