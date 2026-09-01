@@ -36,6 +36,11 @@ const tones = {
     "border border-primary-400/70 bg-primary-50/70 text-primary-800 backdrop-blur-sm hover:border-primary-600 hover:text-primary-900",
   /** Discreto, para acciones terciarias sobre fondos claros. */
   soft: "bg-primary-100/80 text-primary-800 backdrop-blur-sm hover:bg-primary-200/90 hover:text-primary-900",
+  /** Ficha de profesionales mujeres: el mismo rosa violáceo del titular. */
+  rose: "bg-linear-to-br from-rose-500 to-rose-700 text-cream-50 shadow-lg shadow-rose-900/25 hover:from-rose-400 hover:to-rose-500 hover:shadow-xl hover:shadow-rose-900/40",
+  /** Ficha de profesionales varones: el mismo azul profundo del titular. */
+  clinic:
+    "bg-linear-to-br from-clinic-500 to-clinic-700 text-cream-50 shadow-lg shadow-clinic-900/25 hover:from-clinic-400 hover:to-clinic-500 hover:shadow-xl hover:shadow-clinic-900/40",
 } as const;
 
 /** Capa de color que revela el efecto `fill`, por tono. */
@@ -46,6 +51,8 @@ const fillLayers = {
   outlineLight: "bg-cream-50/22",
   outlinePrimary: "bg-primary-200/80",
   soft: "bg-primary-300/70",
+  rose: "bg-linear-to-t from-rose-900 to-rose-500",
+  clinic: "bg-linear-to-t from-clinic-900 to-clinic-500",
 } as const;
 
 const sizes = {

@@ -6,11 +6,90 @@ import type { BlogPost } from "@/lib/types";
  */
 export const blogPosts: BlogPost[] = [
   {
+    slug: "las-caries-son-la-enfermedad-mas-comun-del-mundo",
+    category: "Odontología",
+    title: "Las caries son la enfermedad más común del mundo",
+    excerpt:
+      "Según la OMS afectan al 60–90 % de los chicos en edad escolar y a casi el 100 % de los adultos. Y son, además, de las más fáciles de prevenir.",
+    coverImageUrl: "/odontologia.webp",
+    publishedAt: "2025-08-18",
+    content: `Suena a exageración, pero no lo es: la caries dental es la enfermedad no transmisible más extendida del planeta. La Organización Mundial de la Salud calcula que afecta al 60–90 % de los chicos en edad escolar y a prácticamente el 100 % de los adultos en algún momento de la vida.
+
+## Por qué es tan común
+
+Porque no duele hasta que ya avanzó. Una caries empieza como una desmineralización del esmalte que no se ve ni se siente, y puede pasar meses así. Para cuando aparece la molestia, la lesión ya llegó a la dentina y el tratamiento dejó de ser simple.
+
+A eso se suma que la boca es el único lugar del cuerpo donde alimentamos bacterias varias veces por día. Cada vez que comemos algo con azúcar, el pH baja durante unos veinte minutos. No importa tanto cuánto azúcar comemos: importa cuántas veces por día.
+
+## Lo que sí se puede hacer
+
+La frecuencia pesa más que la cantidad. Cinco caramelos de una sentada hacen menos daño que cinco caramelos espaciados a lo largo del día, porque en el segundo caso el esmalte nunca llega a recuperarse.
+
+El cepillado con pasta fluorada dos veces por día es la base, y el hilo dental no es opcional: el cepillo no llega a las caras que están entre diente y diente, que es justamente donde se inicia buena parte de las caries.
+
+## El control es lo que cambia el número
+
+Dos revisiones al año alcanzan para la mayoría de las personas. En esa consulta se detectan lesiones incipientes que todavía se resuelven en una sesión, antes de que necesiten endodoncia y corona.
+
+Que sea la enfermedad más común no la vuelve inevitable. La vuelve, sobre todo, la más previsible.`,
+  },
+  {
+    slug: "que-esperar-de-un-tratamiento-facial",
+    category: "Estética",
+    title: "Qué esperar —y qué no— de un tratamiento facial",
+    excerpt:
+      "La piel responde al cuidado sostenido, no a las promesas rápidas. Cómo leer los tiempos reales de un plan facial y por qué el seguimiento es parte del tratamiento.",
+    coverImageUrl: "/EsteticaCorporal.webp",
+    publishedAt: "2025-05-19",
+    content: `La consulta estética arrastra una expectativa difícil: que una sesión resuelva algo que se construyó durante años. Ninguna sesión hace eso, y cualquiera que lo prometa está vendiendo otra cosa.
+
+## La piel tiene sus tiempos
+
+La renovación celular de la epidermis lleva alrededor de veintiocho días, y ese plazo se estira con la edad. Por eso los planes se arman por ciclos: el resultado de lo que se hace hoy se termina de ver recién en la sesión siguiente.
+
+Un plan honesto empieza con un diagnóstico de piel, no con un tratamiento de catálogo. Dos personas con la misma edad pueden necesitar abordajes opuestos.
+
+## Lo que hacés en casa pesa más que la sesión
+
+Una sesión son sesenta minutos cada quince o veinte días. El resto del tiempo la piel queda en manos de la rutina domiciliaria: limpieza, hidratación y protector solar. Sin eso, el mejor tratamiento se diluye.
+
+El protector solar no es un agregado estético. Es lo que sostiene cualquier resultado que se haya logrado en el gabinete.
+
+## Cuándo desconfiar
+
+Si nadie te miró la piel antes de proponerte un plan, si no te explican cuántas sesiones son ni qué esperar de cada una, o si el resultado prometido es inmediato y permanente, conviene pedir una segunda opinión.`,
+  },
+  {
+    slug: "cuanto-tiempo-lleva-cambiar-un-habito",
+    category: "El centro",
+    title: "Cuánto tiempo lleva realmente cambiar un hábito",
+    excerpt:
+      "La cifra de los veintiún días es un mito con sesenta años de circulación. Lo que muestra la evidencia es bastante más largo, y bastante más alentador.",
+    coverImageUrl: "/images/galeria/recepcion-02.webp",
+    publishedAt: "2025-02-10",
+    content: `La idea de que un hábito se forma en veintiún días viene de la observación de un cirujano plástico en los años sesenta sobre cuánto tardaban sus pacientes en acostumbrarse a su nueva imagen. No era un estudio sobre hábitos, y sin embargo la cifra se repite hasta hoy.
+
+## Lo que dice la evidencia
+
+El trabajo más citado sobre el tema encontró un promedio cercano a los sesenta y seis días, con un rango enorme: desde dieciocho hasta más de doscientos cincuenta, según la persona y la complejidad de la conducta. Tomar un vaso de agua después del desayuno se automatiza rápido; sostener una rutina de ejercicio, mucho menos.
+
+## La buena noticia está en los tropiezos
+
+El mismo estudio observó algo que suele pasarse por alto: saltearse un día no afectó de forma significativa la formación del hábito. Lo que rompe el proceso no es la falla aislada, sino abandonarlo después de esa falla.
+
+## Por qué importa en una consulta
+
+Porque explica por qué los planes de tres semanas fracasan y por qué el seguimiento periódico no es un trámite administrativo. Es el mecanismo que permite ajustar cuando la vida cambia y sostener cuando aparece el desánimo.
+
+En cualquier especialidad del centro, el alta no llega cuando el síntoma cede: llega cuando lo que lo sostiene ya forma parte de la rutina.`,
+  },
+  {
     slug: "senales-de-que-es-momento-de-empezar-terapia",
+    category: "Psicología",
     title: "Cinco señales de que es momento de empezar terapia",
     excerpt:
       "No hace falta tocar fondo para pedir ayuda. Repasamos las señales cotidianas que suelen indicar que un espacio terapéutico puede hacer la diferencia.",
-    coverImageUrl: "/images/blog/empezar-terapia.jpg",
+    coverImageUrl: "/Piscologia.webp",
     publishedAt: "2025-07-14",
     content: `Una de las preguntas que más escuchamos en las entrevistas de admisión es la misma: "¿No estaré exagerando?". La idea de que la terapia es un recurso para situaciones extremas sigue muy instalada, y hace que muchas personas posterguen durante años una consulta que podrían haber hecho mucho antes.
 
@@ -34,10 +113,11 @@ Empezar no implica un compromiso indefinido. Implica darte la oportunidad de mir
   },
   {
     slug: "cuando-consultar-por-el-lenguaje-de-un-chico",
+    category: "Fonoaudiología",
     title: "Cuándo consultar por el lenguaje de un chico",
     excerpt:
       "«Ya va a hablar» es el consejo más repetido y el que más consultas demora. Repasamos qué es esperable a cada edad y cuándo conviene una evaluación.",
-    coverImageUrl: "/images/blog/lenguaje-infantil.jpg",
+    coverImageUrl: "/Fonoaudiologia.webp",
     publishedAt: "2025-06-02",
     content: `La frase se escucha en casi todas las primeras entrevistas: alguien de la familia dijo que no había que preocuparse, que ya iba a hablar. A veces es cierto. El problema es que, cuando no lo es, esa espera se lleva meses en los que el tratamiento habría sido mucho más corto.
 
@@ -61,10 +141,12 @@ Consultar temprano no adelanta un problema. En la mayoría de los casos lo que h
   },
   {
     slug: "como-prevenir-lesiones-si-volves-a-entrenar",
+    category: "Kinesiología",
     title: "Cómo prevenir lesiones si volvés a entrenar después de un parate",
     excerpt:
       "La mayoría de las lesiones al retomar la actividad física aparecen en las primeras semanas. Estas son las pautas que trabajamos desde kinesiología.",
-    coverImageUrl: "/images/blog/volver-a-entrenar.jpg",
+    coverImageUrl:
+      "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=1600&auto=format&fit=crop",
     publishedAt: "2025-04-21",
     content: `Retomar la actividad física después de meses de inactividad es una de las causas más frecuentes de consulta kinesiológica. El entusiasmo inicial suele llevar a hacer en la primera semana el volumen que el cuerpo estaba preparado para tolerar recién en el segundo mes.
 
@@ -84,10 +166,11 @@ Un dolor que aparece durante la actividad y desaparece al terminar suele ser ada
   },
   {
     slug: "salud-bucal-lo-que-el-control-periodico-previene",
+    category: "Odontología",
     title: "Salud bucal: lo que un control periódico te ahorra",
     excerpt:
       "Dos consultas al año detectan a tiempo la mayoría de los problemas que, sin control, terminan en tratamientos largos y costosos.",
-    coverImageUrl: "/images/blog/salud-bucal.jpg",
+    coverImageUrl: "/odontologia.webp",
     publishedAt: "2025-03-08",
     content: `La consulta odontológica todavía se asocia al dolor: se va cuando algo molesta. El problema es que, para cuando una caries duele, ya avanzó lo suficiente como para necesitar un tratamiento bastante más complejo que una restauración simple.
 

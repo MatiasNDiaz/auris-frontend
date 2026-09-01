@@ -1,38 +1,47 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { Placeholder } from "./Placeholder";
 import type { BlogPost } from "@/lib/types";
 import { cn, formatDate } from "@/lib/utils";
 
 type BlogCardProps = {
   post: BlogPost;
   className?: string;
+  /** Prioriza la carga: solo en las tarjetas de la primera fila. */
+  priority?: boolean;
 };
 
-export function BlogCard({ post, className }: BlogCardProps) {
+/**
+ * Tarjeta de nota: foto arriba, chip del área, título, bajada y la fecha al pie
+ * separada por una regla.
+ *
+ * La fecha va abajo y no arriba a propósito: en un listado, lo primero que
+ * ordena la lectura es el tema, no cuándo se publicó.
+ */
+export function BlogCard({ post, className, priority = false }: BlogCardProps) {
   return (
-    <motion.article
-      whileHover={{ y: -6 }}
-      transition={{ type: "spring", stiffness: 300, damping: 24 }}
+    <article
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-shadow hover:shadow-lg",
+        "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-[box-shadow,transform] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-xl motion-reduce:transition-none motion-reduce:hover:translate-y-0",
         className,
       )}
     >
-      <Placeholder seed={post.slug} className="aspect-16/9 w-full" />
+      <div className="relative aspect-16/10 w-full overflow-hidden bg-cream-100">
+        <Image
+          src={post.coverImageUrl}
+          alt=""
+          fill
+          sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
+          priority={priority}
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+        />
+      </div>
 
       <div className="flex flex-1 flex-col p-6">
-        <time
-          dateTime={post.publishedAt}
-          className="text-xs font-semibold tracking-[0.14em] text-primary-700 uppercase"
-        >
-          {formatDate(post.publishedAt)}
-        </time>
+        <span className="w-fit rounded-full bg-primary-100 px-3 py-1 text-[0.7rem] font-semibold tracking-[0.12em] text-primary-800 uppercase">
+          {post.category}
+        </span>
 
-        <h3 className="mt-3 font-serif text-xl leading-snug text-balance text-ink-900">
+        <h3 className="mt-4 font-serif text-xl leading-snug text-balance text-ink-900 transition-colors duration-300 group-hover:text-primary-800">
           <Link
             href={`/blog/${post.slug}`}
             className="after:absolute after:inset-0 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
@@ -45,14 +54,13 @@ export function BlogCard({ post, className }: BlogCardProps) {
           {post.excerpt}
         </p>
 
-        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-primary-700">
-          Leer artículo
-          <ArrowUpRight
-            className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            aria-hidden
-          />
-        </span>
+        <time
+          dateTime={post.publishedAt}
+          className="mt-6 border-t border-border pt-4 text-xs font-semibold tracking-[0.12em] text-ink-700/60 uppercase"
+        >
+          {formatDate(post.publishedAt)}
+        </time>
       </div>
-    </motion.article>
+    </article>
   );
 }

@@ -47,6 +47,10 @@ const palettes = {
     panel: "bg-rose-100/70",
     ring: "ring-rose-300/60",
     card: "bg-rose-50/80",
+    button: "rose",
+    ctaPanel: "bg-rose-700",
+    ctaText: "text-rose-100",
+    ctaMuted: "text-rose-200",
     header:
       "linear-gradient(180deg, #fae4ef 0%, #fdf3f8 55%, #fdfbf6 100%), radial-gradient(80% 60% at 85% 8%, rgba(212,112,159,.28), transparent 70%)",
     ctaGlow:
@@ -65,6 +69,10 @@ const palettes = {
     panel: "bg-clinic-100/70",
     ring: "ring-clinic-300/60",
     card: "bg-clinic-50/80",
+    button: "clinic",
+    ctaPanel: "bg-clinic-700",
+    ctaText: "text-clinic-100",
+    ctaMuted: "text-clinic-200",
     header:
       "linear-gradient(180deg, #dfe7f4 0%, #f0f4fa 55%, #fdfbf6 100%), radial-gradient(80% 60% at 85% 8%, rgba(100,128,180,.26), transparent 70%)",
     ctaGlow:
@@ -201,6 +209,7 @@ export function ProfessionalProfile({
                 className="mt-9"
               >
                 <WhatsAppButton
+                  tone={c.button}
                   label={`Solicitar turno con ${firstName}`}
                   message={`¡Hola AURIS! Quisiera solicitar un turno con ${professional.name} (${professional.specialty}).`}
                 />
@@ -355,7 +364,10 @@ export function ProfessionalProfile({
             initial="hidden"
             animate="visible"
             custom={0.85}
-            className="relative mx-auto max-w-3xl overflow-hidden rounded-[2rem] bg-primary-800 px-8 py-12 text-center"
+            className={cn(
+              "relative mx-auto max-w-3xl overflow-hidden rounded-[2rem] px-8 py-12 text-center",
+              c.ctaPanel,
+            )}
           >
             <div
               aria-hidden
@@ -367,7 +379,7 @@ export function ProfessionalProfile({
               <h2 className="font-serif text-2xl text-balance text-cream-50 sm:text-3xl">
                 ¿Querés coordinar una consulta con {firstName}?
               </h2>
-              <p className="mx-auto mt-4 max-w-lg text-pretty text-primary-100">
+              <p className={cn("mx-auto mt-4 max-w-lg text-pretty", c.ctaText)}>
                 Escribinos y te confirmamos la disponibilidad. También podés ver
                 los horarios y la ubicación del centro.
               </p>
@@ -387,7 +399,7 @@ export function ProfessionalProfile({
                 </ShineButton>
               </div>
 
-              <p className="mt-6 text-sm text-primary-200">
+              <p className={cn("mt-6 text-sm", c.ctaMuted)}>
                 {siteConfig.address.street}, {siteConfig.address.city}
               </p>
             </div>

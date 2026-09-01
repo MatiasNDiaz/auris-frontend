@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BlogCard } from "@/components/shared/BlogCard";
+import { FeaturedPost } from "@/components/shared/FeaturedPost";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { Reveal } from "@/components/shared/Reveal";
 import { getPublishedPosts } from "@/lib/data/blog-posts";
@@ -13,6 +14,8 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   const posts = getPublishedPosts();
+  // La más reciente encabeza el listado; el resto va a la grilla.
+  const [featured, ...rest] = posts;
 
   return (
     <>
@@ -26,10 +29,16 @@ export default function BlogPage() {
       />
 
       <section className="container-auris py-16 lg:py-20">
+        {featured && (
+          <Reveal className="mb-10 lg:mb-14">
+            <FeaturedPost post={featured} />
+          </Reveal>
+        )}
+
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post, index) => (
+          {rest.map((post, index) => (
             <Reveal as="li" key={post.slug} delay={(index % 3) * 0.1}>
-              <BlogCard post={post} />
+              <BlogCard post={post} priority={index < 3} />
             </Reveal>
           ))}
         </ul>

@@ -1,5 +1,5 @@
 import { MessageCircle } from "lucide-react";
-import { ShineButton } from "./ShineButton";
+import { ShineButton, type ShineTone } from "./ShineButton";
 import { siteConfig } from "@/config/site";
 import { whatsappLink } from "@/lib/utils";
 
@@ -10,6 +10,11 @@ type WhatsAppButtonProps = {
   size?: "default" | "compact";
   /** `onDark` es la variante para el hero, sobre la foto de fondo. */
   variant?: "solid" | "outline" | "onDark";
+  /**
+   * Fuerza un tono concreto, por encima de `variant`. Lo usa la ficha de
+   * profesional para que el botón tome el acento de la persona.
+   */
+  tone?: ShineTone;
 };
 
 /** CTA principal del sitio: no hay reservas con calendario, todo va a WhatsApp. */
@@ -19,16 +24,18 @@ export function WhatsAppButton({
   className,
   size = "default",
   variant = "solid",
+  tone: toneOverride,
 }: WhatsAppButtonProps) {
   // WhatsApp y "Solicitar turno" son la acción principal del sitio: el CTA
   // sólido va en el verde institucional. Sobre fondos verdes o fotos oscuras
   // se usan las variantes clara (`outline`) y de contorno (`onDark`).
   const tone =
-    variant === "onDark"
+    toneOverride ??
+    (variant === "onDark"
       ? "outlineLight"
       : variant === "outline"
         ? "light"
-        : "primary";
+        : "primary");
 
   return (
     <ShineButton

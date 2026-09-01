@@ -43,6 +43,8 @@ export type Professional = {
 
 export type BlogPost = {
   slug: string;
+  /** Etiqueta del chip: el área a la que pertenece la nota. */
+  category: string;
   title: string;
   excerpt: string;
   /** Markdown liviano: párrafos separados por línea en blanco, `## ` para subtítulos. */
