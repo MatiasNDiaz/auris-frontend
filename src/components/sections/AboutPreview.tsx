@@ -114,8 +114,8 @@ export function AboutPreview() {
 
             <div className="relative aspect-4/3 overflow-hidden rounded-[2.5rem] shadow-xl">
               <Image
-                src="https://images.unsplash.com/photo-1505410603994-c3ac6269711f?q=80&w=1400&auto=format&fit=crop"
-                alt="Recepción del centro AURIS"
+                src="/recepcion.webp"
+                alt="Recepción de AURIS con el mostrador de atención"
                 fill
                 sizes="(max-width: 1024px) 92vw, 620px"
                 placeholder="blur"

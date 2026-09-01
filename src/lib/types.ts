@@ -69,3 +69,15 @@ export type GalleryItem = {
   category: string;
   imageUrl: string;
 };
+
+/**
+ * Una parada del recorrido guiado por el centro. `side` indica de qué lado del
+ * pasillo queda el espacio: es lo que usa la planta del visor para ubicarlo.
+ */
+export type TourStop = {
+  id: string;
+  name: string;
+  caption: string;
+  side: "start" | "center" | "left" | "right" | "end";
+  photos: { src: string; alt: string }[];
+};

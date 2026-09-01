@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Expand } from "lucide-react";
 import { useState } from "react";
-import { Placeholder } from "@/components/shared/Placeholder";
+import Image from "next/image";
 import {
   Dialog,
   DialogContent,
@@ -11,6 +11,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { gallery } from "@/lib/data/gallery";
+import { cn } from "@/lib/utils";
 import type { GalleryItem } from "@/lib/types";
 
 export function GalleryGrid() {
@@ -34,14 +35,22 @@ export function GalleryGrid() {
               onClick={() => setSelected(item)}
               className="group relative block h-full w-full overflow-hidden rounded-3xl focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
             >
-              <Placeholder
-                seed={item.id}
-                className={
+              <div
+                className={cn(
+                  "relative w-full overflow-hidden bg-cream-100",
                   index % 5 === 0
-                    ? "aspect-4/5 h-full w-full lg:aspect-auto lg:min-h-full"
-                    : "aspect-4/3 w-full"
-                }
-              />
+                    ? "aspect-4/5 h-full lg:aspect-auto lg:min-h-full"
+                    : "aspect-4/5",
+                )}
+              >
+                <Image
+                  src={item.imageUrl}
+                  alt={item.category}
+                  fill
+                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                />
+              </div>
 
               <span className="absolute inset-0 flex flex-col justify-end bg-linear-to-t from-ink-900/75 via-ink-900/10 to-transparent p-6 text-left opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100">
                 <Expand className="mb-3 size-5 text-cream-50" aria-hidden />
@@ -66,11 +75,17 @@ export function GalleryGrid() {
         <DialogContent className="max-w-3xl overflow-hidden border-border bg-cream-50 p-0">
           {selected && (
             <>
-              <Placeholder
-                seed={selected.id}
-                label={selected.title}
-                className="aspect-16/10 w-full"
-              />
+              {/* `contain` sobre fondo oscuro: son fotos verticales y
+                  recortarlas al abrir se comía media habitación. */}
+              <div className="relative aspect-3/4 w-full bg-ink-900 sm:aspect-4/3">
+                <Image
+                  src={selected.imageUrl}
+                  alt={selected.category}
+                  fill
+                  sizes="(max-width: 768px) 96vw, 768px"
+                  className="object-contain"
+                />
+              </div>
               <div className="p-6">
                 <DialogTitle className="font-serif text-2xl text-ink-900">
                   {selected.title}
