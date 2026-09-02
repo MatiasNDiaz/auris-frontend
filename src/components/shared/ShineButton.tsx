@@ -37,10 +37,10 @@ const tones = {
   /** Discreto, para acciones terciarias sobre fondos claros. */
   soft: "bg-primary-100/80 text-primary-800 backdrop-blur-sm hover:bg-primary-200/90 hover:text-primary-900",
   /** Ficha de profesionales mujeres: el mismo rosa violáceo del titular. */
-  rose: "bg-linear-to-br from-rose-500 to-rose-700 text-cream-50 shadow-lg shadow-rose-900/25 hover:from-rose-400 hover:to-rose-500 hover:shadow-xl hover:shadow-rose-900/40",
+  rose: "bg-linear-to-br from-rose-700 to-rose-900 text-cream-50 shadow-lg shadow-rose-900/30 hover:from-rose-500 hover:to-rose-700 hover:shadow-xl hover:shadow-rose-900/45",
   /** Ficha de profesionales varones: el mismo azul profundo del titular. */
   clinic:
-    "bg-linear-to-br from-clinic-500 to-clinic-700 text-cream-50 shadow-lg shadow-clinic-900/25 hover:from-clinic-400 hover:to-clinic-500 hover:shadow-xl hover:shadow-clinic-900/40",
+    "bg-linear-to-br from-clinic-700 to-clinic-900 text-cream-50 shadow-lg shadow-clinic-900/30 hover:from-clinic-500 hover:to-clinic-700 hover:shadow-xl hover:shadow-clinic-900/45",
 } as const;
 
 /** Capa de color que revela el efecto `fill`, por tono. */
