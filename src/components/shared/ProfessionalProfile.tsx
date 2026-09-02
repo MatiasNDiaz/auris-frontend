@@ -108,20 +108,25 @@ export function ProfessionalProfile({
           <ProfessionalBackLinks tone={c.button} />
 
           <div className="mt-10 grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
-            <AnimatedProfessionalImage
-              src={professional.photoUrl}
-              alt={`Retrato de ${professional.name}`}
-              priority
-              isTransitionTarget
-              sizes="(max-width: 1024px) 90vw, 460px"
-              // `auris-photo-settle` trae la sombra desde transparente al ritmo del
-              // morph: el snapshot de la transición no la incluye, así que sin
-              // esto aparecía de golpe al aterrizar.
-              className={cn(
-                "auris-photo-settle aspect-4/5 w-full rounded-3xl shadow-2xl ring-1",
-                c.ring,
-              )}
-            />
+            {/* La foto va sin sombra ni aro: los lleva la capa de abajo, que
+                se funde al ritmo del morph. Ver `auris-photo-settle`. */}
+            <div className="relative">
+              <AnimatedProfessionalImage
+                src={professional.photoUrl}
+                alt={`Retrato de ${professional.name}`}
+                priority
+                isTransitionTarget
+                sizes="(max-width: 1024px) 90vw, 460px"
+                className="aspect-4/5 w-full rounded-3xl"
+              />
+              <span
+                aria-hidden
+                className={cn(
+                  "auris-photo-settle pointer-events-none absolute inset-0 rounded-3xl shadow-2xl ring-1",
+                  c.ring,
+                )}
+              />
+            </div>
 
             <div>
               <motion.div

@@ -679,31 +679,34 @@ html.vt-active {
 
 /* Asentado de la foto de la ficha ---------------------------------------- */
 
-/* La sombra de la foto del profesional aparecía de golpe al terminar el morph.
+/* La sombra y el aro de color de la foto aparecían de golpe al terminar el
+ * morph.
  *
- * El motivo: el snapshot que el navegador usa para la View Transition no lleva
- * la sombra —se pinta fuera de la caja del elemento—, así que durante todo el
- * recorrido la foto viaja sin ella y la sombra existe recién cuando el elemento
- * real toma el control. Se veía como un golpe al final.
+ * El motivo: el snapshot que usa la View Transition no los lleva. La sombra se
+ * pinta fuera de la caja del elemento y el aro es otro `box-shadow`, así que
+ * ninguno entra en la captura: la foto viaja sin ellos y ambos existen recién
+ * cuando el elemento real toma el control.
  *
- * Acá se recrea el valor de `shadow-2xl` y se lo trae desde transparente en el
- * mismo tiempo que dura el morph. `backwards` sostiene el estado inicial
- * durante el retardo y, al terminar, el elemento vuelve a la sombra normal de
- * Tailwind —que es exactamente el mismo valor—, así que no queda nada fijado.
+ * No se pueden animar directamente. Tailwind los compone en un solo
+ * `box-shadow` a partir de `--tw-shadow` y `--tw-ring-shadow`, y esas variables
+ * están registradas con `syntax:"*"`, o sea que no interpolan. Y declarar el
+ * `box-shadow` entero en un keyframe pisaba el aro, que terminaba apareciendo
+ * igual de golpe al cerrar la animación.
  *
- * El `box-shadow` se declara entero, no compuesto: durante la animación pisa
- * también el `ring`, que entra con el mismo fundido en vez de aparecer solo. */
+ * Por eso viven en una capa aparte, apoyada sobre la foto y fuera de su
+ * `overflow-hidden` —si no, la sombra quedaría recortada—, y lo que se anima es
+ * la opacidad de esa capa: interpola siempre y corre en la capa de composición. */
 @keyframes auris-photo-settle {
   from {
-    box-shadow: 0 8px 16px -12px #00000000;
+    opacity: 0;
   }
   to {
-    box-shadow: 0 25px 50px -12px #00000040;
+    opacity: 1;
   }
 }
 
 .auris-photo-settle {
-  animation: auris-photo-settle 0.55s cubic-bezier(0.22, 0.68, 0.24, 1) 0.12s
+  animation: auris-photo-settle 0.5s cubic-bezier(0.22, 0.68, 0.24, 1) 0.15s
     backwards;
 }
 
