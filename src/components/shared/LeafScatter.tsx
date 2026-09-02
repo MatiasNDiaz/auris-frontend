@@ -91,8 +91,12 @@ export function LeafScatter({
   return (
     <div
       aria-hidden
-      // Lo observa el script inline para congelar el vuelo fuera de pantalla.
       data-decor=""
+      // Lo muta el observer del script inline, que le pone `data-offscreen`
+      // para congelar la animación fuera de pantalla. React no lo sabe y lo
+      // reporta como desajuste de hidratación; esto le avisa que este nodo se
+      // toca por fuera. Silencia solo este elemento, no el árbol.
+      suppressHydrationWarning
       className={cn(
         "pointer-events-none absolute inset-0 overflow-hidden select-none",
         className,

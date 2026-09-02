@@ -63,8 +63,12 @@ export function LeafSprig({
   return (
     <svg
       aria-hidden
-      // Lo observa el script inline para congelar el balanceo fuera de pantalla.
       data-decor=""
+      // Lo muta el observer del script inline, que le pone `data-offscreen`
+      // para congelar la animación fuera de pantalla. React no lo sabe y lo
+      // reporta como desajuste de hidratación; esto le avisa que este nodo se
+      // toca por fuera. Silencia solo este elemento, no el árbol.
+      suppressHydrationWarning
       viewBox="0 0 140 180"
       fill="none"
       className={cn(

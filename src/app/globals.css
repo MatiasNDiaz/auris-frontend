@@ -676,3 +676,39 @@ html.vt-active {
 [data-offscreen].auris-marquee-track {
   animation-play-state: paused;
 }
+
+/* Asentado de la foto de la ficha ---------------------------------------- */
+
+/* La sombra de la foto del profesional aparecía de golpe al terminar el morph.
+ *
+ * El motivo: el snapshot que el navegador usa para la View Transition no lleva
+ * la sombra —se pinta fuera de la caja del elemento—, así que durante todo el
+ * recorrido la foto viaja sin ella y la sombra existe recién cuando el elemento
+ * real toma el control. Se veía como un golpe al final.
+ *
+ * Acá se recrea el valor de `shadow-2xl` y se lo trae desde transparente en el
+ * mismo tiempo que dura el morph. `backwards` sostiene el estado inicial
+ * durante el retardo y, al terminar, el elemento vuelve a la sombra normal de
+ * Tailwind —que es exactamente el mismo valor—, así que no queda nada fijado.
+ *
+ * El `box-shadow` se declara entero, no compuesto: durante la animación pisa
+ * también el `ring`, que entra con el mismo fundido en vez de aparecer solo. */
+@keyframes auris-photo-settle {
+  from {
+    box-shadow: 0 8px 16px -12px #00000000;
+  }
+  to {
+    box-shadow: 0 25px 50px -12px #00000040;
+  }
+}
+
+.auris-photo-settle {
+  animation: auris-photo-settle 0.55s cubic-bezier(0.22, 0.68, 0.24, 1) 0.12s
+    backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auris-photo-settle {
+    animation: none;
+  }
+}

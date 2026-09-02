@@ -114,7 +114,13 @@ export function ProfessionalProfile({
               priority
               isTransitionTarget
               sizes="(max-width: 1024px) 90vw, 460px"
-              className={cn("aspect-4/5 w-full rounded-3xl shadow-2xl ring-1", c.ring)}
+              // `auris-photo-settle` trae la sombra desde transparente al ritmo del
+              // morph: el snapshot de la transición no la incluye, así que sin
+              // esto aparecía de golpe al aterrizar.
+              className={cn(
+                "auris-photo-settle aspect-4/5 w-full rounded-3xl shadow-2xl ring-1",
+                c.ring,
+              )}
             />
 
             <div>
