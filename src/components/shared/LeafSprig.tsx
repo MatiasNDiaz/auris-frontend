@@ -163,8 +163,10 @@ function buildLeaves(count: number, seed: number): Leaf[] {
     // la punta van cada vez más pegadas al eje, como en la planta real.
     const spread = (62 - 20 * k) * side;
 
-    // Decrece hacia la punta, con un ±14% por hoja para que no se repitan.
-    const scale = (0.33 - 0.17 * k) * (0.86 + noise(i * 3 + seed) * 0.28);
+    // La de la base casi triplica a la de la punta. La variación por hoja se
+    // queda en un ±8%: más que eso alcanza para que una hoja de abajo salga
+    // más chica que la de arriba y se pierda la lectura del degradé.
+    const scale = (0.42 - 0.29 * k) * (0.92 + noise(i * 3 + seed) * 0.16);
 
     return {
       x: point.x,
@@ -182,9 +184,10 @@ function buildLeaves(count: number, seed: number): Leaf[] {
 
 /**
  * Cuántas hojas lleva cada tamaño. Todas cubren el tallo entero: lo que cambia
- * es la densidad, no el tramo.
+ * es la densidad, no el tramo. Con más de estas se tocan entre sí y el tallo
+ * deja de verse por debajo del follaje.
  */
-const counts = { sm: 5, md: 9, lg: 11 } as const;
+const counts = { sm: 4, md: 7, lg: 8 } as const;
 
 type LeafSprigProps = {
   palette?: LeafPalette;
