@@ -169,7 +169,7 @@ export function Hero() {
           // Por encima del alto de la onda, para que la curva no le muerda el
           // pie a las cards. Los controles pasaron a dos filas —flechas y
           // puntos— así que el abanico sube lo que crecieron.
-          className="auris-rise lg:absolute lg:right-12 lg:bottom-32"
+          className="auris-rise lg:absolute lg:right-12 lg:bottom-40"
         >
           <ServiceFan
             active={active}
