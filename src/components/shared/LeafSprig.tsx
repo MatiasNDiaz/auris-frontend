@@ -48,7 +48,6 @@ const STEM: readonly Cubic[] = [
 const STEM_D =
   "M52.3 194C52.8 189.3 53.4 184.6 54 180C58 148 62 118 74 92C83 72 90 54 94 30";
 
-
 type StemPoint = { x: number; y: number; angle: number };
 
 /** Punto y dirección de la curva en el parámetro `t`. */
@@ -162,38 +161,53 @@ type Leaf = {
 const FIRST = 0.1;
 const LAST = 0.97;
 
-function buildLeaves(count: number, seed: number): Leaf[] {
-  return Array.from({ length: count }, (_, i) => {
-    const k = count === 1 ? 0 : i / (count - 1);
+/**
+ * Una hoja sobre el tallo.
+ *
+ * `k` va de 0 en la base a 1 en la punta y gobierna las tres cosas que cambian
+ * a lo largo del tallo: dónde se inserta, cuánto se abre y cuánto mide. `salt`
+ * solo desordena la variación, para que dos hojas en la misma posición no
+ * salgan calcadas.
+ */
+function makeLeaf(k: number, side: -1 | 1, seed: number, salt: number): Leaf {
+  // El exponente junta las inserciones hacia la punta. Con paso constante la
+  // separación no acompañaba al tamaño: abajo, donde la hoja es grande, se
+  // superponían, y arriba, donde es chica, quedaba tallo a la vista.
+  const point = stemAt(FIRST + (LAST - FIRST) * Math.pow(k, 0.8));
 
-    // El exponente junta las inserciones hacia la punta. Con paso constante la
-    // separación no acompañaba al tamaño: abajo, donde la hoja es grande, se
-    // superponían, y arriba, donde es chica, quedaba tallo a la vista.
-    const point = stemAt(FIRST + (LAST - FIRST) * Math.pow(k, 0.8));
+  // Apertura respecto del tallo: las de abajo se abren casi en cruz y las de
+  // la punta van cada vez más pegadas al eje, como en la planta real.
+  const spread = (62 - 20 * k) * side;
 
-    const side = i % 2 === 0 ? -1 : 1;
+  // La de la base casi triplica a la de la punta. La variación por hoja se
+  // queda en un ±8%: más que eso alcanza para que una hoja de abajo salga
+  // más chica que la de arriba y se pierda la lectura del degradé.
+  const scale = (0.42 - 0.29 * k) * (0.92 + noise(salt * 3 + seed) * 0.16);
 
-    // Apertura respecto del tallo: las de abajo se abren casi en cruz y las de
-    // la punta van cada vez más pegadas al eje, como en la planta real.
-    const spread = (62 - 20 * k) * side;
+  return {
+    x: point.x,
+    y: point.y,
+    rotate: point.angle + spread,
+    scale,
+    // Espejada de un lado: deja el envés hacia afuera y las dos mitades del
+    // tallo no se leen como la misma hoja calcada.
+    flip: side > 0,
+    delay: -(noise(salt * 7 + seed * 2 + 11) * 5),
+    duration: 3.4 + noise(salt * 5 + seed * 3 + 29) * 2.2,
+  };
+}
 
-    // La de la base casi triplica a la de la punta. La variación por hoja se
-    // queda en un ±8%: más que eso alcanza para que una hoja de abajo salga
-    // más chica que la de arriba y se pierda la lectura del degradé.
-    const scale = (0.42 - 0.29 * k) * (0.92 + noise(i * 3 + seed) * 0.16);
+function buildLeaves(count: number, seed: number, pairBase: boolean): Leaf[] {
+  const leaves = Array.from({ length: count }, (_, i) =>
+    makeLeaf(count === 1 ? 0 : i / (count - 1), i % 2 === 0 ? -1 : 1, seed, i),
+  );
 
-    return {
-      x: point.x,
-      y: point.y,
-      rotate: point.angle + spread,
-      scale,
-      // Espejada de un lado: deja el envés hacia afuera y las dos mitades del
-      // tallo no se leen como la misma hoja calcada.
-      flip: side > 0,
-      delay: -(noise(i * 7 + seed * 2 + 11) * 5),
-      duration: 3.4 + noise(i * 5 + seed * 3 + 29) * 2.2,
-    };
-  });
+  // Las hojas van alternando un lado y el otro, así que la de más abajo se
+  // queda sin par y el arranque del tallo se ve desbalanceado. Esta es su
+  // compañera: mismo punto de inserción, el lado contrario.
+  if (pairBase) leaves.push(makeLeaf(0, 1, seed, count + 4));
+
+  return leaves;
 }
 
 /**
@@ -227,7 +241,7 @@ export function LeafSprig({
   // Sin degradé por hoja: a este tamaño no se percibe y evita tanto un `<defs>`
   // por hoja como tener que generar ids únicos, que obligaría a volver cliente
   // a un componente que no necesita serlo.
-  const leaves = buildLeaves(counts[size], seed);
+  const leaves = buildLeaves(counts[size], seed, size !== "sm");
 
   // A 25px las venas se empastan; recién desde `md` aportan textura.
   const detail = size === "sm" ? "simple" : "veined";
