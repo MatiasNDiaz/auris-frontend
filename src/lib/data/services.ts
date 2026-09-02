@@ -2,6 +2,59 @@ import type { Service } from "@/lib/types";
 
 export const services: Service[] = [
   {
+    slug: "odontologia",
+    name: "Odontología",
+    icon: "tooth",
+    shortDescription:
+      "El área central del centro: rehabilitación oral, implantología, odontopediatría funcional, alineadores y ortodoncia.",
+    tagline: "Prevención antes que tratamiento",
+    heroTitle: "Tu salud bucal, cuidada en serio",
+    heroSubtitle:
+      "Cinco áreas bajo el mismo techo, explicadas paso a paso antes de empezar.",
+    fullDescription:
+      "La odontología es el área central del centro y la que reúne más especialidades: rehabilitación oral, implantología, odontopediatría funcional, alineadores y ortodoncia. Trabajamos con un enfoque preventivo y mínimamente invasivo, desde el control periódico y la limpieza profesional hasta la reposición de piezas perdidas y la corrección de la mordida. Cada plan se arma después de un diagnóstico completo que conversamos con vos antes de empezar, con las etapas y los tiempos reales de cada tratamiento sobre la mesa. Contamos con equipamiento digital que reduce los tiempos de consulta y hace más cómoda cada visita.",
+    imageUrl:
+      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1920&auto=format&fit=crop",
+    features: [
+      "Rehabilitación oral, implantología y prótesis",
+      "Odontopediatría funcional para los más chicos",
+      "Alineadores transparentes y ortodoncia",
+      "Diagnóstico, control preventivo y limpieza",
+    ],
+    branches: [
+      {
+        icon: "tooth",
+        name: "Rehabilitación oral",
+        description:
+          "Reponemos piezas perdidas y devolvemos función a mordidas desgastadas o incompletas. Coronas, carillas y prótesis fijas o removibles, planificadas sobre un estudio previo de cómo cierra la mordida y de cuánto hueso hay disponible.",
+      },
+      {
+        icon: "implant",
+        name: "Implantología",
+        description:
+          "El implante reemplaza la raíz de la pieza perdida y es lo que sostiene la corona definitiva. No es un procedimiento de una sola visita: hay una etapa quirúrgica, una de cicatrización y una protésica, y conviene conocer los tiempos de cada una antes de empezar y no sobre la marcha.",
+      },
+      {
+        icon: "baby",
+        name: "Odontopediatría funcional",
+        description:
+          "Odontología infantil que mira algo más que las caries: cómo respira, cómo traga y cómo mastica el chico, porque esas funciones son las que van dando forma a los maxilares mientras crece. Se trabaja también sobre los hábitos —chupete, mamadera, succión digital— y sobre el seguimiento del crecimiento.",
+      },
+      {
+        icon: "aligner",
+        name: "Alineadores",
+        description:
+          "Férulas transparentes y removibles que van moviendo las piezas por etapas. Antes de colocar la primera hacemos el escaneo intraoral y la planificación digital del recorrido completo, así se sabe de entrada cuánto lleva el tratamiento y hasta dónde llega.",
+      },
+      {
+        icon: "ortho",
+        name: "Ortodoncia",
+        description:
+          "Brackets estéticos o metálicos, para los casos en que el movimiento necesita más control del que dan los alineadores o en que la constancia de uso no está garantizada. Terminado el tratamiento viene la contención, que es lo que evita que los dientes vuelvan a moverse.",
+      },
+    ],
+  },
+  {
     slug: "psicologia",
     name: "Psicología",
     icon: "brain",
@@ -19,27 +72,6 @@ export const services: Service[] = [
       "Terapia de pareja y orientación familiar",
       "Abordaje de ansiedad, estrés y estados de ánimo",
       "Sesiones presenciales y por videollamada",
-    ],
-  },
-  {
-    slug: "odontologia",
-    name: "Odontología",
-    icon: "tooth",
-    shortDescription:
-      "Salud bucal integral: prevención, tratamientos restauradores y estética dental.",
-    tagline: "Prevención antes que tratamiento",
-    heroTitle: "Tu salud bucal, cuidada en serio",
-    heroSubtitle:
-      "Prevención, tratamientos restauradores y estética dental, explicados paso a paso antes de empezar.",
-    fullDescription:
-      "Cuidamos tu salud bucal con un enfoque preventivo y mínimamente invasivo. Desde el control periódico y la limpieza profesional hasta tratamientos restauradores y estética dental, cada plan se arma después de un diagnóstico completo que conversamos con vos antes de empezar. Contamos con equipamiento digital que reduce tiempos de consulta y hace más cómoda cada visita.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1920&auto=format&fit=crop",
-    features: [
-      "Diagnóstico y control preventivo",
-      "Limpieza y profilaxis profesional",
-      "Restauraciones estéticas y endodoncia",
-      "Blanqueamiento y estética dental",
     ],
   },
   {

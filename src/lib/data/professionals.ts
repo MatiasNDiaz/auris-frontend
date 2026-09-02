@@ -3,6 +3,92 @@ import type { Professional } from "@/lib/types";
 /** Datos ficticios de demostración: reemplazar por el equipo real del centro. */
 export const professionals: Professional[] = [
   {
+    slug: "carolina-benitez",
+    motto:
+      "Prefiero explicar diez minutos de más antes que tocar un diente de menos.",
+    credentials: [
+      {
+        title: "Odontología",
+        institution: "Universidad de Buenos Aires",
+        year: "2009",
+      },
+      {
+        title: "Especialización en Odontología Restauradora",
+        institution: "AOA",
+        year: "2012",
+      },
+      {
+        title: "Matrícula Nacional MN 32.104",
+        institution: "Ministerio de Salud de la Nación",
+        year: "2016",
+      },
+      {
+        title: "Certificación en Odontología Digital y CAD/CAM",
+        institution: "Formación de posgrado",
+        year: "2018",
+      },
+    ],
+    gender: "female",
+    name: "Dra. Carolina Benítez",
+    specialty: "Odontología general y estética",
+    serviceSlug: "odontologia",
+    photoUrl:
+      "https://images.unsplash.com/photo-1736289173074-df6009da27c9?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
+    bio: "Orienta su práctica a la odontología preventiva y mínimamente invasiva. Realiza restauraciones estéticas y tratamientos de blanqueamiento, con foco en explicar cada paso antes de iniciarlo.",
+    education: [
+      "Odontología — Universidad de Buenos Aires",
+      "Especialización en Odontología Restauradora — AOA",
+    ],
+    experience: "14 años de ejercicio profesional en consultorio privado.",
+    certifications: [
+      "Matrícula Nacional MN 32.104",
+      "Certificación en Odontología Digital y CAD/CAM",
+    ],
+  },
+  {
+    slug: "florencia-arias",
+    motto:
+      "Si la primera visita al dentista sale bien, las siguientes ya no dan miedo.",
+    credentials: [
+      {
+        title: "Odontología",
+        institution: "Universidad Nacional de Córdoba",
+        year: "2009",
+      },
+      {
+        title: "Especialización en Odontopediatría",
+        institution: "Universidad Maimónides",
+        year: "2012",
+      },
+      {
+        title: "Matrícula Nacional MN 36.720",
+        institution: "Ministerio de Salud de la Nación",
+        year: "2016",
+      },
+      {
+        title: "Formación en Manejo de Conducta Infantil en Odontología",
+        institution: "Formación de posgrado",
+        year: "2018",
+      },
+    ],
+    gender: "female",
+    name: "Dra. Florencia Arias",
+    specialty: "Odontopediatría",
+    serviceSlug: "odontologia",
+    photoUrl:
+      "https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
+    bio: "Atiende a niños y adolescentes con un enfoque centrado en que la primera experiencia odontológica sea buena. Trabaja la prevención junto a las familias desde la primera consulta.",
+    education: [
+      "Odontología — Universidad Nacional de Córdoba",
+      "Especialización en Odontopediatría — Universidad Maimónides",
+    ],
+    experience: "9 años de atención odontológica pediátrica.",
+    certifications: [
+      "Matrícula Nacional MN 36.720",
+      "Formación en Manejo de Conducta Infantil en Odontología",
+    ],
+  },
+  {
     slug: "lucia-fernandez",
     motto:
       "Nadie llega a una consulta solo por un síntoma; siempre hay una historia detrás.",
@@ -91,49 +177,6 @@ export const professionals: Professional[] = [
     ],
   },
   {
-    slug: "carolina-benitez",
-    motto:
-      "Prefiero explicar diez minutos de más antes que tocar un diente de menos.",
-    credentials: [
-      {
-        title: "Odontología",
-        institution: "Universidad de Buenos Aires",
-        year: "2009",
-      },
-      {
-        title: "Especialización en Odontología Restauradora",
-        institution: "AOA",
-        year: "2012",
-      },
-      {
-        title: "Matrícula Nacional MN 32.104",
-        institution: "Ministerio de Salud de la Nación",
-        year: "2016",
-      },
-      {
-        title: "Certificación en Odontología Digital y CAD/CAM",
-        institution: "Formación de posgrado",
-        year: "2018",
-      },
-    ],
-    gender: "female",
-    name: "Dra. Carolina Benítez",
-    specialty: "Odontología general y estética",
-    serviceSlug: "odontologia",
-    photoUrl:
-      "https://images.unsplash.com/photo-1736289173074-df6009da27c9?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
-    bio: "Orienta su práctica a la odontología preventiva y mínimamente invasiva. Realiza restauraciones estéticas y tratamientos de blanqueamiento, con foco en explicar cada paso antes de iniciarlo.",
-    education: [
-      "Odontología — Universidad de Buenos Aires",
-      "Especialización en Odontología Restauradora — AOA",
-    ],
-    experience: "14 años de ejercicio profesional en consultorio privado.",
-    certifications: [
-      "Matrícula Nacional MN 32.104",
-      "Certificación en Odontología Digital y CAD/CAM",
-    ],
-  },
-  {
     slug: "sofia-mendez",
     motto: "La piel responde al cuidado sostenido, no a las promesas rápidas.",
     credentials: [
@@ -173,6 +216,49 @@ export const professionals: Professional[] = [
     certifications: [
       "Certificación en Aparatología Estética",
       "Formación en Drenaje Linfático Manual — Método Vodder",
+    ],
+  },
+  {
+    slug: "camila-duarte",
+    motto:
+      "Cada piel tiene su tiempo; el tratamiento se adapta a ella, no al revés.",
+    credentials: [
+      {
+        title: "Tecnicatura en Estética Integral",
+        institution: "Instituto Argentino de Estética",
+        year: "2009",
+      },
+      {
+        title: "Formación en Aparatología Corporal Avanzada",
+        institution: "Formación continua",
+        year: "2012",
+      },
+      {
+        title: "Certificación en Radiofrecuencia y Ultracavitación",
+        institution: "Formación de posgrado",
+        year: "2016",
+      },
+      {
+        title: "Formación en Bioseguridad aplicada a la estética",
+        institution: "Formación de posgrado",
+        year: "2018",
+      },
+    ],
+    gender: "female",
+    name: "Camila Duarte",
+    specialty: "Estética corporal y aparatología",
+    serviceSlug: "estetica-facial-y-corporal",
+    photoUrl:
+      "https://images.unsplash.com/photo-1734002886107-168181bcd6a1?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
+    bio: "Se especializa en tratamientos corporales y en el uso de aparatología estética. Arma planes por ciclos con evaluación de resultados en cada etapa, sin prometer cambios inmediatos.",
+    education: [
+      "Tecnicatura en Estética Integral — Instituto Argentino de Estética",
+      "Formación en Aparatología Corporal Avanzada",
+    ],
+    experience: "6 años en centros de estética y bienestar.",
+    certifications: [
+      "Certificación en Radiofrecuencia y Ultracavitación",
+      "Formación en Bioseguridad aplicada a la estética",
     ],
   },
   {
@@ -220,135 +306,6 @@ export const professionals: Professional[] = [
     ],
   },
   {
-    slug: "valentina-aguirre",
-    motto:
-      "Cuando un chico empieza a hacerse entender, le cambia el humor antes que el lenguaje.",
-    credentials: [
-      {
-        title: "Licenciatura en Fonoaudiología",
-        institution: "Universidad Nacional de Rosario",
-        year: "2009",
-      },
-      {
-        title: "Formación en Trastornos del Lenguaje Infantil",
-        institution: "Formación continua",
-        year: "2012",
-      },
-      {
-        title: "Matrícula Nacional MN 9.336",
-        institution: "Ministerio de Salud de la Nación",
-        year: "2016",
-      },
-      {
-        title: "Formación en Comunicación Aumentativa y Alternativa",
-        institution: "Formación de posgrado",
-        year: "2018",
-      },
-    ],
-    gender: "female",
-    name: "Lic. Valentina Aguirre",
-    specialty: "Fonoaudiología infantil",
-    serviceSlug: "fonoaudiologia",
-    photoUrl:
-      "https://images.unsplash.com/photo-1736289154383-435d94804522?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
-    bio: "Atiende dificultades del lenguaje y del habla en primera infancia y edad escolar, en articulación con el equipo de psicología del centro. Trabaja con las familias para sostener el tratamiento en casa.",
-    education: [
-      "Licenciatura en Fonoaudiología — Universidad Nacional de Rosario",
-      "Formación en Trastornos del Lenguaje Infantil",
-    ],
-    experience: "7 años de trabajo interdisciplinario en salud.",
-    certifications: [
-      "Matrícula Nacional MN 9.336",
-      "Formación en Comunicación Aumentativa y Alternativa",
-    ],
-  },
-  {
-    slug: "diego-navarro",
-    motto:
-      "Un buen tratamiento estético se termina de definir en las semanas que siguen.",
-    credentials: [
-      {
-        title: "Licenciatura en Kinesiología y Fisiatría",
-        institution: "Universidad Favaloro",
-        year: "2009",
-      },
-      {
-        title: "Especialización en Drenaje Linfático Manual",
-        institution: "Método Vodder",
-        year: "2012",
-      },
-      {
-        title: "Matrícula Nacional MN 14.298",
-        institution: "Ministerio de Salud de la Nación",
-        year: "2016",
-      },
-      {
-        title: "Certificación en Kinesiología Aplicada a la Estética",
-        institution: "Formación de posgrado",
-        year: "2018",
-      },
-    ],
-    gender: "male",
-    name: "Lic. Diego Navarro",
-    specialty: "Kinesiología estética y drenaje",
-    serviceSlug: "kinesiologia",
-    photoUrl:
-      "https://images.unsplash.com/photo-1730597842283-943c7986ee2c?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
-    bio: "Acompaña la recuperación posterior a los tratamientos faciales y corporales del centro. Se especializa en drenaje linfático manual y en el seguimiento de la zona tratada durante las semanas en que el resultado termina de asentarse.",
-    education: [
-      "Licenciatura en Kinesiología y Fisiatría — Universidad Favaloro",
-      "Especialización en Drenaje Linfático Manual — Método Vodder",
-    ],
-    experience: "11 años acompañando tratamientos estéticos faciales y corporales.",
-    certifications: [
-      "Matrícula Nacional MN 14.298",
-      "Certificación en Kinesiología Aplicada a la Estética",
-    ],
-  },
-  {
-    slug: "paula-vidal",
-    motto:
-      "Comunicarse es mucho más que hablar: es poder participar del mundo.",
-    credentials: [
-      {
-        title: "Licenciatura en Fonoaudiología",
-        institution: "Universidad del Museo Social Argentino",
-        year: "2009",
-      },
-      {
-        title: "Especialización en Voz Profesional",
-        institution: "Formación continua",
-        year: "2012",
-      },
-      {
-        title: "Matrícula Nacional MN 7.905",
-        institution: "Ministerio de Salud de la Nación",
-        year: "2016",
-      },
-      {
-        title: "Formación en Rehabilitación de la Deglución",
-        institution: "Formación de posgrado",
-        year: "2018",
-      },
-    ],
-    gender: "female",
-    name: "Lic. Paula Vidal",
-    specialty: "Fonoaudiología",
-    serviceSlug: "fonoaudiologia",
-    photoUrl:
-      "https://images.unsplash.com/photo-1623854767648-e7bb8009f0db?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
-    bio: "Evalúa y trata dificultades del lenguaje, la voz y la audición en pacientes de todas las edades. Sostiene un trabajo articulado con la familia y con las instituciones educativas cuando el tratamiento lo requiere.",
-    education: [
-      "Licenciatura en Fonoaudiología — Universidad del Museo Social Argentino",
-      "Especialización en Voz Profesional",
-    ],
-    experience: "13 años de práctica clínica con niños y adultos.",
-    certifications: [
-      "Matrícula Nacional MN 7.905",
-      "Formación en Rehabilitación de la Deglución",
-    ],
-  },
-  {
     slug: "gabriel-ferrari",
     motto: "La autonomía se entrena, y se entrena mejor acompañado.",
     credentials: [
@@ -392,46 +349,47 @@ export const professionals: Professional[] = [
     ],
   },
   {
-    slug: "florencia-arias",
+    slug: "diego-navarro",
     motto:
-      "Si la primera visita al dentista sale bien, las siguientes ya no dan miedo.",
+      "Un buen tratamiento estético se termina de definir en las semanas que siguen.",
     credentials: [
       {
-        title: "Odontología",
-        institution: "Universidad Nacional de Córdoba",
+        title: "Licenciatura en Kinesiología y Fisiatría",
+        institution: "Universidad Favaloro",
         year: "2009",
       },
       {
-        title: "Especialización en Odontopediatría",
-        institution: "Universidad Maimónides",
+        title: "Especialización en Drenaje Linfático Manual",
+        institution: "Método Vodder",
         year: "2012",
       },
       {
-        title: "Matrícula Nacional MN 36.720",
+        title: "Matrícula Nacional MN 14.298",
         institution: "Ministerio de Salud de la Nación",
         year: "2016",
       },
       {
-        title: "Formación en Manejo de Conducta Infantil en Odontología",
+        title: "Certificación en Kinesiología Aplicada a la Estética",
         institution: "Formación de posgrado",
         year: "2018",
       },
     ],
-    gender: "female",
-    name: "Dra. Florencia Arias",
-    specialty: "Odontopediatría",
-    serviceSlug: "odontologia",
+    gender: "male",
+    name: "Lic. Diego Navarro",
+    specialty: "Kinesiología estética y drenaje",
+    serviceSlug: "kinesiologia",
     photoUrl:
-      "https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
-    bio: "Atiende a niños y adolescentes con un enfoque centrado en que la primera experiencia odontológica sea buena. Trabaja la prevención junto a las familias desde la primera consulta.",
+      "https://images.unsplash.com/photo-1730597842283-943c7986ee2c?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
+    bio: "Acompaña la recuperación posterior a los tratamientos faciales y corporales del centro. Se especializa en drenaje linfático manual y en el seguimiento de la zona tratada durante las semanas en que el resultado termina de asentarse.",
     education: [
-      "Odontología — Universidad Nacional de Córdoba",
-      "Especialización en Odontopediatría — Universidad Maimónides",
+      "Licenciatura en Kinesiología y Fisiatría — Universidad Favaloro",
+      "Especialización en Drenaje Linfático Manual — Método Vodder",
     ],
-    experience: "9 años de atención odontológica pediátrica.",
+    experience:
+      "11 años acompañando tratamientos estéticos faciales y corporales.",
     certifications: [
-      "Matrícula Nacional MN 36.720",
-      "Formación en Manejo de Conducta Infantil en Odontología",
+      "Matrícula Nacional MN 14.298",
+      "Certificación en Kinesiología Aplicada a la Estética",
     ],
   },
   {
@@ -478,46 +436,89 @@ export const professionals: Professional[] = [
     ],
   },
   {
-    slug: "camila-duarte",
+    slug: "valentina-aguirre",
     motto:
-      "Cada piel tiene su tiempo; el tratamiento se adapta a ella, no al revés.",
+      "Cuando un chico empieza a hacerse entender, le cambia el humor antes que el lenguaje.",
     credentials: [
       {
-        title: "Tecnicatura en Estética Integral",
-        institution: "Instituto Argentino de Estética",
+        title: "Licenciatura en Fonoaudiología",
+        institution: "Universidad Nacional de Rosario",
         year: "2009",
       },
       {
-        title: "Formación en Aparatología Corporal Avanzada",
+        title: "Formación en Trastornos del Lenguaje Infantil",
         institution: "Formación continua",
         year: "2012",
       },
       {
-        title: "Certificación en Radiofrecuencia y Ultracavitación",
-        institution: "Formación de posgrado",
+        title: "Matrícula Nacional MN 9.336",
+        institution: "Ministerio de Salud de la Nación",
         year: "2016",
       },
       {
-        title: "Formación en Bioseguridad aplicada a la estética",
+        title: "Formación en Comunicación Aumentativa y Alternativa",
         institution: "Formación de posgrado",
         year: "2018",
       },
     ],
     gender: "female",
-    name: "Camila Duarte",
-    specialty: "Estética corporal y aparatología",
-    serviceSlug: "estetica-facial-y-corporal",
+    name: "Lic. Valentina Aguirre",
+    specialty: "Fonoaudiología infantil",
+    serviceSlug: "fonoaudiologia",
     photoUrl:
-      "https://images.unsplash.com/photo-1734002886107-168181bcd6a1?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
-    bio: "Se especializa en tratamientos corporales y en el uso de aparatología estética. Arma planes por ciclos con evaluación de resultados en cada etapa, sin prometer cambios inmediatos.",
+      "https://images.unsplash.com/photo-1736289154383-435d94804522?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
+    bio: "Atiende dificultades del lenguaje y del habla en primera infancia y edad escolar, en articulación con el equipo de psicología del centro. Trabaja con las familias para sostener el tratamiento en casa.",
     education: [
-      "Tecnicatura en Estética Integral — Instituto Argentino de Estética",
-      "Formación en Aparatología Corporal Avanzada",
+      "Licenciatura en Fonoaudiología — Universidad Nacional de Rosario",
+      "Formación en Trastornos del Lenguaje Infantil",
     ],
-    experience: "6 años en centros de estética y bienestar.",
+    experience: "7 años de trabajo interdisciplinario en salud.",
     certifications: [
-      "Certificación en Radiofrecuencia y Ultracavitación",
-      "Formación en Bioseguridad aplicada a la estética",
+      "Matrícula Nacional MN 9.336",
+      "Formación en Comunicación Aumentativa y Alternativa",
+    ],
+  },
+  {
+    slug: "paula-vidal",
+    motto:
+      "Comunicarse es mucho más que hablar: es poder participar del mundo.",
+    credentials: [
+      {
+        title: "Licenciatura en Fonoaudiología",
+        institution: "Universidad del Museo Social Argentino",
+        year: "2009",
+      },
+      {
+        title: "Especialización en Voz Profesional",
+        institution: "Formación continua",
+        year: "2012",
+      },
+      {
+        title: "Matrícula Nacional MN 7.905",
+        institution: "Ministerio de Salud de la Nación",
+        year: "2016",
+      },
+      {
+        title: "Formación en Rehabilitación de la Deglución",
+        institution: "Formación de posgrado",
+        year: "2018",
+      },
+    ],
+    gender: "female",
+    name: "Lic. Paula Vidal",
+    specialty: "Fonoaudiología",
+    serviceSlug: "fonoaudiologia",
+    photoUrl:
+      "https://images.unsplash.com/photo-1623854767648-e7bb8009f0db?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
+    bio: "Evalúa y trata dificultades del lenguaje, la voz y la audición en pacientes de todas las edades. Sostiene un trabajo articulado con la familia y con las instituciones educativas cuando el tratamiento lo requiere.",
+    education: [
+      "Licenciatura en Fonoaudiología — Universidad del Museo Social Argentino",
+      "Especialización en Voz Profesional",
+    ],
+    experience: "13 años de práctica clínica con niños y adultos.",
+    certifications: [
+      "Matrícula Nacional MN 7.905",
+      "Formación en Rehabilitación de la Deglución",
     ],
   },
 ];

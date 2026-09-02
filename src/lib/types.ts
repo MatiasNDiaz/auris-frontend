@@ -21,6 +21,17 @@ export type Service = {
   fullDescription: string;
   imageUrl: string;
   features: string[];
+  /**
+   * Ramas del servicio, cuando tiene varias con entidad propia. Solo las lleva
+   * odontología, que es el área central del centro; el detalle suma un bloque
+   * con ellas y el resto de los servicios no cambia.
+   */
+  branches?: {
+    /** Clave del ícono, resuelta en la página de detalle. */
+    icon: string;
+    name: string;
+    description: string;
+  }[];
 };
 
 export type Professional = {
