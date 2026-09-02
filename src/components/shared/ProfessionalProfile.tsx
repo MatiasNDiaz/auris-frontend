@@ -134,10 +134,15 @@ export function ProfessionalProfile({
                 className="aspect-4/5 w-full rounded-3xl"
               />
 
-              {/* Sombra: la última en llegar. */}
+              {/* Sombra: la última en llegar.
+
+                  No usa `shadow-2xl`: ese preset lleva -12px de spread, que la
+                  encoge tanto que sobre el fondo claro de la ficha no se
+                  distinguía. Van dos capas —una de contacto, corta, y una de
+                  ambiente, difusa— que es como se lee una tarjeta apoyada. */}
               <span
                 aria-hidden
-                className="auris-photo-shadow pointer-events-none absolute inset-0 rounded-3xl shadow-2xl"
+                className="auris-photo-shadow pointer-events-none absolute inset-0 rounded-3xl shadow-[0_4px_10px_-2px_rgba(43,43,40,0.16),0_22px_45px_-10px_rgba(43,43,40,0.30)]"
               />
 
               {/* Trazo del contorno, en el color de la persona. */}
