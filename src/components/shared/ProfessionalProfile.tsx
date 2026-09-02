@@ -18,22 +18,23 @@ import { cn } from "@/lib/utils";
  * La foto es el destino del shared element transition; el resto del contenido
  * entra escalonado después, para que el movimiento quede en la imagen.
  */
+/**
+ * Entrada de todos los bloques de la ficha. Una sola variante: misma distancia,
+ * misma duración y misma curva para todo, y lo único que cambia es el retardo.
+ * Con recorridos y curvas distintas por bloque —como estaba— cada uno llegaba a
+ * su ritmo y el conjunto se leía descoordinado.
+ *
+ * La curva anterior era `[0.16, 0.68, 0.3, 1]`: sube el 68% del recorrido en el
+ * primer 16% del tiempo y después se arrastra. Ese arrastre final es lo que se
+ * percibía como un saltito extra al terminar, sobre todo en los párrafos. Esta
+ * arranca normal y cierra limpio, sin cola.
+ */
 const content = {
-  hidden: { opacity: 0, y: 22 },
+  hidden: { opacity: 0, y: 18 },
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, delay, ease: [0.16, 0.68, 0.3, 1] as const },
-  }),
-};
-
-/** El CTA sube más que el resto del texto, pero sin hacerse esperar. */
-const cta = {
-  hidden: { opacity: 0, y: 26 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { duration: 0.6, delay, ease: [0.33, 0, 0.2, 1] as const },
   }),
 };
 
@@ -162,7 +163,7 @@ export function ProfessionalProfile({
                 variants={content}
                 initial="hidden"
                 animate="visible"
-                custom={0.15}
+                custom={0.14}
               >
                 <p
                   className={cn(
@@ -218,7 +219,7 @@ export function ProfessionalProfile({
                 variants={content}
                 initial="hidden"
                 animate="visible"
-                custom={0.3}
+                custom={0.28}
                 className="mt-8 max-w-xl"
               >
                 <Quote
@@ -235,20 +236,20 @@ export function ProfessionalProfile({
                 variants={content}
                 initial="hidden"
                 animate="visible"
-                custom={0.4}
+                custom={0.35}
                 className="mt-6 max-w-xl text-base leading-relaxed text-pretty text-ink-700/85"
               >
                 {professional.bio}
               </motion.p>
 
               <motion.div
-                variants={cta}
+                variants={content}
                 initial="hidden"
                 animate="visible"
                 // Cierra el escalonado del texto, sin esperar al trazo del
                 // contorno: entre retardo y recorrido tardaba casi dos segundos
                 // en estar disponible.
-                custom={0.45}
+                custom={0.42}
                 className="mt-9"
               >
                 <WhatsAppButton
@@ -269,7 +270,7 @@ export function ProfessionalProfile({
             variants={content}
             initial="hidden"
             animate="visible"
-            custom={0.55}
+            custom={0.5}
             className={cn(
               "mx-auto flex max-w-3xl items-start gap-5 rounded-3xl border bg-cream-50 p-8 shadow-sm",
               c.border,
@@ -310,7 +311,7 @@ export function ProfessionalProfile({
             variants={content}
             initial="hidden"
             animate="visible"
-            custom={0.6}
+            custom={0.56}
             className="text-center"
           >
             <p
@@ -337,7 +338,7 @@ export function ProfessionalProfile({
                 variants={content}
                 initial="hidden"
                 animate="visible"
-                custom={0.65 + index * 0.06}
+                custom={0.62 + index * 0.06}
               >
                 {/* Diploma estilizado: no es un escaneo real, es una
                     representación con los datos del título. */}
@@ -406,7 +407,7 @@ export function ProfessionalProfile({
             variants={content}
             initial="hidden"
             animate="visible"
-            custom={0.85}
+            custom={0.8}
             className={cn(
               "relative mx-auto max-w-3xl overflow-hidden rounded-[2rem] px-8 py-12 text-center",
               c.ctaPanel,
