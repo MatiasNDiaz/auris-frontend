@@ -97,7 +97,12 @@ export function ShineButton({
   const classes = cn(
     "auris-btn group relative inline-flex shrink-0 items-center justify-center gap-2 overflow-hidden rounded-full font-semibold whitespace-nowrap",
     // Sin rebote y sin `scale`: solo eleva y asienta.
-    "transition-[transform,box-shadow,background-color,border-color,color] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
+    //
+    // Los dos `--tw-gradient-*` son necesarios: los tonos con degradé cambian
+    // sus stops en hover, y eso vive en `background-image`, que no interpola.
+    // Tailwind v4 los registra con `@property … syntax:"<color>"`, así que
+    // transicionando las variables el degradé sí se funde en vez de saltar.
+    "transition-[transform,box-shadow,background-color,border-color,color,--tw-gradient-from,--tw-gradient-to] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
     "hover:-translate-y-0.5 active:translate-y-0 active:duration-150",
     "motion-reduce:transition-none motion-reduce:hover:translate-y-0",
     "focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:outline-none",
