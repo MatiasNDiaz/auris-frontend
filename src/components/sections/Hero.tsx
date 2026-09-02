@@ -98,7 +98,6 @@ export function Hero() {
         className="absolute inset-0 -z-10 bg-linear-to-t from-black/32 via-transparent to-black/12"
       />
 
-
       <div className="container-auris relative flex flex-1 flex-col justify-center gap-12 pt-16 pb-28 lg:gap-0 lg:pt-20 lg:pb-36">
         {/* Capa 3 — contenido, en claro sobre el overlay. */}
         <div className="max-w-2xl">
@@ -132,13 +131,21 @@ export function Hero() {
                 }}
                 className="inset-x-0 top-0"
               >
-                <p className="text-sm font-semibold tracking-[0.2em] text-primary-200 uppercase">
+                {/* El nombre del servicio iba en verde claro suelto sobre la
+                    foto y contra un consultorio blanco desaparecía. En chip
+                    lleno gana fondo propio, y de paso queda una jerarquía
+                    clara con el saludo de arriba: aquel va en contorno, este
+                    en sólido porque es el dato que cambia. */}
+                <p className="inline-flex items-center rounded-full bg-primary-600/95 px-3.5 py-1.5 text-xs font-semibold tracking-[0.16em] text-cream-50 uppercase shadow-lg shadow-primary-900/30 ring-1 ring-cream-50/25">
                   {services[active].name}
                 </p>
-                <h1 className="mt-3 font-serif text-4xl leading-[1.08] text-balance text-cream-50 sm:text-5xl lg:text-6xl">
+                {/* La sombra de texto sostiene la lectura sobre las zonas
+                    claras de la foto sin tener que oscurecer el overlay, que
+                    apagaría la imagen entera. */}
+                <h1 className="mt-4 font-serif text-4xl leading-[1.08] text-balance text-cream-50 [text-shadow:0_2px_20px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-6xl">
                   {services[active].heroTitle}
                 </h1>
-                <p className="mt-5 max-w-xl text-lg leading-relaxed text-pretty text-cream-100/90">
+                <p className="mt-5 max-w-xl text-lg leading-relaxed text-pretty text-cream-50/95 [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
                   {services[active].heroSubtitle}
                 </p>
               </motion.div>
@@ -160,20 +167,24 @@ export function Hero() {
           </div>
 
           {/* Acotado a max-w-xl para no quedar debajo del abanico en desktop. */}
+          {/* Iban como texto suelto sobre la foto y se perdían apenas la
+              imagen tenía una zona clara. Cada uno pasa a ser una pastilla con
+              fondo propio y desenfoque: se leen siempre, sin importar qué foto
+              esté activa, y de paso el bloque queda como una tira de tres. */}
           <ul
             style={{ "--rise-delay": RISE_DELAY.highlights } as CSSProperties}
-            className="auris-rise mt-8 grid max-w-xl gap-3 sm:grid-cols-3"
+            className="auris-rise mt-8 grid max-w-xl gap-2.5 sm:grid-cols-3"
           >
             {highlights.map(({ icon: Icon, label }) => (
               <li
                 key={label}
-                className="flex items-start gap-2.5 text-sm text-cream-100/85"
+                className="flex items-start gap-2.5 rounded-2xl border border-cream-50/20 bg-ink-900/35 px-3.5 py-3 text-sm leading-snug text-cream-50 backdrop-blur-md backdrop-saturate-150"
               >
                 <span
                   aria-hidden
-                  className="mt-px inline-flex size-6 shrink-0 items-center justify-center rounded-lg bg-cream-50/15 text-primary-200"
+                  className="inline-flex size-6 shrink-0 items-center justify-center rounded-lg bg-primary-500/90 text-cream-50"
                 >
-                  <Icon className="size-3.5" strokeWidth={1.9} />
+                  <Icon className="size-3.5" strokeWidth={2} />
                 </span>
                 {label}
               </li>
@@ -191,8 +202,9 @@ export function Hero() {
             } as CSSProperties
           }
           // Por encima del alto de la onda, para que la curva no le muerda el
-          // pie a las cards.
-          className="auris-rise lg:absolute lg:right-12 lg:bottom-28"
+          // pie a las cards. Los controles pasaron a dos filas —flechas y
+          // puntos— así que el abanico sube lo que crecieron.
+          className="auris-rise lg:absolute lg:right-12 lg:bottom-36"
         >
           <ServiceFan
             active={active}

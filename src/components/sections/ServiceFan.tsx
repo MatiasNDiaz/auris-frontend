@@ -173,32 +173,42 @@ export function ServiceFan({
         })}
       </div>
 
-      <div className="flex items-center gap-3">
-        <button
-          type="button"
-          onClick={() => onStep(-1)}
-          aria-label="Servicio anterior"
-          className="inline-flex size-10 items-center justify-center rounded-full border border-cream-50/35 text-cream-50 transition-colors hover:bg-cream-50/15 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
-        >
-          <ChevronLeft className="size-5" aria-hidden />
-        </button>
-        <button
-          type="button"
-          onClick={() => onStep(1)}
-          aria-label="Servicio siguiente"
-          className="inline-flex size-10 items-center justify-center rounded-full border border-cream-50/35 text-cream-50 transition-colors hover:bg-cream-50/15 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
-        >
-          <ChevronRight className="size-5" aria-hidden />
-        </button>
+      {/* Los controles van centrados bajo el abanico: pegados a la izquierda
+          quedaban colgando del borde de la primera card, lejos del grupo de
+          fotos que gobiernan. El contador entre las flechas y los puntos
+          debajo, para que el bloque lea como una sola unidad centrada. */}
+      {/* Mismo ancho que la caja de las cards: centrado sobre el contenedor
+          quedaba unos cuarenta píxeles corrido del grupo de fotos, que ocupa
+          solo una parte de ese ancho. */}
+      <div className="flex w-69 flex-col items-center gap-3.5 md:w-131">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => onStep(-1)}
+            aria-label="Servicio anterior"
+            className="inline-flex size-10 items-center justify-center rounded-full border border-cream-50/35 bg-ink-900/25 text-cream-50 backdrop-blur-sm transition-colors hover:bg-cream-50/20 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+          >
+            <ChevronLeft className="size-5" aria-hidden />
+          </button>
 
-        <p className="ml-1 font-serif text-lg text-cream-50 tabular-nums">
-          <span className="sr-only">Servicio </span>
-          {active + 1}
-          <span className="text-cream-50/55"> / {COUNT}</span>
-        </p>
+          <p className="min-w-14 text-center font-serif text-lg text-cream-50 tabular-nums">
+            <span className="sr-only">Servicio </span>
+            {active + 1}
+            <span className="text-cream-50/55"> / {COUNT}</span>
+          </p>
+
+          <button
+            type="button"
+            onClick={() => onStep(1)}
+            aria-label="Servicio siguiente"
+            className="inline-flex size-10 items-center justify-center rounded-full border border-cream-50/35 bg-ink-900/25 text-cream-50 backdrop-blur-sm transition-colors hover:bg-cream-50/20 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+          >
+            <ChevronRight className="size-5" aria-hidden />
+          </button>
+        </div>
 
         {/* Selección directa, además de las flechas. */}
-        <div className="ml-auto flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5">
           {services.map((service, index) => (
             <button
               key={service.slug}
