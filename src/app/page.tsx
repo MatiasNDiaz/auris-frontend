@@ -22,16 +22,18 @@ export default function HomePage() {
       <WindReveal>
         <QuickLinks />
       </WindReveal>
+      {/* Servicios y equipo son las dos secciones que el centro quiere mostrar
+          primero, así que van juntas y lo más arriba posible. Antes el equipo
+          quedaba sexto, a diez pantallas de scroll en un teléfono. */}
       <WindReveal palette="beige">
         <ServicesGrid />
       </WindReveal>
-      {/* Va pegado a servicios: la foto es de un tratamiento estético. */}
+      <WindReveal palette="beige">
+        <TeamCarousel />
+      </WindReveal>
       <StickyTreatment />
       <WindReveal>
         <AboutPreview />
-      </WindReveal>
-      <WindReveal palette="beige">
-        <TeamCarousel />
       </WindReveal>
       <WindReveal>
         <TestimonialsSlider />
