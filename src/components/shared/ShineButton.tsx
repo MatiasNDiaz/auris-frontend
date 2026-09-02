@@ -102,10 +102,16 @@ export function ShineButton({
     // sus stops en hover, y eso vive en `background-image`, que no interpola.
     // Tailwind v4 los registra con `@property … syntax:"<color>"`, así que
     // transicionando las variables el degradé sí se funde en vez de saltar.
-    "transition-[transform,box-shadow,background-color,border-color,color,--tw-gradient-from,--tw-gradient-to] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
+    //
+    // La curva es simétrica y sale de cero: `cubic-bezier(0.22,1,0.36,1)`
+    // arrancaba con una velocidad altísima —el botón recorría casi todo en el
+    // primer instante y frenaba— y eso es lo que se leía como un salto. Con
+    // esta sube despacio, y al sacar el cursor baja igual de despacio, porque
+    // una transición recorre la misma curva en reversa.
+    "transition-[transform,box-shadow,background-color,border-color,color,--tw-gradient-from,--tw-gradient-to] duration-[520ms] [transition-timing-function:cubic-bezier(0.45,0.05,0.35,1)]",
     // 4px y no 2: a 2px el recorrido es tan corto que la curva no se llega a
     // percibir y el gesto se lee como un salto en vez de una elevación.
-    "hover:-translate-y-1 active:translate-y-0 active:duration-150",
+    "hover:-translate-y-1 active:translate-y-0 active:duration-200",
     "motion-reduce:transition-none motion-reduce:hover:translate-y-0",
     "focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:outline-none",
     "disabled:pointer-events-none disabled:opacity-60",

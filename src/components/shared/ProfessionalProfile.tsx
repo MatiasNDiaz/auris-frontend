@@ -53,8 +53,8 @@ const palettes = {
     quote: "text-rose-400",
     iconBox: "bg-rose-100 text-rose-700 ring-1 ring-rose-200",
     border: "border-rose-200",
-    band: "bg-rose-50",
-    panel: "bg-rose-100/70",
+    band: "bg-rose-100/60",
+    panel: "bg-rose-200/55",
     ring: "ring-rose-300/60",
     outline: "text-rose-400",
     card: "bg-rose-50/80",
@@ -63,7 +63,7 @@ const palettes = {
     ctaText: "text-rose-100",
     ctaMuted: "text-rose-200",
     header:
-      "linear-gradient(180deg, #fae4ef 0%, #fdf3f8 55%, #fdfbf6 100%), radial-gradient(80% 60% at 85% 8%, rgba(212,112,159,.28), transparent 70%)",
+      "linear-gradient(180deg, #f6d9e8 0%, #fbe9f2 52%, #fdf3f8 100%), radial-gradient(80% 60% at 85% 8%, rgba(181,72,126,.30), transparent 70%)",
     ctaGlow:
       "radial-gradient(circle at 15% 20%, rgba(231,158,194,.75), transparent 45%), radial-gradient(circle at 85% 80%, rgba(76,122,65,.5), transparent 45%)",
   },
@@ -76,8 +76,8 @@ const palettes = {
     quote: "text-clinic-400",
     iconBox: "bg-clinic-100 text-clinic-700 ring-1 ring-clinic-200",
     border: "border-clinic-200",
-    band: "bg-clinic-50",
-    panel: "bg-clinic-100/70",
+    band: "bg-clinic-100/60",
+    panel: "bg-clinic-200/55",
     ring: "ring-clinic-300/60",
     outline: "text-clinic-400",
     card: "bg-clinic-50/80",
@@ -86,7 +86,7 @@ const palettes = {
     ctaText: "text-clinic-100",
     ctaMuted: "text-clinic-200",
     header:
-      "linear-gradient(180deg, #dfe7f4 0%, #f0f4fa 55%, #fdfbf6 100%), radial-gradient(80% 60% at 85% 8%, rgba(100,128,180,.26), transparent 70%)",
+      "linear-gradient(180deg, #d5e0f0 0%, #e6edf7 52%, #f0f4fa 100%), radial-gradient(80% 60% at 85% 8%, rgba(68,95,149,.30), transparent 70%)",
     ctaGlow:
       "radial-gradient(circle at 15% 20%, rgba(147,170,210,.75), transparent 45%), radial-gradient(circle at 85% 80%, rgba(76,122,65,.5), transparent 45%)",
   },
