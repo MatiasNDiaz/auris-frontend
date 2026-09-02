@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { LeafShape, type LeafPalette } from "./leaf-art";
+import { LEAF_ANCHOR_Y, LeafShape, type LeafPalette } from "./leaf-art";
 import { cn } from "@/lib/utils";
 
 /**
@@ -230,7 +230,11 @@ export function LeafSprig({
       viewBox="0 0 140 180"
       fill="none"
       className={cn(
-        "pointer-events-none absolute select-none",
+        // Sin `overflow-visible` el SVG recorta contra su propio viewBox y la
+        // hoja de la base —la más grande, que asoma unas unidades por debajo
+        // del arranque del tallo— queda con la punta cortada al ras. Recortar
+        // es tarea de la sección, que ya lleva `overflow-hidden`.
+        "pointer-events-none absolute overflow-visible select-none",
         flip && "-scale-x-100",
         className,
       )}
@@ -258,7 +262,11 @@ export function LeafSprig({
           // pisaría al atributo y la hoja saltaría al origen del lienzo.
           <g
             key={index}
-            transform={`translate(${leaf.x.toFixed(2)} ${leaf.y.toFixed(2)}) rotate(${leaf.rotate.toFixed(2)}) scale(${leaf.scale.toFixed(3)} ${(leaf.flip ? -leaf.scale : leaf.scale).toFixed(3)})`}
+            // El `translate` final es el que hace que la hoja toque el tallo por
+            // donde nace y no por el medio: sin él se ancla por el origen de su
+            // lienzo, que queda 28 unidades por encima del pecíolo, y el trazo
+            // termina cruzando la lámina.
+            transform={`translate(${leaf.x.toFixed(2)} ${leaf.y.toFixed(2)}) rotate(${leaf.rotate.toFixed(2)}) scale(${leaf.scale.toFixed(3)} ${(leaf.flip ? -leaf.scale : leaf.scale).toFixed(3)}) translate(0 ${-LEAF_ANCHOR_Y})`}
           >
             <g
               className="auris-leaf-flutter"

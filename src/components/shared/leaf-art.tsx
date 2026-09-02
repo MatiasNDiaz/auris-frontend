@@ -55,6 +55,15 @@ export const leafPalettes = {
   },
 } as const;
 
+/**
+ * Altura del arranque del pecíolo dentro del sistema local de la hoja.
+ *
+ * El dibujo nace en (0, 28), no en el origen del lienzo: quien quiera apoyar la
+ * hoja sobre un punto tiene que compensar ese desfasaje o el punto le va a caer
+ * en el medio de la lámina.
+ */
+export const LEAF_ANCHOR_Y = 28;
+
 export type LeafPalette = keyof typeof leafPalettes;
 export type LeafDetail = "full" | "veined" | "simple";
 
