@@ -156,24 +156,45 @@ type Leaf = {
  * Dónde arranca y termina el follaje sobre el tallo.
  *
  * `FIRST` deja libre el tramo de abajo —el que se hunde bajo el borde de la
- * sección—: una hoja ahí queda partida al medio por el corte.
+ * sección—: una hoja ahí queda partida al medio por el corte. Arranca por
+ * encima de `PAIR_AT` para dejarle lugar a la compañera de la base.
  */
-const FIRST = 0.1;
+const FIRST = 0.16;
 const LAST = 0.97;
+
+/**
+ * Dónde va la compañera de la base, por debajo de la serie.
+ *
+ * Es lo más abajo que puede ir sin que el borde de la sección le coma la punta:
+ * la hoja cuelga unas once unidades por debajo de donde se inserta.
+ */
+const PAIR_AT = 0.1;
+
+/**
+ * Reparto de la serie sobre el tallo.
+ *
+ * El exponente junta las inserciones hacia la punta. Con paso constante la
+ * separación no acompañaba al tamaño: abajo, donde la hoja es grande, se
+ * superponían, y arriba, donde es chica, quedaba tallo a la vista.
+ */
+const leafAt = (k: number) => FIRST + (LAST - FIRST) * Math.pow(k, 0.8);
 
 /**
  * Una hoja sobre el tallo.
  *
- * `k` va de 0 en la base a 1 en la punta y gobierna las tres cosas que cambian
- * a lo largo del tallo: dónde se inserta, cuánto se abre y cuánto mide. `salt`
- * solo desordena la variación, para que dos hojas en la misma posición no
- * salgan calcadas.
+ * `at` es dónde se inserta —fracción del largo— y `k`, de 0 en la base a 1 en
+ * la punta, gobierna cuánto se abre y cuánto mide. Van separados para poder
+ * pedir una hoja fuera del reparto de la serie sin que pierda el tamaño que le
+ * corresponde a esa altura. `salt` solo desordena la variación.
  */
-function makeLeaf(k: number, side: -1 | 1, seed: number, salt: number): Leaf {
-  // El exponente junta las inserciones hacia la punta. Con paso constante la
-  // separación no acompañaba al tamaño: abajo, donde la hoja es grande, se
-  // superponían, y arriba, donde es chica, quedaba tallo a la vista.
-  const point = stemAt(FIRST + (LAST - FIRST) * Math.pow(k, 0.8));
+function makeLeaf(
+  at: number,
+  k: number,
+  side: -1 | 1,
+  seed: number,
+  salt: number,
+): Leaf {
+  const point = stemAt(at);
 
   // Apertura respecto del tallo: las de abajo se abren casi en cruz y las de
   // la punta van cada vez más pegadas al eje, como en la planta real.
@@ -198,14 +219,19 @@ function makeLeaf(k: number, side: -1 | 1, seed: number, salt: number): Leaf {
 }
 
 function buildLeaves(count: number, seed: number, pairBase: boolean): Leaf[] {
-  const leaves = Array.from({ length: count }, (_, i) =>
-    makeLeaf(count === 1 ? 0 : i / (count - 1), i % 2 === 0 ? -1 : 1, seed, i),
-  );
+  const leaves = Array.from({ length: count }, (_, i) => {
+    const k = count === 1 ? 0 : i / (count - 1);
+    return makeLeaf(leafAt(k), k, i % 2 === 0 ? -1 : 1, seed, i);
+  });
 
-  // Las hojas van alternando un lado y el otro, así que la de más abajo se
-  // queda sin par y el arranque del tallo se ve desbalanceado. Esta es su
-  // compañera: mismo punto de inserción, el lado contrario.
-  if (pairBase) leaves.push(makeLeaf(0, 1, seed, count + 4));
+  // Las hojas van alternando un lado y el otro, así que la primera se queda
+  // sin par y el arranque del tallo se ve desbalanceado. Esta es su compañera:
+  // del lado contrario y un escalón por debajo, porque a la misma altura el
+  // par se lee como un dibujo espejado y no como una planta.
+  //
+  // Va por debajo de la serie y no intercalada entre sus dos primeras hojas:
+  // ahí caía al lado de una del mismo lado y las dos se empastaban.
+  if (pairBase) leaves.push(makeLeaf(PAIR_AT, 0, 1, seed, count + 4));
 
   return leaves;
 }
