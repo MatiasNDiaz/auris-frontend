@@ -14,6 +14,8 @@ const COUNT = services.length;
 
 type Slot = {
   x: number;
+  /** Altura respecto del tope de la caja. Es la que curva la fila. */
+  y: number;
   rotate: number;
   scale: number;
   opacity: number;
@@ -29,21 +31,23 @@ type Slot = {
  * fuera de cuadro a la derecha, ya invisibles, para volver a entrar al abanico.
  */
 const desktopFan: Slot[] = [
-  { x: 0, rotate: -5, scale: 1, opacity: 1, zIndex: 40 },
-  { x: 124, rotate: 1, scale: 0.96, opacity: 1, zIndex: 30 },
-  { x: 248, rotate: 6, scale: 0.92, opacity: 0.95, zIndex: 20 },
-  { x: 372, rotate: 11, scale: 0.88, opacity: 0.7, zIndex: 10 },
+  { x: 0, y: 10, rotate: -12, scale: 1, opacity: 1, zIndex: 40 },
+  { x: 124, y: -24, rotate: -4, scale: 0.96, opacity: 1, zIndex: 30 },
+  { x: 248, y: -18, rotate: 6, scale: 0.92, opacity: 0.95, zIndex: 20 },
+  { x: 372, y: 16, rotate: 15, scale: 0.88, opacity: 0.7, zIndex: 10 },
 ];
 const desktopHidden: Slot = {
   x: 480,
-  rotate: 15,
+  y: 30,
+  rotate: 19,
   scale: 0.85,
   opacity: 0,
   zIndex: 0,
 };
 const desktopExit: Slot = {
   x: -240,
-  rotate: -18,
+  y: 34,
+  rotate: -22,
   scale: 0.8,
   opacity: 0,
   zIndex: 0,
@@ -51,21 +55,23 @@ const desktopExit: Slot = {
 
 /** En mobile el abanico se acorta a tres cards para que siga siendo legible. */
 const mobileFan: Slot[] = [
-  { x: 0, rotate: -4, scale: 1, opacity: 1, zIndex: 40 },
-  { x: 82, rotate: 2, scale: 0.95, opacity: 1, zIndex: 30 },
-  { x: 156, rotate: 8, scale: 0.9, opacity: 0.7, zIndex: 20 },
+  { x: 0, y: 12, rotate: -9, scale: 1, opacity: 1, zIndex: 40 },
+  { x: 82, y: -18, rotate: 0, scale: 0.95, opacity: 1, zIndex: 30 },
+  { x: 156, y: 16, rotate: 10, scale: 0.9, opacity: 0.7, zIndex: 20 },
 ];
 const mobileHidden: Slot = {
   x: 214,
-  rotate: 11,
-  scale: 0.88,
+  y: 24,
+  rotate: 14,
+  scale: 0.86,
   opacity: 0,
   zIndex: 0,
 };
 const mobileExit: Slot = {
   x: -150,
-  rotate: -14,
-  scale: 0.85,
+  y: 26,
+  rotate: -16,
+  scale: 0.82,
   opacity: 0,
   zIndex: 0,
 };
@@ -98,9 +104,9 @@ export function ServiceFan({
   };
 
   return (
-    <div className={cn("flex flex-col gap-4", className)}>
+    <div className={cn("flex flex-col gap-2", className)}>
       {/* El ancho fija el abanico completo; lo que se va fuera lo recorta el hero. */}
-      <div className="relative h-40 w-69 sm:h-46 md:h-50 md:w-131">
+      <div className="relative mt-6 h-44 w-69 sm:h-50 md:h-54 md:w-131">
         {services.map((service, index) => {
           const distance = (index - active + COUNT) % COUNT;
           const slot = slotFor(distance);
@@ -111,6 +117,7 @@ export function ServiceFan({
               key={service.slug}
               animate={{
                 x: slot.x,
+                y: slot.y,
                 rotate: slot.rotate,
                 scale: slot.scale,
                 opacity: slot.opacity,

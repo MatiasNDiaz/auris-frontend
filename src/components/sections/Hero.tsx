@@ -102,7 +102,7 @@ export function Hero() {
           {/* Sin `mode="wait"`: esperar la salida del titular anterior lo dejaba
               un paso atrás del fondo. Entrada y salida corren a la vez, y el
               texto saliente va en absolute para no empujar el layout. */}
-          <div className="relative mt-5 min-h-52 sm:min-h-56 lg:min-h-58">
+          <div className="relative mt-7 min-h-56 sm:min-h-60 lg:min-h-64">
             <AnimatePresence initial={false}>
               <motion.div
                 key={active}
@@ -130,10 +130,10 @@ export function Hero() {
                 {/* La sombra de texto sostiene la lectura sobre las zonas
                     claras de la foto sin tener que oscurecer el overlay, que
                     apagaría la imagen entera. */}
-                <h1 className="mt-4 font-serif text-4xl leading-[1.08] text-balance text-cream-50 [text-shadow:0_2px_20px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-6xl">
+                <h1 className="mt-5 font-serif text-4xl leading-[1.08] text-balance text-cream-50 [text-shadow:0_2px_20px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-6xl">
                   {services[active].heroTitle}
                 </h1>
-                <p className="mt-5 max-w-xl text-lg leading-relaxed text-pretty text-cream-50/95 [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
+                <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-cream-50/95 [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
                   {services[active].heroSubtitle}
                 </p>
               </motion.div>
@@ -142,7 +142,7 @@ export function Hero() {
 
           <div
             style={{ "--rise-delay": RISE_DELAY.cta } as CSSProperties}
-            className="auris-rise mt-7 flex flex-col gap-3 sm:flex-row sm:items-center"
+            className="auris-rise mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
           >
             <ShineButton href="/servicios" tone="primary" effect="shine">
               Conocé nuestros servicios
@@ -169,7 +169,7 @@ export function Hero() {
           // Por encima del alto de la onda, para que la curva no le muerda el
           // pie a las cards. Los controles pasaron a dos filas —flechas y
           // puntos— así que el abanico sube lo que crecieron.
-          className="auris-rise lg:absolute lg:right-12 lg:bottom-36"
+          className="auris-rise lg:absolute lg:right-12 lg:bottom-32"
         >
           <ServiceFan
             active={active}
