@@ -679,23 +679,46 @@ html.vt-active {
 
 /* Asentado de la foto de la ficha ---------------------------------------- */
 
-/* La sombra y el aro de color de la foto aparecían de golpe al terminar el
- * morph.
+/* La foto llega sola y recién cuando se detiene aparece el resto, en orden: un
+ * trazo recorre el contorno y, cuando terminó la vuelta, entra la sombra.
  *
- * El motivo: el snapshot que usa la View Transition no los lleva. La sombra se
- * pinta fuera de la caja del elemento y el aro es otro `box-shadow`, así que
- * ninguno entra en la captura: la foto viaja sin ellos y ambos existen recién
- * cuando el elemento real toma el control.
+ * Nada de esto puede existir mientras la foto viaja. El snapshot que usa la
+ * View Transition no lleva ni sombra ni borde —la sombra se pinta fuera de la
+ * caja y el borde es otro `box-shadow`—, así que si se dibujan durante el
+ * morph quedan en la posición FINAL mientras la imagen todavía se mueve: se ve
+ * un rectángulo vacío suelto en la página. Por eso las dos capas arrancan
+ * ocultas y esperan a que el morph termine.
  *
- * No se pueden animar directamente. Tailwind los compone en un solo
- * `box-shadow` a partir de `--tw-shadow` y `--tw-ring-shadow`, y esas variables
- * están registradas con `syntax:"*"`, o sea que no interpolan. Y declarar el
- * `box-shadow` entero en un keyframe pisaba el aro, que terminaba apareciendo
- * igual de golpe al cerrar la animación.
- *
- * Por eso viven en una capa aparte, apoyada sobre la foto y fuera de su
- * `overflow-hidden` —si no, la sombra quedaría recortada—, y lo que se anima es
- * la opacidad de esa capa: interpola siempre y corre en la capa de composición. */
+ * El trazo es un `<rect>` con `pathLength="100"`: normaliza el perímetro a 100
+ * unidades, así el mismo `stroke-dashoffset` sirve para cualquier tamaño de
+ * pantalla sin recalcular nada. */
+@keyframes auris-outline-draw {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.auris-photo-outline rect {
+  /* Geometría por CSS y no por atributos: así el trazo sigue el tamaño real de
+     la foto en cada breakpoint sin tener que medirla. */
+  x: 1px;
+  y: 1px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  rx: var(--radius-3xl);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+  animation: auris-outline-draw 0.75s cubic-bezier(0.5, 0, 0.2, 1) 0.55s
+    backwards;
+}
+
 @keyframes auris-photo-settle {
   from {
     opacity: 0;
@@ -705,13 +728,14 @@ html.vt-active {
   }
 }
 
-.auris-photo-settle {
-  animation: auris-photo-settle 0.5s cubic-bezier(0.22, 0.68, 0.24, 1) 0.15s
-    backwards;
+/* Entra cuando el trazo ya dio la vuelta entera: 0.55 + 0.75 = 1.3s. */
+.auris-photo-shadow {
+  animation: auris-photo-settle 0.55s ease-out 1.3s backwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .auris-photo-settle {
+  .auris-photo-outline rect,
+  .auris-photo-shadow {
     animation: none;
   }
 }

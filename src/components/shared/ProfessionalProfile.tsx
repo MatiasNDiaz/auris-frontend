@@ -27,6 +27,16 @@ const content = {
   }),
 };
 
+/** El CTA sube más y desacelera más, para que no llegue de golpe. */
+const cta = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (delay: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.95, delay, ease: [0.22, 1, 0.36, 1] as const },
+  }),
+};
+
 /**
  * Cada ficha toma su acento del profesional: azul profundo para varones, rosa
  * violáceo para mujeres. El encabezado es un único degradé continuo de arriba
@@ -46,6 +56,7 @@ const palettes = {
     band: "bg-rose-50",
     panel: "bg-rose-100/70",
     ring: "ring-rose-300/60",
+    outline: "text-rose-400",
     card: "bg-rose-50/80",
     button: "rose",
     ctaPanel: "bg-rose-700",
@@ -68,6 +79,7 @@ const palettes = {
     band: "bg-clinic-50",
     panel: "bg-clinic-100/70",
     ring: "ring-clinic-300/60",
+    outline: "text-clinic-400",
     card: "bg-clinic-50/80",
     button: "clinic",
     ctaPanel: "bg-clinic-700",
@@ -108,8 +120,10 @@ export function ProfessionalProfile({
           <ProfessionalBackLinks tone={c.button} />
 
           <div className="mt-10 grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
-            {/* La foto va sin sombra ni aro: los lleva la capa de abajo, que
-                se funde al ritmo del morph. Ver `auris-photo-settle`. */}
+            {/* La foto llega sola. Recién cuando se detiene, un trazo recorre
+                el contorno y después entra la sombra. Ninguna de las dos capas
+                puede existir durante el morph: quedarían dibujadas en la
+                posición final mientras la imagen todavía se mueve. */}
             <div className="relative">
               <AnimatedProfessionalImage
                 src={professional.photoUrl}
@@ -119,13 +133,23 @@ export function ProfessionalProfile({
                 sizes="(max-width: 1024px) 90vw, 460px"
                 className="aspect-4/5 w-full rounded-3xl"
               />
+
+              {/* Sombra: la última en llegar. */}
               <span
                 aria-hidden
-                className={cn(
-                  "auris-photo-settle pointer-events-none absolute inset-0 rounded-3xl shadow-2xl ring-1",
-                  c.ring,
-                )}
+                className="auris-photo-shadow pointer-events-none absolute inset-0 rounded-3xl shadow-2xl"
               />
+
+              {/* Trazo del contorno, en el color de la persona. */}
+              <svg
+                aria-hidden
+                className={cn(
+                  "auris-photo-outline pointer-events-none absolute inset-0 size-full",
+                  c.outline,
+                )}
+              >
+                <rect pathLength={100} />
+              </svg>
             </div>
 
             <div>
@@ -213,10 +237,12 @@ export function ProfessionalProfile({
               </motion.p>
 
               <motion.div
-                variants={content}
+                variants={cta}
                 initial="hidden"
                 animate="visible"
-                custom={0.5}
+                // Sube después de que el trazo cerró el contorno, con más
+                // recorrido y una curva que desacelera de a poco.
+                custom={0.95}
                 className="mt-9"
               >
                 <WhatsAppButton
