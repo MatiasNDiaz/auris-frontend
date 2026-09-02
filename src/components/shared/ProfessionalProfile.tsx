@@ -27,13 +27,13 @@ const content = {
   }),
 };
 
-/** El CTA sube más y desacelera más, para que no llegue de golpe. */
+/** El CTA sube más que el resto del texto, pero sin hacerse esperar. */
 const cta = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 26 },
   visible: (delay: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.95, delay, ease: [0.22, 1, 0.36, 1] as const },
+    transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as const },
   }),
 };
 
@@ -245,9 +245,10 @@ export function ProfessionalProfile({
                 variants={cta}
                 initial="hidden"
                 animate="visible"
-                // Sube después de que el trazo cerró el contorno, con más
-                // recorrido y una curva que desacelera de a poco.
-                custom={0.95}
+                // Cierra el escalonado del texto, sin esperar al trazo del
+                // contorno: entre retardo y recorrido tardaba casi dos segundos
+                // en estar disponible.
+                custom={0.45}
                 className="mt-9"
               >
                 <WhatsAppButton

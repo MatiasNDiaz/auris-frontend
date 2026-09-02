@@ -33,7 +33,8 @@ export const services: Service[] = [
       "Prevención, tratamientos restauradores y estética dental, explicados paso a paso antes de empezar.",
     fullDescription:
       "Cuidamos tu salud bucal con un enfoque preventivo y mínimamente invasivo. Desde el control periódico y la limpieza profesional hasta tratamientos restauradores y estética dental, cada plan se arma después de un diagnóstico completo que conversamos con vos antes de empezar. Contamos con equipamiento digital que reduce tiempos de consulta y hace más cómoda cada visita.",
-    imageUrl: "/odontologia.webp",
+    imageUrl:
+      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1920&auto=format&fit=crop",
     features: [
       "Diagnóstico y control preventivo",
       "Limpieza y profilaxis profesional",
