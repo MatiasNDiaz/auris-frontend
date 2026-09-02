@@ -31,14 +31,23 @@ type Cubic = readonly [
   number,
 ];
 
-/** El tallo, en coordenadas absolutas para poder evaluarlo. */
+/**
+ * El tallo, en coordenadas absolutas para poder evaluarlo.
+ *
+ * El primer tramo prolonga el trazo por debajo del alto de la caja, siguiendo
+ * la tangente que traía: es el pedazo que queda tapado por el borde de la
+ * sección y el que evita que la planta se lea como flotando.
+ */
 const STEM: readonly Cubic[] = [
+  [52.3, 194, 52.8, 189.3, 53.4, 184.6, 54, 180],
   [54, 180, 58, 148, 62, 118, 74, 92],
   [74, 92, 83, 72, 90, 54, 94, 30],
 ];
 
 /** El mismo recorrido, ya escrito para el atributo `d`. */
-const STEM_D = "M54 180C58 148 62 118 74 92C83 72 90 54 94 30";
+const STEM_D =
+  "M52.3 194C52.8 189.3 53.4 184.6 54 180C58 148 62 118 74 92C83 72 90 54 94 30";
+
 
 type StemPoint = { x: number; y: number; angle: number };
 
@@ -144,8 +153,13 @@ type Leaf = {
   duration: number;
 };
 
-/** Dónde arranca y termina el follaje sobre el tallo. */
-const FIRST = 0.05;
+/**
+ * Dónde arranca y termina el follaje sobre el tallo.
+ *
+ * `FIRST` deja libre el tramo de abajo —el que se hunde bajo el borde de la
+ * sección—: una hoja ahí queda partida al medio por el corte.
+ */
+const FIRST = 0.1;
 const LAST = 0.97;
 
 function buildLeaves(count: number, seed: number): Leaf[] {
