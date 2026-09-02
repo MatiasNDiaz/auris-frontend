@@ -1,20 +1,19 @@
+import { professionals } from "./professionals";
+import { services } from "./services";
+
 /**
  * Franja de confianza de la Home.
  *
- * Punto único de edición: cuando lleguen los números reales se reemplaza el
- * `null` de `value` por la cifra y no hay que tocar el componente. Mientras
- * `value` sea `null` la franja muestra el token de `placeholder` tal cual, así
- * queda a la vista lo que falta completar y nadie lo confunde con un dato real.
- * En cuanto hay número, el conteo ascendente arranca solo.
+ * Punto único de edición de las cuatro cifras. Dos se calculan solas a partir
+ * del contenido del sitio, así que no pueden quedar desfasadas de lo que el
+ * visitante ya vio más arriba; las otras dos son datos del centro y se
+ * escriben a mano acá.
  */
 export type Stat = {
   key: string;
   /** Clave del ícono; se resuelve en `StatsBand`. */
   icon: "calendar" | "heart" | "stethoscope" | "layers";
-  /** El número real. `null` mientras no lo tengamos. */
-  value: number | null;
-  /** Token que se muestra —y que hay que reemplazar— mientras no haya número. */
-  placeholder: string;
+  value: number;
   /** Va pegado al número, sin espacio. */
   suffix?: string;
   label: string;
@@ -26,8 +25,7 @@ export const stats: Stat[] = [
   {
     key: "anios",
     icon: "calendar",
-    value: null,
-    placeholder: "[[PLACEHOLDER_ANIOS]]",
+    value: 5,
     suffix: "+",
     label: "años de trayectoria",
     summary:
@@ -36,8 +34,7 @@ export const stats: Stat[] = [
   {
     key: "pacientes",
     icon: "heart",
-    value: null,
-    placeholder: "[[PLACEHOLDER_PACIENTES]]",
+    value: 250,
     suffix: "+",
     label: "pacientes atendidos",
     summary:
@@ -46,8 +43,10 @@ export const stats: Stat[] = [
   {
     key: "profesionales",
     icon: "stethoscope",
-    value: null,
-    placeholder: "[[PLACEHOLDER_PROFESIONALES]]",
+    // Sale del listado del equipo en vez de escribirse a mano: la cifra que
+    // muestra la franja es exactamente la cantidad de fichas que puede contar
+    // alguien en /profesionales, y se corrige sola cuando cambie el equipo.
+    value: professionals.length,
     label: "profesionales especializados",
     summary:
       "Cada uno con su matrícula y su especialidad, y una mirada compartida cuando el caso lo pide.",
@@ -55,8 +54,8 @@ export const stats: Stat[] = [
   {
     key: "servicios",
     icon: "layers",
-    value: null,
-    placeholder: "[[PLACEHOLDER_SERVICIOS]]",
+    /** Ídem: es el largo de la grilla de servicios. */
+    value: services.length,
     label: "especialidades",
     summary:
       "Odontología, estética, psicología, kinesiología, fonoaudiología y el taller de adultos mayores, en un mismo lugar.",
