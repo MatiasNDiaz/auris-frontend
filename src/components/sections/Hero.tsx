@@ -10,6 +10,7 @@ import { WaveDivider } from "@/components/shared/WaveDivider";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { siteConfig } from "@/config/site";
 import { services } from "@/lib/data/services";
+import { renderServiceIcon } from "@/lib/icons";
 
 const AUTOPLAY_MS = 4000;
 
@@ -119,12 +120,33 @@ export function Hero() {
                 }}
                 className="inset-x-0 top-0"
               >
-                {/* El nombre del servicio iba en verde claro suelto sobre la
-                    foto y contra un consultorio blanco desaparecía. En chip
-                    lleno gana fondo propio, y de paso queda una jerarquía
-                    clara con el saludo de arriba: aquel va en contorno, este
-                    en sólido porque es el dato que cambia. */}
-                <p className="inline-flex items-center rounded-full bg-primary-600/95 px-3.5 py-1.5 text-xs font-semibold tracking-[0.16em] text-cream-50 uppercase shadow-lg shadow-primary-900/30 ring-1 ring-cream-50/25">
+                {/* El nombre del servicio. Antes iba en verde claro suelto
+                    sobre la foto y contra un consultorio blanco desaparecía;
+                    en pastilla llena gana fondo propio y queda una jerarquía
+                    clara con el saludo de arriba, que va en contorno.
+
+                    El relleno es un degradé y no un plano: en plano la
+                    pastilla se leía como una etiqueta pegada. El degradé de
+                    claro a oscuro, el filete de luz de un píxel en el borde
+                    superior y el aro interior le dan el volumen que le
+                    faltaba. El ícono del servicio, en disco crema, la ancla
+                    a lo que está mostrando el carrusel. */}
+                <p className="relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-linear-to-b from-primary-500 to-primary-700 py-1.5 pr-4 pl-1.5 text-xs font-semibold tracking-[0.16em] text-cream-50 uppercase shadow-lg shadow-primary-900/35 ring-1 ring-cream-50/30 ring-inset">
+                  <span
+                    aria-hidden
+                    // Se apaga hacia las puntas: a lo ancho completo se leía
+                    // como una línea dibujada y no como un reflejo.
+                    className="absolute inset-x-3 top-0 h-px bg-linear-to-r from-transparent via-cream-50/55 to-transparent"
+                  />
+                  <span
+                    aria-hidden
+                    className="inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-cream-50 text-primary-700 shadow-sm shadow-primary-900/25"
+                  >
+                    {renderServiceIcon(services[active].icon, {
+                      className: "size-3.5",
+                      strokeWidth: 2,
+                    })}
+                  </span>
                   {services[active].name}
                 </p>
                 {/* La sombra de texto sostiene la lectura sobre las zonas
