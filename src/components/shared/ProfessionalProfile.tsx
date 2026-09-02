@@ -105,7 +105,7 @@ export function ProfessionalProfile({
         <LeafSprig palette="green" size="sm" flip className="-top-2 right-4 h-32 opacity-35" />
 
         <div className="container-auris relative">
-          <ProfessionalBackLinks />
+          <ProfessionalBackLinks tone={c.button} />
 
           <div className="mt-10 grid gap-12 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
             <AnimatedProfessionalImage

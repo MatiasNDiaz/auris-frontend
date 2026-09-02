@@ -78,6 +78,13 @@ const SCRIPT = `
   // eso son decenas de animaciones corriendo mientras el usuario mira otra
   // sección. El margen generoso las despierta antes de que asomen, así que
   // nunca se ve una arrancar.
+  //
+  // Arranca en load y no en DOMContentLoaded: este observer escribe
+  // data-offscreen en el DOM, y hacerlo antes de que React hidrate le
+  // aparece a React como un atributo que el servidor no mandó. Para entonces
+  // ya está todo pintado, y esto es una optimización, no algo que se vea.
+  var seen = typeof WeakSet === 'function' ? new WeakSet() : null;
+
   var decor = new IntersectionObserver(function (entries) {
     for (var i = 0; i < entries.length; i++) {
       var el = entries[i].target;
@@ -86,10 +93,13 @@ const SCRIPT = `
     }
   }, { rootMargin: '250px 0px' });
 
+  // El registro de lo ya observado va en un WeakSet y no en un atributo: menos
+  // ruido en el DOM y nada que a React le pueda parecer un desajuste.
   var watchDecor = function () {
-    var nodes = d.querySelectorAll('[data-decor]:not([data-decor-watched])');
+    var nodes = d.querySelectorAll('[data-decor]');
     for (var i = 0; i < nodes.length; i++) {
-      nodes[i].setAttribute('data-decor-watched', '');
+      if (seen && seen.has(nodes[i])) continue;
+      if (seen) seen.add(nodes[i]);
       decor.observe(nodes[i]);
     }
   };
@@ -99,8 +109,8 @@ const SCRIPT = `
     new MutationObserver(watchDecor).observe(d.body, { childList: true, subtree: true });
   };
 
-  if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', startDecor);
-  else startDecor();
+  if (d.readyState === 'complete') startDecor();
+  else window.addEventListener('load', startDecor);
 })();
 `;
 
