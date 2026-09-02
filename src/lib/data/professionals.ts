@@ -265,7 +265,7 @@ export const professionals: Professional[] = [
   {
     slug: "diego-navarro",
     motto:
-      "El dolor cuenta algo. Mi trabajo es escucharlo y devolverte el movimiento.",
+      "Un buen tratamiento estético se termina de definir en las semanas que siguen.",
     credentials: [
       {
         title: "Licenciatura en Kinesiología y Fisiatría",
@@ -273,8 +273,8 @@ export const professionals: Professional[] = [
         year: "2009",
       },
       {
-        title: "Especialización en Kinesiología Deportiva",
-        institution: "AKD",
+        title: "Especialización en Drenaje Linfático Manual",
+        institution: "Método Vodder",
         year: "2012",
       },
       {
@@ -283,26 +283,26 @@ export const professionals: Professional[] = [
         year: "2016",
       },
       {
-        title: "Certificación en Punción Seca y Terapia Manual Ortopédica",
+        title: "Certificación en Kinesiología Aplicada a la Estética",
         institution: "Formación de posgrado",
         year: "2018",
       },
     ],
     gender: "male",
     name: "Lic. Diego Navarro",
-    specialty: "Kinesiología y rehabilitación deportiva",
+    specialty: "Kinesiología estética y drenaje",
     serviceSlug: "kinesiologia",
     photoUrl:
       "https://images.unsplash.com/photo-1730597842283-943c7986ee2c?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
-    bio: "Combina terapia manual y ejercicio terapéutico para tratar el dolor y recuperar la función. Se especializa en rehabilitación post quirúrgica de rodilla y hombro, y en prevención de lesiones deportivas.",
+    bio: "Acompaña la recuperación posterior a los tratamientos faciales y corporales del centro. Se especializa en drenaje linfático manual y en el seguimiento de la zona tratada durante las semanas en que el resultado termina de asentarse.",
     education: [
       "Licenciatura en Kinesiología y Fisiatría — Universidad Favaloro",
-      "Especialización en Kinesiología Deportiva — AKD",
+      "Especialización en Drenaje Linfático Manual — Método Vodder",
     ],
-    experience: "11 años en rehabilitación traumatológica y deportiva.",
+    experience: "11 años acompañando tratamientos estéticos faciales y corporales.",
     certifications: [
       "Matrícula Nacional MN 14.298",
-      "Certificación en Punción Seca y Terapia Manual Ortopédica",
+      "Certificación en Kinesiología Aplicada a la Estética",
     ],
   },
   {
@@ -436,7 +436,8 @@ export const professionals: Professional[] = [
   },
   {
     slug: "tomas-linares",
-    motto: "La postura no se corrige en una sesión: se construye en la rutina.",
+    motto:
+      "La mandíbula acumula tensión en silencio; casi nadie llega diciendo que le duele ahí.",
     credentials: [
       {
         title: "Licenciatura en Kinesiología y Fisiatría",
@@ -444,7 +445,7 @@ export const professionals: Professional[] = [
         year: "2009",
       },
       {
-        title: "Formación en Reeducación Postural Global (RPG)",
+        title: "Formación en Abordaje de la Articulación Temporomandibular",
         institution: "Formación continua",
         year: "2012",
       },
@@ -454,26 +455,26 @@ export const professionals: Professional[] = [
         year: "2016",
       },
       {
-        title: "Certificación en Ejercicio Terapéutico para Dolor Crónico",
+        title: "Certificación en Terapia Miofuncional Orofacial",
         institution: "Formación de posgrado",
         year: "2018",
       },
     ],
     gender: "male",
     name: "Lic. Tomás Linares",
-    specialty: "Kinesiología y reeducación postural",
+    specialty: "Kinesiología orofacial y ATM",
     serviceSlug: "kinesiologia",
     photoUrl:
       "https://images.unsplash.com/photo-1712215544003-af10130f8eb3?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
-    bio: "Se orienta al tratamiento del dolor crónico de columna y a la reeducación postural en personas con trabajo de oficina. Combina terapia manual con planes de ejercicio domiciliario.",
+    bio: "Trabaja la articulación temporomandibular en pacientes con bruxismo o tensión mandibular, en articulación con el equipo de odontología. Acompaña además la recuperación posterior a intervenciones odontológicas.",
     education: [
       "Licenciatura en Kinesiología y Fisiatría — Universidad de Buenos Aires",
-      "Formación en Reeducación Postural Global (RPG)",
+      "Formación en Abordaje de la Articulación Temporomandibular",
     ],
-    experience: "7 años en consultorio y programas de salud laboral.",
+    experience: "7 años de trabajo conjunto con equipos de odontología.",
     certifications: [
       "Matrícula Nacional MN 16.845",
-      "Certificación en Ejercicio Terapéutico para Dolor Crónico",
+      "Certificación en Terapia Miofuncional Orofacial",
     ],
   },
   {

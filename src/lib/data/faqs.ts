@@ -11,7 +11,7 @@ export const faqs: FAQ[] = [
     category: "Turnos y consultas",
     question: "¿Necesito derivación médica para atenderme?",
     answer:
-      "Para la mayoría de los servicios no hace falta. En kinesiología y fonoaudiología suele solicitarse una orden médica cuando el tratamiento se cubre por obra social; si vas a abonar de forma particular, no es necesaria.",
+      "Para la mayoría de los servicios no hace falta. En fonoaudiología suele solicitarse una orden médica cuando el tratamiento se cubre por obra social; si vas a abonar de forma particular, no es necesaria.",
   },
   {
     category: "Turnos y consultas",
@@ -41,7 +41,7 @@ export const faqs: FAQ[] = [
     category: "Servicios y tratamientos",
     question: "¿Atienden niños y adolescentes?",
     answer:
-      "Sí. Psicología, fonoaudiología, odontología y kinesiología atienden pacientes pediátricos y adolescentes, siempre con acompañamiento de un adulto responsable en la primera entrevista.",
+      "Sí. Psicología, fonoaudiología y odontología atienden pacientes pediátricos y adolescentes, siempre con acompañamiento de un adulto responsable en la primera entrevista.",
   },
   {
     category: "Pagos y cobertura",

@@ -85,22 +85,22 @@ export const services: Service[] = [
   {
     slug: "kinesiologia",
     name: "Kinesiología",
-    icon: "activity",
+    icon: "waves",
     shortDescription:
-      "Rehabilitación del movimiento, tratamiento del dolor y prevención de lesiones.",
-    tagline: "Volver a moverte sin dolor",
-    heroTitle: "Volver a moverte sin dolor",
+      "Kinesiología aplicada a los tratamientos estéticos y odontológicos: drenaje, recuperación y trabajo sobre la zona tratada.",
+    tagline: "El complemento que sostiene el resultado",
+    heroTitle: "El complemento que sostiene el resultado",
     heroSubtitle:
-      "Terapia manual y ejercicio terapéutico, con objetivos medibles y seguimiento en cada sesión.",
+      "Drenaje, recuperación y trabajo manual sobre la zona tratada, para que lo que se hizo en el gabinete se mantenga.",
     fullDescription:
-      "Abordamos el dolor y la limitación funcional combinando terapia manual, ejercicio terapéutico y educación sobre la lesión. Cada tratamiento parte de una evaluación funcional completa y define objetivos medibles, con seguimiento en cada sesión. Trabajamos rehabilitación post quirúrgica, lesiones deportivas y dolores crónicos de columna.",
+      "Trabajamos la kinesiología como complemento de los tratamientos estéticos y odontológicos del centro, no como una consulta aparte. El abordaje incluye drenaje linfático después de procedimientos faciales y corporales, trabajo sobre la articulación temporomandibular en pacientes con bruxismo o tensión mandibular, y acompañamiento en la recuperación posterior a intervenciones odontológicas. Cada plan se arma junto al profesional que llevó adelante el tratamiento, porque el resultado depende tanto de lo que se hizo en el gabinete como de cómo responde el tejido después.",
     imageUrl:
-      "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=1920&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1713085085470-fba013d67e65?q=80&w=1920&auto=format&fit=crop",
     features: [
-      "Evaluación funcional y plan de objetivos",
-      "Terapia manual y ejercicio terapéutico",
-      "Rehabilitación post quirúrgica y deportiva",
-      "Prevención de lesiones y reeducación postural",
+      "Drenaje linfático post tratamiento estético",
+      "Abordaje de la articulación temporomandibular (ATM)",
+      "Recuperación tras procedimientos odontológicos",
+      "Plan coordinado con estética y odontología",
     ],
   },
   {

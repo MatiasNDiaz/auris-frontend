@@ -140,29 +140,31 @@ No es un examen ni el chico tiene que rendir nada. Se juega, se observa cómo se
 Consultar temprano no adelanta un problema. En la mayoría de los casos lo que hace es descartarlo.`,
   },
   {
-    slug: "como-prevenir-lesiones-si-volves-a-entrenar",
+    slug: "que-pasa-con-la-piel-despues-de-un-tratamiento-estetico",
     category: "Kinesiología",
-    title: "Cómo prevenir lesiones si volvés a entrenar después de un parate",
+    title: "Qué pasa con el tejido después de un tratamiento estético",
     excerpt:
-      "La mayoría de las lesiones al retomar la actividad física aparecen en las primeras semanas. Estas son las pautas que trabajamos desde kinesiología.",
+      "El resultado de un tratamiento facial o corporal no se define solo en el gabinete: las semanas siguientes hacen la mitad del trabajo.",
     coverImageUrl:
-      "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?q=80&w=1600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1713085085470-fba013d67e65?q=80&w=1600&auto=format&fit=crop",
     publishedAt: "2025-04-21",
-    content: `Retomar la actividad física después de meses de inactividad es una de las causas más frecuentes de consulta kinesiológica. El entusiasmo inicial suele llevar a hacer en la primera semana el volumen que el cuerpo estaba preparado para tolerar recién en el segundo mes.
+    content: `Cuando termina una sesión de estética facial o corporal, la sensación es que el trabajo ya está hecho. En realidad recién empieza otra etapa: la del tejido respondiendo a lo que se hizo. Esa respuesta, sostenida o abandonada, es lo que separa un resultado que se mantiene de uno que se diluye en un par de semanas.
 
-## El tejido se adapta más lento que la motivación
+## Por qué aparece la hinchazón
 
-El sistema cardiovascular mejora rápido: en dos o tres semanas ya notás diferencia. Pero los tendones, los ligamentos y el cartílago se adaptan mucho más despacio. Esa diferencia de velocidades es exactamente donde aparece la lesión: te sentís en condiciones de hacer más de lo que tus tejidos toleran.
+Después de un procedimiento el tejido retiene líquido. Es una reacción esperable y transitoria, pero si el sistema linfático no la drena a buen ritmo, esa retención se instala y disimula el resultado. El drenaje linfático manual acompaña ese proceso con maniobras específicas que siguen el recorrido de los vasos linfáticos para acelerar la reabsorción.
 
-## Progresión, no intensidad
+## Los primeros días marcan el resto
 
-La regla práctica es aumentar la carga semanal de forma gradual y sostenida, en lugar de dar saltos. Si corriste 10 kilómetros esta semana, la próxima no deberían ser 20.
+La ventana más útil son los días inmediatamente posteriores. Trabajar ahí evita que la zona quede endurecida o con volumen irregular, algo que después cuesta bastante más corregir. Por eso las sesiones de acompañamiento se agendan junto con el tratamiento, no cuando aparece la molestia.
 
-Sumá al menos dos sesiones semanales de trabajo de fuerza. No es opcional ni complementario: es lo que prepara al tendón para absorber carga.
+## La mandíbula también entra en la cuenta
 
-## Señales de alarma
+En los tratamientos de estética dental y en las intervenciones odontológicas pasa algo parecido. La articulación temporomandibular acumula tensión durante y después del procedimiento, sobre todo en pacientes con bruxismo. Un abordaje kinesiológico de la zona reduce esa tensión y hace más llevadera la recuperación.
 
-Un dolor que aparece durante la actividad y desaparece al terminar suele ser adaptativo. Un dolor que persiste más de 24 horas, que aumenta sesión a sesión o que te hace modificar la forma de moverte, no lo es. Ese es el momento de consultar, no cuando ya no podés apoyar el pie.`,
+## Lo que conviene preguntar antes de empezar
+
+Antes de un tratamiento vale la pena saber qué se espera en las semanas siguientes: cuántas sesiones de acompañamiento hacen falta, cuándo empiezan y qué señales indican que algo no está evolucionando como debería. En el centro ese plan se arma junto al profesional que realiza el tratamiento, para que las dos partes del proceso vayan coordinadas.`,
   },
   {
     slug: "salud-bucal-lo-que-el-control-periodico-previene",

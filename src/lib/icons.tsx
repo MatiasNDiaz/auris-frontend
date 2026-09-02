@@ -1,9 +1,9 @@
 import {
-  Activity,
   Brain,
   Ear,
   Sparkles,
   Users,
+  Waves,
   type LucideProps,
 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -17,12 +17,12 @@ import { ToothIcon } from "@/components/shared/ToothIcon";
  * `react-hooks/static-components`.
  */
 const iconMap: Record<string, (props: LucideProps) => ReactNode> = {
-  activity: (props) => <Activity {...props} />,
   brain: (props) => <Brain {...props} />,
   ear: (props) => <Ear {...props} />,
   tooth: (props) => <ToothIcon {...props} />,
   sparkles: (props) => <Sparkles {...props} />,
   users: (props) => <Users {...props} />,
+  waves: (props) => <Waves {...props} />,
 };
 
 export function renderServiceIcon(key: string, props: LucideProps): ReactNode {

@@ -11,7 +11,7 @@ export const testimonials: Testimonial[] = [
   {
     authorName: "María Elena Gómez",
     content:
-      "Llegué por una consulta puntual de kinesiología y terminé encontrando un equipo que se comunica entre sí. Es la primera vez que siento que me tratan como una persona y no como un caso.",
+      "Llegué por una consulta puntual de estética y terminé encontrando un equipo que se comunica entre sí. Es la primera vez que siento que me tratan como una persona y no como un caso.",
     rating: 5,
   },
   {
@@ -29,7 +29,7 @@ export const testimonials: Testimonial[] = [
   {
     authorName: "Sebastián Molina",
     content:
-      "El plan de kinesiología fue realista desde el primer día. No me pidieron nada imposible de sostener y a los seis meses seguía haciendo los ejercicios, que era justamente lo que me costaba.",
+      "El acompañamiento kinesiológico después del tratamiento fue realista desde el primer día. Me explicaron cuántas sesiones necesitaba y por qué, y el resultado se mantuvo tal cual me lo habían anticipado.",
     rating: 4,
   },
   {
