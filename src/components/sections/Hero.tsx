@@ -77,7 +77,9 @@ export function Hero() {
               src={service.imageUrl}
               alt=""
               fill
-              sizes="100vw"
+              // El hero es full-bleed pero por encima de 1600px la foto ya no gana
+              // detalle: se acota para no bajar el 1920 en pantallas grandes.
+              sizes="(max-width: 1600px) 100vw, 1600px"
               priority={index === 0}
               className="object-cover"
             />

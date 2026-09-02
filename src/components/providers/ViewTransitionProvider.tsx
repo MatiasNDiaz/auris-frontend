@@ -82,6 +82,33 @@ function revealVisibleNow() {
     });
 }
 
+/** Radio de la ficha: los cuatro lados redondeados. Es el único fijo. */
+const DETAIL_RADIUS = "var(--radius-3xl)";
+
+/**
+ * Radio real de un elemento, esquina por esquina.
+ *
+ * Se lee del computado y no de una constante porque los destinos no comparten
+ * forma: los paneles del carrusel van redondeados por los cuatro lados, pero la
+ * card del listado es `rounded-t-3xl` y tiene las esquinas de abajo rectas.
+ */
+function readRadius(el: HTMLElement) {
+  const s = getComputedStyle(el);
+  return [
+    s.borderTopLeftRadius,
+    s.borderTopRightRadius,
+    s.borderBottomRightRadius,
+    s.borderBottomLeftRadius,
+  ].join(" ");
+}
+
+/** Los consume el keyframe del morph en `globals.css`. */
+function setRadii(from: string, to: string) {
+  const root = document.documentElement.style;
+  root.setProperty("--vt-radius-from", from);
+  root.setProperty("--vt-radius-to", to);
+}
+
 type NavigateFn = (href: string, sharedElement?: HTMLElement | null) => void;
 
 type ViewTransitionApi = {
@@ -118,6 +145,9 @@ export function ViewTransitionProvider({ children }: { children: ReactNode }) {
   // Si esta navegación es una vuelta al origen: lo consume el efecto de abajo
   // para restaurar el scroll una vez que la ruta nueva ya montó.
   const returningRef = useRef(false);
+  // Forma de la card desde la que se entró: al volver es el radio de destino,
+  // y no hay forma de leerlo antes porque esa card todavía no está montada.
+  const originRadiusRef = useRef(DETAIL_RADIUS);
 
   // Se dispara cuando la ruta nueva se compromete. Es el cierre de la
   // transición: restaura el scroll, resuelve la promesa de
@@ -201,6 +231,17 @@ export function ViewTransitionProvider({ children }: { children: ReactNode }) {
       if (sharedElement) {
         sharedElement.style.viewTransitionName = PHOTO_VT_NAME;
         markedRef.current = sharedElement;
+
+        // El origen siempre se puede medir: está en pantalla. El destino se
+        // deduce del sentido —yendo a una ficha es su radio fijo; volviendo,
+        // el de la card que se guardó al entrar—.
+        const originRadius = readRadius(sharedElement);
+        if (toProfessional) {
+          originRadiusRef.current = originRadius;
+          setRadii(originRadius, DETAIL_RADIUS);
+        } else {
+          setRadii(originRadius, originRadiusRef.current);
+        }
       }
 
       viewTransitionActive = true;

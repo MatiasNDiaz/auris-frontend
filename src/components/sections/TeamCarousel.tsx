@@ -85,7 +85,13 @@ export function TeamCarousel() {
               }}
               className={cn(
                 "group relative h-104 w-64 shrink-0 cursor-pointer snap-start overflow-hidden rounded-3xl shadow-md",
-                "md:h-112 md:w-0 md:min-w-0 md:shrink md:basis-0",
+                // `md:grow` es lo que le da ancho al panel desde el primer
+                // fotograma. Sin eso el ancho salía solo del `flexGrow` que
+                // aplica Framer al montar, así que al volver desde una ficha el
+                // navegador fotografiaba el destino con el panel todavía en 0px
+                // y el morph no tenía a dónde ir: la foto se quedaba grande
+                // hasta que Framer corría. Framer sigue animando 1 ↔ 4.2 encima.
+                "md:h-112 md:w-0 md:min-w-0 md:shrink md:grow md:basis-0",
               )}
             >
               <AnimatedProfessionalImage

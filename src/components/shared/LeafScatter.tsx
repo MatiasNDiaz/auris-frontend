@@ -91,6 +91,8 @@ export function LeafScatter({
   return (
     <div
       aria-hidden
+      // Lo observa el script inline para congelar el vuelo fuera de pantalla.
+      data-decor=""
       className={cn(
         "pointer-events-none absolute inset-0 overflow-hidden select-none",
         className,

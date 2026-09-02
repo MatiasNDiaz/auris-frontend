@@ -143,17 +143,20 @@ export function WindReveal({
   // navegación de cliente no hay snapshot de servidor, `armed` es true desde el
   // primer render y el ref existe cuando el efecto corre.
   return (
-    <div ref={ref} className={cn(armed && "relative", className)}>
+    // `relative` SIEMPRE, no solo al armarse. La capa de hojas es
+    // `absolute inset-0`: si este div no está posicionado, ese absolute se
+    // resuelve contra un ancestro lejano y la capa cubre media pantalla, para
+    // saltar a su caja real recién cuando `armed` pasa a true tras hidratar.
+    // Ese salto de un elemento enorme era todo el CLS de la portada (0.905).
+    <div ref={ref} className={cn("relative", className)}>
       {/* Capa de hojas: por encima del contenido mientras lo descubre, y fuera
-          del flujo, así que no puede provocar layout shift. Solo existe cuando
-          la ráfaga corre de verdad. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-20 overflow-hidden"
-      >
-        {armed &&
-          inView &&
-          gust.map((leaf, index) => (
+          del flujo. Ni siquiera se monta si la ráfaga no corre. */}
+      {armed && inView && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-20 overflow-hidden"
+        >
+          {gust.map((leaf, index) => (
             <motion.svg
               key={index}
               viewBox="0 0 120 56"
@@ -181,7 +184,8 @@ export function WindReveal({
               <LeafShape palette={palette} gradientId={`gust-${index}`} />
             </motion.svg>
           ))}
-      </div>
+        </div>
+      )}
 
       {/* El contenido se revela detrás de la ráfaga, con el retardo justo para
           que las primeras hojas ya lo estén cruzando.

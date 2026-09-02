@@ -539,9 +539,18 @@ html.vt-active {
 }
 
 /* La foto del profesional es el elemento compartido: el navegador interpola su
-   posición y tamaño entre la card de origen y la ficha de destino. */
+   posición y tamaño entre la card de origen y la ficha de destino.
+ *
+ * El radio NO puede quedar fijo. Los tres destinos tienen formas distintas: la
+ * ficha y los paneles del carrusel van redondeados por los cuatro lados, pero
+ * la card del listado es `rounded-t-3xl` —esquinas de abajo rectas—. Con un
+ * radio único la foto aterrizaba con una forma que no era la de su contenedor.
+ *
+ * `--vt-radius-from` y `--vt-radius-to` los escribe `ViewTransitionProvider`
+ * sobre `<html>` justo antes de arrancar: lee el radio real del elemento de
+ * origen y recuerda el de la card por la que se entró para usarlo de destino
+ * al volver. */
 ::view-transition-group(auris-professional-photo) {
-  border-radius: var(--radius-3xl);
   animation-duration: 0.55s;
   animation-timing-function: cubic-bezier(0.22, 0.68, 0.24, 1);
 }
@@ -554,12 +563,45 @@ html.vt-active {
 ::view-transition-new(auris-professional-photo) {
   height: 100%;
   object-fit: cover;
-  /* El snapshot no hereda el `border-radius` del elemento: sin esto la foto
-     se ve rectangular durante todo el recorrido del morph. */
-  border-radius: var(--radius-3xl);
   overflow: clip;
   animation-duration: 0.55s;
   animation-timing-function: cubic-bezier(0.22, 0.68, 0.24, 1);
+}
+
+/* El fundido cruzado va acá y no en el del navegador porque hay que animar
+   también el radio: declarar `animation-name` reemplaza la animación de la UA,
+   así que la opacidad tiene que viajar en los mismos keyframes.
+ *
+ * Con esto el radio se interpola FOTOGRAMA A FOTOGRAMA mientras la foto se
+ * achica, en vez de saltar a la forma final al terminar. */
+@keyframes auris-vt-photo-out {
+  from {
+    opacity: 1;
+    border-radius: var(--vt-radius-from, var(--radius-3xl));
+  }
+  to {
+    opacity: 0;
+    border-radius: var(--vt-radius-to, var(--radius-3xl));
+  }
+}
+
+@keyframes auris-vt-photo-in {
+  from {
+    opacity: 0;
+    border-radius: var(--vt-radius-from, var(--radius-3xl));
+  }
+  to {
+    opacity: 1;
+    border-radius: var(--vt-radius-to, var(--radius-3xl));
+  }
+}
+
+::view-transition-old(auris-professional-photo) {
+  animation-name: auris-vt-photo-out;
+}
+
+::view-transition-new(auris-professional-photo) {
+  animation-name: auris-vt-photo-in;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -614,4 +656,23 @@ html.vt-active {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* Pausa de los bucles fuera de pantalla --------------------------------- */
+
+/* Los tallos, las hojas al viento y la cinta de reseñas corren en bucle
+ * infinito. El navegador NO los frena solo cuando quedan fuera del viewport, y
+ * en una página larga eso son decenas de animaciones compitiendo por el hilo
+ * de composición mientras el usuario mira otra sección.
+ *
+ * El observer del script inline marca `data-offscreen` en cada contenedor
+ * decorativo que sale de pantalla y esto las congela. Al volver a entrar
+ * retoman donde quedaron —`paused` no reinicia—, así que no se ve ningún salto.
+ */
+[data-offscreen] .auris-stem-sway,
+[data-offscreen] .auris-leaf-flutter,
+[data-offscreen] .auris-leaf-fly,
+[data-offscreen] .auris-marquee-track,
+[data-offscreen].auris-marquee-track {
+  animation-play-state: paused;
 }

@@ -70,6 +70,37 @@ const SCRIPT = `
   // Vuelta por bfcache (botón atrás del navegador): el DOM se restaura tal cual
   // estaba, pero si quedó algo sin revelar se resuelve acá.
   window.addEventListener('pageshow', function (e) { if (e.persisted) rescue(); });
+
+  // --- Bucles decorativos: se congelan fuera de pantalla ---
+  //
+  // El navegador no frena solo una animación en bucle porque su elemento salga
+  // del viewport. Con los tallos, las hojas al viento y la cinta de reseñas,
+  // eso son decenas de animaciones corriendo mientras el usuario mira otra
+  // sección. El margen generoso las despierta antes de que asomen, así que
+  // nunca se ve una arrancar.
+  var decor = new IntersectionObserver(function (entries) {
+    for (var i = 0; i < entries.length; i++) {
+      var el = entries[i].target;
+      if (entries[i].isIntersecting) el.removeAttribute('data-offscreen');
+      else el.setAttribute('data-offscreen', '');
+    }
+  }, { rootMargin: '250px 0px' });
+
+  var watchDecor = function () {
+    var nodes = d.querySelectorAll('[data-decor]:not([data-decor-watched])');
+    for (var i = 0; i < nodes.length; i++) {
+      nodes[i].setAttribute('data-decor-watched', '');
+      decor.observe(nodes[i]);
+    }
+  };
+
+  var startDecor = function () {
+    watchDecor();
+    new MutationObserver(watchDecor).observe(d.body, { childList: true, subtree: true });
+  };
+
+  if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', startDecor);
+  else startDecor();
 })();
 `;
 

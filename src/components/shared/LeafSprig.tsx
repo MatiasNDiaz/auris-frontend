@@ -63,6 +63,8 @@ export function LeafSprig({
   return (
     <svg
       aria-hidden
+      // Lo observa el script inline para congelar el balanceo fuera de pantalla.
+      data-decor=""
       viewBox="0 0 140 180"
       fill="none"
       className={cn(

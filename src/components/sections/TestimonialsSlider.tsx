@@ -48,7 +48,10 @@ export function TestimonialsSlider() {
 
       {/* La cinta se sale del container a propósito: recorre todo el ancho de
           la ventana, que es lo que hace que el bucle se lea como continuo. */}
-      <div className="auris-marquee relative mt-14 overflow-hidden [--marquee-duration:70s]">
+      <div
+        data-decor=""
+        className="auris-marquee relative mt-14 overflow-hidden [--marquee-duration:70s]"
+      >
         {/* Los bordes se funden con el fondo para que las tarjetas entren y
             salgan en vez de cortarse contra el filo de la pantalla. */}
         <div
