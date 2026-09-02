@@ -14,7 +14,7 @@ import { formatDate } from "@/lib/utils";
  */
 export function FeaturedPost({ post }: { post: BlogPost }) {
   return (
-    <article className="group relative overflow-hidden rounded-[2rem] border border-border bg-surface-base shadow-sm transition-[box-shadow] duration-[420ms] hover:shadow-xl">
+    <article className="group relative overflow-hidden rounded-[2rem] border border-border bg-surface-base shadow-sm transition-[box-shadow,translate] duration-[420ms] hover:shadow-xl">
       <div className="grid gap-0 lg:grid-cols-[1.05fr_1fr]">
         <div className="flex flex-col justify-center p-8 sm:p-10 lg:p-12">
           <span className="w-fit rounded-full bg-primary-700 px-3.5 py-1.5 text-[0.7rem] font-semibold tracking-[0.12em] text-cream-50 uppercase">
@@ -39,7 +39,7 @@ export function FeaturedPost({ post }: { post: BlogPost }) {
           <span className="mt-8 inline-flex items-center gap-3 text-sm font-semibold text-primary-800">
             <span
               aria-hidden
-              className="inline-flex size-10 items-center justify-center rounded-full border-2 border-primary-700 text-primary-700 transition-[background-color,color,transform] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:bg-primary-700 group-hover:text-cream-50 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+              className="inline-flex size-10 items-center justify-center rounded-full border-2 border-primary-700 text-primary-700 transition-[background-color,color,transform,translate] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1 group-hover:bg-primary-700 group-hover:text-cream-50 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
             >
               <ArrowRight className="size-4.5" strokeWidth={2.2} />
             </span>

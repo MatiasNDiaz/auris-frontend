@@ -48,7 +48,7 @@ export function ScrollToTop() {
         // Verde plano, no degradé: a 44px un degradé se lee como una mancha.
         // El aro claro lo despega del fondo sin necesidad de una sombra grande.
         "bg-primary-700 text-cream-50 ring-1 ring-cream-50/25 shadow-md shadow-ink-900/20 backdrop-blur-sm",
-        "transition-[opacity,transform,background-color,box-shadow] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
+        "transition-[opacity,transform,translate,background-color,box-shadow] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)]",
         "hover:-translate-y-1 hover:bg-primary-800 hover:shadow-lg hover:shadow-ink-900/28 active:translate-y-0 active:duration-150",
         "focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:outline-none",
         "motion-reduce:transition-none motion-reduce:hover:translate-y-0",

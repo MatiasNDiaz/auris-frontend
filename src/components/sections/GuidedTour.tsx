@@ -102,7 +102,7 @@ export function GuidedTour() {
                       <span
                         aria-hidden
                         className={cn(
-                          "relative mt-0.5 grid size-6 shrink-0 place-items-center rounded-full border-2 transition-[background-color,border-color] duration-300 ease-out",
+                          "relative mt-0.5 grid size-6 shrink-0 place-items-center rounded-full border-2 transition-[background-color,border-color,translate] duration-300 ease-out",
                           active
                             ? "border-primary-700 bg-primary-700"
                             : "border-primary-300 bg-cream-50 group-hover:border-primary-500",
@@ -266,7 +266,7 @@ export function GuidedTour() {
                 type="button"
                 onClick={() => step(-1)}
                 aria-label="Foto anterior"
-                className="group absolute top-1/2 left-3 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-ink-900/45 text-cream-50 ring-1 ring-cream-50/25 backdrop-blur-md transition-[background-color,transform] duration-300 ease-out hover:-translate-x-0.5 hover:-translate-y-1/2 hover:bg-ink-900/70 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+                className="group absolute top-1/2 left-3 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-ink-900/45 text-cream-50 ring-1 ring-cream-50/25 backdrop-blur-md transition-[background-color,transform,translate] duration-300 ease-out hover:-translate-x-0.5 hover:-translate-y-1/2 hover:bg-ink-900/70 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
               >
                 <ChevronLeft className="size-5" aria-hidden />
               </button>
@@ -274,7 +274,7 @@ export function GuidedTour() {
                 type="button"
                 onClick={() => step(1)}
                 aria-label="Foto siguiente"
-                className="group absolute top-1/2 right-3 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-ink-900/45 text-cream-50 ring-1 ring-cream-50/25 backdrop-blur-md transition-[background-color,transform] duration-300 ease-out hover:translate-x-0.5 hover:-translate-y-1/2 hover:bg-ink-900/70 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+                className="group absolute top-1/2 right-3 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-ink-900/45 text-cream-50 ring-1 ring-cream-50/25 backdrop-blur-md transition-[background-color,transform,translate] duration-300 ease-out hover:translate-x-0.5 hover:-translate-y-1/2 hover:bg-ink-900/70 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
               >
                 <ChevronRight className="size-5" aria-hidden />
               </button>
@@ -293,7 +293,7 @@ export function GuidedTour() {
                   aria-label={`Ver foto ${index + 1} de ${stop.name}`}
                   aria-current={index === photoIndex}
                   className={cn(
-                    "relative size-16 shrink-0 overflow-hidden rounded-xl transition-[box-shadow,opacity] duration-300 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-none sm:size-20",
+                    "relative size-16 shrink-0 overflow-hidden rounded-xl transition-[box-shadow,opacity,translate] duration-300 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-none sm:size-20",
                     index === photoIndex
                       ? "opacity-100 ring-2 ring-primary-700"
                       : "opacity-65 hover:opacity-100",

@@ -26,7 +26,7 @@ export function ServiceCard({
       whileHover={{ y: -6 }}
       transition={{ type: "spring", stiffness: 300, damping: 24 }}
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-primary-100 bg-card shadow-sm transition-[box-shadow,border-color] duration-300 ease-out hover:border-primary-200 hover:shadow-xl",
+        "group relative flex h-full flex-col overflow-hidden rounded-3xl border border-primary-100 bg-card shadow-sm transition-[box-shadow,border-color,translate] duration-300 ease-out hover:border-primary-200 hover:shadow-xl",
         className,
       )}
     >
@@ -57,7 +57,7 @@ export function ServiceCard({
         <span
           aria-hidden
           className={cn(
-            "inline-flex size-12 items-center justify-center self-center rounded-2xl bg-primary-100 text-primary-700 transition-[background-color,color,transform] duration-300 ease-out group-hover:bg-primary-600 group-hover:text-cream-50",
+            "inline-flex size-12 items-center justify-center self-center rounded-2xl bg-primary-100 text-primary-700 transition-[background-color,color,transform,translate] duration-300 ease-out group-hover:bg-primary-600 group-hover:text-cream-50",
             // En la variante con foto el ícono flota sobre el borde inferior de
             // la imagen: el fondo semitransparente con blur deja ver la foto
             // por detrás y el anillo lo despega sin el borde grueso de antes.

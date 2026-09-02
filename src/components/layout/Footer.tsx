@@ -91,13 +91,13 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="group relative inline-flex size-11 items-center justify-center overflow-hidden rounded-full bg-primary-600 text-cream-50 transition-[transform,box-shadow] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-lg hover:shadow-ink-900/30 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                  className="group relative inline-flex size-11 items-center justify-center overflow-hidden rounded-full bg-primary-600 text-cream-50 transition-[transform,translate,box-shadow] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-lg hover:shadow-ink-900/30 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                 >
                   {/* Capa de marca: crece desde el centro al pasar el mouse. */}
                   <span
                     aria-hidden
                     className={cn(
-                      "absolute inset-0 scale-0 rounded-full opacity-0 transition-[transform,opacity] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100",
+                      "absolute inset-0 scale-0 rounded-full opacity-0 transition-[transform,translate,opacity] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100",
                       social.brand,
                     )}
                   />
@@ -124,7 +124,7 @@ export function Footer() {
                 >
                   <ChevronRight
                     aria-hidden
-                    className="absolute top-1/2 left-0 size-3.5 -translate-x-2 -translate-y-1/2 text-cream-50 opacity-0 transition-[transform,opacity] duration-[380ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
+                    className="absolute top-1/2 left-0 size-3.5 -translate-x-2 -translate-y-1/2 text-cream-50 opacity-0 transition-[transform,translate,opacity] duration-[380ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
                   />
                   <span className={footerLinkText}>
                     {service.name}
@@ -149,7 +149,7 @@ export function Footer() {
                 <Link href={item.href} className={footerLink}>
                   <ChevronRight
                     aria-hidden
-                    className="absolute top-1/2 left-0 size-3.5 -translate-x-2 -translate-y-1/2 text-cream-50 opacity-0 transition-[transform,opacity] duration-[380ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
+                    className="absolute top-1/2 left-0 size-3.5 -translate-x-2 -translate-y-1/2 text-cream-50 opacity-0 transition-[transform,translate,opacity] duration-[380ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
                   />
                   <span className={footerLinkText}>
                     {item.label}
