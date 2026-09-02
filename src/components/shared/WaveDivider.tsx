@@ -37,12 +37,27 @@ type WaveDividerProps = {
   className?: string;
   /** Espeja horizontalmente, para alternar entre secciones. */
   flip?: boolean;
+  /**
+   * Color de una franja que repite el mismo trazo por debajo de la curva, como
+   * un subrayado. Sin esto no se dibuja.
+   */
+  underlineClassName?: string;
+  /**
+   * Grosor de esa franja, en unidades del viewBox —que mide 160 de alto—.
+   *
+   * El alto del lienzo cambia por breakpoint (48, 64 y 96px), así que el grosor
+   * en pantalla acompaña: 30 unidades dan unos 9px en un teléfono y 18px en
+   * escritorio. Por debajo de eso se lee como una línea y no como una franja.
+   */
+  underlineWidth?: number;
 };
 
 export function WaveDivider({
   variant = "gentle",
   className,
   flip = false,
+  underlineClassName,
+  underlineWidth = 30,
 }: WaveDividerProps) {
   return (
     <svg
@@ -56,6 +71,26 @@ export function WaveDivider({
       )}
     >
       <path d={shapes[variant]} fill="currentColor" />
+
+      {/* La franja no es un trazo sino la resta de dos copias del mismo relleno:
+          una corrida hacia abajo con el color del subrayado y otra más abajo
+          todavía con el color de la sección, que le recorta el borde inferior.
+          Un `stroke` habría servido, pero con `preserveAspectRatio="none"` el
+          lienzo se estira distinto en cada eje y el grosor saldría deformado. */}
+      {underlineClassName && (
+        <>
+          <path
+            d={shapes[variant]}
+            fill="currentColor"
+            className={underlineClassName}
+          />
+          <path
+            d={shapes[variant]}
+            fill="currentColor"
+            transform={`translate(0 ${underlineWidth})`}
+          />
+        </>
+      )}
     </svg>
   );
 }

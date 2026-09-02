@@ -212,7 +212,11 @@ export function Hero() {
         se empastan en una sola mancha. Con color sí se leen, pero el pie del
         hero termina pesando más que el titular.
       */}
-      <WaveDivider variant="hero" className="text-surface-base" />
+      <WaveDivider
+        variant="hero"
+        className="text-surface-base"
+        underlineClassName="text-surface-sand"
+      />
     </section>
   );
 }
