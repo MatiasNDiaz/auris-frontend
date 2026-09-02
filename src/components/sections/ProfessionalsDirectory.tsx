@@ -33,7 +33,7 @@ export function ProfessionalsDirectory() {
         palette="green"
         size="md"
         seed={12}
-        className="-bottom-6 left-2 h-44 opacity-45"
+        className="bottom-0 left-2 h-44 opacity-45"
       />
       <div className="container-auris relative">
         <div

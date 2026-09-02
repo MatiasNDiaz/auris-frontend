@@ -45,7 +45,7 @@ export function TeamCarousel() {
       className="relative overflow-hidden bg-surface-sand py-20 lg:py-28"
     >
       <LeafScatter pattern="c" palette="beige" />
-      <LeafSprig palette="beige" size="lg" seed={7} className="-bottom-8 left-2 h-56 opacity-60 lg:h-72" />
+      <LeafSprig palette="beige" size="lg" seed={7} className="bottom-0 left-2 h-56 opacity-60 lg:h-72" />
       <div className="container-auris relative">
         <SectionHeading
           eyebrow="Nuestro equipo"

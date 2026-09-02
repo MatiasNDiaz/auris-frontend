@@ -58,7 +58,7 @@ export function PageHeader({
         className="pointer-events-none absolute -bottom-32 -left-24 size-80 rounded-full bg-warm-200/40 blur-3xl"
       />
       <LeafScatter pattern="b" />
-      <LeafSprig palette="green" size="md" flip seed={9} className="-bottom-4 right-4 h-48 opacity-55" />
+      <LeafSprig palette="green" size="md" flip seed={9} className="bottom-0 right-4 h-48 opacity-55" />
 
       <div className="container-auris relative">
         <SectionHeading

@@ -41,7 +41,7 @@ export function QuickLinks() {
   return (
     <section className="relative overflow-hidden bg-surface-base py-16 lg:py-20">
       <LeafScatter pattern="c" />
-      <LeafSprig palette="green" size="md" flip seed={4} className="-bottom-6 right-3 h-44 opacity-55" />
+      <LeafSprig palette="green" size="md" flip seed={4} className="bottom-0 right-3 h-44 opacity-55" />
       <div className="container-auris relative">
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {links.map((link, index) => (

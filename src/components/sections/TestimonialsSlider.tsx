@@ -32,7 +32,7 @@ export function TestimonialsSlider() {
     <section className="relative overflow-hidden bg-surface-sage py-20 lg:py-28">
       {/* Follaje de fondo, en la misma línea que el resto de la landing. */}
       <LeafScatter pattern="a" />
-      <LeafSprig palette="green" size="lg" seed={8} className="-bottom-8 left-2 h-56 opacity-55 lg:h-72" />
+      <LeafSprig palette="green" size="lg" seed={8} className="bottom-0 left-2 h-56 opacity-55 lg:h-72" />
       <div
         aria-hidden
         className="pointer-events-none absolute -top-24 left-1/4 size-96 rounded-full bg-primary-200/30 blur-3xl"

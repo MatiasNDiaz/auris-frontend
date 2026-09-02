@@ -22,7 +22,7 @@ export function GalleryGrid() {
         size="lg"
         flip
         seed={13}
-        className="-bottom-8 right-2 h-52 opacity-45 lg:h-64"
+        className="bottom-0 right-2 h-52 opacity-45 lg:h-64"
       />
       <ul className="container-auris relative grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {gallery.map((item, index) => (

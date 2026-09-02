@@ -22,7 +22,7 @@ export function VirtualTour() {
         palette="beige"
         size="md"
         seed={14}
-        className="-bottom-6 left-2 h-44 opacity-45"
+        className="bottom-0 left-2 h-44 opacity-45"
       />
       <div className="container-auris relative">
         <SectionHeading

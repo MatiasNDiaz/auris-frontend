@@ -227,7 +227,10 @@ export function LeafSprig({
       // reporta como desajuste de hidratación; esto le avisa que este nodo se
       // toca por fuera. Silencia solo este elemento, no el árbol.
       suppressHydrationWarning
-      viewBox="0 0 140 180"
+      // Hasta 190 y no 180: el tallo arranca en y=180 y la hoja de la base
+      // cuelga unas unidades mas abajo. Con la caja cortada en el arranque,
+      // apoyarla contra el borde de la seccion escondia justo esa hoja.
+      viewBox="0 0 140 190"
       fill="none"
       className={cn(
         // Sin `overflow-visible` el SVG recorta contra su propio viewBox y la

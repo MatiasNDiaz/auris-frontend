@@ -16,7 +16,7 @@ export function ServicesGrid({ withHeading = true }: ServicesGridProps) {
   return (
     <section className="relative overflow-hidden bg-surface-sage py-20 lg:py-28">
       <LeafScatter pattern="b" />
-      <LeafSprig palette="beige" size="lg" flip seed={5} className="-bottom-10 right-2 h-60 opacity-60 lg:h-76" />
+      <LeafSprig palette="beige" size="lg" flip seed={5} className="bottom-0 right-2 h-60 opacity-60 lg:h-76" />
       <div className="container-auris relative">
         {withHeading && (
           <SectionHeading

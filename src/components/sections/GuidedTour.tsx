@@ -67,7 +67,7 @@ export function GuidedTour() {
         size="md"
         flip
         seed={11}
-        className="-bottom-6 right-2 h-44 opacity-45"
+        className="bottom-0 right-2 h-44 opacity-45"
       />
       <div className="container-auris relative">
         <SectionHeading

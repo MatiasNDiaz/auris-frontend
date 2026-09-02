@@ -30,7 +30,7 @@ export function CtaBanner({
           {/* Igual que el footer: el banner es el cierre de la página y el
               CTA tiene que ganar por encima del follaje. */}
           <LeafScatter pattern="c" palette="cream" count={2} className="opacity-35" />
-          <LeafSprig palette="cream" size="md" seed={3} className="-bottom-6 left-4 h-40 opacity-40" />
+          <LeafSprig palette="cream" size="md" seed={3} className="bottom-0 left-4 h-40 opacity-40" />
           <Leaf
             aria-hidden
             className="absolute -right-6 -bottom-8 size-40 -rotate-12 text-primary-500/20"
