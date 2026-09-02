@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, MapPin } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useState } from "react";
+import { LeafSprig } from "@/components/shared/LeafSprig";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { tourStops } from "@/lib/data/gallery";
 import { cn } from "@/lib/utils";
@@ -61,6 +62,13 @@ export function GuidedTour() {
 
   return (
     <section className="relative overflow-hidden bg-surface-sage py-16 lg:py-20">
+      <LeafSprig
+        palette="beige"
+        size="md"
+        flip
+        seed={11}
+        className="-bottom-6 right-2 h-44 opacity-45"
+      />
       <div className="container-auris relative">
         <SectionHeading
           eyebrow="Recorrido guiado"
@@ -93,7 +101,9 @@ export function GuidedTour() {
                       aria-current={active ? "step" : undefined}
                       className={cn(
                         "group flex w-full items-start gap-3 rounded-2xl py-2.5 pr-3 pl-0 text-left transition-colors duration-300 focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-none",
-                        active ? "bg-primary-100/70" : "hover:bg-primary-100/40",
+                        active
+                          ? "bg-primary-100/70"
+                          : "hover:bg-primary-100/40",
                       )}
                     >
                       {/* Punto sobre la línea. El activo se llena y muestra el
@@ -224,7 +234,9 @@ export function GuidedTour() {
                   key={`${stop.id}-${photoIndex}`}
                   custom={dir}
                   initial={
-                    reduceMotion ? false : { opacity: 0, x: dir * 48, scale: 1.02 }
+                    reduceMotion
+                      ? false
+                      : { opacity: 0, x: dir * 48, scale: 1.02 }
                   }
                   animate={{ opacity: 1, x: 0, scale: 1 }}
                   exit={

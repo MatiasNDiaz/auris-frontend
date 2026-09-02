@@ -361,33 +361,30 @@
  * El giro va sobre la base de cada pieza (`transform-origin`), no sobre su
  * centro: una hoja que pivotea desde el pecíolo se mueve como una hoja; desde
  * el centro parece una hélice. */
+/* Dos keyframes y nada en el medio.
+ *
+ * Las paradas intermedias que había antes (0/38/64/100) hacían que el tallo
+ * frenara y arrancara a mitad de camino: se veía como un tic. Con los dos
+ * extremos, `alternate` y una curva seno el recorrido es un péndulo continuo,
+ * sin quiebre perceptible ni siquiera en el punto de retorno.
+ *
+ * Lo que rompe la regularidad no es el keyframe sino el período: cada hoja
+ * recibe el suyo desde `LeafSprig`, así que nunca vuelven a coincidir. */
 @keyframes auris-stem-sway {
-  0% {
-    transform: rotate(-4deg);
+  from {
+    transform: rotate(-7deg);
   }
-  38% {
-    transform: rotate(2.4deg);
-  }
-  64% {
-    transform: rotate(-1.6deg);
-  }
-  100% {
-    transform: rotate(4.4deg);
+  to {
+    transform: rotate(7deg);
   }
 }
 
 @keyframes auris-leaf-flutter {
-  0% {
-    transform: rotate(-9deg);
+  from {
+    transform: rotate(-14deg);
   }
-  30% {
-    transform: rotate(5deg);
-  }
-  55% {
-    transform: rotate(-4deg);
-  }
-  100% {
-    transform: rotate(10deg);
+  to {
+    transform: rotate(14deg);
   }
 }
 
@@ -396,10 +393,18 @@
   /* En SVG el origen se mide sobre la caja del propio dibujo, no sobre el
      viewBox entero; sin esto todo pivotea desde la esquina del lienzo. */
   transform-box: fill-box;
-  will-change: transform;
-  animation-timing-function: ease-in-out;
+  /* Seno in-out: la velocidad entra y sale de cada extremo sin escalón, que es
+     como se mueve algo empujado por el viento y no por un motor. */
+  animation-timing-function: cubic-bezier(0.37, 0, 0.63, 1);
   animation-iteration-count: infinite;
   animation-direction: alternate;
+}
+
+/* `will-change` solo en el tallo: promueve un plano por elemento y con quince
+   hojas por tallo la cuenta se dispara. El grupo del tallo ya arrastra a sus
+   hojas dentro del mismo plano, así que alcanza con promoverlo a él. */
+.auris-stem-sway {
+  will-change: transform;
 }
 
 .auris-stem-sway {
@@ -675,6 +680,12 @@ html.vt-active {
 [data-offscreen] .auris-marquee-track,
 [data-offscreen].auris-marquee-track {
   animation-play-state: paused;
+}
+
+/* Congelada y fuera de vista, la capa propia ya no compensa lo que ocupa. */
+[data-offscreen] .auris-stem-sway,
+[data-offscreen] .auris-leaf-fly {
+  will-change: auto;
 }
 
 /* Asentado de la foto de la ficha ---------------------------------------- */

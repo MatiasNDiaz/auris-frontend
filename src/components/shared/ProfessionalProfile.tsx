@@ -115,7 +115,7 @@ export function ProfessionalProfile({
         className="relative overflow-hidden pt-6 pb-20 lg:pb-24"
         style={{ backgroundImage: c.header }}
       >
-        <LeafSprig palette="green" size="sm" flip className="-top-2 right-4 h-32 opacity-35" />
+        <LeafSprig palette="green" size="sm" flip seed={10} className="-top-2 right-4 h-32 opacity-35" />
 
         <div className="container-auris relative">
           <ProfessionalBackLinks tone={c.button} />

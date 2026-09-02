@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
+import { LeafSprig } from "@/components/shared/LeafSprig";
 import { ProfessionalCard } from "@/components/shared/ProfessionalCard";
 import { professionals } from "@/lib/data/professionals";
 import { services } from "@/lib/data/services";
@@ -27,8 +28,14 @@ export function ProfessionalsDirectory() {
   ];
 
   return (
-    <section className="bg-surface-base py-16 lg:py-20">
-      <div className="container-auris">
+    <section className="relative overflow-hidden bg-surface-base py-16 lg:py-20">
+      <LeafSprig
+        palette="green"
+        size="md"
+        seed={12}
+        className="-bottom-6 left-2 h-44 opacity-45"
+      />
+      <div className="container-auris relative">
         <div
           role="group"
           aria-label="Filtrar profesionales por servicio"

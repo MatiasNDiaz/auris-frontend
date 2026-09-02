@@ -43,7 +43,7 @@ export function AboutPreview() {
   return (
     <section className="relative overflow-hidden bg-surface-base py-20 lg:py-28">
       <LeafScatter pattern="a" />
-      <LeafSprig palette="green" size="lg" className="-bottom-8 left-2 h-56 opacity-60 lg:h-72" />
+      <LeafSprig palette="green" size="lg" seed={2} className="-bottom-8 left-2 h-56 opacity-60 lg:h-72" />
       <div className="container-auris relative">
         <SectionHeading
           eyebrow="Sobre AURIS"

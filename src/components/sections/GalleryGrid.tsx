@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { LeafSprig } from "@/components/shared/LeafSprig";
 import { Reveal } from "@/components/shared/Reveal";
 import { gallery } from "@/lib/data/gallery";
 import { cn } from "@/lib/utils";
@@ -15,8 +16,15 @@ import { cn } from "@/lib/utils";
  */
 export function GalleryGrid() {
   return (
-    <section className="container-auris py-16 lg:py-20">
-      <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <section className="relative overflow-hidden py-16 lg:py-20">
+      <LeafSprig
+        palette="green"
+        size="lg"
+        flip
+        seed={13}
+        className="-bottom-8 right-2 h-52 opacity-45 lg:h-64"
+      />
+      <ul className="container-auris relative grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {gallery.map((item, index) => (
           <Reveal as="li" key={item.id} delay={(index % 3) * 0.08}>
             <figure className="group relative overflow-hidden rounded-3xl bg-cream-100 shadow-sm transition-shadow duration-300 hover:shadow-xl">

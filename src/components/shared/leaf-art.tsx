@@ -15,8 +15,13 @@ import { cn } from "@/lib/utils";
  *    5. venillas finas entre pares;
  *    6. pecíolo.
  *
- * `detail` recorta ese despliegue: una hoja de 20px no puede mostrar venillas
- * y solo aporta nodos al DOM, así que las de los tallos van en `simple`.
+ * `detail` recorta ese despliegue segun el tamano al que se dibuje la hoja:
+ *
+ *   - `full`    — todo: diez venas y ocho venillas. Para hojas sueltas grandes.
+ *   - `veined`  — nervio y tres pares de venas. Es el nivel de los tallos: a
+ *                 30-40px se leen como textura, mientras que los diez pares de
+ *                 `full` se empastan en una mancha y solo suman nodos al DOM.
+ *   - `simple`  — nervio y nada mas. Para las hojas de 20px o menos.
  */
 
 export const leafPalettes = {
@@ -51,7 +56,7 @@ export const leafPalettes = {
 } as const;
 
 export type LeafPalette = keyof typeof leafPalettes;
-export type LeafDetail = "full" | "simple";
+export type LeafDetail = "full" | "veined" | "simple";
 
 /** Contorno de la lámina. La mitad de abajo abre un poco más que la de arriba. */
 const BLADE =
@@ -87,6 +92,9 @@ const VEINLETS = [
   "M55 31C60 34 64 36 69 37",
   "M72 31C76 34 81 36 85 37",
 ];
+
+/** Nivel intermedio: un par cerca de la base, otro al medio y otro en la punta. */
+const VEINED_INDEXES = [0, 2, 4] as const;
 
 type LeafShapeProps = {
   palette?: LeafPalette;
@@ -145,32 +153,37 @@ export function LeafShape({
         opacity="0.55"
       />
 
-      {detail === "full" && (
-        <>
-          <g
-            stroke={c.vein}
-            strokeWidth="1"
-            strokeLinecap="round"
-            fill="none"
-            opacity="0.38"
-          >
-            {[...VEINS_TOP, ...VEINS_BOTTOM].map((d) => (
-              <path key={d} d={d} />
-            ))}
-          </g>
+      {detail !== "simple" && (
+        <g
+          stroke={c.vein}
+          strokeWidth={detail === "veined" ? "1.2" : "1"}
+          strokeLinecap="round"
+          fill="none"
+          // Menos venas piden mas presencia: en `veined` cada trazo tiene que
+          // leerse solo, sin la trama del nivel completo que lo acompane.
+          opacity={detail === "veined" ? "0.5" : "0.38"}
+        >
+          {(detail === "veined"
+            ? VEINED_INDEXES.flatMap((i) => [VEINS_TOP[i], VEINS_BOTTOM[i]])
+            : [...VEINS_TOP, ...VEINS_BOTTOM]
+          ).map((d) => (
+            <path key={d} d={d} />
+          ))}
+        </g>
+      )}
 
-          <g
-            stroke={c.vein}
-            strokeWidth="0.6"
-            strokeLinecap="round"
-            fill="none"
-            opacity="0.22"
-          >
-            {VEINLETS.map((d) => (
-              <path key={d} d={d} />
-            ))}
-          </g>
-        </>
+      {detail === "full" && (
+        <g
+          stroke={c.vein}
+          strokeWidth="0.6"
+          strokeLinecap="round"
+          fill="none"
+          opacity="0.22"
+        >
+          {VEINLETS.map((d) => (
+            <path key={d} d={d} />
+          ))}
+        </g>
       )}
     </>
   );

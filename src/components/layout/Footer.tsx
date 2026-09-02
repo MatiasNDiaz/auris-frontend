@@ -69,7 +69,7 @@ export function Footer() {
       {/* Pocas hojas y grandes: sobre el verde del footer el follaje compite
           con la lectura, así que se prioriza el detalle antes que la cantidad. */}
       <LeafScatter pattern="b" palette="cream" count={2} className="opacity-30" />
-      <LeafSprig palette="cream" size="md" flip className="-top-4 right-6 h-44 opacity-35" />
+      <LeafSprig palette="cream" size="md" flip seed={1} className="-top-4 right-6 h-44 opacity-35" />
       <div className="container-auris grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
           {/* El isotipo va suelto sobre el verde: el logo completo trae el
