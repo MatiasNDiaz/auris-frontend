@@ -1,13 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import {
-  ArrowRight,
-  HeartHandshake,
-  Leaf,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight, Leaf } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import { ServiceFan } from "./ServiceFan";
@@ -24,13 +18,7 @@ const AUTOPLAY_MS = 4000;
  * Framer: 0.1s de arranque y 0.11s entre elementos. Se aplica como
  * `--rise-delay` sobre la clase `auris-rise` de `globals.css`.
  */
-const RISE_DELAY = { eyebrow: "0.1s", cta: "0.21s", highlights: "0.32s" };
-
-const highlights = [
-  { icon: HeartHandshake, label: "Atención humana y personalizada" },
-  { icon: ShieldCheck, label: "Equipo matriculado y con experiencia" },
-  { icon: Sparkles, label: "Seis especialidades en un mismo lugar" },
-];
+const RISE_DELAY = { eyebrow: "0.1s", cta: "0.21s" };
 
 /**
  * Hero por capas: la foto del servicio activo ocupa toda la sección, un
@@ -167,29 +155,6 @@ export function Hero() {
           </div>
 
           {/* Acotado a max-w-xl para no quedar debajo del abanico en desktop. */}
-          {/* Iban como texto suelto sobre la foto y se perdían apenas la
-              imagen tenía una zona clara. Cada uno pasa a ser una pastilla con
-              fondo propio y desenfoque: se leen siempre, sin importar qué foto
-              esté activa, y de paso el bloque queda como una tira de tres. */}
-          <ul
-            style={{ "--rise-delay": RISE_DELAY.highlights } as CSSProperties}
-            className="auris-rise mt-8 grid max-w-xl gap-2.5 sm:grid-cols-3"
-          >
-            {highlights.map(({ icon: Icon, label }) => (
-              <li
-                key={label}
-                className="flex items-start gap-2.5 rounded-2xl border border-cream-50/20 bg-ink-900/35 px-3.5 py-3 text-sm leading-snug text-cream-50 backdrop-blur-md backdrop-saturate-150"
-              >
-                <span
-                  aria-hidden
-                  className="inline-flex size-6 shrink-0 items-center justify-center rounded-lg bg-primary-500/90 text-cream-50"
-                >
-                  <Icon className="size-3.5" strokeWidth={2} />
-                </span>
-                {label}
-              </li>
-            ))}
-          </ul>
         </div>
 
         {/* Capa 4 — abanico de servicios. */}
