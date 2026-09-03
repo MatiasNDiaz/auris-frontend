@@ -73,7 +73,7 @@ export default function SobreElCentroPage() {
       {/* 1 — La historia, como línea de tiempo. En prosa eran tres párrafos
           largos que nadie termina; en hitos se recorre de un vistazo. */}
       <section className="container-auris py-20 lg:py-24">
-        <div className="grid gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
+        <div className="grid gap-14 lg:grid-cols-[1.15fr_0.85fr]">
           <Reveal>
             <p className="text-xs font-semibold tracking-[0.24em] text-primary-700 uppercase">
               Nuestra historia
@@ -118,14 +118,17 @@ export default function SobreElCentroPage() {
             </ol>
           </Reveal>
 
-          <Reveal from="left" delay={0.1}>
-            <div className="grid gap-4">
+          {/* La segunda foto crece hasta emparejar el alto de la línea de
+              tiempo: fijarle una proporción obligaba a estirar o recortar el
+              texto cada vez que se corrige un hito. */}
+          <Reveal from="left" delay={0.1} className="h-full">
+            <div className="flex h-full flex-col gap-4">
               {storyPhotos.map((photo, index) => (
                 <div
                   key={photo.src}
                   className={cn(
                     "relative overflow-hidden rounded-3xl bg-cream-100 shadow-sm",
-                    index === 0 ? "aspect-4/5" : "aspect-4/3",
+                    index === 0 ? "aspect-4/5" : "min-h-56 flex-1",
                   )}
                 >
                   <Image
@@ -172,12 +175,9 @@ export default function SobreElCentroPage() {
               className="mx-auto mt-8 block h-px w-16 bg-cream-50/40"
             />
             <p className="mt-8 text-base leading-relaxed text-pretty text-cream-100/90 sm:text-lg">
-              Con una odontología cada vez más especializada seguía habiendo
-              situaciones que pedían mirar más allá de la boca. Cuando distintas
-              disciplinas trabajan juntas, se entiende mejor lo que le pasa a una
-              persona. Lo mismo ocurre en la odontopediatría funcional, donde la
-              odontología se complementa con fonoaudiología y kinesiología para
-              acompañar el desarrollo de los chicos desde temprano.
+              La especialización es fundamental, pero puede completarse con una
+              mirada más amplia: atender a la persona antes de que un problema
+              se convierta en enfermedad.
             </p>
           </Reveal>
         </div>

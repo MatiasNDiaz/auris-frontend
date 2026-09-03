@@ -40,13 +40,19 @@ export const milestones: Milestone[] = [
     when: "Hace diez años",
     title: "La primera grieta",
     description:
-      "Empezamos a trabajar junto a fisioterapeutas para abordar el bruxismo y ciertas alteraciones funcionales. La experiencia fue reveladora, y de ahí salió la pregunta que cambió la forma de trabajar.",
+      "Aun con una odontología cada vez más especializada, había situaciones que pedían mirar más allá de la boca. Empezamos a trabajar junto a fisioterapeutas para abordar el bruxismo y ciertas alteraciones funcionales, y la experiencia fue reveladora: cuando distintas disciplinas trabajan juntas, se entiende mejor lo que le pasa a una persona.",
+  },
+  {
+    when: "Poco después",
+    title: "El enfoque se extiende",
+    description:
+      "La misma lógica llega a la odontopediatría funcional, donde la odontología se complementa con fonoaudiología y kinesiología para acompañar el desarrollo de los chicos desde temprano.",
   },
   {
     when: "Hoy",
     title: "AURIS",
     description:
-      "El espacio pensado para reunir profesionales de distintas disciplinas que comparten una misma manera de entender la salud.",
+      "El espacio pensado para reunir profesionales que comparten esta filosofía. Cada integrante del equipo fue elegido no solo por su formación y su experiencia, sino por su manera de entender la profesión, su empatía y sus ganas de trabajar junto a otros.",
   },
 ];
 
