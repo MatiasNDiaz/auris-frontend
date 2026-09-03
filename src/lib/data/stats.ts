@@ -25,11 +25,13 @@ export const stats: Stat[] = [
   {
     key: "anios",
     icon: "calendar",
-    value: 5,
+    // La trayectoria completa, contando Kúspide desde 1998 y no solo los años
+    // de AURIS como marca. Es el número del texto institucional.
+    value: 30,
     suffix: "+",
     label: "años de trayectoria",
     summary:
-      "Todo ese tiempo en el mismo lugar del Cerro de las Rosas, sosteniendo la forma de trabajar que nos define.",
+      "Desde fines de los 90 y el nacimiento de Kúspide: tres décadas de práctica que decantaron en la forma de atender que hoy define a AURIS.",
   },
   {
     key: "pacientes",
