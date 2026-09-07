@@ -34,6 +34,12 @@ export type TourNode = {
   image: string;
   alt: string;
   /**
+   * Ancho dividido alto de esa foto. Casi todas son verticales de teléfono
+   * —9:16—, pero la del hall es apaisada, y el visor necesita el dato para
+   * cubrir la ventana sin dejar franjas.
+   */
+  aspect: number;
+  /**
    * Nodo al que lleva el hotspot de volver, abajo y al centro. `null` solo en
    * el ingreso, que es donde arranca el recorrido.
    */
@@ -53,6 +59,7 @@ export const tourNodes: TourNode[] = [
     title: "Ingreso",
     caption: "La puerta sobre Juan Bautista Daniel. Desde acá se ve el hall.",
     image: "/images/galeria/ingreso-03.webp",
+    aspect: 9 / 16,
     alt: "Puerta de entrada vidriada del centro, con el hall y el mostrador al fondo",
     back: null,
     hotspots: [
@@ -75,18 +82,24 @@ export const tourNodes: TourNode[] = [
     id: "recepcion",
     title: "Recepción",
     caption:
-      "El hall de entrada: el mostrador a la derecha y el pasillo al fondo.",
-    image: "/images/galeria/recepcion-01.webp",
-    alt: "Hall de entrada con el mostrador de recepción a la derecha y el pasillo al fondo",
+      "La columna parte el hall en dos: a la izquierda la sala de espera, a la derecha el mostrador y el pasillo.",
+    // La única foto apaisada del recorrido, y la que mejor explica la planta:
+    // se ven las dos áreas de una, separadas por la columna.
+    image: "/images/galeria/recepcion-panoramica.webp",
+    aspect: 1448 / 1086,
+    alt: "Hall de entrada: la sala de espera a la izquierda y el mostrador de recepción a la derecha, separados por una columna",
     back: "ingreso",
     hotspots: [
-      // La sala de espera asoma por el borde izquierdo: se ven el banco y el
-      // logo sobre la pared.
-      { x: 14, y: 57, label: "Sala de espera", to: "sala-espera" },
-      // El pasillo se abre al fondo, entre la pared y el mostrador.
-      { x: 46, y: 45, label: "Ir al pasillo", to: "pasillo" },
+      // Los bancos y el logo, del lado izquierdo de la columna.
+      { x: 27, y: 55, label: "Sala de espera", to: "sala-espera" },
+      // El pasillo se ve iluminado entre la columna y el mostrador.
+      { x: 56, y: 47, label: "Ir al pasillo", to: "pasillo" },
     ],
     extras: [
+      {
+        src: "/images/galeria/recepcion-01.webp",
+        alt: "Vista del hall hacia el mostrador de recepción",
+      },
       {
         src: "/images/galeria/recepcion-03.webp",
         alt: "Mostrador de recepción en madera bajo el logo",
@@ -98,6 +111,7 @@ export const tourNodes: TourNode[] = [
     title: "Sala de espera",
     caption: "Bancos, luz natural y el logo sobre la pared.",
     image: "/images/galeria/recepcion-04.webp",
+    aspect: 9 / 16,
     alt: "Sala de espera con bancos, ventana y el logo de AURIS en la pared",
     back: "recepcion",
     hotspots: [],
@@ -116,18 +130,17 @@ export const tourNodes: TourNode[] = [
     id: "pasillo",
     title: "Pasillo",
     caption: "El eje del centro. De acá salen los consultorios.",
-    image: "/images/galeria/pasillo-02.webp",
-    alt: "Pasillo del centro con puertas de consultorios a ambos lados",
+    image: "/images/galeria/pasillo-03.webp",
+    aspect: 9 / 16,
+    alt: "Pasillo del centro, con el laboratorio a la derecha",
     back: "recepcion",
     hotspots: [
-      // Primera puerta de la izquierda, la que deja salir luz azulada.
-      { x: 25, y: 40, label: "Consultorio 1", to: "consultorio-1" },
-      // Segunda abertura de la izquierda, más adentro.
-      { x: 39, y: 41, label: "Consultorio 2", to: "consultorio-2" },
-      // Puerta abierta de la derecha.
-      { x: 80, y: 41, label: "Gabinete de estética", to: "consultorio-4" },
-      // El pasillo sigue: el tramo del fondo.
-      { x: 50, y: 55, label: "Seguir por el pasillo", to: "pasillo-fondo" },
+      // Puerta de la izquierda, la que deja salir luz azulada.
+      { x: 32, y: 44, label: "Consultorio 1", to: "consultorio-1" },
+      // Puerta abierta de la derecha: se ve la mesada del laboratorio.
+      { x: 83, y: 44, label: "Laboratorio", to: "laboratorio" },
+      // El pasillo sigue hacia el fondo.
+      { x: 50, y: 60, label: "Seguir por el pasillo", to: "pasillo-fondo" },
     ],
     extras: [
       {
@@ -145,6 +158,7 @@ export const tourNodes: TourNode[] = [
     title: "Consultorio 1 — Odontología",
     caption: "Primer consultorio odontológico sobre la izquierda.",
     image: "/images/galeria/odontologia-1-01.webp",
+    aspect: 9 / 16,
     alt: "Sillón odontológico del consultorio 1",
     back: "pasillo",
     hotspots: [],
@@ -164,8 +178,9 @@ export const tourNodes: TourNode[] = [
     title: "Consultorio 2 — Odontología",
     caption: "Segundo consultorio odontológico, con escritorio de consulta.",
     image: "/images/galeria/odontologia-2-01.webp",
+    aspect: 9 / 16,
     alt: "Consultorio 2 con sillón y escritorio",
-    back: "pasillo",
+    back: "pasillo-fondo",
     hotspots: [],
     extras: [
       {
@@ -183,8 +198,9 @@ export const tourNodes: TourNode[] = [
     title: "Consultorio 4 — Estética",
     caption: "Gabinete de estética facial y corporal.",
     image: "/images/galeria/estetica-01.webp",
+    aspect: 9 / 16,
     alt: "Camilla del consultorio de estética",
-    back: "pasillo",
+    back: "pasillo-fondo",
     hotspots: [],
     extras: [
       {
@@ -200,18 +216,20 @@ export const tourNodes: TourNode[] = [
   {
     id: "pasillo-fondo",
     title: "Pasillo — tramo del fondo",
-    caption:
-      "Al fondo el consultorio de entrevista; a la derecha, el laboratorio.",
-    image: "/images/galeria/pasillo-03.webp",
-    alt: "Tramo final del pasillo, con el laboratorio a la derecha y una puerta de madera al fondo",
+    caption: "Las últimas puertas y, al final, el consultorio de entrevista.",
+    image: "/images/galeria/pasillo-02.webp",
+    aspect: 9 / 16,
+    alt: "Tramo final del pasillo, con puertas a ambos lados y una puerta de madera al fondo",
     back: "pasillo",
     hotspots: [
-      // Puerta de la izquierda, con la misma luz azulada del primer tramo.
-      { x: 32, y: 44, label: "Consultorio 3", to: "consultorio-3" },
-      // Puerta abierta de la derecha: se ve la mesada del laboratorio.
-      { x: 83, y: 44, label: "Laboratorio", to: "laboratorio" },
+      // Primera puerta de la izquierda de este tramo.
+      { x: 25, y: 40, label: "Consultorio 2", to: "consultorio-2" },
+      // Segunda abertura de la izquierda, más adentro.
+      { x: 39, y: 41, label: "Consultorio 3", to: "consultorio-3" },
+      // Puerta abierta de la derecha.
+      { x: 80, y: 41, label: "Gabinete de estética", to: "consultorio-4" },
       // La puerta de madera que cierra el pasillo.
-      { x: 51, y: 43, label: "Consultorio de entrevista", to: "consultorio-5" },
+      { x: 51, y: 39, label: "Consultorio de entrevista", to: "consultorio-5" },
     ],
   },
   {
@@ -219,6 +237,7 @@ export const tourNodes: TourNode[] = [
     title: "Consultorio 3 — Odontología",
     caption: "Tercer consultorio odontológico sobre la izquierda.",
     image: "/images/galeria/odontologia-3-01.webp",
+    aspect: 9 / 16,
     alt: "Consultorio 3 con sillón junto a la ventana",
     back: "pasillo-fondo",
     hotspots: [],
@@ -234,8 +253,9 @@ export const tourNodes: TourNode[] = [
     title: "Laboratorio",
     caption: "Donde se preparan y se imprimen los trabajos del consultorio.",
     image: "/images/galeria/laboratorio-01.webp",
+    aspect: 9 / 16,
     alt: "Mesada del laboratorio con esterilizador e impresoras 3D",
-    back: "pasillo-fondo",
+    back: "pasillo",
     hotspots: [],
     extras: [
       {
@@ -253,6 +273,7 @@ export const tourNodes: TourNode[] = [
     title: "Consultorio 5 — Entrevista",
     caption: "El consultorio del fondo, para entrevistas y consultas.",
     image: "/images/galeria/consulta-01.webp",
+    aspect: 9 / 16,
     alt: "Consultorio de entrevista con escritorio",
     back: "pasillo-fondo",
     hotspots: [],

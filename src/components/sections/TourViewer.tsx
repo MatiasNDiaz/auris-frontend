@@ -56,7 +56,7 @@ export function TourViewer() {
   const [way, setWay] = useState<"forward" | "back">("forward");
 
   const frameRef = useRef<HTMLDivElement>(null);
-  const [slack, setSlack] = useState({ x: 0, y: 0 });
+  const [frame, setFrame] = useState({ w: 0, h: 0 });
 
   const reduceMotion = useReducedMotion() ?? false;
   // Sin hover no hay forma de descubrir a dónde lleva cada punto: en pantallas
@@ -82,27 +82,40 @@ export function TourViewer() {
   const panX = useSpring(0, { stiffness: 80, damping: 20, mass: 0.7 });
   const panY = useSpring(0, { stiffness: 80, damping: 20, mass: 0.7 });
 
-  // El sobrante disponible sale de medir: depende del alto de la ventana, que
-  // cambia por breakpoint, así que no se puede fijar en el código.
+  // La ventana se mide: su alto cambia por breakpoint y el sobrante depende de
+  // eso, así que no se puede fijar en el código.
   useEffect(() => {
-    const frame = frameRef.current;
-    if (!frame) return;
+    const el = frameRef.current;
+    if (!el) return;
 
     const measure = () => {
-      const { width, height } = frame.getBoundingClientRect();
-      const layerWidth = width * OVERSCAN;
-      const layerHeight = (layerWidth * 16) / 9;
-      setSlack({
-        x: Math.max(0, (layerWidth - width) / 2),
-        y: Math.max(0, (layerHeight - height) / 2),
-      });
+      const { width, height } = el.getBoundingClientRect();
+      setFrame({ w: width, h: height });
     };
 
     measure();
     const observer = new ResizeObserver(measure);
-    observer.observe(frame);
+    observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
+  /**
+   * Tamaño de la capa que lleva la foto.
+   *
+   * Se calcula en píxeles y no con `aspect-ratio` en CSS porque tiene que
+   * cubrir la ventana en los dos ejes: una foto vertical sobra de alto y una
+   * apaisada sobra de ancho, y en una ventana apaisada con una foto apaisada
+   * hay que cubrir por alto o quedan franjas arriba y abajo.
+   */
+  const layer = (() => {
+    const width = Math.max(frame.w, frame.h * node.aspect) * OVERSCAN;
+    return { width, height: width / node.aspect };
+  })();
+
+  const slack = {
+    x: Math.max(0, (layer.width - frame.w) / 2),
+    y: Math.max(0, (layer.height - frame.h) / 2),
+  };
 
   /** El desplazamiento de reposo, ya acotado al sobrante. */
   const restY = Math.max(
@@ -205,8 +218,13 @@ export function TourViewer() {
             className="absolute inset-0"
           >
             <motion.div
-              style={{ x: panX, y: panY, width: `${OVERSCAN * 100}%` }}
-              className="absolute top-1/2 left-1/2 aspect-9/16 -translate-x-1/2 -translate-y-1/2"
+              style={{
+                x: panX,
+                y: panY,
+                width: layer.width,
+                height: layer.height,
+              }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
             >
               <Image
                 src={photo.src}
