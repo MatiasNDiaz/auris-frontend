@@ -1,8 +1,8 @@
 /**
  * Tipos del contenido del sitio.
  *
- * `Service`, `Professional`, `FAQ` y `GalleryItem` son contenido estático y
- * viven en `/lib/data`. `BlogPost` y `Testimonial` hoy también son mock, pero
+ * `Service`, `Professional` y `FAQ` son contenido estático y viven en
+ * `/lib/data`. `BlogPost` y `Testimonial` hoy también son mock, pero
  * su forma refleja las tablas de Supabase (`blog_posts`, `testimonials`) para
  * que la migración sea un cambio de origen de datos y nada más.
  */
@@ -76,21 +76,3 @@ export type FAQ = {
   answer: string;
 };
 
-export type GalleryItem = {
-  id: string;
-  title: string;
-  category: string;
-  imageUrl: string;
-};
-
-/**
- * Una parada del recorrido guiado por el centro. `side` indica de qué lado del
- * pasillo queda el espacio: es lo que usa la planta del visor para ubicarlo.
- */
-export type TourStop = {
-  id: string;
-  name: string;
-  caption: string;
-  side: "start" | "center" | "left" | "right" | "end";
-  photos: { src: string; alt: string }[];
-};

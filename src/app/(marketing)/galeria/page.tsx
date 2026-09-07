@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { CtaBanner } from "@/components/sections/CtaBanner";
-import { GalleryGrid } from "@/components/sections/GalleryGrid";
-import { GuidedTour } from "@/components/sections/GuidedTour";
+import { TourViewer } from "@/components/sections/TourViewer";
 import { PageHeader } from "@/components/shared/PageHeader";
 
 export const metadata: Metadata = {
   title: "Galería",
   description:
-    "Recorré las instalaciones de AURIS paso a paso: ingreso, recepción, pasillo, consultorios y laboratorio.",
+    "Recorré las instalaciones de AURIS como si estuvieras adentro: entrá por la puerta y caminá hasta los consultorios y el laboratorio.",
   alternates: { canonical: "/galeria" },
 };
 
@@ -20,10 +19,13 @@ export default function GaleriaPage() {
         waveTone="base"
         eyebrow="Galería"
         title="Nuestros espacios"
-        description="Consultorios amplios, luz natural y áreas comunes pensadas para que la espera también sea agradable."
+        description="Entrá por la puerta y caminá el centro: mirá alrededor y tocá los puntos para pasar de un espacio al siguiente."
       />
-      <GuidedTour />
-      <GalleryGrid />
+      {/* El recorrido reemplaza al visor con timeline y a la grilla de fotos:
+          ahora se camina de foto en foto tocando las puertas. */}
+      <section className="container-auris py-16 lg:py-20">
+        <TourViewer />
+      </section>
       <CtaBanner />
     </>
   );

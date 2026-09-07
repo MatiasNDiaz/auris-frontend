@@ -1,0 +1,273 @@
+/**
+ * Grafo de navegación del recorrido virtual.
+ *
+ * Cada nodo es una vista del centro y cada hotspot una puerta o un pasaje que
+ * se ve en esa foto. Las coordenadas van en porcentaje sobre la imagen —no en
+ * píxeles— para que el punto siga cayendo sobre la puerta en cualquier pantalla.
+ *
+ * El orden del recorrido y de qué lado del pasillo queda cada espacio salen de
+ * `gallery.ts`, que ya lo tenía relevado. Lo que cambia es la presentación: en
+ * vez de una lista con flechas, se camina de foto en foto.
+ *
+ * Las coordenadas están tomadas mirando cada foto: el punto de "consultorio 1"
+ * cae sobre la puerta abierta de la izquierda del pasillo, el de "laboratorio"
+ * sobre la puerta de la derecha del tramo del fondo, y así.
+ */
+
+export type TourHotspot = {
+  /** Posición del centro del círculo, en % del ancho y del alto de la foto. */
+  x: number;
+  y: number;
+  /** Lo que dice el globo al pasar el cursor. */
+  label: string;
+  /** Id del nodo destino. */
+  to: string;
+};
+
+export type TourNode = {
+  id: string;
+  /** Nombre de la parada, el que se muestra como título. */
+  title: string;
+  /** Una línea de contexto, debajo del título. */
+  caption: string;
+  /** La foto que se navega. */
+  image: string;
+  alt: string;
+  /**
+   * Nodo al que lleva el hotspot de volver, abajo y al centro. `null` solo en
+   * el ingreso, que es donde arranca el recorrido.
+   */
+  back: string | null;
+  hotspots: TourHotspot[];
+  /**
+   * El resto de las fotos del mismo espacio. No participan de la navegación:
+   * son las que hoy viven en la grilla y que, al sacarla, se quedarían sin
+   * lugar. Van como tira chica dentro del nodo.
+   */
+  extras?: { src: string; alt: string }[];
+};
+
+export const tourNodes: TourNode[] = [
+  {
+    id: "ingreso",
+    title: "Ingreso",
+    caption: "La puerta sobre Juan Bautista Daniel. Desde acá se ve el hall.",
+    image: "/images/galeria/ingreso-03.webp",
+    alt: "Puerta de entrada vidriada del centro, con el hall y el mostrador al fondo",
+    back: null,
+    hotspots: [
+      // A través del vidrio se ve el hall y, al fondo a la derecha, el
+      // mostrador. Es el único pasaje visible desde afuera.
+      { x: 56, y: 52, label: "Entrar al centro", to: "recepcion" },
+    ],
+    extras: [
+      {
+        src: "/images/galeria/ingreso-01.webp",
+        alt: "Cartel de AURIS en el frente del centro",
+      },
+      {
+        src: "/images/galeria/ingreso-02.webp",
+        alt: "Fachada del centro con el número 2044",
+      },
+    ],
+  },
+  {
+    id: "recepcion",
+    title: "Recepción",
+    caption:
+      "El hall de entrada: el mostrador a la derecha y el pasillo al fondo.",
+    image: "/images/galeria/recepcion-01.webp",
+    alt: "Hall de entrada con el mostrador de recepción a la derecha y el pasillo al fondo",
+    back: "ingreso",
+    hotspots: [
+      // La sala de espera asoma por el borde izquierdo: se ven el banco y el
+      // logo sobre la pared.
+      { x: 14, y: 57, label: "Sala de espera", to: "sala-espera" },
+      // El pasillo se abre al fondo, entre la pared y el mostrador.
+      { x: 46, y: 45, label: "Ir al pasillo", to: "pasillo" },
+    ],
+    extras: [
+      {
+        src: "/images/galeria/recepcion-03.webp",
+        alt: "Mostrador de recepción en madera bajo el logo",
+      },
+    ],
+  },
+  {
+    id: "sala-espera",
+    title: "Sala de espera",
+    caption: "Bancos, luz natural y el logo sobre la pared.",
+    image: "/images/galeria/recepcion-04.webp",
+    alt: "Sala de espera con bancos, ventana y el logo de AURIS en la pared",
+    back: "recepcion",
+    hotspots: [],
+    extras: [
+      {
+        src: "/images/galeria/recepcion-02.webp",
+        alt: "Sala de espera con el logo de AURIS en la pared",
+      },
+      {
+        src: "/images/galeria/recepcion-05.webp",
+        alt: "Rincón de la sala de espera junto al mostrador",
+      },
+    ],
+  },
+  {
+    id: "pasillo",
+    title: "Pasillo",
+    caption: "El eje del centro. De acá salen los consultorios.",
+    image: "/images/galeria/pasillo-02.webp",
+    alt: "Pasillo del centro con puertas de consultorios a ambos lados",
+    back: "recepcion",
+    hotspots: [
+      // Primera puerta de la izquierda, la que deja salir luz azulada.
+      { x: 25, y: 40, label: "Consultorio 1", to: "consultorio-1" },
+      // Segunda abertura de la izquierda, más adentro.
+      { x: 39, y: 41, label: "Consultorio 2", to: "consultorio-2" },
+      // Puerta abierta de la derecha.
+      { x: 80, y: 41, label: "Gabinete de estética", to: "consultorio-4" },
+      // El pasillo sigue: el tramo del fondo.
+      { x: 50, y: 55, label: "Seguir por el pasillo", to: "pasillo-fondo" },
+    ],
+    extras: [
+      {
+        src: "/images/galeria/pasillo-01.webp",
+        alt: "Pasillo visto desde la recepción",
+      },
+      {
+        src: "/images/galeria/pasillo-04.webp",
+        alt: "Puerta de los sanitarios sobre el pasillo",
+      },
+    ],
+  },
+  {
+    id: "consultorio-1",
+    title: "Consultorio 1 — Odontología",
+    caption: "Primer consultorio odontológico sobre la izquierda.",
+    image: "/images/galeria/odontologia-1-01.webp",
+    alt: "Sillón odontológico del consultorio 1",
+    back: "pasillo",
+    hotspots: [],
+    extras: [
+      {
+        src: "/images/galeria/odontologia-1-02.webp",
+        alt: "Consultorio 1 con sillón junto a la ventana",
+      },
+      {
+        src: "/images/galeria/odontologia-1-03.webp",
+        alt: "Mesada y equipamiento del consultorio 1",
+      },
+    ],
+  },
+  {
+    id: "consultorio-2",
+    title: "Consultorio 2 — Odontología",
+    caption: "Segundo consultorio odontológico, con escritorio de consulta.",
+    image: "/images/galeria/odontologia-2-01.webp",
+    alt: "Consultorio 2 con sillón y escritorio",
+    back: "pasillo",
+    hotspots: [],
+    extras: [
+      {
+        src: "/images/galeria/odontologia-2-02.webp",
+        alt: "Sillón odontológico del consultorio 2",
+      },
+      {
+        src: "/images/galeria/odontologia-2-03.webp",
+        alt: "Vista general del consultorio 2",
+      },
+    ],
+  },
+  {
+    id: "consultorio-4",
+    title: "Consultorio 4 — Estética",
+    caption: "Gabinete de estética facial y corporal.",
+    image: "/images/galeria/estetica-01.webp",
+    alt: "Camilla del consultorio de estética",
+    back: "pasillo",
+    hotspots: [],
+    extras: [
+      {
+        src: "/images/galeria/estetica-02.webp",
+        alt: "Consultorio de estética con aparatología y bacha",
+      },
+      {
+        src: "/images/galeria/estetica-03.webp",
+        alt: "Escritorio de consulta del consultorio de estética",
+      },
+    ],
+  },
+  {
+    id: "pasillo-fondo",
+    title: "Pasillo — tramo del fondo",
+    caption:
+      "Al fondo el consultorio de entrevista; a la derecha, el laboratorio.",
+    image: "/images/galeria/pasillo-03.webp",
+    alt: "Tramo final del pasillo, con el laboratorio a la derecha y una puerta de madera al fondo",
+    back: "pasillo",
+    hotspots: [
+      // Puerta de la izquierda, con la misma luz azulada del primer tramo.
+      { x: 32, y: 44, label: "Consultorio 3", to: "consultorio-3" },
+      // Puerta abierta de la derecha: se ve la mesada del laboratorio.
+      { x: 83, y: 44, label: "Laboratorio", to: "laboratorio" },
+      // La puerta de madera que cierra el pasillo.
+      { x: 51, y: 43, label: "Consultorio de entrevista", to: "consultorio-5" },
+    ],
+  },
+  {
+    id: "consultorio-3",
+    title: "Consultorio 3 — Odontología",
+    caption: "Tercer consultorio odontológico sobre la izquierda.",
+    image: "/images/galeria/odontologia-3-01.webp",
+    alt: "Consultorio 3 con sillón junto a la ventana",
+    back: "pasillo-fondo",
+    hotspots: [],
+    extras: [
+      {
+        src: "/images/galeria/odontologia-3-02.webp",
+        alt: "Equipamiento odontológico del consultorio 3",
+      },
+    ],
+  },
+  {
+    id: "laboratorio",
+    title: "Laboratorio",
+    caption: "Donde se preparan y se imprimen los trabajos del consultorio.",
+    image: "/images/galeria/laboratorio-01.webp",
+    alt: "Mesada del laboratorio con esterilizador e impresoras 3D",
+    back: "pasillo-fondo",
+    hotspots: [],
+    extras: [
+      {
+        src: "/images/galeria/laboratorio-02.webp",
+        alt: "Equipamiento del laboratorio",
+      },
+      {
+        src: "/images/galeria/laboratorio-03.webp",
+        alt: "Vista general del laboratorio",
+      },
+    ],
+  },
+  {
+    id: "consultorio-5",
+    title: "Consultorio 5 — Entrevista",
+    caption: "El consultorio del fondo, para entrevistas y consultas.",
+    image: "/images/galeria/consulta-01.webp",
+    alt: "Consultorio de entrevista con escritorio",
+    back: "pasillo-fondo",
+    hotspots: [],
+    extras: [
+      {
+        src: "/images/galeria/consulta-02.webp",
+        alt: "Vista general del consultorio de entrevista",
+      },
+    ],
+  },
+];
+
+/** El nodo por donde arranca el recorrido. */
+export const TOUR_START = "ingreso";
+
+export function getTourNode(id: string) {
+  return tourNodes.find((node) => node.id === id);
+}
