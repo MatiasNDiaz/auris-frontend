@@ -50,22 +50,27 @@ export type TourNode = {
    * son las que hoy viven en la grilla y que, al sacarla, se quedarían sin
    * lugar. Van como tira chica dentro del nodo.
    */
-  extras?: { src: string; alt: string }[];
+  extras?: {
+    src: string;
+    alt: string;
+    /** Ancho sobre alto. Si no está, se asume vertical de teléfono. */
+    aspect?: number;
+  }[];
 };
 
 export const tourNodes: TourNode[] = [
   {
     id: "ingreso",
     title: "Ingreso",
-    caption: "La puerta sobre Juan Bautista Daniel. Desde acá se ve el hall.",
-    image: "/images/galeria/ingreso-03.webp",
-    aspect: 9 / 16,
-    alt: "Puerta de entrada vidriada del centro, con el hall y el mostrador al fondo",
+    caption:
+      "El frente sobre Juan Bautista Daniel, con el cartel de las especialidades a la derecha.",
+    image: "/images/galeria/entrada-lejos.webp",
+    aspect: 1672 / 940,
+    alt: "Frente del centro visto desde la vereda, con el número 2044 y el cartel de especialidades",
     back: null,
     hotspots: [
-      // A través del vidrio se ve el hall y, al fondo a la derecha, el
-      // mostrador. Es el único pasaje visible desde afuera.
-      { x: 56, y: 52, label: "Entrar al centro", to: "recepcion" },
+      // La puerta, en el medio del frente vidriado.
+      { x: 48, y: 55, label: "Acercarse a la entrada", to: "entrada" },
     ],
     extras: [
       {
@@ -79,6 +84,26 @@ export const tourNodes: TourNode[] = [
     ],
   },
   {
+    id: "entrada",
+    title: "Entrada",
+    caption:
+      "Ya en la puerta. A través del vidrio se ven la sala de espera y el mostrador.",
+    image: "/images/galeria/entrada-cerca.webp",
+    aspect: 1672 / 940,
+    alt: "Puerta vidriada del centro vista de cerca, con la sala de espera a la izquierda y la recepción a la derecha",
+    back: "ingreso",
+    hotspots: [
+      // Sobre la manija de la puerta.
+      { x: 53, y: 52, label: "Entrar al centro", to: "recepcion" },
+    ],
+    extras: [
+      {
+        src: "/images/galeria/ingreso-03.webp",
+        alt: "Puerta de entrada vidriada del centro",
+      },
+    ],
+  },
+  {
     id: "recepcion",
     title: "Recepción",
     caption:
@@ -88,7 +113,7 @@ export const tourNodes: TourNode[] = [
     image: "/images/galeria/recepcion-panoramica.webp",
     aspect: 1448 / 1086,
     alt: "Hall de entrada: la sala de espera a la izquierda y el mostrador de recepción a la derecha, separados por una columna",
-    back: "ingreso",
+    back: "entrada",
     hotspots: [
       // Los bancos y el logo, del lado izquierdo de la columna.
       { x: 27, y: 55, label: "Sala de espera", to: "sala-espera" },

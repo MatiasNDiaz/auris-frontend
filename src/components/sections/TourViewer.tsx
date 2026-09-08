@@ -64,7 +64,16 @@ export function TourViewer() {
   const coarsePointer = useMediaQuery("(hover: none)");
 
   const node = getTourNode(nodeId) ?? tourNodes[0];
-  const photos = [{ src: node.image, alt: node.alt }, ...(node.extras ?? [])];
+  // Cada foto viaja con su proporción. Las secundarias casi siempre son
+  // verticales de teléfono, incluso cuando la principal del nodo es apaisada:
+  // dimensionar la capa con la del nodo las recortaba hasta dejar un detalle.
+  const photos = [
+    { src: node.image, alt: node.alt, aspect: node.aspect },
+    ...(node.extras ?? []).map((extra) => ({
+      ...extra,
+      aspect: extra.aspect ?? 9 / 16,
+    })),
+  ];
   const photo = photos[Math.min(photoIndex, photos.length - 1)];
   const showHotspots = photoIndex === 0;
 
@@ -105,11 +114,13 @@ export function TourViewer() {
    * Se calcula en píxeles y no con `aspect-ratio` en CSS porque tiene que
    * cubrir la ventana en los dos ejes: una foto vertical sobra de alto y una
    * apaisada sobra de ancho, y en una ventana apaisada con una foto apaisada
-   * hay que cubrir por alto o quedan franjas arriba y abajo.
+   * hay que cubrir por alto o quedan franjas arriba y abajo. Sale de la foto
+   * que se está mirando, no del nodo: dentro de un nodo conviven las dos
+   * orientaciones.
    */
   const layer = (() => {
-    const width = Math.max(frame.w, frame.h * node.aspect) * OVERSCAN;
-    return { width, height: width / node.aspect };
+    const width = Math.max(frame.w, frame.h * photo.aspect) * OVERSCAN;
+    return { width, height: width / photo.aspect };
   })();
 
   const slack = {
@@ -132,7 +143,7 @@ export function TourViewer() {
 
   const look = useCallback(
     (event: ReactPointerEvent<HTMLDivElement>) => {
-      if (reduceMotion || !frameRef.current) return;
+      if (reduceMotion || !showHotspots || !frameRef.current) return;
       const box = frameRef.current.getBoundingClientRect();
       const nx = (event.clientX - box.left) / box.width - 0.5;
       const ny = (event.clientY - box.top) / box.height - 0.5;
@@ -140,7 +151,7 @@ export function TourViewer() {
       panX.set(Math.max(-slack.x, Math.min(slack.x, -nx * LOOK_X)));
       panY.set(Math.max(-slack.y, Math.min(slack.y, restY - ny * LOOK_Y)));
     },
-    [panX, panY, reduceMotion, restY, slack.x, slack.y],
+    [panX, panY, reduceMotion, restY, showHotspots, slack.x, slack.y],
   );
 
   const rest = useCallback(() => {
@@ -159,7 +170,7 @@ export function TourViewer() {
   );
 
   return (
-    <div className="mx-auto max-w-4xl">
+    <div className="mx-auto max-w-6xl">
       {/* Encabezado mínimo: dónde estoy y cuántas paradas hay. El recorrido se
           navega sobre la foto, así que no hace falta más. */}
       <div className="mb-5 flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
@@ -217,27 +228,30 @@ export function TourViewer() {
             style={{ transformOrigin: `${origin.x}% ${origin.y}%` }}
             className="absolute inset-0"
           >
-            <motion.div
-              style={{
-                x: panX,
-                y: panY,
-                width: layer.width,
-                height: layer.height,
-              }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-            >
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                sizes="(max-width: 1024px) 100vw, 900px"
-                priority={node.id === TOUR_START}
-                className="object-cover"
-                draggable={false}
-              />
+            {showHotspots ? (
+              <motion.div
+                style={{
+                  x: panX,
+                  y: panY,
+                  width: layer.width,
+                  height: layer.height,
+                }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              >
+                <Image
+                  src={photo.src}
+                  alt={photo.alt}
+                  fill
+                  // La capa mide OVERSCAN veces el ancho de la ventana, no el
+                  // ancho de la ventana: pidiendo menos, Next servía una
+                  // imagen más chica que la que se dibuja y se veía blanda.
+                  sizes="(max-width: 1024px) 115vw, 1350px"
+                  priority={node.id === TOUR_START}
+                  className="object-cover"
+                  draggable={false}
+                />
 
-              {showHotspots &&
-                node.hotspots.map((hotspot) => (
+                {node.hotspots.map((hotspot) => (
                   <Hotspot
                     key={hotspot.to}
                     hotspot={hotspot}
@@ -245,7 +259,20 @@ export function TourViewer() {
                     onClick={() => go(hotspot.to, hotspot, "forward")}
                   />
                 ))}
-            </motion.div>
+              </motion.div>
+            ) : (
+              // Las fotos de detalle van enteras, no recortadas por la ventana:
+              // no son un lugar por el que se camina sino una foto que se
+              // mira, y ahí lo que se quiere es verla completa.
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, 1150px"
+                className="object-contain"
+                draggable={false}
+              />
+            )}
           </motion.div>
         </AnimatePresence>
 
@@ -269,8 +296,14 @@ export function TourViewer() {
           </motion.button>
         )}
 
-        {/* Pista de uso, solo la primera vez que se ve el visor. */}
-        <p className="pointer-events-none absolute top-4 left-1/2 z-20 -translate-x-1/2 rounded-full bg-ink-900/40 px-3.5 py-1.5 text-[0.6875rem] tracking-wide text-cream-50/90 backdrop-blur-md">
+        {/* Cómo se usa. Sobre una foto de detalle no aplica: ahí no hay ni
+            puntos ni nada alrededor para mirar. */}
+        <p
+          className={cn(
+            "pointer-events-none absolute top-4 left-1/2 z-20 -translate-x-1/2 rounded-full bg-ink-900/40 px-3.5 py-1.5 text-[0.6875rem] tracking-wide text-cream-50/90 backdrop-blur-md",
+            !showHotspots && "hidden",
+          )}
+        >
           {coarsePointer
             ? "Deslizá para mirar · Tocá los puntos"
             : "Mové el cursor para mirar alrededor · Hacé click en los puntos"}
