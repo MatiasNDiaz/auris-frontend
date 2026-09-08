@@ -80,13 +80,17 @@ export function TourViewer() {
   const stepNumber = tourNodes.findIndex((n) => n.id === node.id) + 1;
 
   /**
-   * Dónde se centra el encuadre en reposo: sobre el promedio de los hotspots,
-   * para que las puertas queden a la vista sin tener que buscarlas. Sin
-   * hotspots, el centro de la foto.
+   * Dónde se centra el encuadre en reposo.
+   *
+   * En la vista navegable, sobre el promedio de los hotspots: así las puertas
+   * quedan a la vista sin tener que buscarlas. En una foto de detalle, donde
+   * lo diga la propia foto y, si no dice nada, un poco por encima de la mitad
+   * —en una foto de interior el motivo casi nunca está en el centro exacto—.
    */
-  const focusY = node.hotspots.length
-    ? node.hotspots.reduce((sum, h) => sum + h.y, 0) / node.hotspots.length
-    : 50;
+  const focusY =
+    showHotspots && node.hotspots.length
+      ? node.hotspots.reduce((sum, h) => sum + h.y, 0) / node.hotspots.length
+      : (photo.focus ?? 42);
 
   const panX = useSpring(0, { stiffness: 80, damping: 20, mass: 0.7 });
   const panY = useSpring(0, { stiffness: 80, damping: 20, mass: 0.7 });
@@ -143,7 +147,7 @@ export function TourViewer() {
 
   const look = useCallback(
     (event: ReactPointerEvent<HTMLDivElement>) => {
-      if (reduceMotion || !showHotspots || !frameRef.current) return;
+      if (reduceMotion || !frameRef.current) return;
       const box = frameRef.current.getBoundingClientRect();
       const nx = (event.clientX - box.left) / box.width - 0.5;
       const ny = (event.clientY - box.top) / box.height - 0.5;
@@ -151,7 +155,7 @@ export function TourViewer() {
       panX.set(Math.max(-slack.x, Math.min(slack.x, -nx * LOOK_X)));
       panY.set(Math.max(-slack.y, Math.min(slack.y, restY - ny * LOOK_Y)));
     },
-    [panX, panY, reduceMotion, restY, showHotspots, slack.x, slack.y],
+    [panX, panY, reduceMotion, restY, slack.x, slack.y],
   );
 
   const rest = useCallback(() => {
@@ -228,30 +232,30 @@ export function TourViewer() {
             style={{ transformOrigin: `${origin.x}% ${origin.y}%` }}
             className="absolute inset-0"
           >
-            {showHotspots ? (
-              <motion.div
-                style={{
-                  x: panX,
-                  y: panY,
-                  width: layer.width,
-                  height: layer.height,
-                }}
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-              >
-                <Image
-                  src={photo.src}
-                  alt={photo.alt}
-                  fill
-                  // La capa mide OVERSCAN veces el ancho de la ventana, no el
-                  // ancho de la ventana: pidiendo menos, Next servía una
-                  // imagen más chica que la que se dibuja y se veía blanda.
-                  sizes="(max-width: 1024px) 115vw, 1350px"
-                  priority={node.id === TOUR_START}
-                  className="object-cover"
-                  draggable={false}
-                />
+            <motion.div
+              style={{
+                x: panX,
+                y: panY,
+                width: layer.width,
+                height: layer.height,
+              }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            >
+              <Image
+                src={photo.src}
+                alt={photo.alt}
+                fill
+                // La capa mide OVERSCAN veces el ancho de la ventana, no el
+                // ancho de la ventana: pidiendo menos, Next servía una imagen
+                // más chica que la que se dibuja y se veía blanda.
+                sizes="(max-width: 1024px) 115vw, 1350px"
+                priority={node.id === TOUR_START}
+                className="object-cover"
+                draggable={false}
+              />
 
-                {node.hotspots.map((hotspot) => (
+              {showHotspots &&
+                node.hotspots.map((hotspot) => (
                   <Hotspot
                     key={hotspot.to}
                     hotspot={hotspot}
@@ -259,20 +263,7 @@ export function TourViewer() {
                     onClick={() => go(hotspot.to, hotspot, "forward")}
                   />
                 ))}
-              </motion.div>
-            ) : (
-              // Las fotos de detalle van enteras, no recortadas por la ventana:
-              // no son un lugar por el que se camina sino una foto que se
-              // mira, y ahí lo que se quiere es verla completa.
-              <Image
-                src={photo.src}
-                alt={photo.alt}
-                fill
-                sizes="(max-width: 1024px) 100vw, 1150px"
-                className="object-contain"
-                draggable={false}
-              />
-            )}
+            </motion.div>
           </motion.div>
         </AnimatePresence>
 
@@ -296,14 +287,8 @@ export function TourViewer() {
           </motion.button>
         )}
 
-        {/* Cómo se usa. Sobre una foto de detalle no aplica: ahí no hay ni
-            puntos ni nada alrededor para mirar. */}
-        <p
-          className={cn(
-            "pointer-events-none absolute top-4 left-1/2 z-20 -translate-x-1/2 rounded-full bg-ink-900/40 px-3.5 py-1.5 text-[0.6875rem] tracking-wide text-cream-50/90 backdrop-blur-md",
-            !showHotspots && "hidden",
-          )}
-        >
+        {/* Cómo se usa. */}
+        <p className="pointer-events-none absolute top-4 left-1/2 z-20 -translate-x-1/2 rounded-full bg-ink-900/40 px-3.5 py-1.5 text-[0.6875rem] tracking-wide text-cream-50/90 backdrop-blur-md">
           {coarsePointer
             ? "Deslizá para mirar · Tocá los puntos"
             : "Mové el cursor para mirar alrededor · Hacé click en los puntos"}

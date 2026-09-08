@@ -55,6 +55,12 @@ export type TourNode = {
     alt: string;
     /** Ancho sobre alto. Si no está, se asume vertical de teléfono. */
     aspect?: number;
+    /**
+     * Altura del motivo de la foto, en % de su alto. Es donde se centra el
+     * encuadre al abrirla. Sin esto se centra un poco por encima de la mitad,
+     * que es donde suele estar lo que importa en una foto de interior.
+     */
+    focus?: number;
   }[];
 };
 
@@ -128,6 +134,9 @@ export const tourNodes: TourNode[] = [
       {
         src: "/images/galeria/recepcion-03.webp",
         alt: "Mostrador de recepción en madera bajo el logo",
+        // El logo está arriba de todo; centrada, la foto abre sobre la veta
+        // de la madera del mostrador y no se entiende qué se está mirando.
+        focus: 26,
       },
     ],
   },
