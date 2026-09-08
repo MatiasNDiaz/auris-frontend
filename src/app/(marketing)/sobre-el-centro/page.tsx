@@ -2,6 +2,7 @@ import { Compass, Ear, HeartHandshake, Users } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { CtaBanner } from "@/components/sections/CtaBanner";
+import { HistoryTimeline } from "@/components/sections/HistoryTimeline";
 import { VirtualTour } from "@/components/sections/VirtualTour";
 import { LeafScatter } from "@/components/shared/LeafScatter";
 import { LeafSprig } from "@/components/shared/LeafSprig";
@@ -72,76 +73,87 @@ export default function SobreElCentroPage() {
 
       {/* 1 — La historia, como línea de tiempo. En prosa eran tres párrafos
           largos que nadie termina; en hitos se recorre de un vistazo. */}
-      <section className="container-auris py-20 lg:py-24">
-        <div className="grid gap-14 lg:grid-cols-[1.15fr_0.85fr]">
-          <Reveal>
-            <p className="text-xs font-semibold tracking-[0.24em] text-primary-700 uppercase">
-              Nuestra historia
-            </p>
-            <h2 className="mt-4 font-serif text-3xl leading-tight text-balance text-primary-800 sm:text-4xl">
-              De Kúspide a AURIS
-            </h2>
+      <section className="py-20 lg:py-24">
+        {/* En escritorio la historia se recorre en horizontal, con una rama
+            por hito. Se renderizan las dos versiones y decide el CSS: si el
+            corte lo hiciera JS, el servidor tendría que adivinar el ancho de
+            pantalla y la sección parpadearía al hidratar. */}
+        <div className="hidden lg:block">
+          <HistoryTimeline />
+        </div>
 
-            <ol className="mt-10">
-              {milestones.map((milestone, index) => (
-                <li
-                  key={milestone.when}
-                  className="relative grid gap-x-6 gap-y-1 pb-9 pl-8 sm:grid-cols-[8.5rem_1fr] sm:pl-10 last:pb-0"
-                >
-                  {/* El hilo une los hitos; el último no lo lleva para que la
+        {/* Hasta lg, la línea de tiempo vertical de siempre. */}
+        <div className="container-auris lg:hidden">
+          <div className="grid gap-14">
+            <Reveal>
+              <p className="text-xs font-semibold tracking-[0.24em] text-primary-700 uppercase">
+                Nuestra historia
+              </p>
+              <h2 className="mt-4 font-serif text-3xl leading-tight text-balance text-primary-800 sm:text-4xl">
+                De Kúspide a AURIS
+              </h2>
+
+              <ol className="mt-10">
+                {milestones.map((milestone, index) => (
+                  <li
+                    key={milestone.when}
+                    className="relative grid gap-x-6 gap-y-1 pb-9 pl-8 sm:grid-cols-[8.5rem_1fr] sm:pl-10 last:pb-0"
+                  >
+                    {/* El hilo une los hitos; el último no lo lleva para que la
                       línea no quede colgando en el aire. */}
-                  {index < milestones.length - 1 && (
+                    {index < milestones.length - 1 && (
+                      <span
+                        aria-hidden
+                        className="absolute top-3 bottom-0 left-[0.3125rem] w-px bg-primary-200 sm:left-[0.4375rem]"
+                      />
+                    )}
                     <span
                       aria-hidden
-                      className="absolute top-3 bottom-0 left-[0.3125rem] w-px bg-primary-200 sm:left-[0.4375rem]"
+                      className="absolute top-2 left-0 size-2.5 rounded-full bg-primary-500 ring-4 ring-surface-base sm:size-3.5"
                     />
-                  )}
-                  <span
-                    aria-hidden
-                    className="absolute top-2 left-0 size-2.5 rounded-full bg-primary-500 ring-4 ring-surface-base sm:size-3.5"
-                  />
 
-                  <p className="font-serif text-lg leading-tight text-primary-700 sm:text-right">
-                    {milestone.when}
-                  </p>
-
-                  <div className="sm:row-span-2">
-                    <h3 className="font-semibold text-ink-900">
-                      {milestone.title}
-                    </h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-pretty text-ink-700/80">
-                      {milestone.description}
+                    <p className="font-serif text-lg leading-tight text-primary-700 sm:text-right">
+                      {milestone.when}
                     </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </Reveal>
 
-          {/* La segunda foto crece hasta emparejar el alto de la línea de
+                    <div className="sm:row-span-2">
+                      <h3 className="font-semibold text-ink-900">
+                        {milestone.title}
+                      </h3>
+                      <p className="mt-1.5 text-sm leading-relaxed text-pretty text-ink-700/80">
+                        {milestone.description}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </Reveal>
+
+            {/* La segunda foto crece hasta emparejar el alto de la línea de
               tiempo: fijarle una proporción obligaba a estirar o recortar el
               texto cada vez que se corrige un hito. */}
-          <Reveal from="left" delay={0.1} className="h-full">
-            <div className="flex h-full flex-col gap-4">
-              {storyPhotos.map((photo, index) => (
-                <div
-                  key={photo.src}
-                  className={cn(
-                    "relative overflow-hidden rounded-3xl bg-cream-100 shadow-sm",
-                    index === 0 ? "aspect-4/5" : "min-h-56 flex-1",
-                  )}
-                >
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    fill
-                    sizes="(max-width: 1024px) 90vw, 380px"
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          </Reveal>
+            <Reveal from="left" delay={0.1} className="h-full">
+              <div className="flex h-full flex-col gap-4">
+                {storyPhotos.map((photo, index) => (
+                  <div
+                    key={photo.src}
+                    className={cn(
+                      "relative overflow-hidden rounded-3xl bg-cream-100 shadow-sm",
+                      index === 0 ? "aspect-4/5" : "min-h-56 flex-1",
+                    )}
+                  >
+                    <Image
+                      src={photo.src}
+                      alt={photo.alt}
+                      fill
+                      sizes="(max-width: 1024px) 90vw, 380px"
+                      className="object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
         </div>
       </section>
 

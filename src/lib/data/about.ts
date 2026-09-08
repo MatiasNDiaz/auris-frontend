@@ -11,6 +11,13 @@ export type Milestone = {
   when: string;
   title: string;
   description: string;
+  /**
+   * La foto que acompaña al hito en la versión horizontal de escritorio. Los
+   * hitos viejos van con material de archivo —no hay fotos del centro de esos
+   * años—; de "hace diez años" en adelante son fotos propias.
+   */
+  image: string;
+  alt: string;
 };
 
 /**
@@ -23,36 +30,48 @@ export const milestones: Milestone[] = [
     title: "El punto de partida",
     description:
       "La práctica odontológica estaba cambiando: la especialización, las nuevas tecnologías y los nuevos materiales empezaban a exigir mucha más formación y entrenamiento.",
+    image: "/images/historia/1-punto-de-partida.webp",
+    alt: "Sillón y equipo odontológico antiguo en un consultorio de época",
   },
   {
     when: "1998",
     title: "Nace Kúspide",
     description:
       "Kúspide Consultorios Odontológicos abre con cuatro consultorios y todas las especialidades odontológicas bajo un mismo techo.",
+    image: "/images/historia/2-nace-kuspide.webp",
+    alt: "Consultorio vacío y listo para abrir, en una foto de archivo",
   },
   {
     when: "Los años siguientes",
     title: "Tres centros",
     description:
       "Pese a las crisis y los desafíos, el proyecto crece hasta convertirse en tres centros de atención: dos en Córdoba y uno en San Francisco.",
+    image: "/images/historia/3-tres-centros.webp",
+    alt: "Consultorio luminoso, equipado y listo para atender",
   },
   {
     when: "Hace diez años",
     title: "La primera grieta",
     description:
       "Aun con una odontología cada vez más especializada, había situaciones que pedían mirar más allá de la boca. Empezamos a trabajar junto a fisioterapeutas para abordar el bruxismo y ciertas alteraciones funcionales, y la experiencia fue reveladora: cuando distintas disciplinas trabajan juntas, se entiende mejor lo que le pasa a una persona.",
+    image: "/images/historia/4-primera-grieta.webp",
+    alt: "Dos profesionales atendiendo juntas a un mismo paciente",
   },
   {
     when: "Poco después",
     title: "El enfoque se extiende",
     description:
       "La misma lógica llega a la odontopediatría funcional, donde la odontología se complementa con fonoaudiología y kinesiología para acompañar el desarrollo de los chicos desde temprano.",
+    image: "/images/servicios/odontopediatria-funcional.webp",
+    alt: "Nena sonriendo durante un estudio de radiografía panorámica",
   },
   {
     when: "Hoy",
     title: "AURIS",
     description:
       "El espacio pensado para reunir profesionales que comparten esta filosofía. Cada integrante del equipo fue elegido no solo por su formación y su experiencia, sino por su manera de entender la profesión, su empatía y sus ganas de trabajar junto a otros.",
+    image: "/images/galeria/ingreso-01.webp",
+    alt: "Cartel de AURIS en el frente del centro",
   },
 ];
 
