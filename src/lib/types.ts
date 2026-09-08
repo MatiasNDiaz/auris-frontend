@@ -12,6 +12,16 @@ export type Service = {
   name: string;
   /** Clave del ícono de lucide-react, resuelta en `@/lib/icons`. */
   icon: string;
+  /**
+   * Logo propio del servicio, cuando tiene submarca. Reemplaza al ícono en la
+   * tarjeta y en el detalle. Solo lo usa Alineadores, con Smile Now.
+   */
+  iconImage?: string;
+  /**
+   * Si aparece en las grillas y listados. Los que no se listan siguen
+   * teniendo su página y se puede llegar desde otro servicio.
+   */
+  listed?: boolean;
   shortDescription: string;
   /** Frase de una línea, usada en el carousel del hero. */
   tagline: string;

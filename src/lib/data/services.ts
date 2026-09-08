@@ -55,23 +55,65 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "psicologia",
-    name: "Psicología",
-    icon: "brain",
+    slug: "odontopediatria-funcional",
+    name: "Odontopediatría funcional",
+    icon: "baby",
     shortDescription:
-      "Acompañamiento terapéutico individual, de pareja y familiar en un espacio de escucha y confianza.",
-    tagline: "Un espacio para pensarte con tiempo",
-    heroTitle: "Un espacio para pensarte con tiempo",
+      "Odontología infantil con mirada funcional: cómo el chico respira, traga y mastica, además de cómo están sus dientes.",
+    tagline: "Mirar cómo crece, no solo cómo está",
+    heroTitle: "Mirar cómo crece, no solo cómo está",
     heroSubtitle:
-      "Terapia individual, de pareja y familiar, con la escucha y el encuadre que cada proceso necesita.",
+      "Control, prevención y hábitos, mirando la función completa: respiración, deglución y masticación.",
     fullDescription:
-      "Nuestro equipo de psicología acompaña procesos de cambio personal desde un enfoque integrador, respetando el tiempo y la singularidad de cada persona. Trabajamos sobre ansiedad, estados de ánimo, duelos, vínculos y crisis vitales, tanto en formato individual como de pareja y familia. Cada proceso comienza con entrevistas de admisión donde definimos objetivos claros y elegimos juntos el encuadre más adecuado.",
-    imageUrl: "/Piscologia.webp",
+      "La odontopediatría funcional mira algo más que las caries: observa cómo respira el chico, cómo traga y cómo mastica, porque esas funciones son las que van dando forma a los maxilares mientras crece. Un chico que respira por la boca, o que sostiene una deglución infantil más allá de la edad esperable, desarrolla el paladar y la mordida de otra manera, y eso se corrige mucho mejor a los seis años que a los quince. Trabajamos la prevención, los hábitos —chupete, mamadera, succión digital— y el seguimiento del crecimiento, en consultas pensadas para que el chico no le tenga miedo al consultorio.",
+    imageUrl: "/images/galeria/odontologia-2-01.webp",
     features: [
-      "Terapia individual para adolescentes y adultos",
-      "Terapia de pareja y orientación familiar",
-      "Abordaje de ansiedad, estrés y estados de ánimo",
-      "Sesiones presenciales y por videollamada",
+      "Control y prevención desde la primera infancia",
+      "Evaluación de respiración, deglución y masticación",
+      "Abordaje de hábitos: chupete, mamadera, succión digital",
+      "Seguimiento del crecimiento de los maxilares",
+    ],
+  },
+  {
+    slug: "alineadores-y-ortodoncia",
+    name: "Alineadores y ortodoncia",
+    icon: "tooth",
+    // Submarca propia del centro para los alineadores.
+    iconImage: "/images/smile-now-alineadores.webp",
+    shortDescription:
+      "Ortodoncia con alineadores transparentes o brackets, planificada digitalmente desde el primer estudio.",
+    tagline: "Alinear sin que se note",
+    heroTitle: "Alinear sin que se note",
+    heroSubtitle:
+      "Alineadores transparentes o brackets, con el recorrido planificado digitalmente antes de colocar nada.",
+    fullDescription:
+      "Antes de empezar cualquier tratamiento de ortodoncia hacemos un escaneo intraoral y planificamos digitalmente el recorrido completo: qué pieza se mueve, en qué orden y cuánto tiempo lleva. Recién con esa planificación sobre la mesa conversamos las opciones. Los alineadores transparentes son removibles y prácticamente invisibles, pero dependen de que los uses las horas indicadas; los brackets no dependen de eso, pero se ven y exigen más cuidado en la higiene. Ninguna de las dos opciones es mejor en abstracto: la elección depende del caso y de la rutina de cada persona. Terminado el tratamiento viene la contención, que es lo que evita que los dientes vuelvan a moverse.",
+    imageUrl: "/images/galeria/laboratorio-01.webp",
+    features: [
+      "Escaneo intraoral y planificación digital",
+      "Alineadores transparentes removibles",
+      "Ortodoncia con brackets estéticos y metálicos",
+      "Controles periódicos y contención posterior",
+    ],
+  },
+  {
+    slug: "bruxismo-y-disfunciones",
+    name: "Bruxismo y disfunciones",
+    icon: "activity",
+    shortDescription:
+      "Diagnóstico y tratamiento del bruxismo y de las disfunciones de la articulación temporomandibular.",
+    tagline: "Frenar el desgaste antes de que avance",
+    heroTitle: "Frenar el desgaste antes de que avance",
+    heroSubtitle:
+      "Placas, ajuste de la mordida y trabajo sobre la articulación, para detener el desgaste a tiempo.",
+    fullDescription:
+      "El bruxismo casi nunca llega como motivo de consulta: llega como un diente sensible, una restauración que se fisura o un dolor de cabeza al despertar. El diagnóstico mira el patrón de desgaste del esmalte, la musculatura de la mandíbula y cómo cierra la mordida. El tratamiento suele combinar una placa de descarga hecha a medida, ajustes sobre la oclusión cuando corresponde y trabajo sobre la articulación temporomandibular. El desgaste que ya ocurrió no se revierte solo, pero se puede frenar; por eso el seguimiento en el tiempo es parte del tratamiento y no un extra.",
+    imageUrl: "/images/galeria/odontologia-3-01.webp",
+    features: [
+      "Diagnóstico del desgaste y de la mordida",
+      "Placas de descarga hechas a medida",
+      "Abordaje del dolor y la tensión mandibular",
+      "Control del desgaste en el tiempo",
     ],
   },
   {
@@ -92,6 +134,46 @@ export const services: Service[] = [
       "Tratamientos de hidratación y renovación cutánea",
       "Abordaje corporal y drenaje linfático",
       "Plan de cuidado domiciliario personalizado",
+    ],
+  },
+  {
+    slug: "psicologia",
+    name: "Psicología",
+    icon: "brain",
+    shortDescription:
+      "Acompañamiento terapéutico individual, de pareja y familiar en un espacio de escucha y confianza.",
+    tagline: "Un espacio para pensarte con tiempo",
+    heroTitle: "Un espacio para pensarte con tiempo",
+    heroSubtitle:
+      "Terapia individual, de pareja y familiar, con la escucha y el encuadre que cada proceso necesita.",
+    fullDescription:
+      "Nuestro equipo de psicología acompaña procesos de cambio personal desde un enfoque integrador, respetando el tiempo y la singularidad de cada persona. Trabajamos sobre ansiedad, estados de ánimo, duelos, vínculos y crisis vitales, tanto en formato individual como de pareja y familia. Cada proceso comienza con entrevistas de admisión donde definimos objetivos claros y elegimos juntos el encuadre más adecuado.",
+    imageUrl: "/Piscologia.webp",
+    features: [
+      "Terapia individual para adolescentes y adultos",
+      "Terapia de pareja y orientación familiar",
+      "Abordaje de ansiedad, estrés y estados de ánimo",
+      "Sesiones presenciales y por videollamada",
+    ],
+  },
+  {
+    slug: "fonoaudiologia",
+    name: "Fonoaudiología",
+    icon: "ear",
+    shortDescription:
+      "Evaluación y tratamiento del lenguaje, la voz, la audición y la deglución.",
+    tagline: "Comunicarse mejor, a toda edad",
+    heroTitle: "Comunicarse mejor, a toda edad",
+    heroSubtitle:
+      "Lenguaje, voz, audición y deglución, con evaluación diagnóstica y trabajo articulado.",
+    fullDescription:
+      "Atendemos a niños, adolescentes y adultos en dificultades del lenguaje, el habla, la voz, la audición y la deglución. El proceso comienza con una evaluación diagnóstica detallada y, cuando corresponde, se articula con la familia, la escuela o el equipo médico tratante. Los tratamientos se planifican en ciclos con revisión periódica de objetivos.",
+    imageUrl: "/Fonoaudiologia.webp",
+    features: [
+      "Evaluación del lenguaje y el habla",
+      "Tratamiento de la voz profesional",
+      "Estudios y abordaje auditivo",
+      "Trabajo articulado con familia y escuela",
     ],
   },
   {
@@ -118,6 +200,10 @@ export const services: Service[] = [
     slug: "kinesiologia",
     name: "Kinesiología",
     icon: "waves",
+    // Fuera de las grillas: no entra en el orden de ocho que definió el
+    // centro. La página sigue existiendo y se llega desde Bruxismo, que es
+    // el tratamiento que la usa como complemento.
+    listed: false,
     shortDescription:
       "Kinesiología aplicada a los tratamientos estéticos y odontológicos: drenaje, recuperación y trabajo sobre la zona tratada.",
     tagline: "El complemento que sostiene el resultado",
@@ -135,27 +221,16 @@ export const services: Service[] = [
       "Plan coordinado con estética y odontología",
     ],
   },
-  {
-    slug: "fonoaudiologia",
-    name: "Fonoaudiología",
-    icon: "ear",
-    shortDescription:
-      "Evaluación y tratamiento del lenguaje, la voz, la audición y la deglución.",
-    tagline: "Comunicarse mejor, a toda edad",
-    heroTitle: "Comunicarse mejor, a toda edad",
-    heroSubtitle:
-      "Lenguaje, voz, audición y deglución, con evaluación diagnóstica y trabajo articulado.",
-    fullDescription:
-      "Atendemos a niños, adolescentes y adultos en dificultades del lenguaje, el habla, la voz, la audición y la deglución. El proceso comienza con una evaluación diagnóstica detallada y, cuando corresponde, se articula con la familia, la escuela o el equipo médico tratante. Los tratamientos se planifican en ciclos con revisión periódica de objetivos.",
-    imageUrl: "/Fonoaudiologia.webp",
-    features: [
-      "Evaluación del lenguaje y el habla",
-      "Tratamiento de la voz profesional",
-      "Estudios y abordaje auditivo",
-      "Trabajo articulado con familia y escuela",
-    ],
-  },
 ];
+
+/**
+ * Los que se muestran en las grillas, el hero, el footer y el filtro del
+ * equipo. `services` sigue teniendo todos para las rutas y las búsquedas por
+ * slug: un servicio sin listar conserva su página.
+ */
+export const listedServices = services.filter(
+  (service) => service.listed !== false,
+);
 
 export function getServiceBySlug(slug: string) {
   return services.find((service) => service.slug === slug);

@@ -147,7 +147,7 @@ export default function SobreElCentroPage() {
 
       {/* 2 — La pregunta. Un solo enunciado grande sobre fondo oscuro: es el
           giro de toda la historia y necesita respirar solo. */}
-      <section className="relative isolate overflow-hidden bg-primary-800 py-20 lg:py-28">
+      <section className="relative isolate overflow-hidden bg-primary-800 py-24 lg:py-32">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0"
@@ -162,8 +162,11 @@ export default function SobreElCentroPage() {
           className="absolute -right-16 -bottom-12 h-64 w-auto -rotate-12 opacity-[0.07]"
         />
 
-        <div className="container-auris relative max-w-3xl text-center">
-          <Reveal>
+        {/* El ancho va en un elemento propio: sobre el mismo nodo que
+            `container-auris` gana el max-w-7xl de la clase y los párrafos se
+            estiraban a 1184px, imposibles de leer. */}
+        <div className="container-auris relative">
+          <Reveal className="mx-auto max-w-3xl text-center">
             <p className="text-xs font-semibold tracking-[0.24em] text-primary-200 uppercase">
               La pregunta que cambió todo
             </p>
@@ -174,11 +177,33 @@ export default function SobreElCentroPage() {
               aria-hidden
               className="mx-auto mt-8 block h-px w-16 bg-cream-50/40"
             />
-            <p className="mt-8 text-base leading-relaxed text-pretty text-cream-100/90 sm:text-lg">
-              La especialización es fundamental, pero puede completarse con una
-              mirada más amplia: atender a la persona antes de que un problema
-              se convierta en enfermedad.
-            </p>
+            {/* Cuatro párrafos, no uno: el bloque nació con un texto corto y
+                el aprobado desarrolla la idea completa. Van con separación
+                propia para que se lean como pasos y no como un ladrillo. */}
+            <div className="mt-8 space-y-5 text-base leading-relaxed text-pretty text-cream-100/90 sm:text-lg">
+              <p>
+                Con una odontología cada vez más especializada, empezamos a
+                entender que algunas situaciones requerían mirar más allá de la
+                boca.
+              </p>
+              <p>
+                Cuando distintas disciplinas trabajan juntas, podemos comprender
+                mejor qué le está pasando a una persona y acompañarla de manera
+                más integral.
+              </p>
+              <p>
+                Lo mismo sucede en la odontopediatría funcional, donde la
+                odontología puede complementarse con fonoaudiología y
+                kinesiología para detectar y acompañar desde temprano aspectos
+                relacionados con el desarrollo de los chicos.
+              </p>
+              {/* El cierre queda en cursiva y en crema pleno: es la conclusión
+                  de la pregunta del título, no un párrafo más. */}
+              <p className="font-serif text-lg text-balance text-cream-50 italic sm:text-xl">
+                Porque a veces, para entender lo que sucede en un lugar, hay que
+                mirar el conjunto.
+              </p>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -248,13 +273,23 @@ export default function SobreElCentroPage() {
             <h2 className="mt-4 font-serif text-3xl leading-tight text-balance text-primary-800 sm:text-4xl">
               Un lugar para seguir aprendiendo a cualquier edad
             </h2>
-            <p className="mt-6 text-base leading-relaxed text-pretty text-ink-700/85">
-              La expectativa de vida aumenta y, con ella, la necesidad de
-              propuestas que acompañen esa etapa desde varias dimensiones. Por
-              eso proyectamos talleres y espacios de encuentro alrededor de la
-              comunicación, la actividad neuronal, los vínculos, la respiración,
-              el movimiento, la tecnología y la participación social.
-            </p>
+            <div className="mt-6 space-y-4 text-base leading-relaxed text-pretty text-ink-700/85">
+              <p>
+                Vivir más también significa tener nuevas oportunidades para
+                aprender, compartir y seguir conectados.
+              </p>
+              <p>
+                Por eso en AURIS imaginamos propuestas pensadas para acompañar a
+                los adultos mayores desde diferentes dimensiones: la
+                comunicación, la actividad neuronal, los vínculos, la
+                respiración, el movimiento, la tecnología y la participación
+                social.
+              </p>
+              <p className="font-medium text-primary-800">
+                Un espacio para mantenerse activos, acompañados y protagonistas
+                de esta etapa de la vida.
+              </p>
+            </div>
           </Reveal>
         </div>
       </section>

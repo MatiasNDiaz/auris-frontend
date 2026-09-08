@@ -94,12 +94,24 @@ export default async function ServicioDetallePage({
           <Reveal className="mt-8 text-center">
             <span
               aria-hidden
-              className="inline-flex size-16 items-center justify-center rounded-2xl bg-cream-50/95 text-primary-700 shadow-lg"
+              className="inline-flex size-16 items-center justify-center overflow-hidden rounded-2xl bg-cream-50/95 text-primary-700 shadow-lg"
             >
-              {renderServiceIcon(service.icon, {
-                className: "size-8",
-                strokeWidth: 1.5,
-              })}
+              {service.iconImage ? (
+                // Acá el logo de submarca sí entra a un tamaño en el que se
+                // lee, así que ocupa la pastilla entera.
+                <Image
+                  src={service.iconImage}
+                  alt=""
+                  width={128}
+                  height={128}
+                  className="size-full object-cover"
+                />
+              ) : (
+                renderServiceIcon(service.icon, {
+                  className: "size-8",
+                  strokeWidth: 1.5,
+                })
+              )}
             </span>
           </Reveal>
 

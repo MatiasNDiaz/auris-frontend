@@ -9,7 +9,7 @@ import { ShineButton } from "@/components/shared/ShineButton";
 import { WaveDivider } from "@/components/shared/WaveDivider";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { siteConfig } from "@/config/site";
-import { services } from "@/lib/data/services";
+import { listedServices as services } from "@/lib/data/services";
 import { renderServiceIcon } from "@/lib/icons";
 
 const AUTOPLAY_MS = 4000;

@@ -57,7 +57,10 @@ export function ServiceCard({
         <span
           aria-hidden
           className={cn(
-            "inline-flex size-12 items-center justify-center self-center rounded-2xl bg-primary-100 text-primary-700 transition-[background-color,color,transform,translate] duration-300 ease-out group-hover:bg-primary-600 group-hover:text-cream-50",
+            "inline-flex size-12 items-center justify-center self-center overflow-hidden rounded-2xl transition-[background-color,color,transform,translate] duration-300 ease-out",
+            service.iconImage
+              ? "bg-white ring-1 ring-primary-200"
+              : "bg-primary-100 text-primary-700 group-hover:bg-primary-600 group-hover:text-cream-50",
             // En la variante con foto el ícono flota sobre el borde inferior de
             // la imagen: el fondo semitransparente con blur deja ver la foto
             // por detrás y el anillo lo despega sin el borde grueso de antes.
@@ -65,10 +68,23 @@ export function ServiceCard({
               "-mt-13 mb-5 bg-white/90 shadow-md ring-1 ring-primary-200/70 backdrop-blur-sm group-hover:-translate-y-0.5 motion-reduce:group-hover:translate-y-0",
           )}
         >
-          {renderServiceIcon(service.icon, {
-            className: "size-6",
-            strokeWidth: 1.5,
-          })}
+          {service.iconImage ? (
+            // Con logo de submarca se ocupa toda la pastilla: a tamaño de
+            // ícono el logo queda ilegible, y llenándola al menos se lee
+            // como una marca distinta del resto.
+            <Image
+              src={service.iconImage}
+              alt=""
+              width={96}
+              height={96}
+              className="size-full rounded-2xl object-cover"
+            />
+          ) : (
+            renderServiceIcon(service.icon, {
+              className: "size-6",
+              strokeWidth: 1.5,
+            })
+          )}
         </span>
 
         <h3

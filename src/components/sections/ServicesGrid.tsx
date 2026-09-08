@@ -5,7 +5,7 @@ import { Reveal } from "@/components/shared/Reveal";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { ServiceCard } from "@/components/shared/ServiceCard";
 import { ShineButton } from "@/components/shared/ShineButton";
-import { services } from "@/lib/data/services";
+import { listedServices } from "@/lib/data/services";
 
 type ServicesGridProps = {
   /** En la Home mostramos el encabezado y el CTA; en /servicios no hacen falta. */
@@ -21,14 +21,14 @@ export function ServicesGrid({ withHeading = true }: ServicesGridProps) {
         {withHeading && (
           <SectionHeading
             eyebrow="Nuestros servicios"
-            title="Seis especialidades, un mismo enfoque"
+            title="Ocho especialidades, un mismo enfoque"
             description="Brindamos una atención integral en diferentes áreas para acompañarte en cada etapa de tu bienestar."
             className="mb-14"
           />
         )}
 
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, index) => (
+          {listedServices.map((service, index) => (
             <Reveal as="li" key={service.slug} delay={(index % 3) * 0.1}>
               <ServiceCard service={service} />
             </Reveal>

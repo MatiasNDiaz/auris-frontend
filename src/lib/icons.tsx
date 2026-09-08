@@ -1,4 +1,6 @@
 import {
+  Activity,
+  Baby,
   Brain,
   Ear,
   Sparkles,
@@ -17,6 +19,8 @@ import { ToothIcon } from "@/components/shared/ToothIcon";
  * `react-hooks/static-components`.
  */
 const iconMap: Record<string, (props: LucideProps) => ReactNode> = {
+  activity: (props) => <Activity {...props} />,
+  baby: (props) => <Baby {...props} />,
   brain: (props) => <Brain {...props} />,
   ear: (props) => <Ear {...props} />,
   tooth: (props) => <ToothIcon {...props} />,

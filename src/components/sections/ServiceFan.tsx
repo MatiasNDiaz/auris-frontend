@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { BLUR_DATA_URL } from "@/lib/blur";
-import { services } from "@/lib/data/services";
+import { listedServices as services } from "@/lib/data/services";
 import { renderServiceIcon } from "@/lib/icons";
 import { useMediaQuery } from "@/lib/use-media-query";
 import { cn } from "@/lib/utils";
@@ -143,12 +143,22 @@ export function ServiceFan({
 
               <span
                 aria-hidden
-                className="absolute top-3 left-3 inline-flex size-8 items-center justify-center rounded-lg bg-cream-50/95 text-primary-700"
+                className="absolute top-3 left-3 inline-flex size-8 items-center justify-center overflow-hidden rounded-lg bg-cream-50/95 text-primary-700"
               >
-                {renderServiceIcon(service.icon, {
-                  className: "size-4",
-                  strokeWidth: 1.8,
-                })}
+                {service.iconImage ? (
+                  <Image
+                    src={service.iconImage}
+                    alt=""
+                    width={64}
+                    height={64}
+                    className="size-full object-cover"
+                  />
+                ) : (
+                  renderServiceIcon(service.icon, {
+                    className: "size-4",
+                    strokeWidth: 1.8,
+                  })
+                )}
               </span>
 
               {/* El nombre se muestra solo en la card del frente: en las de

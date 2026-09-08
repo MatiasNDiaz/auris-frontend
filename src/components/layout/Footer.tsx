@@ -8,7 +8,7 @@ import {
   MapPinIcon,
   WhatsAppIcon,
 } from "@/components/shared/SocialIcons";
-import { services } from "@/lib/data/services";
+import { listedServices } from "@/lib/data/services";
 import { mainNav, siteConfig } from "@/config/site";
 import { cn, whatsappLink } from "@/lib/utils";
 
@@ -116,7 +116,7 @@ export function Footer() {
             Servicios
           </h2>
           <ul className="mt-5 space-y-2.5 text-sm">
-            {services.map((service) => (
+            {listedServices.map((service) => (
               <li key={service.slug}>
                 <Link
                   href={`/servicios/${service.slug}`}

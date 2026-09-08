@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { LeafSprig } from "@/components/shared/LeafSprig";
 import { ProfessionalCard } from "@/components/shared/ProfessionalCard";
 import { professionals } from "@/lib/data/professionals";
-import { services } from "@/lib/data/services";
+import { listedServices } from "@/lib/data/services";
 import { cn } from "@/lib/utils";
 
 const ALL = "todos";
@@ -24,7 +24,7 @@ export function ProfessionalsDirectory() {
 
   const options = [
     { slug: ALL, name: "Todos" },
-    ...services.map((s) => ({ slug: s.slug, name: s.name })),
+    ...listedServices.map((s) => ({ slug: s.slug, name: s.name })),
   ];
 
   return (
