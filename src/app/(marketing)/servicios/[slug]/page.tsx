@@ -9,12 +9,12 @@ import {
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { ProfessionalCard } from "@/components/shared/ProfessionalCard";
 import { Reveal } from "@/components/shared/Reveal";
 import { SectionHeading } from "@/components/shared/SectionHeading";
+import { ShineButton } from "@/components/shared/ShineButton";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { getProfessionalsByService } from "@/lib/data/professionals";
 import { getServiceBySlug, services } from "@/lib/data/services";
@@ -82,15 +82,25 @@ export default async function ServicioDetallePage({
           className="absolute inset-0 -z-10 bg-linear-to-t from-black/85 via-black/45 to-black/25"
         />
 
-        <div className="container-auris relative w-full pt-24 pb-14 lg:pt-28 lg:pb-16">
-          <Link
+        {/* El enlace de volver sale del flujo y se ancla arriba del banner: en
+            el flujo quedaba pegado al titular, casi al pie de una foto de 400px
+            de alto, y no se veía al cargar la página. */}
+        <div className="container-auris absolute inset-x-0 top-6 z-10 lg:top-8">
+          <ShineButton
             href="/servicios"
-            className="inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-cream-100 transition-colors hover:text-cream-50 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+            tone="primary"
+            size="compact"
+            effect="shine"
           >
-            <ArrowLeft className="size-4" aria-hidden />
+            <ArrowLeft
+              className="size-4 transition-transform duration-300 group-hover:-translate-x-1"
+              aria-hidden
+            />
             Todos los servicios
-          </Link>
+          </ShineButton>
+        </div>
 
+        <div className="container-auris relative w-full pt-24 pb-14 lg:pt-28 lg:pb-16">
           <Reveal className="mt-8 text-center">
             <span
               aria-hidden
