@@ -198,9 +198,6 @@ export function HistoryTimeline() {
         disparada = true;
         setRafaga((n) => n + 1);
       }
-      // Se rearma recién cuando la sección quedó bien lejos, para que un
-      // temblor del scroll en el borde no dispare dos veces seguidas.
-      if (crudo < -0.35 || crudo > 1.35) disparada = false;
 
       // Interpolar y no saltar: la rueda de un mouse avanza de a tirones de
       // cien píxeles, y sin este suavizado el riel se movería a los saltos.
@@ -224,8 +221,19 @@ export function HistoryTimeline() {
       ([entrada]) => {
         if (entrada.isIntersecting === vivo) return;
         vivo = entrada.isIntersecting;
-        if (vivo) cuadro = requestAnimationFrame(animar);
-        else cancelAnimationFrame(cuadro);
+        if (vivo) {
+          cuadro = requestAnimationFrame(animar);
+        } else {
+          cancelAnimationFrame(cuadro);
+          // La ráfaga se rearma al salir de la sección, y tiene que ser acá.
+          // Antes se rearmaba dentro del bucle, comparando el avance contra un
+          // umbral bastante más allá de las puntas del recorrido; pero el
+          // bucle lo apaga este mismo observador mucho antes de llegar a ese
+          // umbral, así que la condición no se cumplía nunca y el viento
+          // soplaba una sola vez por carga de página. Volviendo a entrar no
+          // pasaba nada, que es justo lo que se veía.
+          disparada = false;
+        }
       },
       { rootMargin: "300px 0px" },
     );

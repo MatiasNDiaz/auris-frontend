@@ -28,9 +28,9 @@ import { cn } from "@/lib/utils";
  */
 
 /** Cuántas hojas trae la ráfaga. */
-const HOJAS = 46;
+const HOJAS = 62;
 /** Cuánto dura, en segundos, desde la primera hoja hasta que se va la última. */
-const DURACION = 2.6;
+const DURACION = 3.1;
 
 type Hoja = {
   /** Cuándo entra, en segundos desde el disparo. */
@@ -87,7 +87,12 @@ function coloresDe(paleta: LeafPalette) {
     return nombre ? raiz.getPropertyValue(nombre).trim() : valor;
   };
   const p = leafPalettes[paleta];
-  return { edge: leer(p.edge), body: leer(p.body), core: leer(p.core), vein: leer(p.vein) };
+  return {
+    edge: leer(p.edge),
+    body: leer(p.body),
+    core: leer(p.core),
+    vein: leer(p.vein),
+  };
 }
 
 function cargarSprite(paleta: LeafPalette) {
@@ -111,14 +116,14 @@ function bandada(): Hoja[] {
       // Las primeras salen casi juntas y la cola se estira: así entra como
       // golpe de viento y no como desfile parejo.
       demora: a(1) ** 1.6 * 0.85,
-      vuelo: 0.95 + a(2) * 0.85,
+      vuelo: 1 + a(2) * 0.95,
       y: a(3),
       amplitud: 12 + a(4) * 46,
       fase: a(5) * Math.PI * 2,
-      largo: 26 + a(6) ** 1.7 * 74,
+      largo: 30 + a(6) ** 1.7 * 82,
       giro: a(7) * Math.PI * 2,
       vueltas: (a(8) - 0.5) * 2.4,
-      opacidad: 0.3 + a(9) * 0.4,
+      opacidad: 0.38 + a(9) * 0.44,
       beige: a(10) > 0.62,
     };
   });
@@ -173,7 +178,8 @@ export function LeafGust({ trigger, className }: LeafGustProps) {
 
         // De fuera del borde izquierdo a fuera del derecho.
         const x = (-0.15 + avance * 1.3) * ancho;
-        const y = hoja.y * alto + Math.sin(hoja.fase + avance * 5.5) * hoja.amplitud;
+        const y =
+          hoja.y * alto + Math.sin(hoja.fase + avance * 5.5) * hoja.amplitud;
         // Aparece y se desvanece en las puntas del recorrido.
         const alfa = Math.min(1, avance * 6, (1 - avance) * 4) * hoja.opacidad;
         const escala = hoja.largo / 120;
