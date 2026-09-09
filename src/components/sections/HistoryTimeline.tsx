@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { LeafGust } from "@/components/shared/LeafGust";
 import { milestones } from "@/lib/data/about";
@@ -17,6 +16,12 @@ import { cn } from "@/lib/utils";
  * El espaciado entre paradas es parejo y no proporcional al tiempo real: de
  * los seis hitos, tres no tienen fecha ("Los años siguientes", "Poco después",
  * "Hoy"), así que un eje a escala sería inventar años que nadie confirmó.
+ *
+ * Las tarjetas son solo texto. Con foto arriba, cada una se comía la mitad
+ * del alto disponible y el riel entero había que achicarlo para que entrara
+ * en la ventana, con lo que la letra terminaba más chica que antes. Sin foto
+ * entran a tamaño real y el texto se puede leer de lejos, que es de lo que
+ * se trata un recorrido que se mira de costado.
  *
  * El armado es una grilla de tres filas —rama de arriba, eje, rama de abajo—
  * y una columna por hito, más dos de aire en las puntas. Las filas van en
@@ -59,13 +64,39 @@ const TALLO = "2.5rem";
 /** Alto de la navbar, que queda pegada arriba de todo. */
 const CABEZAL = 80;
 /** Aire vertical dentro del contenedor pegado, arriba y abajo. */
-const RESPIRO = 20;
+const RESPIRO = 32;
 /** Separación entre la cabecera y el riel. */
 const HUECO = 32;
 /** Cuánto se acerca la posición dibujada a la real en cada cuadro. */
 const SUAVIZADO = 0.16;
 /** Piso de rescate: por debajo de esto el riel se leería diminuto. */
 const ESCALA_MINIMA = 0.62;
+
+/**
+ * Cómo se pinta cada tarjeta. Los hitos de la crónica van en claro; los dos
+ * del cierre toman los dos colores del isotipo —el beige y el verde bosque—,
+ * que es lo que los despega del relato sin sacarlos de la línea.
+ */
+const PALETAS = {
+  claro: {
+    caja: "border-primary-100 bg-card group-hover:border-primary-200",
+    titulo: "text-primary-800",
+    raya: "bg-primary-300",
+    cuerpo: "text-ink-900/85",
+  },
+  arena: {
+    caja: "border-warm-200 bg-surface-sand group-hover:border-warm-300",
+    titulo: "text-primary-800",
+    raya: "bg-warm-400",
+    cuerpo: "text-ink-900/85",
+  },
+  verde: {
+    caja: "border-primary-700 bg-primary-800 group-hover:border-primary-600",
+    titulo: "text-cream-50",
+    raya: "bg-cream-200",
+    cuerpo: "text-cream-100/90",
+  },
+} as const;
 
 export function HistoryTimeline() {
   const bloque = useRef<HTMLDivElement>(null);
@@ -96,9 +127,8 @@ export function HistoryTimeline() {
     // pantallas chicas: ahí no hay nada que enganchar.
     const visible = marcoEl.offsetParent !== null;
     const anchoOk = window.matchMedia("(min-width: 1024px)").matches;
-    const movimientoOk = !window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const movimientoOk = !window.matchMedia("(prefers-reduced-motion: reduce)")
+      .matches;
 
     if (!visible || !anchoOk || !movimientoOk) {
       setMedida({ recorrido: 0, escala: 1 });
@@ -204,7 +234,13 @@ export function HistoryTimeline() {
   return (
     <div
       ref={bloque}
-      className={cn(!pegado && "py-20 lg:py-24")}
+      // El margen de abajo va por fuera del alto calculado: con `padding`
+      // entraría dentro de la caja —`box-sizing: border-box`— y le comería
+      // recorrido al tramo pegado.
+      className={cn(
+        "mt-16 mb-20 lg:mt-24 lg:mb-28",
+        !pegado && "pb-20 lg:pb-24",
+      )}
       style={
         pegado
           ? { height: `calc(100vh - ${CABEZAL}px + ${recorrido}px)` }
@@ -214,7 +250,7 @@ export function HistoryTimeline() {
       <div
         className={cn(
           "flex flex-col",
-          pegado && "sticky top-20 h-[calc(100vh-5rem)] overflow-hidden py-5",
+          pegado && "sticky top-20 h-[calc(100vh-5rem)] overflow-hidden py-8",
         )}
       >
         <div ref={cabecera} className="container-auris text-center">
@@ -278,6 +314,7 @@ export function HistoryTimeline() {
               const arriba = index % 2 === 0;
               // La primera columna es el aire de la izquierda.
               const columna = index + 2;
+              const paleta = PALETAS[milestone.tone ?? "claro"];
 
               return (
                 // `contents` deja que los tres pedazos del hito se ubiquen
@@ -300,28 +337,38 @@ export function HistoryTimeline() {
                         un poco, gana sombra y la foto se acerca. En Tailwind
                         v4 `-translate-y-*` sale como propiedad `translate`, no
                         como `transform`, así que la transición la nombra. */}
-                    <article className="overflow-hidden rounded-3xl border border-primary-100 bg-card shadow-sm transition-[box-shadow,border-color,translate] duration-300 ease-out group-hover:-translate-y-1.5 group-hover:border-primary-200 group-hover:shadow-xl">
-                      {/* Alto atado a la ventana y no a la proporción: con
-                          `aspect-*`, ensanchar la tarjeta la hacía más alta,
-                          y el alto es justo lo que escasea acá. */}
-                      <div className="relative h-[clamp(7.5rem,15vh,11rem)] w-full overflow-hidden bg-cream-100">
-                        <Image
-                          src={milestone.image}
-                          alt={milestone.alt}
-                          fill
-                          sizes="512px"
-                          className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                        />
-                      </div>
-
-                      <div className="p-5">
-                        <h3 className="font-serif text-xl leading-snug text-primary-800">
-                          {milestone.title}
-                        </h3>
-                        <p className="mt-2 text-sm leading-relaxed text-pretty text-ink-700/80">
-                          {milestone.description}
-                        </p>
-                      </div>
+                    <article
+                      className={cn(
+                        "rounded-3xl border p-8 shadow-sm transition-[box-shadow,border-color,translate] duration-300 ease-out group-hover:-translate-y-1.5 group-hover:shadow-xl",
+                        paleta.caja,
+                      )}
+                    >
+                      <h3
+                        className={cn(
+                          "font-serif text-2xl leading-snug",
+                          paleta.titulo,
+                        )}
+                      >
+                        {milestone.title}
+                      </h3>
+                      {/* Sin foto, la tarjeta necesita algo que separe el
+                          titular del cuerpo. La misma rayita corta que usan
+                          los encabezados de sección; se estira en el hover. */}
+                      <span
+                        aria-hidden
+                        className={cn(
+                          "mt-4 block h-px w-10 origin-left transition-transform duration-300 ease-out group-hover:scale-x-[2.4]",
+                          paleta.raya,
+                        )}
+                      />
+                      <p
+                        className={cn(
+                          "mt-4 text-[1.0625rem] leading-relaxed text-pretty",
+                          paleta.cuerpo,
+                        )}
+                      >
+                        {milestone.description}
+                      </p>
                     </article>
 
                     {/* El tallo ocupa el hueco que dejó el padding. */}
