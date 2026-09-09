@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { LeafGust } from "@/components/shared/LeafGust";
 import { milestones } from "@/lib/data/about";
@@ -298,6 +299,7 @@ export function HistoryTimeline() {
             className="grid w-max shrink-0 origin-left grid-rows-[auto_auto_auto] will-change-transform"
             style={{
               ["--aire" as string]: "clamp(2rem, 9vw, 10rem)",
+              ["--ancho-riel" as string]: `calc(${milestones.length} * ${PASO} + 2 * var(--aire))`,
               gridTemplateColumns: `var(--aire) repeat(${milestones.length}, ${PASO}) var(--aire)`,
             }}
           >
@@ -305,9 +307,24 @@ export function HistoryTimeline() {
                 dos extremos para no terminar en un corte seco. */}
             <span
               aria-hidden
-              className="row-start-2 h-px self-center bg-linear-to-r from-transparent via-primary-300 to-transparent"
+              className="relative row-start-2 h-0.5 self-center rounded-full bg-linear-to-r from-transparent via-primary-300 to-transparent"
               style={{ gridColumn: "1 / -1" }}
-            />
+            >
+              {/* El eje también lleva su orbe: recorre la línea entera de
+                  punta a punta, mucho más lento que los de las ramas, para
+                  que se lea como la corriente de la que salen los otros. */}
+              <span
+                aria-hidden
+                className="auris-orb-x absolute top-1/2 left-0 size-3 rounded-full bg-primary-500 shadow-[0_0_18px_6px_var(--color-primary-200)]"
+                style={
+                  {
+                    "--orb-desde": "0px",
+                    "--orb-hasta": "var(--ancho-riel)",
+                    "--orb-dur": "11s",
+                  } as React.CSSProperties
+                }
+              />
+            </span>
 
             {milestones.map((milestone, index) => {
               // Alternancia estricta: los pares ramifican hacia arriba.
@@ -333,49 +350,79 @@ export function HistoryTimeline() {
                       [arriba ? "paddingBottom" : "paddingTop"]: TALLO,
                     }}
                   >
-                    {/* Mismo gesto que las tarjetas de servicios: se levanta
-                        un poco, gana sombra y la foto se acerca. En Tailwind
-                        v4 `-translate-y-*` sale como propiedad `translate`, no
-                        como `transform`, así que la transición la nombra. */}
-                    <article
-                      className={cn(
-                        "rounded-3xl border p-8 shadow-sm transition-[box-shadow,border-color,translate] duration-300 ease-out group-hover:-translate-y-1.5 group-hover:shadow-xl",
-                        paleta.caja,
-                      )}
-                    >
-                      <h3
+                    {/* La perspectiva va en un envoltorio y no en la pieza
+                        que gira: puesta sobre el propio elemento rotado, el
+                        giro sale plano, sin profundidad. */}
+                    <div className="[perspective:1600px]">
+                      <div
                         className={cn(
-                          "font-serif text-2xl leading-snug",
-                          paleta.titulo,
+                          "relative transition-[transform,translate] duration-700 ease-out [transform-style:preserve-3d]",
+                          // En Tailwind v4 `-translate-y-*` sale como propiedad
+                          // `translate` y no como `transform`, así que el
+                          // levante y el giro conviven sin pisarse. La
+                          // transición tiene que nombrar las dos.
+                          "group-hover:-translate-y-1.5 group-hover:[transform:rotateY(180deg)]",
+                          "motion-reduce:transition-none motion-reduce:group-hover:[transform:none]",
                         )}
                       >
-                        {milestone.title}
-                      </h3>
-                      {/* Sin foto, la tarjeta necesita algo que separe el
-                          titular del cuerpo. La misma rayita corta que usan
-                          los encabezados de sección; se estira en el hover. */}
-                      <span
-                        aria-hidden
-                        className={cn(
-                          "mt-4 block h-px w-10 origin-left transition-transform duration-300 ease-out group-hover:scale-x-[2.4]",
-                          paleta.raya,
-                        )}
-                      />
-                      <p
-                        className={cn(
-                          "mt-4 text-[1.0625rem] leading-relaxed text-pretty",
-                          paleta.cuerpo,
-                        )}
-                      >
-                        {milestone.description}
-                      </p>
-                    </article>
+                        <article
+                          className={cn(
+                            "rounded-3xl border p-8 shadow-sm transition-shadow duration-300 ease-out [backface-visibility:hidden] group-hover:shadow-xl",
+                            paleta.caja,
+                          )}
+                        >
+                          <h3
+                            className={cn(
+                              "font-serif text-2xl leading-snug",
+                              paleta.titulo,
+                            )}
+                          >
+                            {milestone.title}
+                          </h3>
+                          {/* Sin foto al frente, la tarjeta necesita algo que
+                              separe el titular del cuerpo: la misma rayita
+                              corta que usan los encabezados de sección. */}
+                          <span
+                            aria-hidden
+                            className={cn("mt-4 block h-px w-10", paleta.raya)}
+                          />
+                          <p
+                            className={cn(
+                              "mt-4 text-[1.0625rem] leading-relaxed text-pretty",
+                              paleta.cuerpo,
+                            )}
+                          >
+                            {milestone.description}
+                          </p>
+                        </article>
+
+                        {/* El dorso: la foto ocupa la tarjeta entera. Va
+                            girada de entrada, así que con la cara oculta solo
+                            aparece cuando el envoltorio da la vuelta. */}
+                        <div className="absolute inset-0 overflow-hidden rounded-3xl border border-primary-200 shadow-xl [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                          <Image
+                            src={milestone.image}
+                            alt={milestone.alt}
+                            fill
+                            sizes="512px"
+                            className="object-cover"
+                          />
+                          {/* El titular se repite abajo para no perder de
+                              vista de qué hito es la foto. */}
+                          <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-ink-900/85 via-ink-900/45 to-transparent px-8 pt-16 pb-7">
+                            <p className="font-serif text-xl leading-snug text-cream-50">
+                              {milestone.title}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
                     {/* El tallo ocupa el hueco que dejó el padding. */}
                     <span
                       aria-hidden
                       className={cn(
-                        "absolute left-1/2 w-px -translate-x-1/2 bg-primary-300",
+                        "absolute left-1/2 w-0.5 -translate-x-1/2 rounded-full bg-primary-300",
                         arriba ? "bottom-0" : "top-0",
                       )}
                       style={{ height: TALLO }}
@@ -386,7 +433,7 @@ export function HistoryTimeline() {
                         para que no latan todas a la vez. */}
                     <span
                       aria-hidden
-                      className="auris-orb absolute left-1/2 size-1.5 rounded-full bg-primary-500 shadow-[0_0_10px_3px_var(--color-primary-200)]"
+                      className="auris-orb absolute left-1/2 size-2.5 rounded-full bg-primary-500 shadow-[0_0_14px_5px_var(--color-primary-200)]"
                       style={
                         {
                           [arriba ? "bottom" : "top"]: 0,
@@ -401,7 +448,7 @@ export function HistoryTimeline() {
                   {/* El nodo sobre el eje. */}
                   <span
                     aria-hidden
-                    className="row-start-2 size-3.5 justify-self-center rounded-full bg-primary-500 ring-4 ring-surface-base"
+                    className="row-start-2 size-4 justify-self-center rounded-full bg-primary-500 ring-4 ring-surface-base"
                     style={{ gridColumn: columna }}
                   />
 

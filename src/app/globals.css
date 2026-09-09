@@ -92,7 +92,6 @@
   --color-gold-500: #c98f24;
 }
 
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -136,7 +135,8 @@
 /* Tokens semánticos de shadcn mapeados sobre la paleta AURIS. */
 :root {
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-fraunces), ui-serif, Georgia, "Times New Roman", serif;
+  --font-serif:
+    var(--font-fraunces), ui-serif, Georgia, "Times New Roman", serif;
 
   --background: #faf9f5;
   --foreground: #2b2b28;
@@ -482,6 +482,34 @@
   }
 }
 
+/* El mismo orbe pero recorriendo el eje horizontal. Va aparte y no con una
+   variable de dirección porque `translate3d` necesita el eje fijo en el
+   keyframe: acá el que se mueve es la X y el que centra es la Y. Timing lineal
+   y no una curva: sobre un recorrido de varios miles de píxeles, acelerar y
+   frenar se nota como un tirón. */
+@keyframes auris-orb-flow-x {
+  0% {
+    transform: translate3d(var(--orb-desde), -50%, 0) scale(0.4);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(var(--orb-hasta), -50%, 0) scale(0.9);
+    opacity: 0;
+  }
+}
+
+.auris-orb-x {
+  animation: auris-orb-flow-x var(--orb-dur, 11s) linear infinite;
+  animation-delay: var(--orb-delay, 0s);
+  will-change: transform, opacity;
+}
+
 .auris-orb {
   animation: auris-orb-flow var(--orb-dur, 2.8s) cubic-bezier(0.5, 0, 0.5, 1)
     infinite;
@@ -500,13 +528,15 @@
   .auris-stem-sway,
   .auris-leaf-flutter,
   .auris-leaf-fly,
-  .auris-orb {
+  .auris-orb,
+  .auris-orb-x {
     animation: none;
     will-change: auto;
   }
-  /* Sin recorrido, el orbe no aporta nada y solo queda un punto pegado al
-     tallo: mejor que no esté. */
-  .auris-orb {
+  /* Sin recorrido, el orbe no aporta nada y solo queda un punto pegado a la
+     línea: mejor que no esté. */
+  .auris-orb,
+  .auris-orb-x {
     opacity: 0;
   }
   /* Sin vuelo, la hoja se queda donde la dejó su posición base. */

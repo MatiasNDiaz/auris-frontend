@@ -16,7 +16,10 @@ export function VirtualTour() {
   return (
     <section
       id="recorrido-virtual"
-      className="relative overflow-hidden py-20 lg:py-24"
+      // Beige: en "Sobre el centro" esta sección queda entre el cierre —verde
+      // claro— y el CTA final —crema—, así que en crema se pegaba con el CTA.
+      // Es la única página donde se usa.
+      className="relative overflow-hidden bg-surface-sand py-20 lg:py-24"
     >
       <LeafSprig
         palette="beige"
