@@ -460,6 +460,35 @@
   }
 }
 
+/* Orbe de luz que recorre el tallo de cada rama de la historia, desde la
+   línea principal hacia la tarjeta. La idea es que se lea como algo que
+   circula por la ramificación, no como un adorno que parpadea: por eso viaja
+   siempre en el mismo sentido, aparece y se apaga en las puntas, y las seis
+   ramas van desfasadas para que no latan todas juntas. */
+@keyframes auris-orb-flow {
+  0% {
+    transform: translate3d(-50%, var(--orb-desde), 0) scale(0.45);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(-50%, var(--orb-hasta), 0) scale(0.95);
+    opacity: 0;
+  }
+}
+
+.auris-orb {
+  animation: auris-orb-flow var(--orb-dur, 2.8s) cubic-bezier(0.5, 0, 0.5, 1)
+    infinite;
+  animation-delay: var(--orb-delay, 0s);
+  will-change: transform, opacity;
+}
+
 .auris-leaf-fly {
   will-change: transform, opacity;
   animation-name: auris-leaf-fly;
@@ -470,9 +499,15 @@
 @media (prefers-reduced-motion: reduce) {
   .auris-stem-sway,
   .auris-leaf-flutter,
-  .auris-leaf-fly {
+  .auris-leaf-fly,
+  .auris-orb {
     animation: none;
     will-change: auto;
+  }
+  /* Sin recorrido, el orbe no aporta nada y solo queda un punto pegado al
+     tallo: mejor que no esté. */
+  .auris-orb {
+    opacity: 0;
   }
   /* Sin vuelo, la hoja se queda donde la dejó su posición base. */
   .auris-leaf-fly {

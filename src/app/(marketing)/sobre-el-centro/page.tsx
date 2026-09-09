@@ -73,7 +73,10 @@ export default function SobreElCentroPage() {
 
       {/* 1 — La historia, como línea de tiempo. En prosa eran tres párrafos
           largos que nadie termina; en hitos se recorre de un vistazo. */}
-      <section className="py-20 lg:py-24">
+      {/* Sin `overflow` propio: el recorrido horizontal fija su contenido a la
+          pantalla, y basta con que un ancestro recorte para que `sticky` deje
+          de pegar. El aire vertical lo pone cada versión por su cuenta. */}
+      <section>
         {/* En escritorio la historia se recorre en horizontal, con una rama
             por hito. Se renderizan las dos versiones y decide el CSS: si el
             corte lo hiciera JS, el servidor tendría que adivinar el ancho de
@@ -83,7 +86,7 @@ export default function SobreElCentroPage() {
         </div>
 
         {/* Hasta lg, la línea de tiempo vertical de siempre. */}
-        <div className="container-auris lg:hidden">
+        <div className="container-auris py-20 lg:hidden">
           <div className="grid gap-14">
             <Reveal>
               <p className="text-xs font-semibold tracking-[0.24em] text-primary-700 uppercase">

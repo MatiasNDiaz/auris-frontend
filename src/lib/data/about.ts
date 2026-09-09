@@ -29,7 +29,7 @@ export const milestones: Milestone[] = [
     when: "Fines de los 90",
     title: "El punto de partida",
     description:
-      "La práctica odontológica estaba cambiando: la especialización, las nuevas tecnologías y los nuevos materiales empezaban a exigir mucha más formación y entrenamiento.",
+      "La práctica odontológica estaba cambiando: la especialización, las nuevas tecnologías y los nuevos materiales empezaban a exigir mucha más formación y entrenamiento. Ya no alcanzaba con el consultorio general de siempre: cada área pedía su propio recorrido de estudio.",
     image: "/images/historia/1-punto-de-partida.webp",
     alt: "Sillón y equipo odontológico antiguo en un consultorio de época",
   },
@@ -37,7 +37,7 @@ export const milestones: Milestone[] = [
     when: "1998",
     title: "Nace Kúspide",
     description:
-      "Kúspide Consultorios Odontológicos abre con cuatro consultorios y todas las especialidades odontológicas bajo un mismo techo.",
+      "Kúspide Consultorios Odontológicos abre con cuatro consultorios y todas las especialidades odontológicas bajo un mismo techo. La idea, poco común entonces, era que un tratamiento completo pudiera resolverse en un mismo lugar y entre profesionales que se conocen.",
     image: "/images/historia/2-nace-kuspide.webp",
     alt: "Consultorio vacío y listo para abrir, en una foto de archivo",
   },
@@ -45,9 +45,9 @@ export const milestones: Milestone[] = [
     when: "Los años siguientes",
     title: "Tres centros",
     description:
-      "Pese a las crisis y los desafíos, el proyecto crece hasta convertirse en tres centros de atención: dos en Córdoba y uno en San Francisco.",
+      "Pese a las crisis y los desafíos, el proyecto crece hasta convertirse en tres centros de atención: dos en Córdoba y uno en San Francisco. Tres equipos distintos sosteniendo el mismo criterio de atención, que es lo que terminó de darle forma.",
     image: "/images/historia/3-tres-centros.webp",
-    alt: "Consultorio luminoso, equipado y listo para atender",
+    alt: "Dos profesionales trabajando juntas en un consultorio",
   },
   {
     when: "Hace diez años",
@@ -61,15 +61,15 @@ export const milestones: Milestone[] = [
     when: "Poco después",
     title: "El enfoque se extiende",
     description:
-      "La misma lógica llega a la odontopediatría funcional, donde la odontología se complementa con fonoaudiología y kinesiología para acompañar el desarrollo de los chicos desde temprano.",
-    image: "/images/servicios/odontopediatria-funcional.webp",
-    alt: "Nena sonriendo durante un estudio de radiografía panorámica",
+      "La misma lógica llega a la odontopediatría funcional, donde la odontología se complementa con fonoaudiología y kinesiología para acompañar el desarrollo de los chicos desde temprano. Mirar cómo respira, cómo traga y cómo mastica dice tanto como mirarle los dientes.",
+    image: "/images/historia/5-enfoque-se-extiende.webp",
+    alt: "Profesional trabajando cara a cara con una nena que sonríe",
   },
   {
     when: "Hoy",
     title: "AURIS",
     description:
-      "El espacio pensado para reunir profesionales que comparten esta filosofía. Cada integrante del equipo fue elegido no solo por su formación y su experiencia, sino por su manera de entender la profesión, su empatía y sus ganas de trabajar junto a otros.",
+      "El espacio pensado para reunir profesionales que comparten esta filosofía. Cada integrante del equipo fue elegido no solo por su formación y su experiencia, sino por su manera de entender la profesión, su empatía y sus ganas de trabajar junto a otros. El resultado es un equipo que se consulta entre sí.",
     image: "/images/galeria/ingreso-01.webp",
     alt: "Cartel de AURIS en el frente del centro",
   },

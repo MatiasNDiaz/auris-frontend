@@ -68,21 +68,21 @@ export type LeafPalette = keyof typeof leafPalettes;
 export type LeafDetail = "full" | "veined" | "simple";
 
 /** Contorno de la lámina. La mitad de abajo abre un poco más que la de arriba. */
-const BLADE =
+export const BLADE =
   "M6 28C18 9 44 0 74 3c17 2 31 9 40 25-9 16-23 24-40 26-31 3-57-7-68-26Z";
 
 /** Nervio central, de la base a la punta. */
-const MIDRIB = "M9 28C38 26 76 26 111 28";
+export const MIDRIB = "M9 28C38 26 76 26 111 28";
 
 /** Venas laterales: cinco arriba y cinco abajo, abriéndose hacia la punta. */
-const VEINS_TOP = [
+export const VEINS_TOP = [
   "M17 26C24 19 32 14 42 11",
   "M31 25C40 18 50 13 61 10",
   "M47 24C57 17 67 13 78 11",
   "M64 24C73 18 83 14 92 13",
   "M80 25C88 20 95 17 102 16",
 ];
-const VEINS_BOTTOM = [
+export const VEINS_BOTTOM = [
   "M17 30C24 37 32 42 42 45",
   "M31 31C40 38 50 43 61 46",
   "M47 32C57 39 67 43 78 45",
