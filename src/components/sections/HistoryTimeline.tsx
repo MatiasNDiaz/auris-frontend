@@ -289,7 +289,15 @@ export function HistoryTimeline() {
           className={cn(
             "relative",
             pegado
-              ? "flex flex-1 items-center overflow-hidden"
+              ? // `overflow-x: clip` y no `hidden`: hace falta recortar a lo
+                // ancho —el riel sigue mucho más allá de la pantalla— pero no a
+                // lo alto. El riel mide exactamente lo que mide el marco, así
+                // que con `hidden` la tarjeta más alta de la fila de arriba
+                // quedaba pegada al borde y al girar se le cortaba el techo: el
+                // giro en perspectiva hace que el canto cercano se agrande y se
+                // salga de la caja. `hidden` en un eje y `visible` en el otro no
+                // existe —el visible pasa a `auto`—, pero `clip` sí lo permite.
+                "flex flex-1 items-center overflow-x-clip overflow-y-visible"
               : "overflow-x-auto overscroll-x-contain pb-3 [scrollbar-color:var(--color-primary-300)_transparent] [scrollbar-width:thin]",
           )}
           style={{ marginTop: HUECO }}
@@ -353,7 +361,7 @@ export function HistoryTimeline() {
                     {/* La perspectiva va en un envoltorio y no en la pieza
                         que gira: puesta sobre el propio elemento rotado, el
                         giro sale plano, sin profundidad. */}
-                    <div className="[perspective:1600px]">
+                    <div className="[perspective:2200px]">
                       <div
                         className={cn(
                           "relative transition-[transform,translate] duration-700 ease-out [transform-style:preserve-3d]",
@@ -445,10 +453,13 @@ export function HistoryTimeline() {
                     />
                   </div>
 
-                  {/* El nodo sobre el eje. */}
+                  {/* El nodo, apoyado encima del eje. Sin el anillo del color
+                      del fondo que tenía antes: ese anillo borraba la línea a
+                      los costados del círculo y el eje se leía cortado en cada
+                      parada en vez de pasar por debajo. */}
                   <span
                     aria-hidden
-                    className="row-start-2 size-4 justify-self-center rounded-full bg-primary-500 ring-4 ring-surface-base"
+                    className="relative row-start-2 size-4 justify-self-center rounded-full bg-primary-500 shadow-[0_0_0_2px_var(--color-primary-100)]"
                     style={{ gridColumn: columna }}
                   />
 

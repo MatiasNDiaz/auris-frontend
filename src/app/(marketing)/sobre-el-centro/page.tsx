@@ -355,13 +355,14 @@ export default function SobreElCentroPage() {
       {/* 6 — El cierre. Tres líneas y nada más: es la frase que resume todo y
           compite con cualquier cosa que le pongas al lado.
 
-          El fondo va en verde claro y no en crema: los pilares que vienen
-          arriba son beige y el recorrido virtual que sigue abajo también, así
-          que en crema esta sección se fundía con la siguiente en vez de
-          leerse aparte. `container-auris` tiene que quedar adentro y no en la
-          sección, porque lleva un ancho máximo y el color no llegaría a los
-          bordes de la pantalla. */}
-      <section className="bg-surface-sage py-20 text-center lg:py-24">
+          El fondo va en blanco y no en crema: los pilares que vienen arriba
+          son beige y el recorrido virtual que sigue abajo también, así que en
+          crema esta sección se fundía con la siguiente en vez de leerse
+          aparte. Entre dos beiges, el blanco es el corte más limpio.
+          `container-auris` tiene que quedar adentro y no en la sección,
+          porque lleva un ancho máximo y el color no llegaría a los bordes de
+          la pantalla. */}
+      <section className="bg-card py-20 text-center lg:py-24">
         <div className="container-auris">
           <Reveal className="mx-auto max-w-2xl">
             <p className="text-xs font-semibold tracking-[0.24em] text-primary-700 uppercase">
