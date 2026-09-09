@@ -64,10 +64,16 @@ const TALLO = "2.5rem";
 
 /** Alto de la navbar, que queda pegada arriba de todo. */
 const CABEZAL = 80;
-/** Aire vertical dentro del contenedor pegado, arriba y abajo. */
-const RESPIRO = 32;
+/**
+ * Aire vertical dentro del contenedor pegado. Arriba va más corto que abajo:
+ * subir el titular es lo que le deja alto al riel, y como el eje vertical del
+ * marco ya no recorta, la fila de arriba puede asomarse a ese hueco sin que se
+ * le corte nada.
+ */
+const RESPIRO_ARRIBA = 16;
+const RESPIRO_ABAJO = 24;
 /** Separación entre la cabecera y el riel. */
-const HUECO = 32;
+const HUECO = 24;
 /** Cuánto se acerca la posición dibujada a la real en cada cuadro. */
 const SUAVIZADO = 0.16;
 /** Piso de rescate: por debajo de esto el riel se leería diminuto. */
@@ -141,7 +147,8 @@ export function HistoryTimeline() {
     const paraElRiel =
       window.innerHeight -
       CABEZAL -
-      RESPIRO * 2 -
+      RESPIRO_ARRIBA -
+      RESPIRO_ABAJO -
       cabeceraEl.offsetHeight -
       HUECO;
     const k = Math.min(1, paraElRiel / pistaEl.offsetHeight);
@@ -251,7 +258,8 @@ export function HistoryTimeline() {
       <div
         className={cn(
           "flex flex-col",
-          pegado && "sticky top-20 h-[calc(100vh-5rem)] overflow-hidden py-8",
+          pegado &&
+            "sticky top-20 h-[calc(100vh-5rem)] overflow-hidden pt-4 pb-6",
         )}
       >
         <div ref={cabecera} className="container-auris text-center">
@@ -297,7 +305,13 @@ export function HistoryTimeline() {
                 // giro en perspectiva hace que el canto cercano se agrande y se
                 // salga de la caja. `hidden` en un eje y `visible` en el otro no
                 // existe —el visible pasa a `auto`—, pero `clip` sí lo permite.
-                "flex flex-1 items-center overflow-x-clip overflow-y-visible"
+                //
+                // `min-h-0` no es decorativo: un item flexible tiene alto
+                // mínimo automático, y ese mínimo vale 0 solo mientras el
+                // desbordamiento no sea `visible`. Al abrir el eje vertical el
+                // marco volvió a reclamar el alto entero del riel, se pasó del
+                // contenedor pegado y las tarjetas de abajo quedaron cortadas.
+                "flex min-h-0 flex-1 items-center overflow-x-clip overflow-y-visible"
               : "overflow-x-auto overscroll-x-contain pb-3 [scrollbar-color:var(--color-primary-300)_transparent] [scrollbar-width:thin]",
           )}
           style={{ marginTop: HUECO }}
