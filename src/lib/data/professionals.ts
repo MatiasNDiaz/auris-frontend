@@ -1,6 +1,14 @@
 import type { Professional } from "@/lib/types";
 
-/** Datos ficticios de demostración: reemplazar por el equipo real del centro. */
+/**
+ * Datos ficticios de demostración: reemplazar por el equipo real del centro.
+ *
+ * Las fotos viejas apuntan a Unsplash y las tres últimas a `/images/
+ * profesionales`. La mezcla es a propósito y no un descuido: al cargar las
+ * especialidades que faltaban ya no había forma de conseguir ids nuevos de
+ * Unsplash sin credenciales, así que esos retratos se bajaron y viven en el
+ * repo. Cuando lleguen las fotos reales del equipo, todas van a ser locales.
+ */
 export const professionals: Professional[] = [
   {
     slug: "carolina-benitez",
@@ -519,6 +527,130 @@ export const professionals: Professional[] = [
     certifications: [
       "Matrícula Nacional MN 7.905",
       "Formación en Rehabilitación de la Deglución",
+    ],
+  },
+  {
+    slug: "milagros-sosa",
+    motto:
+      "A los seis años se corrige jugando lo que a los quince ya es otro problema.",
+    credentials: [
+      {
+        title: "Odontología",
+        institution: "Universidad Nacional de Córdoba",
+        year: "2011",
+      },
+      {
+        title: "Especialización en Odontopediatría",
+        institution: "Universidad Nacional de Córdoba",
+        year: "2015",
+      },
+      {
+        title: "Matrícula Nacional MN 38.412",
+        institution: "Ministerio de Salud de la Nación",
+        year: "2016",
+      },
+      {
+        title: "Formación en Ortopedia Funcional de los Maxilares",
+        institution: "Formación de posgrado",
+        year: "2019",
+      },
+    ],
+    gender: "female",
+    name: "Dra. Milagros Sosa",
+    specialty: "Odontopediatría funcional",
+    serviceSlug: "odontopediatria-funcional",
+    photoUrl: "/images/profesionales/milagros-sosa.webp",
+    bio: "Atiende a chicos mirando algo más que las caries: cómo respiran, cómo tragan y cómo mastican, porque esas funciones son las que van dando forma a los maxilares mientras crecen. Trabaja los hábitos junto a la familia desde la primera consulta.",
+    education: [
+      "Odontología — Universidad Nacional de Córdoba",
+      "Especialización en Odontopediatría — Universidad Nacional de Córdoba",
+    ],
+    experience: "12 años de práctica clínica con niños y adolescentes.",
+    certifications: [
+      "Matrícula Nacional MN 38.412",
+      "Formación en Ortopedia Funcional de los Maxilares",
+    ],
+  },
+  {
+    slug: "tomas-ferrer",
+    motto: "Antes de mover un diente quiero saber dónde va a terminar.",
+    credentials: [
+      {
+        title: "Odontología",
+        institution: "Universidad Nacional de Córdoba",
+        year: "2010",
+      },
+      {
+        title: "Especialización en Ortodoncia y Ortopedia Dentofacial",
+        institution: "Universidad Maimónides",
+        year: "2014",
+      },
+      {
+        title: "Matrícula Nacional MN 35.908",
+        institution: "Ministerio de Salud de la Nación",
+        year: "2015",
+      },
+      {
+        title: "Certificación en Alineadores Transparentes",
+        institution: "Formación de posgrado",
+        year: "2019",
+      },
+    ],
+    gender: "male",
+    name: "Dr. Tomás Ferrer",
+    specialty: "Ortodoncia y alineadores",
+    serviceSlug: "alineadores-y-ortodoncia",
+    photoUrl: "/images/profesionales/tomas-ferrer.webp",
+    bio: "Planifica cada tratamiento en digital antes de colocar nada: qué pieza se mueve, en qué orden y cuánto tiempo lleva. Recién con ese recorrido sobre la mesa conversa las opciones entre alineadores y brackets.",
+    education: [
+      "Odontología — Universidad Nacional de Córdoba",
+      "Especialización en Ortodoncia y Ortopedia Dentofacial — Universidad Maimónides",
+    ],
+    experience: "13 años dedicados a ortodoncia en consultorio privado.",
+    certifications: [
+      "Matrícula Nacional MN 35.908",
+      "Certificación en Alineadores Transparentes",
+    ],
+  },
+  {
+    slug: "rocio-marquez",
+    motto: "El desgaste que ya pasó no vuelve, pero se puede frenar.",
+    credentials: [
+      {
+        title: "Odontología",
+        institution: "Universidad Nacional de Córdoba",
+        year: "2012",
+      },
+      {
+        title: "Posgrado en Oclusión y Disfunción Temporomandibular",
+        institution: "Asociación Odontológica Argentina",
+        year: "2016",
+      },
+      {
+        title: "Matrícula Nacional MN 39.640",
+        institution: "Ministerio de Salud de la Nación",
+        year: "2017",
+      },
+      {
+        title: "Formación en Placas de Descarga y Ajuste Oclusal",
+        institution: "Formación de posgrado",
+        year: "2018",
+      },
+    ],
+    gender: "female",
+    name: "Dra. Rocío Márquez",
+    specialty: "Bruxismo y disfunción temporomandibular",
+    serviceSlug: "bruxismo-y-disfunciones",
+    photoUrl: "/images/profesionales/rocio-marquez.webp",
+    bio: "Diagnostica a partir del patrón de desgaste del esmalte, la musculatura de la mandíbula y cómo cierra la mordida. Combina placas hechas a medida con trabajo sobre la articulación y seguimiento en el tiempo.",
+    education: [
+      "Odontología — Universidad Nacional de Córdoba",
+      "Posgrado en Oclusión y Disfunción Temporomandibular — Asociación Odontológica Argentina",
+    ],
+    experience: "11 años de práctica clínica orientada a la oclusión.",
+    certifications: [
+      "Matrícula Nacional MN 39.640",
+      "Formación en Placas de Descarga y Ajuste Oclusal",
     ],
   },
 ];
