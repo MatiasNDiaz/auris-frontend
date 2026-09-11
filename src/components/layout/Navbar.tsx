@@ -142,7 +142,22 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-3 xl:justify-self-end">
-          <WhatsAppButton className="hidden sm:inline-flex" />
+          {/* `compact` y no el tamaño por defecto: en una navbar de 80 px de
+              alto, un botón de 52 px con texto de 16 px se comía la franja
+              entera y pesaba más que la navegación.
+
+              El hover corto —1 px en 200 ms, el mismo de los enlaces de al
+              lado— también arregla el desfase al esconderse. El botón del
+              sitio se levanta 4 px y tarda 520 ms en volver, y cuando se
+              scrollea con la rueda el cursor suele quedar justo encima: la
+              navbar terminaba de irse a los 320 ms y el botón seguía bajando
+              adentro hasta 250 ms después, que es lo que se veía como que se
+              quedaba atrás. Con 200 ms el gesto se cierra antes que el
+              ocultado y los dos se van juntos. */}
+          <WhatsAppButton
+            size="compact"
+            className="hidden duration-200 hover:-translate-y-px sm:inline-flex"
+          />
           <MobileMenu />
         </div>
       </div>

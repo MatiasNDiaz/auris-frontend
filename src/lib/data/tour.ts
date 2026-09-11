@@ -9,6 +9,9 @@
  * `gallery.ts`, que ya lo tenía relevado. Lo que cambia es la presentación: en
  * vez de una lista con flechas, se camina de foto en foto.
  *
+ * El hall reparte en tres: la sala de espera a la izquierda de la columna,
+ * el mostrador a la derecha y el pasillo entre los dos.
+ *
  * EL MAPA, tal como está el pasillo:
  *
  *   - Izquierda: consultorios 1, 2 y 3. El 1 se ve desde el primer tramo; el
@@ -76,16 +79,25 @@ export const tourNodes: TourNode[] = [
     id: "ingreso",
     title: "Ingreso",
     caption:
-      "El frente sobre Juan Bautista Daniel, con el cartel de las especialidades a la derecha.",
-    image: "/images/galeria/entrada-lejos.webp",
+      "El equipo en la puerta del centro, sobre Juan Bautista Daniel, con el cartel de las especialidades a la derecha.",
+    // El recorrido abre con el equipo y no con la fachada vacía: lo primero
+    // que se ve del centro son las personas que atienden. La fachada sola
+    // queda abajo, entre las fotos del ingreso.
+    image: "/images/galeria/doce-entrada.webp",
     aspect: 1672 / 940,
-    alt: "Frente del centro visto desde la vereda, con el número 2044 y el cartel de especialidades",
+    alt: "Los doce profesionales de AURIS en la puerta del centro",
     back: null,
     hotspots: [
-      // La puerta, en el medio del frente vidriado.
-      { x: 48, y: 55, label: "Acercarse a la entrada", to: "entrada" },
+      // El frente vidriado asoma por encima del grupo: el punto va ahí y no
+      // en el medio de la foto, que es donde están las personas.
+      { x: 46, y: 24, label: "Acercarse a la entrada", to: "entrada" },
     ],
     extras: [
+      {
+        src: "/images/galeria/entrada-lejos.webp",
+        alt: "Frente del centro visto desde la vereda, con el número 2044",
+        aspect: 1672 / 940,
+      },
       {
         src: "/images/galeria/ingreso-01.webp",
         alt: "Cartel de AURIS en el frente del centro",
@@ -118,7 +130,10 @@ export const tourNodes: TourNode[] = [
   },
   {
     id: "recepcion",
-    title: "Recepción",
+    // "Hall de entrada" y no "Recepción": la recepción es el mostrador, que
+    // ahora es su propia parada. Con las dos llamándose igual, el "volver"
+    // del mostrador decía "Volver a Recepción" y no se entendía a cuál.
+    title: "Hall de entrada",
     caption:
       "La columna parte el hall en dos: a la izquierda la sala de espera, a la derecha el mostrador y el pasillo.",
     // La única foto apaisada del recorrido, y la que mejor explica la planta:
@@ -129,10 +144,24 @@ export const tourNodes: TourNode[] = [
     back: "entrada",
     hotspots: [
       // Los bancos y el logo, del lado izquierdo de la columna.
-      { x: 27, y: 55, label: "Sala de espera", to: "sala-espera" },
+      { x: 24, y: 53, label: "Sala de espera", to: "sala-espera" },
+      // El mostrador, del lado derecho.
+      { x: 78, y: 48, label: "Recepción", to: "recepcion-mostrador" },
       // El pasillo se ve iluminado entre la columna y el mostrador.
-      { x: 56, y: 47, label: "Ir al pasillo", to: "pasillo" },
+      { x: 58, y: 46, label: "Ir al pasillo", to: "pasillo" },
     ],
+    // Sin fotos sueltas: esta parada es el reparto, y las del mostrador ahora
+    // viven en su propia parada.
+  },
+  {
+    id: "recepcion-mostrador",
+    title: "Recepción",
+    caption: "El mostrador, bajo el logo. Es donde arranca cualquier visita.",
+    image: "/images/galeria/reunion-recepcion.webp",
+    aspect: 1448 / 1086,
+    alt: "El equipo de AURIS reunido frente al mostrador de recepción",
+    back: "recepcion",
+    hotspots: [],
     extras: [
       {
         src: "/images/galeria/recepcion-01.webp",

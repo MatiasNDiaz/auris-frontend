@@ -77,8 +77,8 @@ export const milestones: Milestone[] = [
     title: "AURIS",
     description:
       "El espacio pensado para reunir profesionales que comparten esta filosofía. Cada integrante del equipo fue elegido no solo por su formación y su experiencia, sino por su manera de entender la profesión, su empatía y sus ganas de trabajar junto a otros. El resultado es un equipo que se consulta entre sí.",
-    image: "/images/galeria/entrada-lejos.webp",
-    alt: "Frente del centro sobre la vereda, con el cartel de especialidades",
+    image: "/images/galeria/doce-entrada.webp",
+    alt: "Los doce profesionales de AURIS en la puerta del centro",
   },
   {
     when: "Todos los días",
@@ -95,8 +95,8 @@ export const milestones: Milestone[] = [
     tone: "verde",
     description:
       "Porque para nosotros, cuidar la salud también es cuidar a la persona. Eso es lo que sostiene cada consulta y lo que queremos que se note apenas se cruza la puerta: un espacio de salud y bienestar.",
-    image: "/images/galeria/recepcion-panoramica.webp",
-    alt: "Hall de AURIS: la sala de espera y el mostrador de recepción",
+    image: "/images/galeria/reunion-recepcion.webp",
+    alt: "El equipo de AURIS reunido en la recepción, aplaudiendo",
   },
 ];
 
