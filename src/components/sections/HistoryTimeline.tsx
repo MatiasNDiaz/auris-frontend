@@ -383,15 +383,22 @@ export function HistoryTimeline() {
                     {/* La perspectiva va en un envoltorio y no en la pieza
                         que gira: puesta sobre el propio elemento rotado, el
                         giro sale plano, sin profundidad. */}
-                    <div className="[perspective:2200px]">
+                    {/* El levante va acá, en el envoltorio, y no en la pieza
+                        que gira. Estaba adentro, y en Tailwind v4
+                        `-translate-y-*` sale como propiedad `translate`
+                        suelta: combinada con `transform-style: preserve-3d` en
+                        el mismo elemento, el navegador aplana el contexto 3D y
+                        `backface-visibility` deja de tapar la cara de atrás.
+                        El resultado era la cara blanca del frente
+                        transparentándose sobre la foto del dorso, que es esa
+                        neblina que la deslavaba. Separados, cada propiedad
+                        vive en un elemento distinto y no hay nada que
+                        aplanar. */}
+                    <div className="[perspective:2200px] transition-[translate] duration-700 ease-out group-hover:-translate-y-1.5 motion-reduce:transition-none motion-reduce:group-hover:translate-y-0">
                       <div
                         className={cn(
-                          "relative transition-[transform,translate] duration-700 ease-out [transform-style:preserve-3d]",
-                          // En Tailwind v4 `-translate-y-*` sale como propiedad
-                          // `translate` y no como `transform`, así que el
-                          // levante y el giro conviven sin pisarse. La
-                          // transición tiene que nombrar las dos.
-                          "group-hover:-translate-y-1.5 group-hover:[transform:rotateY(180deg)]",
+                          "relative transition-transform duration-700 ease-out [transform-style:preserve-3d]",
+                          "group-hover:[transform:rotateY(180deg)]",
                           "motion-reduce:transition-none motion-reduce:group-hover:[transform:none]",
                         )}
                       >
@@ -426,9 +433,13 @@ export function HistoryTimeline() {
                           </p>
                         </article>
 
-                        {/* El dorso: la foto ocupa la tarjeta entera. Va
-                            girada de entrada, así que con la cara oculta solo
-                            aparece cuando el envoltorio da la vuelta. */}
+                        {/* El dorso: la foto ocupa la tarjeta entera, sin
+                            nada encima. Va girada de entrada, así que con la
+                            cara oculta solo aparece cuando el envoltorio da la
+                            vuelta. Acá abajo iba el titular sobre un degradé
+                            oscuro; el degradé ensuciaba la foto y sobre las
+                            imágenes claras se leía como una mancha, y el
+                            titular ya está en la cara de adelante. */}
                         <div className="absolute inset-0 overflow-hidden rounded-3xl border border-primary-200 shadow-xl [backface-visibility:hidden] [transform:rotateY(180deg)]">
                           <Image
                             src={milestone.image}
@@ -437,13 +448,6 @@ export function HistoryTimeline() {
                             sizes="512px"
                             className="object-cover"
                           />
-                          {/* El titular se repite abajo para no perder de
-                              vista de qué hito es la foto. */}
-                          <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-ink-900/85 via-ink-900/45 to-transparent px-8 pt-16 pb-7">
-                            <p className="font-serif text-xl leading-snug text-cream-50">
-                              {milestone.title}
-                            </p>
-                          </div>
                         </div>
                       </div>
                     </div>
