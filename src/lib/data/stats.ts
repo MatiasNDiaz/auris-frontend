@@ -1,5 +1,5 @@
 import { professionals } from "./professionals";
-import { services } from "./services";
+import { listedServices } from "./services";
 
 /**
  * Franja de confianza de la Home.
@@ -56,10 +56,14 @@ export const stats: Stat[] = [
   {
     key: "servicios",
     icon: "layers",
-    /** Ídem: es el largo de la grilla de servicios. */
-    value: services.length,
+    /**
+     * El largo de la grilla, pero contando solo las que se publican: `services`
+     * incluye kinesiología, que quedó sin listar, y el número daba nueve donde
+     * el visitante ve ocho.
+     */
+    value: listedServices.length,
     label: "especialidades",
     summary:
-      "Odontología, estética, psicología, kinesiología, fonoaudiología y el taller de adultos mayores, en un mismo lugar.",
+      "Odontología, odontopediatría funcional, alineadores y ortodoncia, bruxismo y disfunciones, estética facial y corporal, fonoaudiología, psicología y el taller de adultos mayores, en un mismo lugar.",
   },
 ];

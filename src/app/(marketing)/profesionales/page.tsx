@@ -6,7 +6,7 @@ import { PageHeader } from "@/components/shared/PageHeader";
 export const metadata: Metadata = {
   title: "Profesionales",
   description:
-    "Conocé al equipo de AURIS: psicología, odontología, estética, kinesiología, fonoaudiología y talleres para adultos mayores.",
+    "Conocé al equipo de AURIS: odontología, odontopediatría funcional, alineadores y ortodoncia, bruxismo y disfunciones, estética facial y corporal, fonoaudiología, psicología y taller de adultos mayores.",
   alternates: { canonical: "/profesionales" },
 };
 

@@ -2,7 +2,7 @@
  * Tipos del contenido del sitio.
  *
  * `Service`, `Professional` y `FAQ` son contenido estático y viven en
- * `/lib/data`. `BlogPost` y `Testimonial` hoy también son mock, pero
+ * `/lib/data`. `Testimonial` hoy también es mock, pero
  * su forma refleja las tablas de Supabase (`blog_posts`, `testimonials`) para
  * que la migración sea un cambio de origen de datos y nada más.
  */
@@ -62,17 +62,6 @@ export type Professional = {
   certifications: string[];
 };
 
-export type BlogPost = {
-  slug: string;
-  /** Etiqueta del chip: el área a la que pertenece la nota. */
-  category: string;
-  title: string;
-  excerpt: string;
-  /** Markdown liviano: párrafos separados por línea en blanco, `## ` para subtítulos. */
-  content: string;
-  coverImageUrl: string;
-  publishedAt: string;
-};
 
 export type Testimonial = {
   authorName: string;

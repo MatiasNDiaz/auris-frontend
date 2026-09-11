@@ -28,13 +28,19 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  // Las ocho especialidades que se publican, no una selección: kinesiología
+  // estaba acá y ya no se lista, y faltaban cuatro de las que sí.
   keywords: [
     "centro de salud",
     "bienestar integral",
-    "psicología",
     "odontología",
-    "kinesiología",
+    "odontopediatría funcional",
+    "alineadores y ortodoncia",
+    "bruxismo",
+    "estética facial y corporal",
     "fonoaudiología",
+    "psicología",
+    "taller de adultos mayores",
     siteConfig.address.city,
   ],
   openGraph: {

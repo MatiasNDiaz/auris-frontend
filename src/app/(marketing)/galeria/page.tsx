@@ -17,7 +17,7 @@ export default function GaleriaPage() {
         surface="sand"
         wave="shoulder"
         waveTone="base"
-        eyebrow="Galería"
+        eyebrow="Recorrido virtual"
         title="Nuestros espacios"
         description="Entrá por la puerta y caminá el centro: mirá alrededor y tocá los puntos para pasar de un espacio al siguiente."
       />

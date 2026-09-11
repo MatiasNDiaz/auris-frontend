@@ -11,9 +11,17 @@ import { usePathname } from "next/navigation";
 import { useRef, useState } from "react";
 import { AnimatedNavLogo } from "./AnimatedNavLogo";
 import { MobileMenu } from "./MobileMenu";
+import { NavServicesMenu } from "./NavServicesMenu";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { mainNav, siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+
+/** Las clases de un enlace de la navbar; las comparte el menú de servicios. */
+const ENLACE =
+  "rounded-full px-3.5 py-2 text-sm font-medium whitespace-nowrap transition-[color,background-color,transform,translate] duration-200 ease-out hover:-translate-y-px focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none motion-reduce:hover:translate-y-0";
+const ENLACE_ACTIVO = "bg-primary-300 text-primary-900";
+const ENLACE_QUIETO =
+  "text-primary-700 hover:bg-primary-200 hover:text-primary-900";
 
 /** Ruido de scroll por debajo de esto no cambia el estado de la navbar. */
 const DELTA_THRESHOLD = 6;
@@ -106,18 +114,26 @@ export function Navbar() {
         >
           {mainNav.slice(1).map((item) => {
             const active = pathname.startsWith(item.href);
+            const clases = cn(ENLACE, active ? ENLACE_ACTIVO : ENLACE_QUIETO);
+
+            // Servicios es el único que despliega: el listado completo cuelga
+            // del rótulo y el enlace sigue llevando a /servicios.
+            if (item.href === "/servicios") {
+              return (
+                <NavServicesMenu
+                  key={item.href}
+                  className={clases}
+                  activo={active}
+                />
+              );
+            }
 
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={cn(
-                  "rounded-full px-3.5 py-2 text-sm font-medium whitespace-nowrap transition-[color,background-color,transform,translate] duration-200 ease-out hover:-translate-y-px focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none motion-reduce:hover:translate-y-0",
-                  active
-                    ? "bg-primary-300 text-primary-900"
-                    : "text-primary-700 hover:bg-primary-200 hover:text-primary-900",
-                )}
+                className={clases}
               >
                 {item.label}
               </Link>

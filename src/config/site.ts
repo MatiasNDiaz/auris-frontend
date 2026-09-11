@@ -6,7 +6,7 @@ export const siteConfig = {
   name: "AURIS",
   tagline: "Espacio de salud y bienestar",
   description:
-    "Centro de salud y bienestar en Cerro de las Rosas, Córdoba. Odontología, kinesiología, estética facial y corporal, psicología y fonoaudiología con un enfoque humano, profesional y personalizado.",
+    "Centro de salud y bienestar en Cerro de las Rosas, Córdoba. Odontología, odontopediatría funcional, alineadores y ortodoncia, bruxismo y disfunciones, estética facial y corporal, fonoaudiología, psicología y taller de adultos mayores, con un enfoque humano, profesional y personalizado.",
   url: "https://auris.com.ar",
 
   phone: "+54 351 481-0843",
@@ -46,11 +46,16 @@ export const siteConfig = {
 
 export const mainNav = [
   { href: "/", label: "Inicio" },
-  { href: "/sobre-el-centro", label: "Sobre el centro" },
+  // El rótulo no sigue a la URL: "Nuestra historia" es lo que se lee, pero la
+  // ruta queda en /sobre-el-centro. Cambiarla obligaría a redirigir y a tocar
+  // los enlaces internos, el sitemap y lo que ya esté indexado, sin ganar
+  // nada para el visitante.
+  { href: "/sobre-el-centro", label: "Nuestra historia" },
   { href: "/servicios", label: "Servicios" },
   { href: "/profesionales", label: "Profesionales" },
-  { href: "/blog", label: "Blog" },
-  { href: "/galeria", label: "Galería" },
+  // "Recorrido" y no "Galería": lo que hay detrás es el recorrido virtual del
+  // consultorio, no una grilla de fotos sueltas.
+  { href: "/galeria", label: "Recorrido" },
   { href: "/preguntas-frecuentes", label: "Preguntas frecuentes" },
   { href: "/contacto", label: "Contacto" },
 ] as const;
