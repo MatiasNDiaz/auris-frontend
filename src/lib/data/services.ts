@@ -10,9 +10,9 @@ export const services: Service[] = [
     tagline: "Prevención antes que tratamiento",
     heroTitle: "Tu salud bucal, cuidada en serio",
     heroSubtitle:
-      "Cinco áreas bajo el mismo techo, explicadas paso a paso antes de empezar.",
+      "Las cinco áreas de la odontología, explicadas paso a paso antes de empezar.",
     fullDescription:
-      "La odontología es el área central del centro y la que reúne más especialidades: rehabilitación oral, implantología, odontopediatría funcional, alineadores y ortodoncia. Trabajamos con un enfoque preventivo y mínimamente invasivo, desde el control periódico y la limpieza profesional hasta la reposición de piezas perdidas y la corrección de la mordida. Cada plan se arma después de un diagnóstico completo que conversamos con vos antes de empezar, con las etapas y los tiempos reales de cada tratamiento sobre la mesa. Contamos con equipamiento digital que reduce los tiempos de consulta y hace más cómoda cada visita.",
+      "La odontología es el área central del centro y la que reúne más áreas propias: rehabilitación oral, implantología, odontopediatría funcional, alineadores y ortodoncia. Trabajamos con un enfoque preventivo y mínimamente invasivo, desde el control periódico y la limpieza profesional hasta la reposición de piezas perdidas y la corrección de la mordida. Cada plan se arma después de un diagnóstico completo que conversamos con vos antes de empezar, con las etapas y los tiempos reales de cada tratamiento sobre la mesa. Contamos con equipamiento digital que reduce los tiempos de consulta y hace más cómoda cada visita.",
     imageUrl:
       "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1920&auto=format&fit=crop",
     features: [

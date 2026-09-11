@@ -191,7 +191,7 @@ export default async function ServicioDetallePage({
           <div className="container-auris relative">
             <SectionHeading
               eyebrow="Áreas del servicio"
-              title="Cinco especialidades bajo el mismo techo"
+              title="Las cinco áreas de la odontología"
               description="Cada rama tiene su propio abordaje y sus propios tiempos. Estas son las que cubrimos y cómo trabaja cada una."
               className="mb-14"
             />
