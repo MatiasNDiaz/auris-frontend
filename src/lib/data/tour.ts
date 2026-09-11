@@ -14,8 +14,14 @@
  *
  * EL MAPA, tal como está el pasillo:
  *
- *   - Izquierda: consultorios 1, 2 y 3 en el primer tramo, y el 4 —el
- *     gabinete de estética— al final, ya frente a la puerta del patio.
+ *   - Izquierda: un consultorio por tramo. El 1 desde la boca, el 2 desde el
+ *     tramo del medio y el 3 desde el final. La puerta del 3 se ve también
+ *     desde el tramo del medio, y lleva su nombre en los dos lados.
+ *
+ *     Falta el 4, el gabinete de estética: ninguna de las tres fotos del
+ *     pasillo muestra su puerta. Sus fotos están en el repo
+ *     (`estetica-4-*.webp`) esperando saber desde qué tramo y de qué lado se
+ *     entra; colgarlo de una puerta que no es sería peor que no tenerlo.
  *   - Derecha: una sola abertura en todo el pasillo, el laboratorio. Lleva la
  *     misma etiqueta desde donde se la mire.
  *   - Al fondo, sobre la derecha: el consultorio 5, que es el de psicología.
@@ -157,10 +163,15 @@ export const tourNodes: TourNode[] = [
     alt: "Hall de entrada: la sala de espera a la izquierda y el mostrador de recepción a la derecha, separados por una columna",
     back: "entrada",
     hotspots: [
-      // Los bancos y el logo, del lado izquierdo de la columna.
-      { x: 24, y: 53, label: "Sala de espera", to: "sala-espera" },
-      // El mostrador, del lado derecho.
-      { x: 78, y: 48, label: "Recepción", to: "recepcion-mostrador" },
+      // Los bancos y el logo, del lado izquierdo de la columna; el mostrador
+      // del derecho. Van más adentro de lo que pediría la foto: esta es la
+      // única parada apaisada de todo el recorrido, y en la ventana vertical
+      // del teléfono una foto apaisada se agranda para cubrir por alto, así
+      // que de su ancho solo se ve poco más de la mitad. En 24 y 78 los dos
+      // círculos quedaban fuera del marco y en un teléfono no había forma de
+      // entrar ni a la sala de espera ni a la recepción.
+      { x: 30, y: 53, label: "Sala de espera", to: "sala-espera" },
+      { x: 72, y: 48, label: "Recepción", to: "recepcion-mostrador" },
       // El pasillo se ve iluminado entre la columna y el mostrador.
       { x: 58, y: 46, label: "Ir al pasillo", to: "pasillo" },
     ],
@@ -249,15 +260,13 @@ export const tourNodes: TourNode[] = [
     title: "Pasillo — tramo del medio",
     caption:
       "Unos pasos más adentro. El laboratorio ya quedó atrás y la puerta del patio se acerca.",
-    image: "/images/galeria/pasillo-medio.webp",
+    image: "/images/recorrido/pasillo-medio.webp",
     aspect: 9 / 16,
     alt: "Tramo del medio del pasillo, con una puerta abierta a la izquierda y la puerta de madera al fondo",
     back: "pasillo",
     hotspots: [
-      // La abertura de la izquierda y la que le sigue, ya sobre la pared que
-      // se va al punto de fuga.
+      // La única abertura de la izquierda en este tramo.
       { x: 28, y: 47, label: "Consultorio 2", to: "consultorio-2" },
-      { x: 42, y: 43, label: "Consultorio 3", to: "consultorio-3" },
       // Y el pasillo sigue hasta la puerta del fondo.
       { x: 52, y: 57, label: "Seguir por el pasillo", to: "pasillo-fondo" },
     ],
@@ -306,57 +315,34 @@ export const tourNodes: TourNode[] = [
     id: "pasillo-fondo",
     title: "Final del pasillo",
     caption:
-      "Ya frente a la puerta del patio: a la izquierda el gabinete de estética y, recién desde acá, el consultorio de psicología sobre la derecha.",
+      "Ya frente a la puerta del patio: a la izquierda el consultorio 3 y, recién desde acá, el de psicología sobre la derecha.",
     // Acá el recorrido avanza de verdad. Antes esta parada era otra foto del
     // mismo tramo, tomada casi desde el mismo lugar, así que tocar "seguir por
     // el pasillo" no se sentía como caminar. Esta llega hasta la puerta del
     // fondo y las dos últimas aberturas se ven de frente.
-    image: "/images/galeria/pasillo-fondo-zoom.webp",
-    aspect: 9 / 16,
+    // Recortada cuadrada y no vertical como el resto. En una ventana apaisada
+    // una foto 9:16 entra por el ancho y de su alto solo se ve un tercio: se
+    // veía una puerta gigante en vez del final de un pasillo. Cuadrada cae
+    // entre la ventana de escritorio —apaisada— y la de teléfono —vertical—,
+    // así que entra casi entera en las dos y los dos puntos quedan dentro del
+    // marco en ambas. Con 4:3 el punto de la derecha se salía en teléfono.
+    image: "/images/recorrido/pasillo-fondo-zoom.webp",
+    aspect: 1,
     alt: "Final del pasillo, con la puerta de madera del patio al frente y sendas aberturas a los costados",
     back: "pasillo-medio",
     hotspots: [
-      // La abertura de la izquierda.
-      { x: 25, y: 45, label: "Consultorio 4", to: "consultorio-4" },
-      // La de la derecha, al fondo.
-      { x: 87, y: 45, label: "Consultorio 5", to: "consultorio-5" },
+      // La abertura de la izquierda es la misma del consultorio 3 que ya se
+      // veía desde el tramo del medio, ahora de cerca. Como el laboratorio:
+      // una puerta no cambia de nombre según desde dónde se la mire.
+      { x: 25, y: 48, label: "Consultorio 3", to: "consultorio-3" },
+      // La de la derecha, al fondo. En 84 el círculo entraba por el centro
+      // pero se cortaba contra el borde en la ventana del teléfono: el punto
+      // mide 44 px, así que necesita unos cuatro puntos porcentuales de
+      // margen además de estar dentro.
+      { x: 80, y: 48, label: "Consultorio 5", to: "consultorio-5" },
       // La puerta de madera del centro da al patio: no es una sala y por eso
       // no lleva punto. Marcarla mandaba al visitante a una habitación que no
       // existe detrás de esa puerta.
-    ],
-  },
-  {
-    id: "consultorio-4",
-    title: "Consultorio 4 — Estética",
-    caption: "El gabinete de estética facial y corporal, sobre la izquierda.",
-    // Los archivos de estas fotos vienen nombrados "consultorio5", pero la
-    // sala es el consultorio 4: el nombre del archivo no manda.
-    image: "/images/galeria/estetica-4-01.webp",
-    aspect: 9 / 16,
-    alt: "Gabinete de estética con la camilla y el escritorio de consulta",
-    back: "pasillo-fondo",
-    hotspots: [],
-    extras: [
-      {
-        src: "/images/galeria/estetica-4-02.webp",
-        alt: "Camilla del gabinete junto a la ventana",
-      },
-      {
-        src: "/images/galeria/estetica-4-03.webp",
-        alt: "Vista del gabinete desde la puerta, con la bacha en primer plano",
-      },
-      {
-        src: "/images/galeria/estetica-4-04.webp",
-        alt: "Escritorio de consulta del gabinete",
-      },
-      {
-        src: "/images/galeria/estetica-4-05.webp",
-        alt: "Vista general del gabinete de estética",
-      },
-      {
-        src: "/images/galeria/estetica-4-06.webp",
-        alt: "Mesada y aparatología del gabinete",
-      },
     ],
   },
   {
@@ -366,7 +352,7 @@ export const tourNodes: TourNode[] = [
     image: "/images/galeria/odontologia-3-01.webp",
     aspect: 9 / 16,
     alt: "Consultorio 3 con sillón junto a la ventana",
-    back: "pasillo-medio",
+    back: "pasillo-fondo",
     hotspots: [],
     extras: [
       {
@@ -399,22 +385,22 @@ export const tourNodes: TourNode[] = [
     id: "consultorio-5",
     title: "Consultorio 5 — Psicología",
     caption: "El consultorio del fondo, sobre la derecha del pasillo.",
-    image: "/images/galeria/psicologia-5-01.webp",
+    image: "/images/recorrido/psicologia-5-01.webp",
     aspect: 9 / 16,
     alt: "Consultorio de psicología con el escritorio y las dos sillas",
     back: "pasillo-fondo",
     hotspots: [],
     extras: [
       {
-        src: "/images/galeria/psicologia-5-02.webp",
+        src: "/images/recorrido/psicologia-5-02.webp",
         alt: "Vista general del consultorio de psicología",
       },
       {
-        src: "/images/galeria/psicologia-5-03.webp",
+        src: "/images/recorrido/psicologia-5-03.webp",
         alt: "El consultorio visto desde la puerta",
       },
       {
-        src: "/images/galeria/psicologia-5-04.webp",
+        src: "/images/recorrido/psicologia-5-04.webp",
         alt: "La puerta del consultorio, al fondo del pasillo",
       },
     ],

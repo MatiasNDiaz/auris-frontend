@@ -25,10 +25,15 @@ import {
 import { cn } from "@/lib/utils";
 
 /**
- * Cuánto se agranda la foto respecto del ancho de la ventana. El sobrante es
- * el que permite mirar a los costados sin que asome el borde.
+ * Cuánto más grande que la ventana se dibuja la foto.
+ *
+ * De ese sobrante sale el paneo del cursor. Estaba en 1.14 y era demasiado:
+ * las fotos del centro son de teléfono, así que agrandarlas un catorce por
+ * ciento por encima de lo que ya hace falta para cubrir la ventana se notaba
+ * como blandura. Con 1.06 queda holgura para mirar alrededor —que es el
+ * efecto— y la foto se dibuja bastante más cerca de su tamaño real.
  */
-const OVERSCAN = 1.14;
+const OVERSCAN = 1.06;
 
 /** Cuánto acompaña el encuadre al puntero, en px sobre el eje más largo. */
 const LOOK_X = 26;
@@ -248,7 +253,16 @@ export function TourViewer() {
                 // La capa mide OVERSCAN veces el ancho de la ventana, no el
                 // ancho de la ventana: pidiendo menos, Next servía una imagen
                 // más chica que la que se dibuja y se veía blanda.
-                sizes="(max-width: 1024px) 115vw, 1350px"
+                //
+                // Y una foto apaisada dentro de la ventana vertical del
+                // teléfono se agranda mucho más que una vertical —tiene que
+                // cubrir por alto—, así que ahí la capa pasa del ancho de la
+                // pantalla y hay que pedir el doble.
+                sizes={
+                  photo.aspect > 1
+                    ? "(max-width: 1024px) 200vw, 1350px"
+                    : "(max-width: 1024px) 115vw, 1350px"
+                }
                 priority={node.id === TOUR_START}
                 className="object-cover"
                 draggable={false}
