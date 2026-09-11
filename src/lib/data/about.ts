@@ -12,9 +12,10 @@ export type Milestone = {
   title: string;
   description: string;
   /**
-   * La foto del dorso de la tarjeta en el recorrido horizontal. Los hitos
-   * viejos van con material de archivo —no hay fotos del centro de esos
-   * años—; de "hace diez años" en adelante son propias.
+   * La foto del dorso de la tarjeta en el recorrido horizontal. Los dos
+   * primeros hitos van con material de la época —una consulta de los 90 y el
+   * logo de Kúspide—, el tercero con archivo, y de "hace diez años" en
+   * adelante son fotos propias del centro.
    */
   image: string;
   alt: string;
@@ -37,16 +38,16 @@ export const milestones: Milestone[] = [
     title: "El punto de partida",
     description:
       "La práctica odontológica estaba cambiando: la especialización, las nuevas tecnologías y los nuevos materiales empezaban a exigir mucha más formación y entrenamiento. Ya no alcanzaba con el consultorio general de siempre: cada área pedía su propio recorrido de estudio.",
-    image: "/images/historia/1-punto-de-partida.webp",
-    alt: "Sillón y equipo odontológico antiguo en un consultorio de época",
+    image: "/images/historia/1-fines-de-los-90.webp",
+    alt: "Consulta odontológica a fines de los 90, con el calendario de 1997 en la pared",
   },
   {
     when: "1998",
     title: "Nace Kúspide",
     description:
       "Kúspide Consultorios Odontológicos abre con cuatro consultorios y todas las especialidades odontológicas bajo un mismo techo. La idea, poco común entonces, era que un tratamiento completo pudiera resolverse en un mismo lugar y entre profesionales que se conocen.",
-    image: "/images/historia/2-nace-kuspide.webp",
-    alt: "Consultorio vacío y listo para abrir, en una foto de archivo",
+    image: "/images/historia/2-logo-kuspide.webp",
+    alt: "Logo de Kúspide Consultorios Odontológicos",
   },
   {
     when: "Los años siguientes",
