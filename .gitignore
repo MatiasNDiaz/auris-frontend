@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# media sin procesar
+# Los originales pesados que llegan del centro se dejan en assets/raw/ y el
+# pipeline (`npm run optimize:media`) los convierte a public/images y
+# public/videos. Al repo solo va la salida optimizada. Se ignora el contenido
+# pero no las carpetas —un .gitkeep en cada una—, para que después de clonar
+# ya esté claro dónde se deja el material nuevo.
+/assets/raw/**
+!/assets/raw/images/
+!/assets/raw/videos/
+!/assets/raw/images/.gitkeep
+!/assets/raw/videos/.gitkeep
