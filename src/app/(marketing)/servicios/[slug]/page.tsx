@@ -241,15 +241,15 @@ export default async function ServicioDetallePage({
         </section>
       )}
 
-      {team.length > 0 && (
-        <section className="bg-surface-sand py-20 lg:py-24">
-          <div className="container-auris">
-            <SectionHeading
-              eyebrow="Equipo"
-              title={`Profesionales de ${service.name.toLowerCase()}`}
-              className="mb-12"
-            />
+      <section className="bg-surface-sand py-20 lg:py-24">
+        <div className="container-auris">
+          <SectionHeading
+            eyebrow="Equipo"
+            title={`Profesionales de ${service.name.toLowerCase()}`}
+            className="mb-12"
+          />
 
+          {team.length > 0 ? (
             <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {team.map((professional, index) => (
                 <Reveal as="li" key={professional.slug} delay={index * 0.08}>
@@ -260,9 +260,17 @@ export default async function ServicioDetallePage({
                 </Reveal>
               ))}
             </ul>
-          </div>
-        </section>
-      )}
+          ) : (
+            // Mismo mensaje y mismo estilo que usa /profesionales cuando un
+            // filtro no encuentra a nadie: antes esta sección directamente
+            // desaparecía cuando el servicio no tenía profesional asignado,
+            // y la página quedaba sin avisar que faltaba alguien.
+            <p className="rounded-2xl border border-dashed border-border bg-cream-100 p-8 text-center text-ink-700/75">
+              Todavía no tenemos profesionales cargados en esta especialidad.
+            </p>
+          )}
+        </div>
+      </section>
 
       <CtaBanner
         title={`¿Querés empezar con ${service.name.toLowerCase()}?`}
