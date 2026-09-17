@@ -46,7 +46,7 @@ export const milestones: Milestone[] = [
     title: "Nace Kúspide",
     description:
       "Kúspide Consultorios Odontológicos abre con cuatro consultorios y todas las especialidades odontológicas bajo un mismo techo. La idea, poco común entonces, era que un tratamiento completo pudiera resolverse en un mismo lugar y entre profesionales que se conocen.",
-    image: "/images/historia/2-logo-kuspide.webp",
+    image: "/logos/2-logo-kuspide.webp",
     alt: "Logo de Kúspide Consultorios Odontológicos",
   },
   {

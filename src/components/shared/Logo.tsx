@@ -12,8 +12,12 @@ import { cn } from "@/lib/utils";
  * dimensionados y comprimidos, servirlos tal cual no cuesta nada.
  */
 /** Coincide con el archivo real: se muestra a 46-56px, 160 cubre 2x. */
-export const MARK = { src: "/logo-auris-mark.png", width: 160, height: 72 };
-const FULL = { src: "/logo-auris-full.png", width: 640, height: 459 };
+export const MARK = {
+  src: "/logos/logo-auris-mark.png",
+  width: 160,
+  height: 72,
+};
+const FULL = { src: "/logos/logo-auris-full.png", width: 640, height: 459 };
 
 type LogoProps = {
   /** `mark`: solo el isotipo, junto al nombre. `full`: el logo completo. */

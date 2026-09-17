@@ -79,7 +79,7 @@ export const services: Service[] = [
     name: "Alineadores y ortodoncia",
     icon: "tooth",
     // Submarca propia del centro para los alineadores.
-    iconImage: "/images/smile-now-alineadores.webp",
+    iconImage: "/logos/smile-now-alineadores.webp",
     shortDescription:
       "Ortodoncia con alineadores transparentes o brackets, planificada digitalmente desde el primer estudio.",
     tagline: "Alinear sin que se note",
