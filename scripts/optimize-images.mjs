@@ -33,8 +33,8 @@ import {
 const ENTRADA = path.join(RAIZ, "assets", "raw", "images");
 const SALIDA = path.join(RAIZ, "public", "images");
 
-/** Calidad WebP, de 1 a 100. 80 es el punto donde deja de notarse la compresión. */
-const CALIDAD = Number(process.env.IMG_QUALITY ?? 80);
+/** Calidad WebP, de 1 a 100. 88 mantiene la piel y el pelo sin artefactos. */
+const CALIDAD = Number(process.env.IMG_QUALITY ?? 88);
 
 /**
  * Presets de tamaño: el lado más largo nunca pasa de `max`. Una imagen más
@@ -46,12 +46,19 @@ const PRESETS = {
   /** Tarjetas de la línea de tiempo: media pantalla como mucho. */
   tarjeta: { max: 1200 },
   /**
-   * Fotos de profesionales. 1000 y no 800 en el lado largo: las fichas son
-   * verticales 4:5 y las fotos que ya usa el sitio miden 800×1000. Con 800 en
-   * el lado largo un retrato 4:5 salía 640×800 y uno de teléfono, 450×800:
-   * más chico de lo que la ficha dibuja en una pantalla retina.
+   * Fotos de profesionales. 2000 en el lado largo y no 1000: una foto de
+   * teléfono es 9:16, así que con 1000 de alto quedaba en 562 de ancho —menos
+   * de lo que la ficha dibuja en una pantalla retina, donde el hero pide unos
+   * 920px—. Con 2000 de lado largo esa misma foto sale 1125 de ancho y entra
+   * nítida en todos lados.
    */
-  retrato: { max: 1000 },
+  retrato: { max: 2000 },
+  /**
+   * Banner de la ficha: ocupa el ancho completo de la pantalla. Como suele ser
+   * una foto vertical, el lado largo es el alto, y hace falta pasarse de 1920
+   * para que el ancho llegue a cubrir un monitor grande.
+   */
+  panoramica: { max: 2560 },
 };
 
 /**
@@ -90,6 +97,15 @@ function presetDe(original) {
     return /** @type {keyof typeof PRESETS} */ (forzado);
   }
   const carpetas = path.relative(ENTRADA, path.dirname(original)).split(path.sep);
+  // La imagen 6 de un profesional (`Nombre_6` o `Nombre-6`) es el fondo del
+  // banner de su ficha, que ocupa todo el ancho de la pantalla y necesita más
+  // resolución que un retrato. Ver docs/modus-operandi-imagenes-profesionales.md.
+  if (
+    carpetas.some((carpeta) => carpeta.toLowerCase() === "profesionales") &&
+    /[_-]6$/.test(path.parse(original).name)
+  ) {
+    return "panoramica";
+  }
   for (const carpeta of carpetas) {
     const p = PRESET_POR_CARPETA[carpeta.toLowerCase()];
     if (p) return /** @type {keyof typeof PRESETS} */ (p);
@@ -175,6 +191,12 @@ async function main() {
           fit: "inside",
           withoutEnlargement: true,
         })
+        // Achicar una foto siempre la ablanda: al promediar píxeles se pierde
+        // el micro-contraste de los bordes. Este enfoque suave lo devuelve, y
+        // es lo que hace que una foto de 6000px se siga viendo nítida en 2000.
+        // Los valores son conservadores a propósito: más que esto empieza a
+        // marcar halos en los contornos y a resaltar el ruido de la piel.
+        .sharpen({ sigma: 0.8, m1: 0.6, m2: 2.2 })
         .webp({ quality: CALIDAD, effort: 6, smartSubsample: true })
         .toFile(temporal);
 

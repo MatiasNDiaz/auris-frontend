@@ -253,6 +253,8 @@ type LeafSprigProps = {
    * tamaños ni el ritmo, así que no se ven como el mismo dibujo repetido.
    */
   seed?: number;
+  /** Color del tallo. Por defecto, el verde del sitio. */
+  stem?: string;
   /** Posición y opacidad: se fijan desde la sección que lo usa. */
   className?: string;
 };
@@ -262,6 +264,7 @@ export function LeafSprig({
   size = "md",
   flip = false,
   seed = 0,
+  stem = "var(--color-primary-500)",
   className,
 }: LeafSprigProps) {
   // Sin degradé por hoja: a este tamaño no se percibe y evita tanto un `<defs>`
@@ -307,7 +310,7 @@ export function LeafSprig({
       >
         <path
           d={STEM_D}
-          stroke="var(--color-primary-500)"
+          stroke={stem}
           strokeWidth="2.4"
           strokeLinecap="round"
           opacity="0.55"

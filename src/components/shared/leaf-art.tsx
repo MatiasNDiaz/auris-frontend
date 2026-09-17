@@ -53,6 +53,20 @@ export const leafPalettes = {
     core: "var(--color-cream-50)",
     vein: "var(--color-cream-300)",
   },
+  /** Azul de las fichas de profesionales varones. */
+  clinic: {
+    edge: "var(--color-clinic-300)",
+    body: "var(--color-clinic-200)",
+    core: "var(--color-clinic-100)",
+    vein: "var(--color-clinic-500)",
+  },
+  /** Rosa de las fichas de profesionales mujeres. */
+  rose: {
+    edge: "var(--color-rose-300)",
+    body: "var(--color-rose-200)",
+    core: "var(--color-rose-100)",
+    vein: "var(--color-rose-500)",
+  },
 } as const;
 
 /**

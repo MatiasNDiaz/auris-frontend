@@ -99,6 +99,126 @@ export type Trayectoria = {
   }[];
 };
 
+/**
+ * Ícono de un hito de la línea de tiempo de la ficha. Es una clave y no un
+ * componente para que los datos no dependan de la librería de íconos.
+ */
+export type IconoHito =
+  /** Birrete: estudios universitarios. */
+  | "formacion"
+  /** Persona: el ejercicio de la profesión. */
+  | "experiencia"
+  /** Cruz: posgrados, diplomaturas y especialidades. */
+  | "especializacion"
+  /** Microscopio: tecnología y diagnóstico. */
+  | "tecnologia"
+  /** Edificio: hospitales, sanatorios, fundaciones. */
+  | "institucion"
+  /** Pizarra: docencia, cursos y congresos. */
+  | "docencia"
+  /** Libro: publicaciones. */
+  | "publicacion"
+  /** Maletín: proyectos y empresas propias. */
+  | "proyecto"
+  /** Medalla: certificaciones. */
+  | "certificacion"
+  /** Personas: trabajo con otras disciplinas. */
+  | "equipo"
+  /** Manos: acompañamiento de pacientes y familias. */
+  | "acompanamiento";
+
+/**
+ * Contenido de la ficha extendida de un profesional: la línea de tiempo con
+ * su grilla de fotos, el banner de su enfoque y las cifras.
+ *
+ * Todo lo que es texto de la bio (`texto`, `frase`, los ítems de servicios…)
+ * se toma literal de su `Trayectoria` y se comprueba al compilar. Los rótulos
+ * —título de cada hito, etiquetas, títulos de apartado— pueden ser un
+ * encabezado de la bio o un rótulo de la interfaz; las etiquetas de las cifras
+ * y la tarjeta flotante son siempre de la interfaz.
+ */
+export type Ficha = {
+  /**
+   * Quien todavía no tiene bio: la ficha mantiene la estructura completa pero
+   * cada texto dice que la información está en actualización.
+   */
+  enActualizacion?: boolean;
+  /** Rótulo de la sección de trayectoria, si la bio trae uno propio. */
+  trayectoriaTitulo?: string;
+  /**
+   * Qué parte de la foto del banner tiene que quedar a la vista, en formato
+   * `object-position` ("center 40%" por defecto).
+   *
+   * El banner es una franja baja y las fotos son verticales, así que solo se
+   * ve una tira horizontal: el porcentaje es la altura de la cara dentro de la
+   * foto. Alguien parado suele estar cerca del 35%, alguien sentado, del 50%.
+   */
+  bannerFoco?: string;
+  /**
+   * Cuánto se corre la foto del banner hacia la derecha ("14%" por defecto).
+   *
+   * No alcanza con `bannerFoco` para esto: la foto es vertical y entra entera
+   * a lo ancho de su franja, así que no hay recorte horizontal que mover. Este
+   * corrimiento la empuja, y el hueco que deja a la izquierda cae donde el
+   * degradé ya la desvanece, así que no se nota. Solo se aplica en pantallas
+   * anchas, que es donde la foto convive con el texto.
+   */
+  bannerCorrimiento?: string;
+  /**
+   * Encuadre de las fotos del hero (`object-position`), para cuando la persona
+   * no está en el centro del cuadro o la foto es apaisada y hay que recortarla
+   * a vertical. Por defecto, el centro.
+   */
+  heroFoco?: string;
+  /** Lo mismo para la foto 2, la que alterna en el hero. */
+  heroHoverFoco?: string;
+  /** Sección "Formación y trayectoria". */
+  hitos: {
+    icono: IconoHito;
+    /** Dato corto arriba del título: un año, una institución. */
+    marca?: string;
+    titulo: string;
+    /** Frases literales de la bio. */
+    texto: string[];
+  }[];
+  /** Tarjeta que flota sobre la grilla de fotos. */
+  destacado?: { titulo: string; texto: string };
+  /** Banner con la foto de fondo. */
+  enfoque: {
+    /** Rótulo del banner, literal de la bio: "Su enfoque profesional". */
+    etiqueta: string;
+    /** La frase grande. Literal de la bio. */
+    frase: string;
+    /** Lo que sigue a la frase, también literal. */
+    texto: string[];
+  };
+  /**
+   * Sección de cifras. Solo con números que estén en la bio: si no hay
+   * ninguno, se omite y esa sección muestra servicios y contacto.
+   */
+  cifras?: {
+    /** Texto manuscrito sobre la foto. */
+    firma?: string;
+    items: {
+      valor: number;
+      prefijo?: string;
+      sufijo?: string;
+      /** Los años no cuentan desde cero ni llevan separador de miles. */
+      anio?: boolean;
+      etiqueta: string;
+    }[];
+  };
+  /** Los servicios que ofrece en el centro, literales de la bio. */
+  servicios?: {
+    titulo: string;
+    /** Párrafos de la bio que presentan el apartado. */
+    intro?: string[];
+    grupos: { titulo?: string; items: string[] }[];
+    /** Párrafos de la bio que cierran el apartado. */
+    cierre?: string[];
+  };
+};
+
 export type Testimonial = {
   authorName: string;
   content: string;

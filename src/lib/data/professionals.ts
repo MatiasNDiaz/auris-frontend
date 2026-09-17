@@ -1,4 +1,5 @@
 import type { Professional } from "@/lib/types";
+import fotosGeneradas from "./fotos-profesionales.generated.json";
 import { trayectorias } from "./trayectorias";
 
 /**
@@ -308,9 +309,17 @@ const equipo: Professional[] = [
  * agregar a alguien arriba de todo no lo corra del primer lugar. `sort` es
  * estable, así que el resto conserva el orden en que está cargado.
  */
-export const professionals: Professional[] = [...equipo].sort(
-  (a, b) => Number(Boolean(b.owner)) - Number(Boolean(a.owner)),
-);
+export const professionals: Professional[] = [...equipo]
+  .sort((a, b) => Number(Boolean(b.owner)) - Number(Boolean(a.owner)))
+  // Si ya subieron su imagen 1 (`<prefijo>-1.*`), esa foto reemplaza a la
+  // provisoria en todo el sitio: ficha, tarjetas y carrusel. Ver
+  // `docs/modus-operandi-imagenes-profesionales.md`.
+  .map((professional) => {
+    const hero = (fotosGeneradas as Record<string, { hero?: string }>)[
+      professional.slug
+    ]?.hero;
+    return hero ? { ...professional, photoUrl: hero } : professional;
+  });
 
 /** Tope de tarjetas del carousel de la Home. */
 export const CAROUSEL_LIMIT = 12;

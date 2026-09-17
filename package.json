@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/fotos-profesionales.mjs",
     "dev": "next dev",
-    "prebuild": "npm run optimize:media",
+    "prebuild": "npm run optimize:media && node scripts/fotos-profesionales.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",

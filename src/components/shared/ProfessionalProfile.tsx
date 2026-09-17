@@ -1,23 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Award,
-  BadgeCheck,
-  Briefcase,
-  GraduationCap,
-  MessageCircle,
-  Phone,
-  Quote,
-} from "lucide-react";
+import { BadgeCheck, Quote } from "lucide-react";
 import Link from "next/link";
 import { AnimatedProfessionalImage } from "./AnimatedProfessionalImage";
 import { LeafSprig } from "./LeafSprig";
 import { ProfessionalBackLinks } from "./ProfessionalBackLinks";
-import { ShineButton } from "./ShineButton";
+import { ProfessionalFicha } from "./ProfessionalFicha";
 import { WhatsAppButton } from "./WhatsAppButton";
-import { siteConfig } from "@/config/site";
-import type { Professional, Service } from "@/lib/types";
+import type { FotosProfesional } from "@/lib/fotos-profesional";
+import type { Ficha, Professional, Service } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 /**
@@ -104,12 +96,20 @@ const palettes = {
 type ProfessionalProfileProps = {
   professional: Professional;
   service?: Service;
+  /** Trayectoria, banner y cifras: todo lo que va debajo del hero. */
+  ficha: Ficha;
+  /** Fotos de su carpeta en `public/images/profesionales/`, por lugar. */
+  fotos: FotosProfesional;
+  fotoCifras?: "izquierda" | "derecha";
   className?: string;
 };
 
 export function ProfessionalProfile({
   professional,
   service,
+  ficha,
+  fotos,
+  fotoCifras,
   className,
 }: ProfessionalProfileProps) {
   const firstName = professional.name.split(" ").slice(1).join(" ");
@@ -143,10 +143,17 @@ export function ProfessionalProfile({
             <div className="relative">
               <AnimatedProfessionalImage
                 src={professional.photoUrl}
+                hoverSrc={fotos.heroHover}
+                objectPosition={ficha.heroFoco}
+                hoverObjectPosition={ficha.heroHoverFoco}
                 alt={`Retrato de ${professional.name}`}
                 priority
                 isTransitionTarget
-                sizes="(max-width: 1024px) 90vw, 460px"
+                // Pide el doble del ancho de la card. Con una foto vertical
+                // alcanzaría con 460, pero una apaisada se recorta a lo ancho
+                // y solo muestra la mitad: con 460 el navegador bajaba 640px
+                // y la card los estiraba al doble, que es lo que se pixelaba.
+                sizes="(max-width: 1024px) 100vw, 960px"
                 className="aspect-4/5 w-full rounded-3xl"
               />
 
@@ -283,333 +290,13 @@ export function ProfessionalProfile({
         </div>
       </section>
 
-      {/* Trayectoria. La misma tarjeta que antes decía "Experiencia" con una
-          línea; ahora lleva la historia completa que escribió el centro, con
-          los colores de la persona. */}
-      <section className={cn("py-14", c.band)}>
-        <div className="container-auris">
-          <motion.div
-            variants={content}
-            initial="hidden"
-            animate="visible"
-            custom={0.5}
-            className={cn(
-              "mx-auto max-w-3xl rounded-3xl border bg-cream-50 p-8 shadow-sm sm:p-10",
-              c.border,
-            )}
-          >
-            <div className="flex items-start gap-5">
-              <span
-                aria-hidden
-                className={cn(
-                  "inline-flex size-12 shrink-0 items-center justify-center rounded-2xl",
-                  c.iconBox,
-                )}
-              >
-                <Briefcase className="size-6" strokeWidth={1.6} />
-              </span>
-              <div>
-                <p
-                  className={cn(
-                    "text-xs font-semibold tracking-[0.18em] uppercase",
-                    c.label,
-                  )}
-                >
-                  Trayectoria de {firstName}
-                </p>
-
-                {trayectoria ? (
-                  <>
-                    <h2 className="mt-2 font-serif text-2xl leading-snug text-balance text-ink-900 sm:text-3xl">
-                      {trayectoria.titulo}
-                    </h2>
-                    <p
-                      className={cn(
-                        "mt-2 text-base leading-relaxed text-pretty",
-                        c.label,
-                      )}
-                    >
-                      {trayectoria.especialidad}
-                    </p>
-                    <span
-                      aria-hidden
-                      className={cn(
-                        "mt-5 block h-0.5 w-16 rounded-full",
-                        c.rule,
-                      )}
-                    />
-                  </>
-                ) : (
-                  // Mientras el centro no mande su historia no se inventa
-                  // nada: se avisa y listo.
-                  <p className="mt-2 text-lg leading-relaxed text-pretty text-ink-900">
-                    Información en actualización.
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {trayectoria && (
-              // En pantallas anchas el texto se alinea con el título, a la
-              // derecha del ícono; en el teléfono usa todo el ancho, que es
-              // poco como para dejarle una sangría.
-              <div className="mt-8 sm:pl-17">
-                {trayectoria.bloques.map((bloque, index) => {
-                  if (bloque.tipo === "titulo") {
-                    return (
-                      <h3
-                        key={index}
-                        className="mt-10 flex items-center gap-3 font-serif text-xl text-ink-900 first:mt-0"
-                      >
-                        <span
-                          aria-hidden
-                          className={cn(
-                            "h-0.5 w-6 shrink-0 rounded-full",
-                            c.rule,
-                          )}
-                        />
-                        {bloque.texto}
-                      </h3>
-                    );
-                  }
-
-                  if (bloque.tipo === "subtitulo") {
-                    return (
-                      <p
-                        key={index}
-                        className={cn(
-                          "mt-6 text-xs font-semibold tracking-[0.18em] uppercase first:mt-0",
-                          c.label,
-                        )}
-                      >
-                        {bloque.texto}
-                      </p>
-                    );
-                  }
-
-                  if (bloque.tipo === "lista") {
-                    return (
-                      <ul key={index} className="mt-4 space-y-2.5 first:mt-0">
-                        {bloque.items.map((item) => (
-                          <li
-                            key={item}
-                            className="flex gap-3 text-base leading-relaxed text-pretty text-ink-700/85"
-                          >
-                            <span
-                              aria-hidden
-                              className={cn(
-                                "mt-2.5 size-1.5 shrink-0 rounded-full",
-                                c.rule,
-                              )}
-                            />
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    );
-                  }
-
-                  return (
-                    <p
-                      key={index}
-                      className="mt-4 text-base leading-relaxed text-pretty text-ink-700/85 first:mt-0"
-                    >
-                      {bloque.texto}
-                    </p>
-                  );
-                })}
-
-                {trayectoria.contactos.length > 0 && (
-                  <ul
-                    className={cn(
-                      "mt-10 flex flex-col gap-3 border-t pt-6 sm:flex-row sm:flex-wrap sm:gap-x-8",
-                      c.border,
-                    )}
-                  >
-                    {trayectoria.contactos.map((contacto) => {
-                      const Icono =
-                        contacto.tipo === "whatsapp" ? MessageCircle : Phone;
-                      const externo = contacto.tipo === "whatsapp";
-
-                      return (
-                        <li key={contacto.href}>
-                          <a
-                            href={contacto.href}
-                            target={externo ? "_blank" : undefined}
-                            rel={externo ? "noopener noreferrer" : undefined}
-                            className="group inline-flex items-center gap-3 rounded-xl text-base text-ink-700/85 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
-                          >
-                            <span
-                              aria-hidden
-                              className={cn(
-                                "inline-flex size-9 shrink-0 items-center justify-center rounded-xl transition-[translate] duration-200 group-hover:-translate-y-0.5",
-                                c.iconBox,
-                              )}
-                            >
-                              <Icono className="size-4.5" strokeWidth={1.7} />
-                            </span>
-                            <span>
-                              {contacto.etiqueta}:{" "}
-                              <strong className="font-semibold text-ink-900 tabular-nums">
-                                {contacto.numero}
-                              </strong>
-                            </span>
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-              </div>
-            )}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Credenciales, presentadas como diplomas. */}
-      <section
-        className={cn("relative overflow-hidden py-16 lg:py-20", c.panel)}
-      >
-        <div className="container-auris relative">
-          <motion.div
-            variants={content}
-            initial="hidden"
-            animate="visible"
-            custom={0.56}
-            className="text-center"
-          >
-            <p
-              className={cn(
-                "text-xs font-semibold tracking-[0.24em] uppercase",
-                c.label,
-              )}
-            >
-              Formación y certificaciones
-            </p>
-            <h2 className="mt-3 font-serif text-3xl text-balance text-ink-900 sm:text-4xl">
-              Títulos que respaldan su práctica
-            </h2>
-            <span
-              aria-hidden
-              className={cn(
-                "mx-auto mt-5 block h-0.5 w-16 rounded-full",
-                c.rule,
-              )}
-            />
-          </motion.div>
-
-          <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {professional.credentials.map((cred, index) => (
-              <motion.li
-                key={`${cred.title}-${cred.year}`}
-                variants={content}
-                initial="hidden"
-                animate="visible"
-                custom={0.62 + index * 0.06}
-              >
-                {/* Diploma estilizado: no es un escaneo real, es una
-                    representación con los datos del título. */}
-                <article
-                  className={cn(
-                    "flex h-full flex-col rounded-2xl border-2 bg-cream-50 p-6 shadow-sm",
-                    c.border,
-                  )}
-                >
-                  <div
-                    className={cn(
-                      "flex items-center justify-between rounded-xl px-4 py-3",
-                      c.card,
-                    )}
-                  >
-                    <span
-                      aria-hidden
-                      className={cn(
-                        "inline-flex size-9 items-center justify-center rounded-lg",
-                        c.iconBox,
-                      )}
-                    >
-                      {index === 0 ? (
-                        <GraduationCap className="size-4.5" strokeWidth={1.7} />
-                      ) : (
-                        <Award className="size-4.5" strokeWidth={1.7} />
-                      )}
-                    </span>
-                    <span
-                      className={cn("font-serif text-lg tabular-nums", c.label)}
-                    >
-                      {cred.year}
-                    </span>
-                  </div>
-
-                  <h3 className="mt-5 font-serif text-lg leading-snug text-balance text-ink-900">
-                    {cred.title}
-                  </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-700/80">
-                    {cred.institution}
-                  </p>
-
-                  <p
-                    className={cn(
-                      "mt-5 border-t pt-4 text-[0.7rem] tracking-[0.16em] uppercase",
-                      c.border,
-                      c.label,
-                    )}
-                  >
-                    {siteConfig.name} · Documentación verificada
-                  </p>
-                </article>
-              </motion.li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* Cierre: contacto. */}
-      <section className={cn("py-16 lg:py-20", c.band)}>
-        <div className="container-auris">
-          <motion.div
-            variants={content}
-            initial="hidden"
-            animate="visible"
-            custom={0.8}
-            className={cn(
-              "relative mx-auto max-w-3xl overflow-hidden rounded-[2rem] px-8 py-12 text-center",
-              c.ctaPanel,
-            )}
-          >
-            <div
-              aria-hidden
-              className="absolute inset-0 opacity-35"
-              style={{ backgroundImage: c.ctaGlow }}
-            />
-
-            <div className="relative">
-              <h2 className="font-serif text-2xl text-balance text-cream-50 sm:text-3xl">
-                ¿Querés coordinar una consulta con {firstName}?
-              </h2>
-              <p className={cn("mx-auto mt-4 max-w-lg text-pretty", c.ctaText)}>
-                Escribinos y te confirmamos la disponibilidad. También podés ver
-                los horarios y la ubicación del centro.
-              </p>
-
-              <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-                <WhatsAppButton
-                  label="Escribinos por WhatsApp"
-                  variant="outline"
-                  message={`¡Hola AURIS! Quisiera solicitar un turno con ${professional.name} (${professional.specialty}).`}
-                />
-                <ShineButton href="/contacto" tone="outlineLight" effect="fill">
-                  Ver datos de contacto
-                </ShineButton>
-              </div>
-
-              <p className={cn("mt-6 text-sm", c.ctaMuted)}>
-                {siteConfig.address.street}, {siteConfig.address.city}
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <ProfessionalFicha
+        professional={professional}
+        trayectoria={trayectoria}
+        ficha={ficha}
+        fotos={fotos}
+        fotoCifras={fotoCifras}
+      />
     </div>
   );
 }

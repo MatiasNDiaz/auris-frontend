@@ -60,7 +60,7 @@ terminen como `%20` en las URLs.
 
 | Carpeta | Lado máximo | Para |
 |---|---|---|
-| `profesionales/` | 1000 px | fichas del equipo |
+| `profesionales/` | 1000 px (`banner`: 1920 px) | fichas del equipo |
 | `historia/` | 1200 px | tarjetas de la línea de tiempo |
 | cualquier otra | 1920 px | hero, galería, recorrido, servicios |
 
@@ -86,6 +86,15 @@ ven lavados.
   sacar el audio.
 - **Corre solo antes de cada build** (`prebuild`). Con `assets/raw/` vacía —el
   caso normal en Vercel— termina al instante y no demora el deploy.
+
+## Fotos de cada profesional
+
+Cada ficha usa 6 fotos por profesional, nombradas `[Nombre]_[número].webp`
+(ej. `Ariel_1.webp` a `Ariel_6.webp`) en
+`assets/raw/images/profesionales/<slug>/`. Mientras una falta, la ficha
+muestra un bloque de color en su lugar. La convención completa —qué es cada
+número, la regla para nombres repetidos y el slug de cada profesional— está en
+[`docs/modus-operandi-imagenes-profesionales.md`](docs/modus-operandi-imagenes-profesionales.md).
 
 ## Learn More
 
