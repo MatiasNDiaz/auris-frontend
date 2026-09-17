@@ -5,10 +5,22 @@ import { useMemo, useState } from "react";
 import { LeafSprig } from "@/components/shared/LeafSprig";
 import { ProfessionalCard } from "@/components/shared/ProfessionalCard";
 import { professionals } from "@/lib/data/professionals";
-import { listedServices } from "@/lib/data/services";
 import { cn } from "@/lib/utils";
 
 const ALL = "todos";
+
+/**
+ * Las 4 áreas del cartel de la recepción, en el mismo orden en que están
+ * ahí colgadas. No son los 8 servicios que el sitio muestra en la home o en
+ * la navbar —esos son tratamientos concretos—; acá alcanza con la
+ * especialidad de cada profesional, que es como el cartel los agrupa.
+ */
+const AREAS = [
+  { slug: "odontologia", name: "Odontología" },
+  { slug: "kinesiologia", name: "Kinesiología y Fisioterapia" },
+  { slug: "psicologia", name: "Psicología" },
+  { slug: "fonoaudiologia", name: "Fonoaudiología" },
+];
 
 /** Listado del equipo con filtro por servicio. */
 export function ProfessionalsDirectory() {
@@ -22,10 +34,7 @@ export function ProfessionalsDirectory() {
     [filter],
   );
 
-  const options = [
-    { slug: ALL, name: "Todos" },
-    ...listedServices.map((s) => ({ slug: s.slug, name: s.name })),
-  ];
+  const options = [{ slug: ALL, name: "Todos" }, ...AREAS];
 
   return (
     <section className="relative overflow-hidden bg-surface-base py-16 lg:py-20">

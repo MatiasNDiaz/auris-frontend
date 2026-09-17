@@ -4,6 +4,10 @@ import { trayectorias } from "./trayectorias";
 /**
  * Equipo real de AURIS, según el cartel de la recepción.
  *
+ * Los nombres son los del cartel, letra por letra —ni de más ni de menos—,
+ * aunque alguna bio (`trayectorias.ts`) mencione el nombre completo de esa
+ * persona: ese texto es una cita literal del centro y no se toca.
+ *
  * Las fotos siguen siendo las que había antes de este cambio: todavía no
  * están asociadas a cada persona real, así que quedan como estaban hasta que
  * lleguen los retratos del equipo. Lo que cambió acá es el texto —nombre,
@@ -58,7 +62,7 @@ const equipo: Professional[] = [
       },
     ],
     gender: "female",
-    name: "Dra. Carla Daniela Fernández",
+    name: "Dra. Carla Fernández",
     specialty: "Odontología general",
     serviceSlug: "odontologia",
     photoUrl:
@@ -149,7 +153,7 @@ const equipo: Professional[] = [
       },
     ],
     gender: "female",
-    name: "Dra. Laura Mansilla Federmann",
+    name: "Dra. Laura Mansilla",
     specialty: "Odontología general",
     serviceSlug: "odontologia",
     photoUrl:
@@ -194,7 +198,7 @@ const equipo: Professional[] = [
       },
     ],
     gender: "male",
-    name: "Dr. Santiago Rodríguez",
+    name: "Dr. Santiago Rodriguez",
     specialty: "Odontología general",
     serviceSlug: "odontologia",
     photoUrl:
