@@ -1,7 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Award, BadgeCheck, Briefcase, GraduationCap, Quote } from "lucide-react";
+import {
+  Award,
+  BadgeCheck,
+  Briefcase,
+  GraduationCap,
+  MessageCircle,
+  Phone,
+  Quote,
+} from "lucide-react";
 import Link from "next/link";
 import { AnimatedProfessionalImage } from "./AnimatedProfessionalImage";
 import { LeafSprig } from "./LeafSprig";
@@ -106,6 +114,7 @@ export function ProfessionalProfile({
 }: ProfessionalProfileProps) {
   const firstName = professional.name.split(" ").slice(1).join(" ");
   const c = palettes[professional.gender];
+  const { trayectoria } = professional;
 
   return (
     <div className={className}>
@@ -115,7 +124,13 @@ export function ProfessionalProfile({
         className="relative overflow-hidden pt-6 pb-20 lg:pb-24"
         style={{ backgroundImage: c.header }}
       >
-        <LeafSprig palette="green" size="sm" flip seed={10} className="-top-2 right-4 h-32 opacity-35" />
+        <LeafSprig
+          palette="green"
+          size="sm"
+          flip
+          seed={10}
+          className="-top-2 right-4 h-32 opacity-35"
+        />
 
         <div className="container-auris relative">
           <ProfessionalBackLinks tone={c.button} />
@@ -196,7 +211,11 @@ export function ProfessionalProfile({
                       c.softBadge,
                     )}
                   >
-                    <BadgeCheck className="size-4" strokeWidth={2} aria-hidden />
+                    <BadgeCheck
+                      className="size-4"
+                      strokeWidth={2}
+                      aria-hidden
+                    />
                     {professional.specialty}
                   </span>
 
@@ -254,6 +273,7 @@ export function ProfessionalProfile({
               >
                 <WhatsAppButton
                   tone={c.button}
+                  phone={professional.whatsapp}
                   label={`Solicitar turno con ${firstName}`}
                   message={`¡Hola AURIS! Quisiera solicitar un turno con ${professional.name} (${professional.specialty}).`}
                 />
@@ -263,7 +283,9 @@ export function ProfessionalProfile({
         </div>
       </section>
 
-      {/* Experiencia. */}
+      {/* Trayectoria. La misma tarjeta que antes decía "Experiencia" con una
+          línea; ahora lleva la historia completa que escribió el centro, con
+          los colores de la persona. */}
       <section className={cn("py-14", c.band)}>
         <div className="container-auris">
           <motion.div
@@ -272,40 +294,182 @@ export function ProfessionalProfile({
             animate="visible"
             custom={0.5}
             className={cn(
-              "mx-auto flex max-w-3xl items-start gap-5 rounded-3xl border bg-cream-50 p-8 shadow-sm",
+              "mx-auto max-w-3xl rounded-3xl border bg-cream-50 p-8 shadow-sm sm:p-10",
               c.border,
             )}
           >
-            <span
-              aria-hidden
-              className={cn(
-                "inline-flex size-12 shrink-0 items-center justify-center rounded-2xl",
-                c.iconBox,
-              )}
-            >
-              <Briefcase className="size-6" strokeWidth={1.6} />
-            </span>
-            <div>
-              <p
+            <div className="flex items-start gap-5">
+              <span
+                aria-hidden
                 className={cn(
-                  "text-xs font-semibold tracking-[0.18em] uppercase",
-                  c.label,
+                  "inline-flex size-12 shrink-0 items-center justify-center rounded-2xl",
+                  c.iconBox,
                 )}
               >
-                Experiencia
-              </p>
-              <p className="mt-2 text-lg leading-relaxed text-pretty text-ink-900">
-                {professional.experience}
-              </p>
+                <Briefcase className="size-6" strokeWidth={1.6} />
+              </span>
+              <div>
+                <p
+                  className={cn(
+                    "text-xs font-semibold tracking-[0.18em] uppercase",
+                    c.label,
+                  )}
+                >
+                  Trayectoria de {firstName}
+                </p>
+
+                {trayectoria ? (
+                  <>
+                    <h2 className="mt-2 font-serif text-2xl leading-snug text-balance text-ink-900 sm:text-3xl">
+                      {trayectoria.titulo}
+                    </h2>
+                    <p
+                      className={cn(
+                        "mt-2 text-base leading-relaxed text-pretty",
+                        c.label,
+                      )}
+                    >
+                      {trayectoria.especialidad}
+                    </p>
+                    <span
+                      aria-hidden
+                      className={cn(
+                        "mt-5 block h-0.5 w-16 rounded-full",
+                        c.rule,
+                      )}
+                    />
+                  </>
+                ) : (
+                  // Mientras el centro no mande su historia no se inventa
+                  // nada: se avisa y listo.
+                  <p className="mt-2 text-lg leading-relaxed text-pretty text-ink-900">
+                    Información en actualización.
+                  </p>
+                )}
+              </div>
             </div>
+
+            {trayectoria && (
+              // En pantallas anchas el texto se alinea con el título, a la
+              // derecha del ícono; en el teléfono usa todo el ancho, que es
+              // poco como para dejarle una sangría.
+              <div className="mt-8 sm:pl-17">
+                {trayectoria.bloques.map((bloque, index) => {
+                  if (bloque.tipo === "titulo") {
+                    return (
+                      <h3
+                        key={index}
+                        className="mt-10 flex items-center gap-3 font-serif text-xl text-ink-900 first:mt-0"
+                      >
+                        <span
+                          aria-hidden
+                          className={cn(
+                            "h-0.5 w-6 shrink-0 rounded-full",
+                            c.rule,
+                          )}
+                        />
+                        {bloque.texto}
+                      </h3>
+                    );
+                  }
+
+                  if (bloque.tipo === "subtitulo") {
+                    return (
+                      <p
+                        key={index}
+                        className={cn(
+                          "mt-6 text-xs font-semibold tracking-[0.18em] uppercase first:mt-0",
+                          c.label,
+                        )}
+                      >
+                        {bloque.texto}
+                      </p>
+                    );
+                  }
+
+                  if (bloque.tipo === "lista") {
+                    return (
+                      <ul key={index} className="mt-4 space-y-2.5 first:mt-0">
+                        {bloque.items.map((item) => (
+                          <li
+                            key={item}
+                            className="flex gap-3 text-base leading-relaxed text-pretty text-ink-700/85"
+                          >
+                            <span
+                              aria-hidden
+                              className={cn(
+                                "mt-2.5 size-1.5 shrink-0 rounded-full",
+                                c.rule,
+                              )}
+                            />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                  }
+
+                  return (
+                    <p
+                      key={index}
+                      className="mt-4 text-base leading-relaxed text-pretty text-ink-700/85 first:mt-0"
+                    >
+                      {bloque.texto}
+                    </p>
+                  );
+                })}
+
+                {trayectoria.contactos.length > 0 && (
+                  <ul
+                    className={cn(
+                      "mt-10 flex flex-col gap-3 border-t pt-6 sm:flex-row sm:flex-wrap sm:gap-x-8",
+                      c.border,
+                    )}
+                  >
+                    {trayectoria.contactos.map((contacto) => {
+                      const Icono =
+                        contacto.tipo === "whatsapp" ? MessageCircle : Phone;
+                      const externo = contacto.tipo === "whatsapp";
+
+                      return (
+                        <li key={contacto.href}>
+                          <a
+                            href={contacto.href}
+                            target={externo ? "_blank" : undefined}
+                            rel={externo ? "noopener noreferrer" : undefined}
+                            className="group inline-flex items-center gap-3 rounded-xl text-base text-ink-700/85 focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none"
+                          >
+                            <span
+                              aria-hidden
+                              className={cn(
+                                "inline-flex size-9 shrink-0 items-center justify-center rounded-xl transition-[translate] duration-200 group-hover:-translate-y-0.5",
+                                c.iconBox,
+                              )}
+                            >
+                              <Icono className="size-4.5" strokeWidth={1.7} />
+                            </span>
+                            <span>
+                              {contacto.etiqueta}:{" "}
+                              <strong className="font-semibold text-ink-900 tabular-nums">
+                                {contacto.numero}
+                              </strong>
+                            </span>
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </div>
+            )}
           </motion.div>
         </div>
       </section>
 
       {/* Credenciales, presentadas como diplomas. */}
-      <section className={cn("relative overflow-hidden py-16 lg:py-20", c.panel)}>
-
-
+      <section
+        className={cn("relative overflow-hidden py-16 lg:py-20", c.panel)}
+      >
         <div className="container-auris relative">
           <motion.div
             variants={content}
@@ -327,7 +491,10 @@ export function ProfessionalProfile({
             </h2>
             <span
               aria-hidden
-              className={cn("mx-auto mt-5 block h-0.5 w-16 rounded-full", c.rule)}
+              className={cn(
+                "mx-auto mt-5 block h-0.5 w-16 rounded-full",
+                c.rule,
+              )}
             />
           </motion.div>
 
@@ -368,10 +535,7 @@ export function ProfessionalProfile({
                       )}
                     </span>
                     <span
-                      className={cn(
-                        "font-serif text-lg tabular-nums",
-                        c.label,
-                      )}
+                      className={cn("font-serif text-lg tabular-nums", c.label)}
                     >
                       {cred.year}
                     </span>
@@ -434,11 +598,7 @@ export function ProfessionalProfile({
                   variant="outline"
                   message={`¡Hola AURIS! Quisiera solicitar un turno con ${professional.name} (${professional.specialty}).`}
                 />
-                <ShineButton
-                  href="/contacto"
-                  tone="outlineLight"
-                  effect="fill"
-                >
+                <ShineButton href="/contacto" tone="outlineLight" effect="fill">
                   Ver datos de contacto
                 </ShineButton>
               </div>

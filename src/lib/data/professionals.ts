@@ -1,4 +1,5 @@
 import type { Professional } from "@/lib/types";
+import { trayectorias } from "./trayectorias";
 
 /**
  * Equipo real de AURIS, según el cartel de la recepción.
@@ -8,15 +9,44 @@ import type { Professional } from "@/lib/types";
  * lleguen los retratos del equipo. Lo que cambió acá es el texto —nombre,
  * área y todo lo que antes describía a un profesional de ejemplo—.
  *
- * Sobre motto/bio/credentials/education/experience/certifications: no hay
- * biografías ni credenciales reales cargadas todavía, así que en vez de
- * inventar universidades, años de egreso o números de matrícula para
- * personas reales —la ficha los muestra como "Documentación verificada"—,
- * quedan en un texto genérico y honesto (el área y que forman parte del
- * equipo de AURIS, nada más). Reemplazar por los datos reales de cada
- * profesional en cuanto estén disponibles.
+ * La historia real de cada uno vive en `trayectoria` (ver `trayectorias.ts`)
+ * y es la que se muestra en su ficha. Quien no la tiene todavía aparece con
+ * la información en actualización.
+ *
+ * `motto`, `bio` y `credentials` siguen con texto genérico: en vez de inventar
+ * universidades, años de egreso o números de matrícula para personas reales
+ * —la ficha los muestra como "Documentación verificada"—, dicen solo el área
+ * y que forman parte del equipo de AURIS.
  */
-export const professionals: Professional[] = [
+
+/** WhatsApp del centro, para quien todavía no pasó su número. */
+const WHATSAPP_CENTRO = "5493512177788";
+
+const equipo: Professional[] = [
+  {
+    slug: "ariel-vidal",
+    motto:
+      "Cada paciente merece un plan pensado para su caso, no una receta estándar.",
+    credentials: [
+      {
+        title: "Odontología",
+        institution: "Equipo AURIS",
+        year: "",
+      },
+    ],
+    gender: "male",
+    name: "Dr. Ariel Vidal",
+    specialty: "Odontología general",
+    serviceSlug: "odontologia",
+    photoUrl:
+      "https://images.unsplash.com/photo-1678940805950-73f2127f9d4e?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
+    bio: "Integra el equipo de Odontología de AURIS y sostiene un enfoque preventivo, centrado en la persona.",
+    education: ["Formación en Odontología"],
+    certifications: [],
+    owner: true,
+    whatsapp: "5493512177788",
+    trayectoria: trayectorias["ariel-vidal"],
+  },
   {
     slug: "carla-fernandez",
     motto: "Prefiero explicar cada paso antes de empezar un tratamiento.",
@@ -28,15 +58,16 @@ export const professionals: Professional[] = [
       },
     ],
     gender: "female",
-    name: "Dra. Carla Fernández",
+    name: "Dra. Carla Daniela Fernández",
     specialty: "Odontología general",
     serviceSlug: "odontologia",
     photoUrl:
       "https://images.unsplash.com/photo-1736289173074-df6009da27c9?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Forma parte del equipo de Odontología de AURIS, con un enfoque preventivo y centrado en explicar cada paso del tratamiento antes de empezarlo.",
     education: ["Formación en Odontología"],
-    experience: "Atiende en el área de Odontología de AURIS.",
     certifications: [],
+    whatsapp: "5493516075681",
+    trayectoria: trayectorias["carla-fernandez"],
   },
   {
     slug: "daniela-giansetto",
@@ -56,12 +87,14 @@ export const professionals: Professional[] = [
       "https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Integra el equipo de Odontología de AURIS, acompañando a cada paciente con un abordaje preventivo y personalizado.",
     education: ["Formación en Odontología"],
-    experience: "Atiende en el área de Odontología de AURIS.",
     certifications: [],
+    // Todavía sin número propio: el botón va al WhatsApp del centro.
+    whatsapp: WHATSAPP_CENTRO,
   },
   {
     slug: "rocio-matteucci",
-    motto: "Cada consulta empieza con una escucha atenta, no con un diagnóstico apurado.",
+    motto:
+      "Cada consulta empieza con una escucha atenta, no con un diagnóstico apurado.",
     credentials: [
       {
         title: "Odontología",
@@ -77,12 +110,14 @@ export const professionals: Professional[] = [
       "https://images.unsplash.com/photo-1683348858689-f4e10994804d?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Es parte del equipo de Odontología de AURIS y sostiene un enfoque de atención integral, con foco en la prevención.",
     education: ["Formación en Odontología"],
-    experience: "Atiende en el área de Odontología de AURIS.",
     certifications: [],
+    // Todavía sin número propio: el botón va al WhatsApp del centro.
+    whatsapp: WHATSAPP_CENTRO,
   },
   {
     slug: "tomas-garcia",
-    motto: "Un buen tratamiento se construye con información clara, paso a paso.",
+    motto:
+      "Un buen tratamiento se construye con información clara, paso a paso.",
     credentials: [
       {
         title: "Odontología",
@@ -98,12 +133,14 @@ export const professionals: Professional[] = [
       "https://images.unsplash.com/photo-1756699279298-c89cdef354ab?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Forma parte del equipo de Odontología de AURIS, trabajando desde un enfoque preventivo y mínimamente invasivo.",
     education: ["Formación en Odontología"],
-    experience: "Atiende en el área de Odontología de AURIS.",
     certifications: [],
+    // Todavía sin número propio: el botón va al WhatsApp del centro.
+    whatsapp: WHATSAPP_CENTRO,
   },
   {
     slug: "laura-mansilla",
-    motto: "Cuidar la boca es también cuidar la confianza de quien nos consulta.",
+    motto:
+      "Cuidar la boca es también cuidar la confianza de quien nos consulta.",
     credentials: [
       {
         title: "Odontología",
@@ -112,19 +149,21 @@ export const professionals: Professional[] = [
       },
     ],
     gender: "female",
-    name: "Dra. Laura Mansilla",
+    name: "Dra. Laura Mansilla Federmann",
     specialty: "Odontología general",
     serviceSlug: "odontologia",
     photoUrl:
       "https://images.unsplash.com/photo-1673865641073-4479f93a7776?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Integra el equipo de Odontología de AURIS, priorizando la prevención y el acompañamiento en cada etapa del tratamiento.",
     education: ["Formación en Odontología"],
-    experience: "Atiende en el área de Odontología de AURIS.",
     certifications: [],
+    whatsapp: "5493512177788",
+    trayectoria: trayectorias["laura-mansilla"],
   },
   {
     slug: "claudia-tomasi",
-    motto: "La odontología moderna tiene que doler lo menos posible, en todos los sentidos.",
+    motto:
+      "La odontología moderna tiene que doler lo menos posible, en todos los sentidos.",
     credentials: [
       {
         title: "Odontología",
@@ -140,8 +179,9 @@ export const professionals: Professional[] = [
       "https://images.unsplash.com/photo-1734002886107-168181bcd6a1?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Es parte del equipo de Odontología de AURIS, con un enfoque centrado en la persona y en la prevención.",
     education: ["Formación en Odontología"],
-    experience: "Atiende en el área de Odontología de AURIS.",
     certifications: [],
+    whatsapp: "5493512177788",
+    trayectoria: trayectorias["claudia-tomasi"],
   },
   {
     slug: "santiago-rodriguez",
@@ -161,29 +201,9 @@ export const professionals: Professional[] = [
       "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Forma parte del equipo de Odontología de AURIS, acompañando cada tratamiento con información clara y un enfoque preventivo.",
     education: ["Formación en Odontología"],
-    experience: "Atiende en el área de Odontología de AURIS.",
     certifications: [],
-  },
-  {
-    slug: "ariel-vidal",
-    motto: "Cada paciente merece un plan pensado para su caso, no una receta estándar.",
-    credentials: [
-      {
-        title: "Odontología",
-        institution: "Equipo AURIS",
-        year: "",
-      },
-    ],
-    gender: "male",
-    name: "Dr. Ariel Vidal",
-    specialty: "Odontología general",
-    serviceSlug: "odontologia",
-    photoUrl:
-      "https://images.unsplash.com/photo-1678940805950-73f2127f9d4e?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
-    bio: "Integra el equipo de Odontología de AURIS y sostiene un enfoque preventivo, centrado en la persona.",
-    education: ["Formación en Odontología"],
-    experience: "Atiende en el área de Odontología de AURIS.",
-    certifications: [],
+    // Todavía sin número propio: el botón va al WhatsApp del centro.
+    whatsapp: WHATSAPP_CENTRO,
   },
   {
     slug: "eugenia-leiva",
@@ -203,8 +223,9 @@ export const professionals: Professional[] = [
       "https://images.unsplash.com/photo-1730597842283-943c7986ee2c?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Forma parte del equipo de Kinesiología y Fisioterapia de AURIS, acompañando procesos de recuperación y bienestar físico.",
     education: ["Formación en Kinesiología y Fisioterapia"],
-    experience: "Atiende en el área de Kinesiología y Fisioterapia de AURIS.",
     certifications: [],
+    whatsapp: "5493516991150",
+    trayectoria: trayectorias["eugenia-leiva"],
   },
   {
     slug: "soledad-di-martino",
@@ -224,8 +245,9 @@ export const professionals: Professional[] = [
       "https://images.unsplash.com/photo-1712215544003-af10130f8eb3?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Forma parte del equipo de Psicología de AURIS, acompañando procesos personales con escucha y respeto por el tiempo de cada consultante.",
     education: ["Formación en Psicología"],
-    experience: "Atiende en el área de Psicología de AURIS.",
     certifications: [],
+    // Todavía sin número propio: el botón va al WhatsApp del centro.
+    whatsapp: WHATSAPP_CENTRO,
   },
   {
     slug: "romina-tchakerian",
@@ -245,8 +267,9 @@ export const professionals: Professional[] = [
       "https://images.unsplash.com/photo-1736289154383-435d94804522?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Forma parte del equipo de Fonoaudiología de AURIS, acompañando el desarrollo del lenguaje y la comunicación.",
     education: ["Formación en Fonoaudiología"],
-    experience: "Atiende en el área de Fonoaudiología de AURIS.",
     certifications: [],
+    whatsapp: "5493513725125",
+    trayectoria: trayectorias["romina-tchakerian"],
   },
   {
     slug: "eugenia-villalobos",
@@ -266,10 +289,24 @@ export const professionals: Professional[] = [
       "https://images.unsplash.com/photo-1623854767648-e7bb8009f0db?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Integra el equipo de Fonoaudiología de AURIS, trabajando sobre el lenguaje, la voz y la comunicación.",
     education: ["Formación en Fonoaudiología"],
-    experience: "Atiende en el área de Fonoaudiología de AURIS.",
     certifications: [],
+    whatsapp: "5493516539545",
+    trayectoria: trayectorias["eugenia-villalobos"],
   },
 ];
+
+/**
+ * El equipo en el orden en que se muestra: el Dr. Ariel Vidal, dueño del
+ * centro, siempre primero —en /profesionales, en el carrusel de la home y en
+ * el equipo de cada servicio—.
+ *
+ * Se ordena acá y no confiando en la posición dentro del array, para que
+ * agregar a alguien arriba de todo no lo corra del primer lugar. `sort` es
+ * estable, así que el resto conserva el orden en que está cargado.
+ */
+export const professionals: Professional[] = [...equipo].sort(
+  (a, b) => Number(Boolean(b.owner)) - Number(Boolean(a.owner)),
+);
 
 /** Tope de tarjetas del carousel de la Home. */
 export const CAROUSEL_LIMIT = 12;

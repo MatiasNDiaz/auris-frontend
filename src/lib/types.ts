@@ -58,10 +58,46 @@ export type Professional = {
   /** Títulos y certificaciones, con institución y año. */
   credentials: { title: string; institution: string; year: string }[];
   education: string[];
-  experience: string;
   certifications: string[];
+  /**
+   * WhatsApp al que va el botón "Solicitar turno con…" de su ficha, solo
+   * dígitos y con 549 adelante. Quien todavía no pasó su número usa el del
+   * centro.
+   */
+  whatsapp: string;
+  /**
+   * Su historia profesional, tal como la escribió el centro. Si no está, la
+   * ficha avisa que la información está en actualización.
+   */
+  trayectoria?: Trayectoria;
+  /** El dueño del centro: va primero en cualquier listado del equipo. */
+  owner?: boolean;
 };
 
+/** Un tramo del texto de trayectoria, en el orden en que se lee. */
+export type BloqueTrayectoria =
+  | { tipo: "parrafo"; texto: string }
+  /** Encabezado de un apartado, como "Servicios en AURIS". */
+  | { tipo: "titulo"; texto: string }
+  /** Agrupador dentro de un apartado, como "Odontología" en una lista de servicios. */
+  | { tipo: "subtitulo"; texto: string }
+  | { tipo: "lista"; items: string[] };
+
+export type Trayectoria = {
+  /** Título profesional: "Doctor en Odontología", "Licenciada en Fonoaudiología". */
+  titulo: string;
+  /** La línea que va debajo del título. */
+  especialidad: string;
+  bloques: BloqueTrayectoria[];
+  contactos: {
+    tipo: "telefono" | "whatsapp";
+    etiqueta: string;
+    /** Tal como lo escribió el centro, para mostrarlo. */
+    numero: string;
+    /** `tel:` o `https://wa.me/`, ya normalizado. */
+    href: string;
+  }[];
+};
 
 export type Testimonial = {
   authorName: string;
@@ -74,4 +110,3 @@ export type FAQ = {
   question: string;
   answer: string;
 };
-

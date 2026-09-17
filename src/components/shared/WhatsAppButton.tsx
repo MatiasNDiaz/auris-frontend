@@ -6,6 +6,11 @@ import { whatsappLink } from "@/lib/utils";
 type WhatsAppButtonProps = {
   label?: string;
   message?: string;
+  /**
+   * A qué número va. Por defecto el del centro; la ficha de cada profesional
+   * pasa el suyo, para que "Solicitar turno con…" le llegue directo.
+   */
+  phone?: string;
   className?: string;
   size?: "default" | "compact";
   /** `onDark` es la variante para el hero, sobre la foto de fondo. */
@@ -21,6 +26,7 @@ type WhatsAppButtonProps = {
 export function WhatsAppButton({
   label = "Solicitar turno",
   message = siteConfig.whatsappMessage,
+  phone = siteConfig.whatsapp,
   className,
   size = "default",
   variant = "solid",
@@ -39,7 +45,7 @@ export function WhatsAppButton({
 
   return (
     <ShineButton
-      href={whatsappLink(siteConfig.whatsapp, message)}
+      href={whatsappLink(phone, message)}
       external
       tone={tone}
       size={size}
