@@ -34,9 +34,44 @@ export function VideoEnBucle({
   className,
 }: VideoEnBucleProps) {
   const video = useRef<HTMLVideoElement>(null);
+  const caja = useRef<HTMLDivElement>(null);
   const menosMovimiento = useReducedMotion() ?? false;
   const [sonido, setSonido] = useState(false);
   const [pausado, setPausado] = useState(menosMovimiento);
+
+  /**
+   * El archivo recién se pide cuando la sección está por entrar en pantalla.
+   *
+   * Sin esto el video empieza a bajar apenas carga la página aunque esté muy
+   * por debajo del pliegue: son varios megas compitiendo con el contenido de
+   * arriba, y en un teléfono con datos es plata de quien tal vez nunca llegue
+   * a esa sección. Mientras tanto se ve el póster, que pesa 19 KB.
+   */
+  const [cerca, setCerca] = useState(false);
+
+  useEffect(() => {
+    const nodo = caja.current;
+    if (!nodo) return;
+    // Sin soporte no se difiere nada: mejor cargarlo que no mostrarlo nunca.
+    if (!("IntersectionObserver" in window)) {
+      const id = setTimeout(() => setCerca(true), 0);
+      return () => clearTimeout(id);
+    }
+
+    const observador = new IntersectionObserver(
+      ([entrada]) => {
+        if (!entrada.isIntersecting) return;
+        setCerca(true);
+        observador.disconnect();
+      },
+      // Un margen generoso: arranca la descarga un scroll antes de que se vea,
+      // así llega listo y no se nota el póster congelado.
+      { rootMargin: "400px" },
+    );
+
+    observador.observe(nodo);
+    return () => observador.disconnect();
+  }, []);
 
   // `muted` se maneja como propiedad y no como atributo: React no lo
   // actualiza después del primer render, y el video se quedaría mudo para
@@ -58,16 +93,16 @@ export function VideoEnBucle({
   };
 
   return (
-    <div className={cn("group relative overflow-hidden", className)}>
+    <div ref={caja} className={cn("group relative overflow-hidden", className)}>
       <video
         ref={video}
-        src={src}
+        src={cerca ? src : undefined}
         poster={poster}
         loop
         muted
         playsInline
         autoPlay={!menosMovimiento}
-        preload="metadata"
+        preload="none"
         aria-label={descripcion}
         onPlay={() => setPausado(false)}
         onPause={() => setPausado(true)}

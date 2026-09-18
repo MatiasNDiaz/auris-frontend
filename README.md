@@ -1,24 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AURIS — Espacio de salud y bienestar
 
-## Getting Started
+Sitio del centro AURIS (Cerro de las Rosas, Córdoba). Next.js 16 con App
+Router, React 19, TypeScript y Tailwind v4.
 
-First, run the development server:
+## Arranque
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Comando | Qué hace |
+|---|---|
+| `npm run dev` | desarrollo (antes regenera el manifiesto de fotos) |
+| `npm run build` | build de producción (antes optimiza medios y regenera el manifiesto) |
+| `npm run start` | sirve el build |
+| `npm run lint` | ESLint |
+| `npx tsc --noEmit` | chequeo de tipos |
+| `npm run optimize:media` | convierte los originales de `assets/raw/` |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+No hace falta ninguna variable de entorno: todo el contenido vive en el
+repositorio y no hay servicios externos con credenciales. Los datos del centro
+—teléfonos, dirección, horarios— están en `src/config/site.ts`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Las fuentes son **Fraunces** (títulos) y **Manrope** (texto), servidas por
+`next/font/google`, que las autoaloja y evita el pedido a Google en runtime.
+
+## Documentación
+
+- [`docs/rendimiento.md`](docs/rendimiento.md) — decisiones de performance,
+  imágenes, video, animaciones, responsive y despliegue.
+- [`docs/modus-operandi-imagenes-profesionales.md`](docs/modus-operandi-imagenes-profesionales.md)
+  — convención de las 6 fotos por profesional.
+- [`CHANGELOG.md`](CHANGELOG.md) — historial de cambios.
 
 ## Imágenes y videos nuevos
 
@@ -56,15 +70,17 @@ terminen como `%20` en las URLs.
 
 ### Qué hace con cada tipo
 
-**Imágenes** → WebP calidad 80. El lado más largo se limita según la carpeta:
+**Imágenes** → WebP calidad 88. El lado más largo se limita según la carpeta:
 
 | Carpeta | Lado máximo | Para |
 |---|---|---|
-| `profesionales/` | 1000 px (`banner`: 1920 px) | fichas del equipo |
+| `profesionales/` | 2000 px | fichas del equipo |
 | `historia/` | 1200 px | tarjetas de la línea de tiempo |
-| cualquier otra | 1920 px | hero, galería, recorrido, servicios |
+| cualquier otra | 1920 px | hero, galería, recorrido, servicios, banners |
 
-Nunca agranda una imagen más chica que ese máximo.
+Nunca agranda una imagen más chica que ese máximo. Algunas fotos llevan además
+un reencuadre propio (recorte o aire agregado) definido en el mapa `ENCUADRE`
+del script; está explicado en [`docs/rendimiento.md`](docs/rendimiento.md).
 
 **Videos** → MP4 H.264, hasta 1080p y 30 fps, más un poster WebP para mostrar
 mientras carga. Los videos HDR de teléfono se pasan a SDR; si no, en la web se
@@ -81,9 +97,10 @@ ven lavados.
   modificados. Para rehacer todo: `npm run optimize:media -- --force`.
 - **No pisa imágenes que ya usa el sitio.** Si un original terminaría en un
   archivo de `public/` que no generó este script, avisa y lo saltea.
-- **Ajustes por variable de entorno:** `IMG_QUALITY` (80), `VIDEO_CRF` (26, más
+- **Ajustes por variable de entorno:** `IMG_QUALITY` (88), `VIDEO_CRF` (26, más
   bajo = más calidad y más peso), `VIDEO_MAX_FPS` (30), `VIDEO_AUDIO=0` para
-  sacar el audio.
+  sacar el audio. Son de uso puntual al correr el script a mano; no hay que
+  configurarlas en Vercel.
 - **Corre solo antes de cada build** (`prebuild`). Con `assets/raw/` vacía —el
   caso normal en Vercel— termina al instante y no demora el deploy.
 
@@ -96,17 +113,11 @@ muestra un bloque de color en su lugar. La convención completa —qué es cada
 número, la regla para nombres repetidos y el slug de cada profesional— está en
 [`docs/modus-operandi-imagenes-profesionales.md`](docs/modus-operandi-imagenes-profesionales.md).
 
-## Learn More
+## Despliegue
 
-To learn more about Next.js, take a look at the following resources:
+Vercel con la configuración por defecto de Next.js: no hay `vercel.json` ni
+variables de entorno que cargar. Las 32 rutas se generan estáticas en el build.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+El detalle —qué corre en el `prebuild`, por qué las fotos llevan la fecha en la
+ruta y qué mirar si algo falla en producción— está en
+[`docs/rendimiento.md`](docs/rendimiento.md#despliegue-en-vercel).

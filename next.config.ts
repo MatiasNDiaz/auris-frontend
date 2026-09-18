@@ -8,7 +8,22 @@ const nextConfig: NextConfig = {
      * que las fichas piden 92 (`quality={CALIDAD_FOTO}`). Hay que declarar acá
      * cada valor que se use: Next 16 rechaza los que no estén en esta lista.
      */
-    qualities: [75, 92],
+    qualities: [75, 88, 92],
+    /**
+     * AVIF primero y WebP de respaldo. Sobre estas fotos —piel, pelo, paredes
+     * lisas— AVIF pesa entre un 20% y un 30% menos que WebP a igual calidad
+     * percibida, y el navegador que no lo soporta recibe WebP sin más. El
+     * costo es que la primera conversión de cada tamaño tarda más; en Vercel
+     * queda cacheada y solo la paga la primera visita.
+     */
+    formats: ["image/avif", "image/webp"],
+    /**
+     * Las fotos llevan la fecha del archivo en la ruta (ver `rewrites`), así
+     * que una imagen nueva es una dirección nueva y nunca hace falta invalidar
+     * la caché: se puede guardar por mucho tiempo sin riesgo de servir la
+     * anterior. Un año, que es el máximo razonable para contenido inmutable.
+     */
+    minimumCacheTTL: 31_536_000,
     remotePatterns: [
       {
         protocol: "https",

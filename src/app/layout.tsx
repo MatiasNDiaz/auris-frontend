@@ -43,6 +43,10 @@ export const metadata: Metadata = {
     "taller de adultos mayores",
     siteConfig.address.city,
   ],
+  // La foto del equipo y no el logo: es la que ya abre la página de
+  // profesionales y la que mejor representa al centro cuando el enlace se
+  // comparte por WhatsApp, que es por donde llega la mayoría. Las medidas van
+  // declaradas para que la miniatura no salte mientras carga.
   openGraph: {
     type: "website",
     locale: "es_AR",
@@ -50,7 +54,22 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: `${siteConfig.name} — ${siteConfig.tagline}`,
     description: siteConfig.description,
+    images: [
+      {
+        url: "/images/banners-secciones/banner-profesionales.webp",
+        width: 1920,
+        height: 941,
+        alt: `El equipo de ${siteConfig.name} en la recepción del centro`,
+      },
+    ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} — ${siteConfig.tagline}`,
+    description: siteConfig.description,
+    images: ["/images/banners-secciones/banner-profesionales.webp"],
+  },
+  alternates: { canonical: "/" },
   robots: { index: true, follow: true },
 };
 

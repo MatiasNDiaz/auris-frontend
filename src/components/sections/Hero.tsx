@@ -15,6 +15,13 @@ import { renderServiceIcon } from "@/lib/icons";
 const AUTOPLAY_MS = 4000;
 
 /**
+ * Cuánto espera la foto siguiente antes de empezar a bajar. Lo suficiente para
+ * no pelearle el ancho de banda a la primera, y bastante menos que
+ * `AUTOPLAY_MS`, así llega entera antes de que le toque aparecer.
+ */
+const PRECARGA_MS = 1200;
+
+/**
  * Escalonado de la entrada, replicando el `staggerChildren` que antes hacía
  * Framer: 0.1s de arranque y 0.11s entre elementos. Se aplica como
  * `--rise-delay` sobre la clase `auris-rise` de `globals.css`.
@@ -31,11 +38,44 @@ export function Hero() {
   const [paused, setPaused] = useState(false);
   const reduceMotion = useReducedMotion() ?? false;
 
-  const step = useCallback((delta: number) => {
-    setActive(
-      (current) => (current + delta + services.length) % services.length,
+  /**
+   * Qué fotos de fondo están en el DOM.
+   *
+   * Las ocho ocupan la pantalla entera con `absolute inset-0`, así que aunque
+   * siete estén en `opacity: 0` el navegador las considera dentro del viewport
+   * y las descarga todas al entrar —`loading="lazy"` solo difiere lo que está
+   * abajo del pliegue, no lo invisible—. Eran más de un mega compitiendo con
+   * el LCP. Montándolas de a una, la portada baja una sola foto.
+   */
+  const [montadas, setMontadas] = useState<number[]>([0]);
+
+  const montar = useCallback((indice: number) => {
+    setMontadas((antes) =>
+      antes.includes(indice) ? antes : [...antes, indice],
     );
   }, []);
+
+  const step = useCallback(
+    (delta: number) => {
+      setActive((current) => {
+        const siguiente = (current + delta + services.length) % services.length;
+        montar(siguiente);
+        return siguiente;
+      });
+    },
+    [montar],
+  );
+
+  // La que sigue se monta un rato después del primer pintado, no junto con
+  // ella: así no compite con el LCP y llega igual antes del primer cambio.
+  useEffect(() => {
+    if (reduceMotion) return;
+    const espera = setTimeout(
+      () => montar((active + 1) % services.length),
+      PRECARGA_MS,
+    );
+    return () => clearTimeout(espera);
+  }, [active, montar, reduceMotion]);
 
   useEffect(() => {
     if (paused || reduceMotion) return;
@@ -57,30 +97,35 @@ export function Hero() {
     >
       {/* Capa 1 — fondo full-bleed con crossfade entre servicios. */}
       <div aria-hidden className="absolute inset-0 -z-20 bg-ink-900">
-        {services.map((service, index) => (
-          <motion.div
-            key={service.slug}
-            initial={false}
-            animate={{ opacity: index === active ? 1 : 0 }}
-            transition={{ duration: reduceMotion ? 0 : 0.6, ease: "easeInOut" }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={service.imageUrl}
-              alt=""
-              fill
-              // El hero es full-bleed pero por encima de 1600px la foto ya no gana
-              // detalle: se acota para no bajar el 1920 en pantallas grandes.
-              sizes="(max-width: 1600px) 100vw, 1600px"
-              priority={index === 0}
-              // En las ocho fotos la gente está en el tercio de arriba, así
-              // que centradas la franja les cortaba la cabeza. Con el 25%
-              // entran enteras en todas.
-              style={{ objectPosition: "center 25%" }}
-              className="object-cover"
-            />
-          </motion.div>
-        ))}
+        {services.map((service, index) =>
+          !montadas.includes(index) ? null : (
+            <motion.div
+              key={service.slug}
+              initial={false}
+              animate={{ opacity: index === active ? 1 : 0 }}
+              transition={{
+                duration: reduceMotion ? 0 : 0.6,
+                ease: "easeInOut",
+              }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={service.imageUrl}
+                alt=""
+                fill
+                // El hero es full-bleed pero por encima de 1600px la foto ya no gana
+                // detalle: se acota para no bajar el 1920 en pantallas grandes.
+                sizes="(max-width: 1600px) 100vw, 1600px"
+                priority={index === 0}
+                // En las ocho fotos la gente está en el tercio de arriba, así
+                // que centradas la franja les cortaba la cabeza. Con el 25%
+                // entran enteras en todas.
+                style={{ objectPosition: "center 25%" }}
+                className="object-cover"
+              />
+            </motion.div>
+          ),
+        )}
       </div>
 
       {/* Capa 2 — degradés neutros: el tinte verde ensuciaba el color de las
