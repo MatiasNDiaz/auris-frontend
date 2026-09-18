@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { PageHeader } from "@/components/shared/PageHeader";
+import { bannerDeSeccion } from "@/lib/banners-secciones";
 import { Reveal } from "@/components/shared/Reveal";
 import {
   Accordion,
@@ -26,13 +27,20 @@ export default function PreguntasFrecuentesPage() {
         surface="sage"
         wave="soft"
         waveTone="base"
+        foto={bannerDeSeccion("preguntas-frecuentes")}
+        fotoFoco="center 100%"
+        fotoAlt="Recepción de AURIS con el cartel del centro en la pared"
         eyebrow="Preguntas frecuentes"
         title="Lo que más nos consultan"
         description="Reunimos las dudas que aparecen con más frecuencia. Si no encontrás la tuya, escribinos y te respondemos."
       />
 
-      <section className="container-auris py-16 lg:py-20">
-        <div className="mx-auto max-w-3xl space-y-14">
+      {/* El fondo va declarado y no heredado del body: la curva del encabezado
+          se pinta con el color de lo que sigue, y el del body es apenas más
+          claro. Esa diferencia dibujaba una línea recta justo debajo de la
+          onda, que es lo que la curva viene a evitar. */}
+      <section className="bg-surface-base py-16 lg:py-20">
+        <div className="container-auris mx-auto max-w-3xl space-y-14">
           {Object.entries(grouped).map(([category, items], index) => (
             <Reveal key={category} delay={index * 0.06}>
               <h2 className="text-center font-serif text-2xl text-primary-800">

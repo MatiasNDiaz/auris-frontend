@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, statSync } from "node:fs";
 import path from "node:path";
 import { PREFIJO_FOTO } from "./data/prefijo-foto.mjs";
 
@@ -49,6 +49,22 @@ export type FotosProfesional = {
  */
 const FOTO_CIFRAS: Record<string, number> = {
   "soledad-di-martino": 6,
+  // Su 1 y su 6 ya abren la ficha y el banner: la 3 la muestra trabajando en
+  // el consultorio y es la única distinta que entra bien en el recuadro.
+  "romina-tchakerian": 3,
+};
+
+/**
+ * Qué foto usa el banner, para quien no tenga la 6.
+ *
+ * Sin entrada acá va la 6, que es la que se pide para eso. Quien todavía no la
+ * subió puede prestar otra: el banner recorta una franja, así que sirve
+ * cualquiera donde la cara entre bien (ver `bannerFoco` en su ficha).
+ */
+const FOTO_BANNER: Record<string, number> = {
+  // Por ahora mandó solo dos fotos: el banner usa la 2, que es la misma toma
+  // que la de portada pero con otro gesto.
+  "eugenia-villalobos": 2,
 };
 
 function buscar(slug: string, base: string) {
@@ -62,7 +78,15 @@ function buscar(slug: string, base: string) {
       slug,
       archivo,
     );
-    if (existsSync(ruta)) return `/images/profesionales/${slug}/${archivo}`;
+    if (existsSync(ruta)) {
+      // La fecha del archivo va en la ruta —no como `?v=`, que `next/image`
+      // rechaza en imágenes locales—. Si se reemplaza una foto por otra con el
+      // mismo nombre, la dirección cambia y ni el navegador ni Next siguen
+      // mostrando la vieja. `next.config.ts` traduce `/imagenes/v/<n>/...` a
+      // la ruta real dentro de `public/`.
+      const version = Math.round(statSync(ruta).mtimeMs);
+      return `/imagenes/v/${version}/profesionales/${slug}/${archivo}`;
+    }
   }
   return undefined;
 }
@@ -82,7 +106,7 @@ export function fotosDeProfesional(slug: string): FotosProfesional {
     hero: imagen1,
     heroHover: porNumero(2),
     grilla: [porNumero(3), porNumero(4), porNumero(5)],
-    banner: porNumero(6),
+    banner: porNumero(FOTO_BANNER[slug] ?? 6) ?? porNumero(6),
     cifras: porNumero(FOTO_CIFRAS[slug] ?? 1) ?? imagen1,
   };
 }

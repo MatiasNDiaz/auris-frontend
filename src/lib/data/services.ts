@@ -13,8 +13,7 @@ export const services: Service[] = [
       "Las cinco áreas de la odontología, explicadas paso a paso antes de empezar.",
     fullDescription:
       "La odontología es el área central del centro y la que reúne más áreas propias: rehabilitación oral, implantología, odontopediatría funcional, alineadores y ortodoncia. Trabajamos con un enfoque preventivo y mínimamente invasivo, desde el control periódico y la limpieza profesional hasta la reposición de piezas perdidas y la corrección de la mordida. Cada plan se arma después de un diagnóstico completo que conversamos con vos antes de empezar, con las etapas y los tiempos reales de cada tratamiento sobre la mesa. Contamos con equipamiento digital que reduce los tiempos de consulta y hace más cómoda cada visita.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=1920&auto=format&fit=crop",
+    imageUrl: "/images/servicios/odontologia.webp",
     features: [
       "Rehabilitación oral, implantología y prótesis",
       "Odontopediatría funcional para los más chicos",
@@ -108,7 +107,12 @@ export const services: Service[] = [
       "Placas, ajuste de la mordida y trabajo sobre la articulación, para detener el desgaste a tiempo.",
     fullDescription:
       "El bruxismo casi nunca llega como motivo de consulta: llega como un diente sensible, una restauración que se fisura o un dolor de cabeza al despertar. El diagnóstico mira el patrón de desgaste del esmalte, la musculatura de la mandíbula y cómo cierra la mordida. El tratamiento suele combinar una placa de descarga hecha a medida, ajustes sobre la oclusión cuando corresponde y trabajo sobre la articulación temporomandibular. El desgaste que ya ocurrió no se revierte solo, pero se puede frenar; por eso el seguimiento en el tiempo es parte del tratamiento y no un extra.",
-    imageUrl: "/images/servicios/bruxismo-y-disfunciones.webp",
+    // El consultorio real del centro, la misma foto que abre la página de
+    // servicios. Reemplaza a una de banco que mostraba una placa en la mano y
+    // se confundía con la de alineadores. Va con el foco abajo: lo que cuenta
+    // —el sillón y el equipo— está en la mitad inferior.
+    imageUrl: "/images/banners-secciones/banner-servicios.webp",
+    heroFoco: "center 70%",
     features: [
       "Diagnóstico del desgaste y de la mordida",
       "Placas de descarga hechas a medida",
@@ -148,7 +152,7 @@ export const services: Service[] = [
       "Lenguaje, voz, audición y deglución, con evaluación diagnóstica y trabajo articulado.",
     fullDescription:
       "Atendemos a niños, adolescentes y adultos en dificultades del lenguaje, el habla, la voz, la audición y la deglución. El proceso comienza con una evaluación diagnóstica detallada y, cuando corresponde, se articula con la familia, la escuela o el equipo médico tratante. Los tratamientos se planifican en ciclos con revisión periódica de objetivos.",
-    imageUrl: "/Fonoaudiologia.webp",
+    imageUrl: "/images/servicios/fonoaudiologia.webp",
     features: [
       "Evaluación del lenguaje y el habla",
       "Tratamiento de la voz profesional",
@@ -212,8 +216,7 @@ export const services: Service[] = [
       "Drenaje, recuperación y trabajo manual sobre la zona tratada, para que lo que se hizo en el gabinete se mantenga.",
     fullDescription:
       "Trabajamos la kinesiología como complemento de los tratamientos estéticos y odontológicos del centro, no como una consulta aparte. El abordaje incluye drenaje linfático después de procedimientos faciales y corporales, trabajo sobre la articulación temporomandibular en pacientes con bruxismo o tensión mandibular, y acompañamiento en la recuperación posterior a intervenciones odontológicas. Cada plan se arma junto al profesional que llevó adelante el tratamiento, porque el resultado depende tanto de lo que se hizo en el gabinete como de cómo responde el tejido después.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1713085085470-fba013d67e65?q=80&w=1920&auto=format&fit=crop",
+    imageUrl: "/images/servicios/kinesiologia.webp",
     features: [
       "Drenaje linfático post tratamiento estético",
       "Abordaje de la articulación temporomandibular (ATM)",

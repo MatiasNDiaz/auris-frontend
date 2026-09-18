@@ -65,7 +65,6 @@ distinta: da la sensación de "cobrar vida", no de un cambio brusco de persona.
 | Lic. Eugenia Leiva | `EugeniaL` | `eugenia-leiva/` |
 | Lic. Romina Tchakerian | `Romina` | `romina-tchakerian/` |
 | Lic. Eugenia Villalobos | `EugeniaV` | `eugenia-villalobos/` |
-| Dr. Tomás García | `Tomas` | `tomas-garcia/` |
 | Dra. Daniela Giansetto | `Daniela` | `daniela-giansetto/` |
 | Dra. Rocío Matteucci | `Rocio` | `rocio-matteucci/` |
 | Dr. Santiago Rodriguez | `Santiago` | `santiago-rodriguez/` |

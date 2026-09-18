@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { PageHeader } from "@/components/shared/PageHeader";
+import { bannerDeSeccion } from "@/lib/banners-secciones";
 
 export const metadata: Metadata = {
   title: "Servicios",
@@ -17,6 +18,9 @@ export default function ServiciosPage() {
         surface="sand"
         wave="slope"
         waveTone="sage"
+        foto={bannerDeSeccion("servicios")}
+        fotoFoco="center 50%"
+        fotoAlt="Consultorio odontológico de AURIS, con el sillón y el mobiliario clínico"
         eyebrow="Nuestros servicios"
         title="Especialidades que trabajan en equipo"
         description="Ocho especialidades bajo un mismo enfoque de atención. Elegí la que estás buscando para conocer en detalle cómo trabajamos y quiénes te acompañan."

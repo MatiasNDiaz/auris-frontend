@@ -1,3 +1,5 @@
+import type { AreaSlug } from "./data/areas";
+
 /**
  * Tipos del contenido del sitio.
  *
@@ -30,6 +32,13 @@ export type Service = {
   heroSubtitle: string;
   fullDescription: string;
   imageUrl: string;
+  /**
+   * Qué parte de la foto conserva la franja del encabezado, como
+   * `object-position`. Por defecto el 15% de arriba, que es donde está la
+   * gente en casi todas. Se cambia cuando lo que importa está más abajo —una
+   * foto del consultorio, por ejemplo—.
+   */
+  heroFoco?: string;
   features: string[];
   /**
    * Ramas del servicio, cuando tiene varias con entidad propia. Solo las lleva
@@ -49,9 +58,30 @@ export type Professional = {
   /** Define la paleta de su ficha: rosada o verde agua de consultorio. */
   gender: "female" | "male";
   name: string;
+  /** Su título profesional, con el género que corresponde: "Odontóloga". */
   specialty: string;
+  /**
+   * La rama en la que trabaja, de `areas.ts`. Es lo que se muestra arriba de
+   * su nombre en cada tarjeta y por lo que filtra el listado del equipo.
+   */
+  areaSlug: AreaSlug;
+  /** El servicio del sitio al que se la asocia, para enlazar a su página. */
   serviceSlug: string;
   photoUrl: string;
+  /**
+   * Su imagen 2. Es la que aparece al pasar el cursor por su tarjeta, cruzada
+   * con la 1. Sin ella, la tarjeta se queda con una sola foto.
+   */
+  photoHoverUrl?: string;
+  /** Encuadre de esa imagen 2, para cuando no está centrada en su cuadro. */
+  fotoHoverFoco?: string;
+  /**
+   * Encuadre de su foto 1 (`object-position`) para cuando el recuadro es más
+   * ancho que alto y hay que recortarla a lo alto: es lo que pasa en la
+   * tarjeta del equipo al pasar el cursor, que se ensancha. Un porcentaje
+   * bajo muestra más de la parte de arriba, así no se corta la cabeza.
+   */
+  fotoFoco?: string;
   bio: string;
   /** Frase profesional o personal, en primera persona. */
   motto: string;
@@ -172,6 +202,19 @@ export type Ficha = {
   heroFoco?: string;
   /** Lo mismo para la foto 2, la que alterna en el hero. */
   heroHoverFoco?: string;
+  /**
+   * Encuadre de las fotos 3, 4 y 5 en el mosaico, en ese orden. Las celdas son
+   * más anchas que altas y las fotos verticales, así que de cada una se ve una
+   * franja: esto elige cuál. Un porcentaje alto baja el recorte —sirve para
+   * que entre el escritorio o lo que la rodea—.
+   */
+  grillaFoco?: (string | undefined)[];
+  /**
+   * Acercamiento de la foto de la sección de cifras, desde el centro. Para las
+   * tomas de lejos, que en ese recuadro alto dejan a la persona chica. 1 —o
+   * nada— es la foto tal cual.
+   */
+  cifrasZoom?: number;
   /** Sección "Formación y trayectoria". */
   hitos: {
     icono: IconoHito;

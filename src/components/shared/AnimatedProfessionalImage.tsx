@@ -32,13 +32,24 @@ type AnimatedProfessionalImageProps = {
   vtSlug?: string;
   /**
    * Imagen 2 de la convención (ver
-   * `docs/modus-operandi-imagenes-profesionales.md`). Solo la usa el hero de
-   * la ficha: con esta prop puesta, la foto alterna con `src` cada 3s en un
-   * crossfade continuo, y al pasar el mouse se queda mostrando esta hasta que
-   * el cursor se va. Sin ella el componente es una sola foto fija, como
-   * siempre.
+   * `docs/modus-operandi-imagenes-profesionales.md`): la que aparece al pasar
+   * el cursor, cruzada con `src`. Sin ella el componente es una sola foto
+   * fija, como siempre.
    */
   hoverSrc?: string;
+  /**
+   * Además del hover, alterna sola entre las dos fotos cada 3s. Es para el
+   * hero de la ficha, que es una sola foto grande; en un listado, doce
+   * tarjetas cambiando por su cuenta marean.
+   *
+   * Con esto puesto el cruce lo maneja JavaScript, porque el reloj lo
+   * necesita. Sin esto lo hace CSS con `group-hover`, y entonces el elemento
+   * de arriba tiene que llevar la clase `group`: en las tarjetas el cursor
+   * nunca llega a la foto —el enlace del nombre estira un pseudo-elemento
+   * invisible sobre toda la tarjeta para que se pueda clickear en cualquier
+   * lado—, así que escuchar el mouse sobre la foto no serviría.
+   */
+  autoAlterna?: boolean;
   /**
    * Qué parte de la foto queda a la vista (`object-position`). La caja es
    * vertical: una foto apaisada, o con la persona corrida, necesita decir por
@@ -71,6 +82,7 @@ export const AnimatedProfessionalImage = forwardRef<
     isTransitionTarget = false,
     vtSlug,
     hoverSrc,
+    autoAlterna = false,
     objectPosition,
     hoverObjectPosition,
   },
@@ -91,12 +103,12 @@ export const AnimatedProfessionalImage = forwardRef<
   const [ciclo, setCiclo] = useState(0);
 
   useEffect(() => {
-    if (!alterna) return;
+    if (!alterna || !autoAlterna) return;
     const id = setInterval(() => {
       if (!hoverManual.current) setMostrarHover((valor) => !valor);
     }, CICLO_MS);
     return () => clearInterval(id);
-  }, [alterna, ciclo]);
+  }, [alterna, autoAlterna, ciclo]);
 
   return (
     <div
@@ -105,7 +117,7 @@ export const AnimatedProfessionalImage = forwardRef<
       data-professional-photo={isTransitionTarget ? "" : undefined}
       style={named ? { viewTransitionName: PHOTO_VT_NAME } : undefined}
       onMouseEnter={
-        alterna
+        alterna && autoAlterna
           ? () => {
               hoverManual.current = true;
               setMostrarHover(true);
@@ -113,7 +125,7 @@ export const AnimatedProfessionalImage = forwardRef<
           : undefined
       }
       onMouseLeave={
-        alterna
+        alterna && autoAlterna
           ? () => {
               hoverManual.current = false;
               setMostrarHover(false);
@@ -155,9 +167,17 @@ export const AnimatedProfessionalImage = forwardRef<
           priority={priority}
           placeholder="blur"
           blurDataURL={BLUR_DATA_URL}
-          className="object-cover transition-opacity duration-[900ms] ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none"
+          className={cn(
+            "object-cover transition-opacity ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none",
+            // El hero cambia solo cada 3s: ahí un cruce largo se lee como algo
+            // que respira. En un listado el cruce responde al cursor y se
+            // repite tarjeta por tarjeta, así que tiene que ser corto.
+            autoAlterna
+              ? "duration-[900ms]"
+              : "duration-[350ms] opacity-0 group-hover:opacity-100",
+          )}
           style={{
-            opacity: mostrarHover ? 1 : 0,
+            ...(autoAlterna ? { opacity: mostrarHover ? 1 : 0 } : {}),
             objectPosition: hoverObjectPosition ?? objectPosition,
           }}
         />

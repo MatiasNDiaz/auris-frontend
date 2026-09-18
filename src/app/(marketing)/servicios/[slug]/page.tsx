@@ -68,13 +68,19 @@ export default async function ServicioDetallePage({
     <>
       {/* Banner del servicio: foto full-bleed con el nombre superpuesto, con
           el mismo criterio de overlay neutro que usa el Hero. */}
-      <header className="relative isolate flex min-h-100 items-end overflow-hidden lg:min-h-120">
+      {/* El alto crece con el ancho de la pantalla: la foto se escala con el
+          ancho, así que con un alto fijo cuanto más grande el monitor más se
+          recortaba, y las caras quedaban cortadas por arriba. */}
+      <header className="relative isolate flex min-h-100 items-end overflow-hidden lg:min-h-[clamp(35rem,29.5vw,44rem)]">
         <Image
           src={service.imageUrl}
           alt=""
           fill
           sizes="100vw"
           priority
+          // En estas fotos la gente está en el tercio de arriba: centrada, la
+          // franja les cortaba la cabeza. El 15% las deja enteras en las ocho.
+          style={{ objectPosition: service.heroFoco ?? "center 15%" }}
           className="-z-20 object-cover"
         />
         <div

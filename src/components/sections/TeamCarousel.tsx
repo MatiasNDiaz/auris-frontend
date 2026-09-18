@@ -10,7 +10,7 @@ import { LeafSprig } from "@/components/shared/LeafSprig";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { ShineButton } from "@/components/shared/ShineButton";
 import { CAROUSEL_LIMIT, professionals } from "@/lib/data/professionals";
-import { getServiceBySlug } from "@/lib/data/services";
+import { getAreaBySlug } from "@/lib/data/areas";
 import { useMediaQuery } from "@/lib/use-media-query";
 import { useViewTransitionRouter } from "@/components/providers/ViewTransitionProvider";
 import { cn } from "@/lib/utils";
@@ -56,7 +56,7 @@ export function TeamCarousel() {
 
       <ul className="scrollbar-none mt-12 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-4 sm:px-8 md:overflow-x-visible md:px-12 [&::-webkit-scrollbar]:hidden">
         {featured.map((professional) => {
-          const service = getServiceBySlug(professional.serviceSlug);
+          const area = getAreaBySlug(professional.areaSlug);
           // En mobile todos van expandidos; en desktop, solo el activo.
           const isOpen = isMobile || expanded === professional.slug;
 
@@ -100,6 +100,7 @@ export function TeamCarousel() {
                 }}
                 vtSlug={professional.slug}
                 src={professional.photoUrl}
+                objectPosition={professional.fotoFoco}
                 alt={`Retrato de ${professional.name}`}
                 sizes="(max-width: 768px) 16rem, 420px"
                 className="absolute inset-0 size-full rounded-3xl"
@@ -141,9 +142,9 @@ export function TeamCarousel() {
                   !isOpen && "pointer-events-none",
                 )}
               >
-                {service && (
+                {area && (
                   <p className="text-xs font-semibold tracking-[0.14em] text-primary-200 uppercase">
-                    {service.name}
+                    {area.name}
                   </p>
                 )}
                 <h3 className="mt-2 font-serif text-2xl leading-tight text-balance text-cream-50">

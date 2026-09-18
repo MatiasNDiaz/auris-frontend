@@ -45,7 +45,10 @@ export function Hero() {
 
   return (
     <section
-      className="relative isolate flex min-h-184 flex-col overflow-hidden lg:min-h-172"
+      // El alto crece con el ancho de la pantalla: la foto se escala con el
+      // ancho, así que con un alto fijo cuanto más grande el monitor más se
+      // recortaba la imagen.
+      className="relative isolate flex min-h-184 flex-col overflow-hidden lg:min-h-[clamp(43rem,40.6vw,54rem)]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocusCapture={() => setPaused(true)}
@@ -70,6 +73,10 @@ export function Hero() {
               // detalle: se acota para no bajar el 1920 en pantallas grandes.
               sizes="(max-width: 1600px) 100vw, 1600px"
               priority={index === 0}
+              // En las ocho fotos la gente está en el tercio de arriba, así
+              // que centradas la franja les cortaba la cabeza. Con el 25%
+              // entran enteras en todas.
+              style={{ objectPosition: "center 25%" }}
               className="object-cover"
             />
           </motion.div>

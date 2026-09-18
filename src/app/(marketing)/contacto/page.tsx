@@ -1,7 +1,15 @@
-import { Clock, Mail, MapPin, MessageCircle, Navigation, Phone } from "lucide-react";
+import {
+  Clock,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Navigation,
+  Phone,
+} from "lucide-react";
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { PageHeader } from "@/components/shared/PageHeader";
+import { bannerDeSeccion } from "@/lib/banners-secciones";
 import { Reveal } from "@/components/shared/Reveal";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { ShineButton } from "@/components/shared/ShineButton";
@@ -57,6 +65,9 @@ export default function ContactoPage() {
         surface="sand"
         wave="gentle"
         waveTone="sage"
+        foto={bannerDeSeccion("contacto")}
+        fotoFoco="center 90%"
+        fotoAlt="Atención en el mostrador de AURIS"
         eyebrow="Contacto"
         title="Estamos para escucharte"
         description="Escribinos por el canal que prefieras. Si necesitás un turno, WhatsApp es la vía más rápida."

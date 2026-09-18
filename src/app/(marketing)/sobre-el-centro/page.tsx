@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { HistoryTimeline } from "@/components/sections/HistoryTimeline";
-import { VirtualTour } from "@/components/sections/VirtualTour";
 import { LeafScatter } from "@/components/shared/LeafScatter";
 import { LeafSprig } from "@/components/shared/LeafSprig";
 import { Leaf } from "@/components/shared/leaf-art";
 import { PageHeader } from "@/components/shared/PageHeader";
+import { bannerDeSeccion } from "@/lib/banners-secciones";
 import { Reveal } from "@/components/shared/Reveal";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { milestones, pillars } from "@/lib/data/about";
@@ -66,6 +66,9 @@ export default function SobreElCentroPage() {
         surface="sand"
         wave="valley"
         waveTone="base"
+        foto={bannerDeSeccion("nuestra-historia")}
+        fotoFoco="center 45%"
+        fotoAlt="La entrada de AURIS de noche, con el local iluminado"
         eyebrow="Sobre el centro"
         title="Una nueva forma de entender la salud y el bienestar"
         description="AURIS es el resultado de treinta años de trabajo en salud. Un espacio donde distintas disciplinas se encuentran para acompañar a la persona completa, en cada etapa de su vida."
@@ -75,8 +78,13 @@ export default function SobreElCentroPage() {
           largos que nadie termina; en hitos se recorre de un vistazo. */}
       {/* Sin `overflow` propio: el recorrido horizontal fija su contenido a la
           pantalla, y basta con que un ancestro recorte para que `sticky` deje
-          de pegar. El aire vertical lo pone cada versión por su cuenta. */}
-      <section>
+          de pegar. El aire vertical lo pone cada versión por su cuenta.
+
+          El fondo sí va declarado: la curva del encabezado se pinta con el
+          color de lo que sigue, y el del body es apenas más claro. Esa
+          diferencia dibujaba una línea recta justo debajo de la onda, que es
+          lo que la curva viene a evitar. */}
+      <section className="bg-surface-base">
         {/* En escritorio la historia se recorre en horizontal, con una rama
             por hito. Se renderizan las dos versiones y decide el CSS: si el
             corte lo hiciera JS, el servidor tendría que adivinar el ancho de
@@ -381,7 +389,6 @@ export default function SobreElCentroPage() {
         </div>
       </section>
 
-      <VirtualTour />
       <CtaBanner />
     </>
   );

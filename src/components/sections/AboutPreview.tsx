@@ -1,19 +1,10 @@
-import {
-  ArrowRight,
-  Building2,
-  Check,
-  HeartPulse,
-  Play,
-  Users,
-} from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { ArrowRight, Building2, Check, HeartPulse, Users } from "lucide-react";
 import { LeafScatter } from "@/components/shared/LeafScatter";
 import { LeafSprig } from "@/components/shared/LeafSprig";
 import { Reveal } from "@/components/shared/Reveal";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { ShineButton } from "@/components/shared/ShineButton";
-import { BLUR_DATA_URL } from "@/lib/blur";
+import { VideoEnBucle } from "@/components/shared/VideoEnBucle";
 
 const pillars = [
   {
@@ -43,7 +34,12 @@ export function AboutPreview() {
   return (
     <section className="relative overflow-hidden bg-surface-base py-20 lg:py-28">
       <LeafScatter pattern="a" />
-      <LeafSprig palette="green" size="lg" seed={2} className="bottom-0 left-2 h-56 opacity-60 lg:h-72" />
+      <LeafSprig
+        palette="green"
+        size="lg"
+        seed={2}
+        className="bottom-0 left-2 h-56 opacity-60 lg:h-72"
+      />
       <div className="container-auris relative">
         <SectionHeading
           eyebrow="Sobre AURIS"
@@ -105,39 +101,44 @@ export function AboutPreview() {
           </ShineButton>
         </Reveal>
 
-        <Reveal from="right" className="order-1 lg:order-2">
-          <div className="relative">
+        {/* Pegado al texto y no centrado en su columna: centrado quedaban más
+            de cien píxeles de aire entre una cosa y la otra. */}
+        <Reveal
+          from="right"
+          className="order-1 lg:order-2 lg:justify-self-start"
+        >
+          <div className="group relative mx-auto w-full max-w-104 lg:mx-0">
             <div
               aria-hidden
               className="absolute -top-6 -right-6 size-40 rounded-full bg-primary-200/60 blur-2xl"
             />
 
-            <div className="relative aspect-4/3 overflow-hidden rounded-[2.5rem] shadow-xl">
-              <Image
-                src="/recepcion.webp"
-                alt="Recepción de AURIS con el mostrador de atención"
-                fill
-                sizes="(max-width: 1024px) 92vw, 620px"
-                placeholder="blur"
-                blurDataURL={BLUR_DATA_URL}
-                className="object-cover"
-              />
-              <div aria-hidden className="absolute inset-0 bg-primary-900/25" />
+            {/* Bloque verde desplazado por detrás, el mismo gesto que la foto
+                de las fichas: le da profundidad y se abre un poco al pasar el
+                cursor. Va hacia la derecha, del lado contrario al texto. */}
+            <span
+              aria-hidden
+              className="absolute inset-0 translate-x-5 translate-y-5 rounded-[2.5rem] bg-primary-200/70 transition-[translate] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-7 group-hover:translate-y-7"
+            />
 
-              <Link
-                href="/sobre-el-centro#recorrido-virtual"
-                aria-label="Ver el recorrido virtual del centro"
-                className="group absolute inset-0 flex items-center justify-center focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
-              >
-                <span
-                  aria-hidden
-                  className="inline-flex size-18 items-center justify-center rounded-full bg-cream-50/95 text-primary-700 shadow-lg transition-transform duration-300 group-hover:scale-110"
-                >
-                  <Play className="ml-1 size-7 fill-current" strokeWidth={0} />
-                </span>
-              </Link>
-            </div>
+            {/* El recuadro sigue la proporción del video —vertical, 464×832—
+                en vez de recortarlo dentro de uno apaisado. Y no pasa de 416px:
+                el original mide 464 de ancho, así que estirarlo más sería
+                agrandar píxeles. */}
+            <VideoEnBucle
+              src="/videos/video-equipo-auris.mp4"
+              poster="/videos/video-equipo-auris-poster.webp"
+              descripcion="El equipo de AURIS entre risas, en la recepción del centro"
+              pie="Más que un consultorio, un equipo que se lleva bien"
+              className="relative aspect-464/832 w-full rounded-[2.5rem] shadow-xl"
+            />
           </div>
+
+          <p className="mx-auto mt-8 max-w-104 text-sm leading-relaxed text-pretty text-ink-700/75 lg:mx-0">
+            Esta toma iba a ser la seria. Quedó esta, y nos gustó más: acá no
+            hay batas almidonadas ni salas silenciosas, hay gente que trabaja
+            junta, se conoce y te recibe así.
+          </p>
         </Reveal>
       </div>
     </section>

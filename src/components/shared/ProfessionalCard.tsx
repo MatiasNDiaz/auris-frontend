@@ -5,7 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { useRef } from "react";
 import { AnimatedProfessionalImage } from "./AnimatedProfessionalImage";
-import { getServiceBySlug } from "@/lib/data/services";
+import { getAreaBySlug } from "@/lib/data/areas";
 import type { Professional } from "@/lib/types";
 import { useViewTransitionRouter } from "@/components/providers/ViewTransitionProvider";
 import { cn } from "@/lib/utils";
@@ -21,7 +21,7 @@ export function ProfessionalCard({
   className,
   sizes,
 }: ProfessionalCardProps) {
-  const service = getServiceBySlug(professional.serviceSlug);
+  const area = getAreaBySlug(professional.areaSlug);
   const photoRef = useRef<HTMLDivElement>(null);
   const navigate = useViewTransitionRouter();
   const href = `/profesionales/${professional.slug}`;
@@ -46,15 +46,23 @@ export function ProfessionalCard({
         ref={photoRef}
         vtSlug={professional.slug}
         src={professional.photoUrl}
+        // Al pasar el cursor por la tarjeta se cruza con su foto 2, igual
+        // que en el hero de la ficha. Sin `autoAlterna`: en un listado,
+        // doce tarjetas cambiando solas marean.
+        hoverSrc={professional.photoHoverUrl}
+        objectPosition={professional.fotoFoco}
+        hoverObjectPosition={professional.fotoHoverFoco}
         alt={`Retrato de ${professional.name}`}
         sizes={sizes}
         className="aspect-4/5 w-full rounded-t-3xl"
       />
 
       <div className="flex flex-1 flex-col p-6">
-        {service && (
+        {/* El área, no el servicio: es lo que distingue a quién hace
+            odontopediatría de quién hace estética. */}
+        {area && (
           <p className="text-xs font-semibold tracking-[0.14em] text-primary-700 uppercase">
-            {service.name}
+            {area.name}
           </p>
         )}
 

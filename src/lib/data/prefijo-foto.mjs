@@ -28,7 +28,6 @@ export const PREFIJO_FOTO = {
   "eugenia-leiva": "EugeniaL",
   "romina-tchakerian": "Romina",
   "eugenia-villalobos": "EugeniaV",
-  "tomas-garcia": "Tomas",
   "daniela-giansetto": "Daniela",
   "rocio-matteucci": "Rocio",
   "santiago-rodriguez": "Santiago",

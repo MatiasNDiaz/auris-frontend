@@ -8,6 +8,7 @@ import { LeafSprig } from "./LeafSprig";
 import { ProfessionalBackLinks } from "./ProfessionalBackLinks";
 import { ProfessionalFicha } from "./ProfessionalFicha";
 import { WhatsAppButton } from "./WhatsAppButton";
+import { getAreaBySlug } from "@/lib/data/areas";
 import type { FotosProfesional } from "@/lib/fotos-profesional";
 import type { Ficha, Professional, Service } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -113,6 +114,7 @@ export function ProfessionalProfile({
   className,
 }: ProfessionalProfileProps) {
   const firstName = professional.name.split(" ").slice(1).join(" ");
+  const area = getAreaBySlug(professional.areaSlug);
   const c = palettes[professional.gender];
   const { trayectoria } = professional;
 
@@ -144,8 +146,13 @@ export function ProfessionalProfile({
               <AnimatedProfessionalImage
                 src={professional.photoUrl}
                 hoverSrc={fotos.heroHover}
-                objectPosition={ficha.heroFoco}
-                hoverObjectPosition={ficha.heroHoverFoco}
+                // El hero es una sola foto grande: acá sí conviene que vaya
+                // alternando sola, no solo con el cursor encima.
+                autoAlterna
+                objectPosition={ficha.heroFoco ?? professional.fotoFoco}
+                hoverObjectPosition={
+                  ficha.heroHoverFoco ?? professional.fotoHoverFoco
+                }
                 alt={`Retrato de ${professional.name}`}
                 priority
                 isTransitionTarget
@@ -223,7 +230,7 @@ export function ProfessionalProfile({
                       strokeWidth={2}
                       aria-hidden
                     />
-                    {professional.specialty}
+                    {area?.name ?? professional.specialty}
                   </span>
 
                   {service && (

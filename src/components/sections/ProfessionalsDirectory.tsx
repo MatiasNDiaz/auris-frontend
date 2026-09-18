@@ -4,25 +4,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { LeafSprig } from "@/components/shared/LeafSprig";
 import { ProfessionalCard } from "@/components/shared/ProfessionalCard";
+import { areas } from "@/lib/data/areas";
 import { professionals } from "@/lib/data/professionals";
 import { cn } from "@/lib/utils";
 
 const ALL = "todos";
 
 /**
- * Las 4 áreas del cartel de la recepción, en el mismo orden en que están
- * ahí colgadas. No son los 8 servicios que el sitio muestra en la home o en
- * la navbar —esos son tratamientos concretos—; acá alcanza con la
- * especialidad de cada profesional, que es como el cartel los agrupa.
+ * Listado del equipo, con filtro por el área de cada profesional.
+ *
+ * Filtra por `areaSlug` y no por el servicio: el servicio es el tratamiento
+ * que se ofrece —y casi todo el equipo comparte "odontología"—, mientras que
+ * el área distingue a quién hace odontopediatría de quién hace estética.
  */
-const AREAS = [
-  { slug: "odontologia", name: "Odontología" },
-  { slug: "kinesiologia", name: "Kinesiología y Fisioterapia" },
-  { slug: "psicologia", name: "Psicología" },
-  { slug: "fonoaudiologia", name: "Fonoaudiología" },
-];
-
-/** Listado del equipo con filtro por servicio. */
 export function ProfessionalsDirectory() {
   const [filter, setFilter] = useState<string>(ALL);
 
@@ -30,11 +24,17 @@ export function ProfessionalsDirectory() {
     () =>
       filter === ALL
         ? professionals
-        : professionals.filter((p) => p.serviceSlug === filter),
+        : professionals.filter((p) => p.areaSlug === filter),
     [filter],
   );
 
-  const options = [{ slug: ALL, name: "Todos" }, ...AREAS];
+  // Solo las áreas que hoy tienen gente: una pestaña vacía no sirve de nada.
+  const options = [
+    { slug: ALL, name: "Todos" },
+    ...areas.filter((area) =>
+      professionals.some((p) => p.areaSlug === area.slug),
+    ),
+  ];
 
   return (
     <section className="relative overflow-hidden bg-surface-base py-16 lg:py-20">
@@ -47,7 +47,7 @@ export function ProfessionalsDirectory() {
       <div className="container-auris relative">
         <div
           role="group"
-          aria-label="Filtrar profesionales por servicio"
+          aria-label="Filtrar profesionales por área"
           className="flex flex-wrap gap-2"
         >
           {options.map((option) => {

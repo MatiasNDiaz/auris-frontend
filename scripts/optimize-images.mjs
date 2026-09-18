@@ -75,7 +75,15 @@ const PRESET_POR_CARPETA = {
 };
 const PRESET_POR_DEFECTO = "grande";
 
-const EXTENSIONES = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif", ".tif", ".tiff"]);
+const EXTENSIONES = new Set([
+  ".jpg",
+  ".jpeg",
+  ".png",
+  ".webp",
+  ".avif",
+  ".tif",
+  ".tiff",
+]);
 /**
  * Formatos que se reconocen pero no se pueden leer. Las fotos de iPhone salen
  * en HEIC, y el `sharp` precompilado no trae el decodificador HEVC —por
@@ -83,6 +91,146 @@ const EXTENSIONES = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif", ".tif", 
  * archivo ignorado en silencio.
  */
 const NO_SOPORTADOS = new Set([".heic", ".heif"]);
+
+/**
+ * Reencuadre de fotos sueltas, en fracciones de su alto original.
+ *
+ *   arriba  cuánto fondo agregarle por encima, estirando la fila de píxeles
+ *           de más arriba (en estas tomas, pared lisa)
+ *   cabeza  cuánto recortarle por arriba. Lo contrario de `arriba`: sirve para
+ *           sacarle el techo o la pared de más a una toma abierta, que en una
+ *           franja apaisada deja a la persona chica y perdida en el medio
+ *   abajo   cuánto recortarle por debajo
+ *   ancho   qué fracción del ancho conservar
+ *   centroX en qué punto del ancho original queda centrada esa fracción; 0,5
+ *           —el centro— si no se dice otra cosa. Es para las tomas donde la
+ *           gente está cargada a un lado y lo que sobra es pared: recortando
+ *           del lado vacío quedan centradas. La ventana no se sale de la foto.
+ *
+ * Es para las fotos que vienen con otro encuadre que el resto: una de cuerpo
+ * entero con la cabeza pegada al borde deja a esa persona chica y más arriba
+ * que las demás en la grilla del equipo. Se resuelve acá, en el archivo, y no
+ * con un `zoom` por CSS en el componente: al expandirse la tarjeta en el
+ * hover, una imagen escalada por `transform` tiembla, porque su punto de
+ * origen se mueve con el ancho en cada cuadro.
+ *
+ * La clave es la ruta dentro de `assets/raw/images/`, sin extensión.
+ *
+ * @type {Record<string, { arriba?: number, cabeza?: number, abajo?: number, ancho?: number, centroX?: number }>}
+ */
+const ENCUADRE = {
+  // Las tres del mostrador ocupan del 14% al 72% del ancho: el resto es
+  // pared vacía a la derecha. El banner muestra la foto entera a lo ancho
+  // —es más angosta que la franja—, así que la única forma de centrarlas es
+  // sacarle ese sobrante acá. Con esta ventana el grupo queda en el medio.
+  "banners-secciones/banner-recorrido": { ancho: 0.84, centroX: 0.43 },
+  // Lo mismo: ella está en el 44% del ancho y del 82% para la derecha no hay
+  // más que mostrador vacío. Sacándole ese borde queda centrada y la notebook
+  // y las flores le siguen haciendo peso del otro lado.
+  "banners-secciones/banner-contacto": { ancho: 0.88, centroX: 0.44 },
+  // Toma abierta, con un tercio de pared y cartel por encima de ella. En la
+  // franja apaisada eso la dejaba chica y hundida abajo. Sacándole ese techo
+  // la foto queda más apaisada que la franja, así que pasa a recortarse de los
+  // costados: ella se ve más cerca y entera, y el cartel sigue entrando.
+  "banners-secciones/banner-preguntas-frecuentes": { cabeza: 0.32 },
+  // La toma va de techo a piso y el equipo ocupa del 22% —donde arranca el
+  // logo de la pared— al 88%. Sacándole el techo y un poco de piso, lo que
+  // importa entra en un banner bastante más bajo, que es lo que permite que
+  // el texto quede a la misma altura que en las otras secciones.
+  // El recorte de arriba llega justo hasta el spot del techo: un pelo más y
+  // le come la punta al logo de la pared, que arranca cinco píxeles debajo.
+  "banners-secciones/banner-profesionales": { cabeza: 0.215, abajo: 0.05 },
+  // De cuerpo entero y sin aire arriba: se le suma cielo y se le cortan las
+  // piernas para que quede como las demás del equipo.
+  //
+  // El recorte de los costados la deja con la misma forma vertical que el
+  // resto (0,562). No es un capricho: en el carrusel de la home el panel
+  // muestra la foto a lo alto, y al expandirse llega un punto en que pasa a
+  // recortarla a lo ancho y ahí se agranda sola. Ese es el efecto de hover de
+  // todas las tarjetas. Con la foto casi cuadrada ese punto nunca llegaba y la
+  // suya se quedaba quieta. Cortando de los lados —y no de arriba y abajo— el
+  // tamaño al que se la ve no cambia.
+  "profesionales/claudia-tomasi/claudia-1": {
+    arriba: 0.16,
+    abajo: 0.43,
+    ancho: 0.616,
+  },
+  // También con la cabeza pegada al borde de arriba, y con un plano más
+  // cerrado que el resto. El aire de arriba resuelve las dos cosas a la vez:
+  // la baja hasta la altura de las demás y, al hacer la foto más alta, la deja
+  // del mismo tamaño en la tarjeta.
+  "profesionales/romina-tchakerian/romina-1": { arriba: 0.303 },
+  // Sus dos fotos vienen en 0,754 y con poco aire arriba: queda más chica y
+  // más alta que el resto del equipo. El aire la baja a la altura de las
+  // demás y el recorte de los costados la deja en 0,562, la proporción del
+  // resto. Las dos llevan el mismo encuadre: la 2 es la que aparece en el
+  // hover, y con otro recorte el cruce entre una y otra daba un salto.
+  "profesionales/eugenia-villalobos/EugeniaV-1": { arriba: 0.2, ancho: 0.895 },
+  "profesionales/eugenia-villalobos/EugeniaV-2": { arriba: 0.2, ancho: 0.895 },
+};
+
+/** @param {string} original */
+function encuadreDe(original) {
+  const clave = path
+    .relative(ENTRADA, original)
+    .split(path.sep)
+    .join("/")
+    .replace(/\.[^.]+$/, "");
+  return ENCUADRE[clave] ?? {};
+}
+
+/**
+ * Devuelve la foto ya reencuadrada —con el aire de arriba agregado y el
+ * recorte de abajo hecho—, lista para el resto del pipeline. Sin encuadre
+ * definido devuelve la ruta original, sin tocar nada.
+ *
+ * `sharp` llega por parámetro: el script lo carga con un import dinámico
+ * dentro de `main`, para no pagar su costo cuando no hay nada que procesar.
+ *
+ * @param {import("sharp").default} sharp
+ * @param {string} original
+ * @param {{ arriba?: number, cabeza?: number, abajo?: number, ancho?: number, centroX?: number }} encuadre
+ * @returns {Promise<string | Buffer>}
+ */
+async function reencuadrar(sharp, original, encuadre) {
+  const {
+    arriba = 0,
+    cabeza = 0,
+    abajo = 0,
+    ancho = 1,
+    centroX = 0.5,
+  } = encuadre;
+  if (!arriba && !cabeza && !abajo && ancho === 1) return original;
+
+  // `.rotate()` primero: con una foto de teléfono, el alto real es el de
+  // después de aplicar la orientación EXIF.
+  const derecha = await sharp(original, { failOn: "none" }).rotate().toBuffer();
+  const { width = 0, height = 0 } = await sharp(derecha).metadata();
+  const sumar = Math.round(height * arriba);
+  const cortar = Math.round(height * abajo);
+
+  const conAire = sumar
+    ? await sharp(derecha).extend({ top: sumar, extendWith: "copy" }).toBuffer()
+    : derecha;
+
+  const quitar = Math.round(height * cabeza);
+  const anchoFinal = Math.round(width * ancho);
+  // La ventana se centra en `centroX`, pero sin salirse de la foto: contra el
+  // borde se apoya y no deja una franja vacía.
+  const izquierda = Math.min(
+    Math.max(Math.round(width * centroX - anchoFinal / 2), 0),
+    width - anchoFinal,
+  );
+
+  return sharp(conAire)
+    .extract({
+      left: izquierda,
+      top: quitar,
+      width: anchoFinal,
+      height: height + sumar - cortar - quitar,
+    })
+    .toBuffer();
+}
 
 /** @param {string} original */
 function presetDe(original) {
@@ -96,7 +244,9 @@ function presetDe(original) {
     }
     return /** @type {keyof typeof PRESETS} */ (forzado);
   }
-  const carpetas = path.relative(ENTRADA, path.dirname(original)).split(path.sep);
+  const carpetas = path
+    .relative(ENTRADA, path.dirname(original))
+    .split(path.sep);
   // La imagen 6 de un profesional (`Nombre_6` o `Nombre-6`) es el fondo del
   // banner de su ficha, que ocupa todo el ancho de la pantalla y necesita más
   // resolución que un retrato. Ver docs/modus-operandi-imagenes-profesionales.md.
@@ -135,7 +285,13 @@ async function main() {
   const { default: sharp } = await import("sharp");
   const { force } = flags();
   const manifiesto = abrirManifiesto("images");
-  const totales = { procesados: 0, salteados: 0, errores: 0, antes: 0, despues: 0 };
+  const totales = {
+    procesados: 0,
+    salteados: 0,
+    errores: 0,
+    antes: 0,
+    despues: 0,
+  };
   /** Para detectar dos originales que terminarían en el mismo archivo. */
   const destinos = new Map();
 
@@ -180,7 +336,15 @@ async function main() {
       mkdirSync(path.dirname(destino), { recursive: true });
       const temporal = destino + ".part";
       const meta = await sharp(original).metadata();
-      const resultado = await sharp(original, { failOn: "none" })
+      const encuadre = encuadreDe(original);
+
+      // El reencuadre va en su propia pasada, no encadenado con el resto:
+      // sharp aplica sus operaciones en un orden fijo —recorta antes de
+      // extender— sin importar cómo se las escriba, así que encadenarlo daba
+      // un alto distinto del pedido.
+      const entrada = await reencuadrar(sharp, original, encuadre);
+
+      const resultado = await sharp(entrada, { failOn: "none" })
         // Aplica la orientación EXIF y la descarta: una foto de teléfono
         // sacada en vertical se guarda "acostada" con una marca que dice
         // cómo girarla, y al quitar los metadatos se perdería esa marca.
@@ -216,7 +380,9 @@ async function main() {
       console.log(
         `    → ${destinoRel}  [${preset} ${max}px]  ${origW}×${origH}${reescalada ? ` → ${resultado.width}×${resultado.height}` : " (sin reescalar)"}`,
       );
-      console.log(`    ${peso(antes)} → ${peso(despues)}  (${reduccion(antes, despues)})`);
+      console.log(
+        `    ${peso(antes)} → ${peso(despues)}  (${reduccion(antes, despues)})`,
+      );
 
       manifiesto.anotar(clave, info, ajustes, [destinoRel]);
       totales.procesados++;

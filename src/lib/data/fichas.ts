@@ -75,6 +75,54 @@ const serviciosLaura = {
   ],
 };
 
+const serviciosSantiago = {
+  titulo: "Áreas de atención en AURIS",
+  grupos: [
+    {
+      items: [
+        "Odontología general.",
+        "Cirugía odontológica.",
+        "Tratamientos con alineadores.",
+        "Diseño y planificación digital de alineadores.",
+        "Evaluación y seguimiento de tratamientos de ortodoncia.",
+      ],
+    },
+  ],
+};
+
+const serviciosSoledad = {
+  titulo: "Servicios en AURIS",
+  grupos: [
+    {
+      items: [
+        "Atención clínica individual para niños, adolescentes y adultos.",
+        "Evaluaciones psicodiagnósticas.",
+        "Orientación psicológica.",
+        "Intervenciones grupales.",
+        "Talleres de bienestar emocional y habilidades sociales.",
+        "Orientación vocacional y profesional.",
+        "Aptos psicológicos.",
+      ],
+    },
+  ],
+};
+
+const serviciosRocio = {
+  titulo: "Servicios en AURIS",
+  grupos: [
+    {
+      items: [
+        "Atención odontológica integral.",
+        "Evaluación, diagnóstico y planificación de tratamientos.",
+        "Operatoria dental y tratamientos restauradores.",
+        "Estética dental y blanqueamiento.",
+        "Rehabilitación oral y tratamientos protésicos.",
+        "Cirugía dentomaxilar.",
+      ],
+    },
+  ],
+};
+
 const cuenta = (servicios: { grupos: { items: string[] }[] }) =>
   servicios.grupos.flatMap((grupo) => grupo.items).length;
 
@@ -170,8 +218,7 @@ const fichas: Partial<Record<keyof typeof trayectorias, Ficha>> = {
     },
     enfoque: {
       etiqueta: "Su enfoque profesional",
-      frase:
-        "Su propuesta busca comprender a cada paciente de manera integral",
+      frase: "Su propuesta busca comprender a cada paciente de manera integral",
       texto: [
         "contemplando las estructuras y funciones del sistema estomatognático y su relación con el desarrollo, la respiración y el bienestar general.",
         "Cada tratamiento se adapta a las necesidades particulares de la persona, priorizando una atención personalizada, respetuosa y basada en la evaluación clínica y el trabajo interdisciplinario.",
@@ -563,6 +610,213 @@ const fichas: Partial<Record<keyof typeof trayectorias, Ficha>> = {
       ],
     },
   },
+
+  "rocio-matteucci": {
+    hitos: [
+      {
+        icono: "formacion",
+        marca: "Universidad Católica de Córdoba",
+        titulo: "Formación universitaria",
+        texto: ["Odontóloga graduada de la Universidad Católica de Córdoba."],
+      },
+      {
+        icono: "especializacion",
+        marca: "Universidad Nacional de Córdoba",
+        titulo: "Especialización en curso",
+        texto: [
+          "Actualmente realizando la especialidad en rehabilitación oral, prótesis fija, removible e implantología en la Universidad Nacional de Córdoba.",
+        ],
+      },
+      {
+        icono: "tecnologia",
+        titulo: "Otras formaciones",
+        texto: [
+          "Cuenta además con formación en cirugía dentomaxilar, ortodoncia y flujo digital aplicado a la odontología.",
+        ],
+      },
+      {
+        icono: "docencia",
+        marca: "Cátedra de Operatoria Dental",
+        titulo: "Docencia",
+        texto: [
+          "Además de mi práctica clínica, me desempeño como docente en la cátedra de Operatoria Dental de la Facultad de Ciencias de la Salud de la Universidad Católica de Córdoba. La actividad académica forma parte de mi desarrollo profesional y me permite mantener una actualización constante, integrando la práctica clínica con la formación y el intercambio de conocimientos.",
+        ],
+      },
+    ],
+    destacado: {
+      titulo: "Rehabilitación Oral",
+      texto: "Prótesis fija, removible e implantología",
+    },
+    enfoque: {
+      etiqueta: "Su enfoque profesional",
+      // En primera persona porque así lo escribió ella; el resto de su ficha
+      // va en tercera, como la mandó el centro.
+      frase:
+        "Mi objetivo es brindar a cada paciente una atención personalizada, basada en una evaluación integral, una planificación cuidadosa y tratamientos orientados a lograr resultados funcionales y estéticos.",
+      texto: [
+        "Su práctica se caracteriza por un enfoque centrado en el paciente, la planificación integral de los tratamientos y la búsqueda constante de actualización y perfeccionamiento profesional.",
+      ],
+    },
+    // Su bio no trae años ni fechas: va sin cifras.
+    servicios: serviciosRocio,
+  },
+
+  "santiago-rodriguez": {
+    hitos: [
+      {
+        icono: "formacion",
+        marca: "Universidad Católica de Córdoba",
+        titulo: "Formación universitaria",
+        texto: [
+          "Odontólogo egresado de la Universidad Católica de Córdoba, actualmente se encuentra realizando su formación de especialización en Ortodoncia y Ortopedia.",
+        ],
+      },
+      {
+        icono: "experiencia",
+        marca: "Odontología digital",
+        titulo: "Práctica profesional",
+        texto: [
+          "Se desempeña en el área de odontología general, con especial orientación a la cirugía odontológica, y participa activamente en el área de odontología digital de AURIS, donde trabaja en el diseño y preparación de tratamientos con alineadores.",
+        ],
+      },
+      {
+        icono: "tecnologia",
+        titulo: "Tecnología aplicada al diagnóstico",
+        texto: [
+          "Su práctica combina una formación clínica integral con la incorporación de nuevas tecnologías aplicadas al diagnóstico y planificación odontológica",
+        ],
+      },
+    ],
+    destacado: {
+      titulo: "Odontología general y cirugía",
+      texto: "Con planificación digital de alineadores",
+    },
+    enfoque: {
+      etiqueta: "Su enfoque profesional",
+      // El cierre de su tercer párrafo: el hito de tecnología se queda con la
+      // primera mitad y esta es la segunda, que es la que dice para qué.
+      frase:
+        "buscando ofrecer tratamientos personalizados y adaptados a las necesidades de cada paciente.",
+      texto: [],
+    },
+    // Su bio no trae años ni fechas: va sin cifras, como la de Claudia.
+    servicios: serviciosSantiago,
+  },
+
+  "daniela-giansetto": {
+    hitos: [
+      {
+        icono: "experiencia",
+        marca: "Casi 20 años",
+        titulo: "Trayectoria profesional",
+        texto: [
+          "Con casi 20 años de trayectoria dedicada a la Ortodoncia y la Ortopedia de los Maxilares, la Dra. María Daniela Giansetto desarrolla su práctica profesional desde una mirada integral de la salud bucal y el desarrollo funcional de cada paciente.",
+        ],
+      },
+      {
+        icono: "acompanamiento",
+        titulo: "Cada etapa de la vida",
+        texto: [
+          "Su abordaje contempla las necesidades particulares de cada etapa de la vida, acompañando a niños, adolescentes y adultos en tratamientos orientados a mejorar la función, la salud y la armonía de la sonrisa.",
+        ],
+      },
+      {
+        icono: "equipo",
+        marca: "En AURIS",
+        titulo: "Trabajo interdisciplinario",
+        texto: [
+          "En AURIS trabaja de manera interdisciplinaria junto al equipo de profesionales, integrando conocimientos y distintas especialidades para lograr diagnósticos más completos y tratamientos personalizados.",
+        ],
+      },
+    ],
+    destacado: {
+      titulo: "Ortopedia y Ortodoncia de los Maxilares",
+      texto: "Niños, adolescentes y adultos",
+    },
+    enfoque: {
+      etiqueta: "Su enfoque profesional",
+      // El cierre de su bio, que es la frase con la que ella resume su mirada.
+      frase:
+        "Porque una sonrisa saludable comienza con un diagnóstico que mira más allá de los dientes.",
+      texto: [
+        "El trabajo conjunto entre especialidades es uno de los pilares de AURIS. Por eso, cada caso se aborda contemplando al paciente de manera integral, buscando comprender las causas y necesidades que intervienen en su salud bucal.",
+      ],
+    },
+    cifras: {
+      firma: "Casi 20 años de trayectoria",
+      items: [
+        {
+          valor: 20,
+          prefijo: "casi ",
+          etiqueta:
+            "años dedicados a la Ortodoncia y la Ortopedia de los Maxilares",
+        },
+        // Niños, adolescentes y adultos.
+        {
+          valor: 3,
+          etiqueta:
+            "etapas de la vida que acompaña: niños, adolescentes y adultos",
+        },
+      ],
+    },
+    // Su bio no lista servicios: describe su abordaje, y eso ya está en los
+    // hitos y en el enfoque.
+  },
+
+  "soledad-di-martino": {
+    hitos: [
+      {
+        icono: "experiencia",
+        marca: "Más de 20 años",
+        titulo: "Experiencia profesional",
+        texto: [
+          "Con más de 20 años de experiencia profesional, la Lic. Soledad Di Martino desarrolla su práctica en consultorio privado y centros de rehabilitación, acompañando a niños, adolescentes y adultos en sus diferentes procesos terapéuticos.",
+        ],
+      },
+      {
+        icono: "formacion",
+        marca: "Universidad Nacional de Córdoba",
+        titulo: "Formación y posgrado",
+        texto: [
+          "Es Licenciada y Profesora en Psicología, cuenta con formación de posgrado en Psicodiagnóstico y Actualización en Psicopatología Clínica, y actualmente cursa la Especialización en Psicología Clínica en la Universidad Nacional de Córdoba.",
+        ],
+      },
+      {
+        icono: "docencia",
+        titulo: "Docencia y proyectos comunitarios",
+        texto: [
+          "Su trayectoria también incluye la docencia y la participación en proyectos comunitarios, espacios desde los cuales promueve la construcción de herramientas para el bienestar emocional y el desarrollo integral de las personas.",
+        ],
+      },
+      {
+        icono: "acompanamiento",
+        titulo: "Su modo de acompañar",
+        texto: [
+          "Su enfoque se basa en brindar un acompañamiento cálido, profesional y respetuoso, adaptado a las necesidades particulares de cada paciente.",
+        ],
+      },
+    ],
+    destacado: {
+      titulo: "Psicodiagnóstico y clínica",
+      texto: "Niños, adolescentes y adultos",
+    },
+    enfoque: {
+      etiqueta: "Su enfoque profesional",
+      frase:
+        "Cada proceso terapéutico es un espacio de escucha, acompañamiento y construcción conjunta.",
+      texto: [
+        "Su objetivo es favorecer el bienestar emocional y brindar herramientas que permitan a cada persona afrontar sus desafíos y desarrollar sus recursos personales.",
+      ],
+    },
+    cifras: {
+      firma: "Más de 20 años de experiencia",
+      items: [
+        { valor: 20, sufijo: "+", etiqueta: "años de experiencia profesional" },
+        { valor: cuenta(serviciosSoledad), etiqueta: "servicios en AURIS" },
+      ],
+    },
+    servicios: serviciosSoledad,
+  },
 };
 
 /** Texto con al menos una letra o un número: lo demás es puntuación suelta. */
@@ -694,24 +948,59 @@ const encuadreBanner: Record<
   string,
   Pick<
     Ficha,
-    "bannerFoco" | "bannerCorrimiento" | "heroFoco" | "heroHoverFoco"
+    | "bannerFoco"
+    | "bannerCorrimiento"
+    | "heroFoco"
+    | "heroHoverFoco"
+    | "grillaFoco"
+    | "cifrasZoom"
   >
 > = {
   // De pie y centrado en su foto.
   "ariel-vidal": { bannerFoco: "center 38%", bannerCorrimiento: "8%" },
+  // Su banner usa la foto 2 —todavía no mandó la 6— y esa foto lleva aire
+  // agregado arriba, así que la cara queda más abajo de lo habitual.
+  "eugenia-villalobos": { bannerFoco: "center 38%", bannerCorrimiento: "14%" },
   // Sentada y hacia la izquierda de su foto: hay que correrla bastante.
   "carla-fernandez": { bannerFoco: "center 56%", bannerCorrimiento: "30%" },
   // Sentada, con la cara alta y ya algo a la derecha en su foto.
   "soledad-di-martino": { bannerFoco: "center 42%", bannerCorrimiento: "12%" },
-  // De pie, con la cara bien arriba en su foto y apenas a la derecha. Su foto
-  // 2 es apaisada y ella está sobre el borde derecho, así que el recorte
-  // vertical del hero tiene que ir a buscarla ahí.
-  "daniela-giansetto": {
-    bannerFoco: "center 29%",
-    bannerCorrimiento: "15%",
-    // Pasado del 50% el recorte se va hacia la derecha de la foto, que es
-    // donde está ella: con 86% queda con cara y cuerpo al centro de la card.
-    heroHoverFoco: "86% center",
+  // De pie, con la cara bien arriba en su foto y apenas a la derecha. El
+  // encuadre de su foto 2 vive en `professionals.ts`, porque también lo
+  // necesitan las tarjetas del listado.
+  "daniela-giansetto": { bannerFoco: "center 29%", bannerCorrimiento: "15%" },
+  // De pie y centrada en su foto, con la cara algo más arriba de la mitad.
+  "rocio-matteucci": { bannerFoco: "center 37%", bannerCorrimiento: "14%" },
+  // Su foto 6 es cuadrada y él queda alto en el cuadro: pasado del 25% el
+  // banner le corta la frente.
+  "santiago-rodriguez": { bannerFoco: "center 25%", bannerCorrimiento: "17%" },
+  // Su foto 6 es un retrato con mucha pared vacía arriba: recién pasado el 45%
+  // la cara queda centrada en la franja sin que se le corte el pelo.
+  "romina-tchakerian": { bannerFoco: "center 47%", bannerCorrimiento: "16%" },
+  // De pie y centrada, con la cara cerca de la mitad de la foto.
+  "laura-mansilla": { bannerFoco: "center 44%", bannerCorrimiento: "15%" },
+  // Sentada al escritorio: con este foco la cara entra entera y el diploma de
+  // la pared queda fuera de la franja.
+  "eugenia-leiva": {
+    bannerFoco: "center 52%",
+    bannerCorrimiento: "18%",
+    // Su foto 3 la tiene sentada al escritorio: bajando el recorte entran el
+    // escritorio y lo que la rodea, en vez de quedar solo la cara.
+    grillaFoco: ["center 88%"],
+  },
+  // Sentada al escritorio: la cara le queda justo debajo de la mitad.
+  "claudia-tomasi": {
+    // Sentada y lejos en su foto 6, con mucha pared vacía arriba: recién
+    // pasado el 50% la cara queda centrada en la franja sin cortarle el pelo.
+    bannerFoco: "center 50%",
+    bannerCorrimiento: "19%",
+    // Su foto 3 la muestra escribiendo: bajando el recorte entra la escena
+    // entera —el escritorio, las manos, la lapicera— y no solo la cabeza. En
+    // la 5 está inclinada sobre la bacha: con el recorte al medio quedaban
+    // solo las manos, y subiéndolo entran la cara y lo que está haciendo.
+    grillaFoco: ["center 65%", undefined, "center 30%"],
+    // Su foto 1 es de lejos y en el recuadro de cifras quedaba chica.
+    cifrasZoom: 1.45,
   },
 };
 

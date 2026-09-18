@@ -12,10 +12,12 @@ export type Milestone = {
   title: string;
   description: string;
   /**
-   * La foto del dorso de la tarjeta en el recorrido horizontal. Los dos
-   * primeros hitos van con material de la época —una consulta de los 90 y el
-   * logo de Kúspide—, el tercero con archivo, y de "hace diez años" en
-   * adelante son fotos propias del centro.
+   * La foto del dorso de la tarjeta en el recorrido horizontal.
+   *
+   * Los dos primeros hitos van con material de la época —una consulta de los
+   * 90 y el logo de Kúspide—, porque de entonces no hay fotos del equipo de
+   * hoy. Del tercero en adelante son todas del centro y de su gente: cada una
+   * muestra a quien mejor representa lo que ese hito cuenta.
    */
   image: string;
   alt: string;
@@ -54,32 +56,32 @@ export const milestones: Milestone[] = [
     title: "Tres centros",
     description:
       "Pese a las crisis y los desafíos, el proyecto crece hasta convertirse en tres centros de atención: dos en Córdoba y uno en San Francisco. Tres equipos distintos sosteniendo el mismo criterio de atención, que es lo que terminó de darle forma.",
-    image: "/images/historia/3-tres-centros.webp",
-    alt: "Dos profesionales trabajando juntas en un consultorio",
+    image: "/images/profesionales/rocio-matteucci/rocio-5.webp",
+    alt: "Consultorio de AURIS en plena atención, con la paciente en el sillón",
   },
   {
     when: "Hace diez años",
     title: "La primera grieta",
     description:
       "Aun con una odontología cada vez más especializada, había situaciones que pedían mirar más allá de la boca. Empezamos a trabajar junto a fisioterapeutas para abordar el bruxismo y ciertas alteraciones funcionales, y la experiencia fue reveladora: cuando distintas disciplinas trabajan juntas, se entiende mejor lo que le pasa a una persona.",
-    image: "/images/historia/4-primera-grieta.webp",
-    alt: "Dos profesionales atendiendo juntas a un mismo paciente",
+    image: "/images/profesionales/ariel-vidal/ariel-3.webp",
+    alt: "El Dr. Ariel Vidal en consulta con una paciente",
   },
   {
     when: "Poco después",
     title: "El enfoque se extiende",
     description:
       "La misma lógica llega a la odontopediatría funcional, donde la odontología se complementa con fonoaudiología y kinesiología para acompañar el desarrollo de los chicos desde temprano. Mirar cómo respira, cómo traga y cómo mastica dice tanto como mirarle los dientes.",
-    image: "/images/historia/5-enfoque-se-extiende.webp",
-    alt: "Profesional trabajando cara a cara con una nena que sonríe",
+    image: "/images/profesionales/carla-fernandez/carla-3.webp",
+    alt: "La Dra. Carla Fernández en el consultorio de odontopediatría, con los modelos que usa para explicarles a los chicos",
   },
   {
     when: "Hoy",
     title: "AURIS",
     description:
       "El espacio pensado para reunir profesionales que comparten esta filosofía. Cada integrante del equipo fue elegido no solo por su formación y su experiencia, sino por su manera de entender la profesión, su empatía y sus ganas de trabajar junto a otros. El resultado es un equipo que se consulta entre sí.",
-    image: "/images/galeria/doce-entrada.webp",
-    alt: "Los doce profesionales de AURIS en la puerta del centro",
+    image: "/images/banners-secciones/banner-profesionales.webp",
+    alt: "El equipo de AURIS en la recepción del centro",
   },
   {
     when: "Todos los días",
@@ -87,8 +89,8 @@ export const milestones: Milestone[] = [
     tone: "arena",
     description:
       "Más allá de los tratamientos, las especialidades y los proyectos, hay algo que para nosotros es todavía más importante: que cada persona que entra a AURIS se sienta escuchada y contenida, que confíe en quienes la atienden, que encuentre profesionales comprometidos y que pueda sentirse cuidada.",
-    image: "/images/historia/7-verdadero-objetivo.webp",
-    alt: "Consulta en la que una persona habla y la profesional escucha",
+    image: "/images/profesionales/soledad-di-martino/soledad-3.webp",
+    alt: "La Lic. Soledad Di Martino escuchando a una consultante",
   },
   {
     when: "Lo que viene",
@@ -96,8 +98,8 @@ export const milestones: Milestone[] = [
     tone: "verde",
     description:
       "Porque para nosotros, cuidar la salud también es cuidar a la persona. Eso es lo que sostiene cada consulta y lo que queremos que se note apenas se cruza la puerta: un espacio de salud y bienestar.",
-    image: "/images/galeria/reunion-recepcion.webp",
-    alt: "El equipo de AURIS reunido en la recepción, aplaudiendo",
+    image: "/images/banners-secciones/banner-nuestra-historia.webp",
+    alt: "La entrada de AURIS iluminada de noche",
   },
 ];
 

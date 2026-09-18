@@ -394,8 +394,204 @@ export const trayectorias = {
       {
         tipo: "telefono",
         etiqueta: "Turnos y consultas",
-        numero: "351 653 9545",
+        numero: "+54 9 3516 53-9545",
         href: "tel:+5493516539545",
+      },
+    ],
+  },
+  // Dr. Santiago Tomás Rodríguez
+  "santiago-rodriguez": {
+    titulo: "Odontólogo",
+    especialidad:
+      "Odontología General | Cirugía | Alineadores | Formación en Ortodoncia y Ortopedia.",
+    bloques: [
+      {
+        tipo: "parrafo",
+        texto:
+          "Odontólogo egresado de la Universidad Católica de Córdoba, actualmente se encuentra realizando su formación de especialización en Ortodoncia y Ortopedia.",
+      },
+      {
+        tipo: "parrafo",
+        texto:
+          "Se desempeña en el área de odontología general, con especial orientación a la cirugía odontológica, y participa activamente en el área de odontología digital de AURIS, donde trabaja en el diseño y preparación de tratamientos con alineadores.",
+      },
+      {
+        tipo: "parrafo",
+        texto:
+          "Su práctica combina una formación clínica integral con la incorporación de nuevas tecnologías aplicadas al diagnóstico y planificación odontológica, buscando ofrecer tratamientos personalizados y adaptados a las necesidades de cada paciente.",
+      },
+      { tipo: "titulo", texto: "Áreas de atención en AURIS" },
+      {
+        tipo: "lista",
+        items: [
+          "Odontología general.",
+          "Cirugía odontológica.",
+          "Tratamientos con alineadores.",
+          "Diseño y planificación digital de alineadores.",
+          "Evaluación y seguimiento de tratamientos de ortodoncia.",
+        ],
+      },
+    ],
+    contactos: [
+      {
+        tipo: "telefono",
+        etiqueta: "Turnos y consultas",
+        numero: "+54 9 3544 58-3449",
+        href: "tel:+5493544583449",
+      },
+    ],
+  },
+  // Dra. María Daniela Giansetto
+  "daniela-giansetto": {
+    titulo: "Odontóloga",
+    especialidad:
+      "Especialista en Ortopedia y Ortodoncia de los Maxilares en niños, adolescentes y adultos.",
+    bloques: [
+      {
+        tipo: "parrafo",
+        texto:
+          "Con casi 20 años de trayectoria dedicada a la Ortodoncia y la Ortopedia de los Maxilares, la Dra. María Daniela Giansetto desarrolla su práctica profesional desde una mirada integral de la salud bucal y el desarrollo funcional de cada paciente.",
+      },
+      {
+        tipo: "parrafo",
+        texto:
+          "Su abordaje contempla las necesidades particulares de cada etapa de la vida, acompañando a niños, adolescentes y adultos en tratamientos orientados a mejorar la función, la salud y la armonía de la sonrisa.",
+      },
+      {
+        tipo: "parrafo",
+        texto:
+          "En AURIS trabaja de manera interdisciplinaria junto al equipo de profesionales, integrando conocimientos y distintas especialidades para lograr diagnósticos más completos y tratamientos personalizados.",
+      },
+      { tipo: "titulo", texto: "Su enfoque profesional" },
+      {
+        tipo: "parrafo",
+        texto:
+          "El trabajo conjunto entre especialidades es uno de los pilares de AURIS. Por eso, cada caso se aborda contemplando al paciente de manera integral, buscando comprender las causas y necesidades que intervienen en su salud bucal.",
+      },
+      {
+        tipo: "parrafo",
+        texto:
+          "Porque una sonrisa saludable comienza con un diagnóstico que mira más allá de los dientes.",
+      },
+    ],
+    contactos: [
+      {
+        tipo: "telefono",
+        etiqueta: "Turnos y consultas",
+        numero: "+54 9 3517 03-1002",
+        href: "tel:+5493517031002",
+      },
+    ],
+  },
+  // Dra. Rocío Matteucci
+  "rocio-matteucci": {
+    titulo: "Odontóloga",
+    especialidad: "Odontología general – Especializada en Rehabilitación Oral.",
+    bloques: [
+      {
+        tipo: "parrafo",
+        texto:
+          "Odontóloga graduada de la Universidad Católica de Córdoba. Actualmente realizando la especialidad en rehabilitación oral, prótesis fija, removible e implantología en la Universidad Nacional de Córdoba.",
+      },
+      {
+        tipo: "parrafo",
+        texto:
+          "Cuenta además con formación en cirugía dentomaxilar, ortodoncia y flujo digital aplicado a la odontología.",
+      },
+      {
+        tipo: "parrafo",
+        texto:
+          "Su práctica se caracteriza por un enfoque centrado en el paciente, la planificación integral de los tratamientos y la búsqueda constante de actualización y perfeccionamiento profesional.",
+      },
+      { tipo: "titulo", texto: "Servicios en AURIS" },
+      {
+        tipo: "lista",
+        items: [
+          "Atención odontológica integral.",
+          "Evaluación, diagnóstico y planificación de tratamientos.",
+          "Operatoria dental y tratamientos restauradores.",
+          "Estética dental y blanqueamiento.",
+          "Rehabilitación oral y tratamientos protésicos.",
+          "Cirugía dentomaxilar.",
+        ],
+      },
+      // Estos dos párrafos son suyos y están escritos en primera persona, tal
+      // como los mandó. No se pasan a tercera para no ponerle palabras que no
+      // dijo: la ficha los muestra donde esa voz se lee natural, en el bloque
+      // de enfoque.
+      {
+        tipo: "parrafo",
+        texto:
+          "Además de mi práctica clínica, me desempeño como docente en la cátedra de Operatoria Dental de la Facultad de Ciencias de la Salud de la Universidad Católica de Córdoba. La actividad académica forma parte de mi desarrollo profesional y me permite mantener una actualización constante, integrando la práctica clínica con la formación y el intercambio de conocimientos.",
+      },
+      {
+        tipo: "parrafo",
+        texto:
+          "Mi objetivo es brindar a cada paciente una atención personalizada, basada en una evaluación integral, una planificación cuidadosa y tratamientos orientados a lograr resultados funcionales y estéticos.",
+      },
+    ],
+    // Todavía no pasó un número propio: queda el del centro.
+    contactos: [
+      {
+        tipo: "telefono",
+        etiqueta: "Turnos y consultas",
+        numero: "351 217 7788",
+        href: "tel:+5493512177788",
+      },
+    ],
+  },
+  // Lic. Soledad Di Martino
+  "soledad-di-martino": {
+    titulo: "Licenciada y Profesora en Psicología",
+    especialidad:
+      "Especialista en Psicodiagnóstico y actualización en Psicopatología Clínica.",
+    bloques: [
+      {
+        tipo: "parrafo",
+        texto:
+          "Con más de 20 años de experiencia profesional, la Lic. Soledad Di Martino desarrolla su práctica en consultorio privado y centros de rehabilitación, acompañando a niños, adolescentes y adultos en sus diferentes procesos terapéuticos.",
+      },
+      {
+        tipo: "parrafo",
+        texto:
+          "Es Licenciada y Profesora en Psicología, cuenta con formación de posgrado en Psicodiagnóstico y Actualización en Psicopatología Clínica, y actualmente cursa la Especialización en Psicología Clínica en la Universidad Nacional de Córdoba.",
+      },
+      {
+        tipo: "parrafo",
+        texto:
+          "Su trayectoria también incluye la docencia y la participación en proyectos comunitarios, espacios desde los cuales promueve la construcción de herramientas para el bienestar emocional y el desarrollo integral de las personas.",
+      },
+      {
+        tipo: "parrafo",
+        texto:
+          "Su enfoque se basa en brindar un acompañamiento cálido, profesional y respetuoso, adaptado a las necesidades particulares de cada paciente.",
+      },
+      { tipo: "titulo", texto: "Servicios en AURIS" },
+      {
+        tipo: "lista",
+        items: [
+          "Atención clínica individual para niños, adolescentes y adultos.",
+          "Evaluaciones psicodiagnósticas.",
+          "Orientación psicológica.",
+          "Intervenciones grupales.",
+          "Talleres de bienestar emocional y habilidades sociales.",
+          "Orientación vocacional y profesional.",
+          "Aptos psicológicos.",
+        ],
+      },
+      { tipo: "titulo", texto: "Su enfoque profesional" },
+      {
+        tipo: "parrafo",
+        texto:
+          "Cada proceso terapéutico es un espacio de escucha, acompañamiento y construcción conjunta. Su objetivo es favorecer el bienestar emocional y brindar herramientas que permitan a cada persona afrontar sus desafíos y desarrollar sus recursos personales.",
+      },
+    ],
+    contactos: [
+      {
+        tipo: "telefono",
+        etiqueta: "Turnos y consultas",
+        numero: "+54 9 3517 59-8062",
+        href: "tel:+5493517598062",
       },
     ],
   },

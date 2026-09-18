@@ -17,6 +17,22 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  /**
+   * Las fotos del equipo se piden como `/imagenes/v/<fecha>/...` y se sirven
+   * desde `public/images/...`. Ese número en el medio es la fecha del archivo:
+   * cambia sola cuando se reemplaza una foto, así que la dirección pasa a ser
+   * otra y nadie —ni el navegador ni la caché de Next— sigue mostrando la
+   * anterior. Va en la ruta y no como `?v=`, que `next/image` no acepta en
+   * imágenes locales.
+   */
+  async rewrites() {
+    return [
+      {
+        source: "/imagenes/v/:version/:ruta*",
+        destination: "/images/:ruta*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

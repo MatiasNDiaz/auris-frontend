@@ -61,7 +61,8 @@ const iconos: Record<IconoHito, LucideIcon> = {
  * Curva y duraciones de todos los hovers de la ficha: salen rápido y frenan
  * largo, sin rebote. Es la misma sensación que las tarjetas de la home.
  */
-const suave = "ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none";
+const suave =
+  "ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none";
 
 /**
  * Clases por género. Van escritas enteras —nada de `bg-${color}-100`— porque
@@ -152,9 +153,10 @@ function iniciales(nombre: string) {
 }
 
 /**
- * La frase del banner puede ser el primer tramo de una oración de la bio: se
- * cierra con punto para que se lea como frase. Y el párrafo que la sigue
- * arranca con mayúscula. Las palabras no se tocan.
+ * La frase del banner puede ser un tramo suelto de una oración de la bio: se
+ * cierra con punto para que se lea como frase, y arranca con mayúscula por si
+ * el tramo es el segundo —el de Santiago empieza en "buscando"—. El párrafo
+ * que la sigue, igual. Las palabras no se tocan.
  */
 const cerrarFrase = (frase: string) =>
   /[.!?…]$/.test(frase) ? frase : `${frase.replace(/[,:;]$/, "")}.`;
@@ -235,12 +237,14 @@ export function ProfessionalFicha({
   const siglas = iniciales(professional.name);
   const nombre = professional.name.split(" ").slice(1).join(" ");
   const contactos = trayectoria?.contactos ?? [];
-  const frase = cerrarFrase(ficha.enfoque.frase);
+  const frase = cerrarFrase(conMayuscula(ficha.enfoque.frase));
 
   return (
     <>
       {/* ───────── Formación y trayectoria ───────── */}
-      <section className={cn("relative overflow-hidden py-20 lg:py-28", p.fondo)}>
+      <section
+        className={cn("relative overflow-hidden py-20 lg:py-28", p.fondo)}
+      >
         <LeafSprig
           palette={p.hoja}
           stem={p.tallo}
@@ -383,6 +387,11 @@ export function ProfessionalFicha({
                     // hero: una foto apaisada se recorta y muestra menos.
                     sizes="(max-width: 1024px) 100vw, 1000px"
                     quality={CALIDAD_FOTO}
+                    style={
+                      ficha.grillaFoco?.[0]
+                        ? { objectPosition: ficha.grillaFoco[0] }
+                        : undefined
+                    }
                     className={cn(
                       "object-cover transition-transform duration-1200 group-hover:scale-[1.06]",
                       suave,
@@ -409,6 +418,11 @@ export function ProfessionalFicha({
                         fill
                         sizes="(max-width: 1024px) 70vw, 560px"
                         quality={CALIDAD_FOTO}
+                        style={
+                          ficha.grillaFoco?.[index + 1]
+                            ? { objectPosition: ficha.grillaFoco[index + 1] }
+                            : undefined
+                        }
                         className={cn(
                           "object-cover transition-transform duration-1200 group-hover:scale-[1.06]",
                           suave,
@@ -634,6 +648,13 @@ export function ProfessionalFicha({
                   fill
                   sizes="(max-width: 1024px) 100vw, 1000px"
                   quality={CALIDAD_FOTO}
+                  // Va como `transform` y no como `scale` para que se combine
+                  // con el `scale` del hover en vez de pisarlo.
+                  style={
+                    ficha.cifrasZoom
+                      ? { transform: `scale(${ficha.cifrasZoom})` }
+                      : undefined
+                  }
                   className={cn(
                     "object-cover transition-transform duration-1200 group-hover:scale-[1.05]",
                     suave,
@@ -690,60 +711,54 @@ export function ProfessionalFicha({
             </Reveal>
 
             {ficha.cifras && (
-            <ul
-              className={cn(
-                "mt-10 grid gap-4 sm:grid-cols-2",
-                ficha.cifras.items.length === 3 && "xl:grid-cols-3",
-              )}
-            >
-              {ficha.cifras.items.map((cifra, index) => (
-                <Reveal
-                  as="li"
-                  key={cifra.etiqueta}
-                  delay={index * 0.08}
-                >
-                  {/* El hover va en un div propio y no en el `li`: el `Reveal`
+              <ul
+                className={cn(
+                  "mt-10 grid gap-4 sm:grid-cols-2",
+                  ficha.cifras.items.length === 3 && "xl:grid-cols-3",
+                )}
+              >
+                {ficha.cifras.items.map((cifra, index) => (
+                  <Reveal as="li" key={cifra.etiqueta} delay={index * 0.08}>
+                    {/* El hover va en un div propio y no en el `li`: el `Reveal`
                       lleva la transición de entrada de `globals.css`, que es
                       más específica y pisaba esta, así que la tarjeta subía
                       y cambiaba de sombra de golpe. */}
-                  <div
-                    className={cn(
-                      "group h-full rounded-3xl border bg-white px-6 py-7 shadow-[0_1px_3px_rgba(43,43,40,0.08)] transition-[translate,box-shadow,border-color] duration-500 will-change-transform hover:-translate-y-1.5 hover:shadow-[0_6px_14px_-4px_rgba(43,43,40,0.12),0_22px_40px_-14px_rgba(43,43,40,0.22)] motion-reduce:hover:translate-y-0",
-                      suave,
-                      p.borde,
-                      p.bordeHover,
-                    )}
-                  >
-                  <p
-                    className={cn(
-                      "origin-left font-serif text-4xl leading-none font-semibold tabular-nums transition-[scale] duration-500 group-hover:scale-[1.04] sm:text-[2.75rem]",
-                      suave,
-                      p.numero,
-                    )}
-                  >
-                    {cifra.prefijo && (
-                      <span className={p.sufijo}>
-                        {cifra.prefijo}
-                      </span>
-                    )}
-                    {cifra.anio ? (
-                      cifra.valor
-                    ) : (
-                      <CountUp to={cifra.valor} delay={index * 0.12} />
-                    )}
-                    {cifra.sufijo && (
-                      <span aria-hidden className={p.sufijo}>
-                        {cifra.sufijo}
-                      </span>
-                    )}
-                  </p>
-                  <p className="mt-3 text-sm leading-snug text-balance text-ink-700/75">
-                    {cifra.etiqueta}
-                  </p>
-                  </div>
-                </Reveal>
-              ))}
-            </ul>
+                    <div
+                      className={cn(
+                        "group h-full rounded-3xl border bg-white px-6 py-7 shadow-[0_1px_3px_rgba(43,43,40,0.08)] transition-[translate,box-shadow,border-color] duration-500 will-change-transform hover:-translate-y-1.5 hover:shadow-[0_6px_14px_-4px_rgba(43,43,40,0.12),0_22px_40px_-14px_rgba(43,43,40,0.22)] motion-reduce:hover:translate-y-0",
+                        suave,
+                        p.borde,
+                        p.bordeHover,
+                      )}
+                    >
+                      <p
+                        className={cn(
+                          "origin-left font-serif text-4xl leading-none font-semibold tabular-nums transition-[scale] duration-500 group-hover:scale-[1.04] sm:text-[2.75rem]",
+                          suave,
+                          p.numero,
+                        )}
+                      >
+                        {cifra.prefijo && (
+                          <span className={p.sufijo}>{cifra.prefijo}</span>
+                        )}
+                        {cifra.anio ? (
+                          cifra.valor
+                        ) : (
+                          <CountUp to={cifra.valor} delay={index * 0.12} />
+                        )}
+                        {cifra.sufijo && (
+                          <span aria-hidden className={p.sufijo}>
+                            {cifra.sufijo}
+                          </span>
+                        )}
+                      </p>
+                      <p className="mt-3 text-sm leading-snug text-balance text-ink-700/75">
+                        {cifra.etiqueta}
+                      </p>
+                    </div>
+                  </Reveal>
+                ))}
+              </ul>
             )}
 
             {ficha.servicios && (

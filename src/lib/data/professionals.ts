@@ -41,7 +41,8 @@ const equipo: Professional[] = [
     ],
     gender: "male",
     name: "Dr. Ariel Vidal",
-    specialty: "Odontología general",
+    specialty: "Odontólogo",
+    areaSlug: "odontologia",
     serviceSlug: "odontologia",
     photoUrl:
       "https://images.unsplash.com/photo-1678940805950-73f2127f9d4e?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
@@ -64,7 +65,8 @@ const equipo: Professional[] = [
     ],
     gender: "female",
     name: "Dra. Carla Fernández",
-    specialty: "Odontología general",
+    specialty: "Odontopediatra",
+    areaSlug: "odontopediatria",
     serviceSlug: "odontologia",
     photoUrl:
       "https://images.unsplash.com/photo-1736289173074-df6009da27c9?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
@@ -86,15 +88,20 @@ const equipo: Professional[] = [
     ],
     gender: "female",
     name: "Dra. Daniela Giansetto",
-    specialty: "Odontología general",
+    // Su foto 2 es apaisada y ella está sobre el borde derecho: el recorte
+    // vertical de las tarjetas y del hero tiene que ir a buscarla ahí. Pasado
+    // del 50% el recorte se corre hacia la derecha, que es donde está.
+    fotoHoverFoco: "86% center",
+    specialty: "Odontopediatra",
+    areaSlug: "odontopediatria",
     serviceSlug: "odontologia",
     photoUrl:
       "https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Integra el equipo de Odontología de AURIS, acompañando a cada paciente con un abordaje preventivo y personalizado.",
     education: ["Formación en Odontología"],
     certifications: [],
-    // Todavía sin número propio: el botón va al WhatsApp del centro.
-    whatsapp: WHATSAPP_CENTRO,
+    whatsapp: "5493517031002",
+    trayectoria: trayectorias["daniela-giansetto"],
   },
   {
     slug: "rocio-matteucci",
@@ -109,7 +116,8 @@ const equipo: Professional[] = [
     ],
     gender: "female",
     name: "Dra. Rocío Matteucci",
-    specialty: "Odontología general",
+    specialty: "Odontóloga",
+    areaSlug: "odontologia",
     serviceSlug: "odontologia",
     photoUrl:
       "https://images.unsplash.com/photo-1683348858689-f4e10994804d?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
@@ -118,29 +126,7 @@ const equipo: Professional[] = [
     certifications: [],
     // Todavía sin número propio: el botón va al WhatsApp del centro.
     whatsapp: WHATSAPP_CENTRO,
-  },
-  {
-    slug: "tomas-garcia",
-    motto:
-      "Un buen tratamiento se construye con información clara, paso a paso.",
-    credentials: [
-      {
-        title: "Odontología",
-        institution: "Equipo AURIS",
-        year: "",
-      },
-    ],
-    gender: "male",
-    name: "Dr. Tomás García",
-    specialty: "Odontología general",
-    serviceSlug: "odontologia",
-    photoUrl:
-      "https://images.unsplash.com/photo-1756699279298-c89cdef354ab?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
-    bio: "Forma parte del equipo de Odontología de AURIS, trabajando desde un enfoque preventivo y mínimamente invasivo.",
-    education: ["Formación en Odontología"],
-    certifications: [],
-    // Todavía sin número propio: el botón va al WhatsApp del centro.
-    whatsapp: WHATSAPP_CENTRO,
+    trayectoria: trayectorias["rocio-matteucci"],
   },
   {
     slug: "laura-mansilla",
@@ -155,7 +141,8 @@ const equipo: Professional[] = [
     ],
     gender: "female",
     name: "Dra. Laura Mansilla",
-    specialty: "Odontología general",
+    specialty: "Odontóloga",
+    areaSlug: "odontologia",
     serviceSlug: "odontologia",
     photoUrl:
       "https://images.unsplash.com/photo-1673865641073-4479f93a7776?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
@@ -178,7 +165,15 @@ const equipo: Professional[] = [
     ],
     gender: "female",
     name: "Dra. Claudia Tomasi",
-    specialty: "Odontología general",
+    // Su foto 1 es de cuerpo entero y sin aire arriba: el reencuadre que la
+    // deja como el resto del equipo se hace en el archivo, no acá (ver
+    // `ENCUADRE` en `scripts/optimize-images.mjs`).
+    //
+    // Al pasar el cursor la tarjeta se ensancha y la foto pasa a recortarse a
+    // lo alto: sin esto el recorte arranca por debajo de su cabeza.
+    fotoFoco: "center 40%",
+    specialty: "Odontóloga estética",
+    areaSlug: "odontologia-estetica",
     serviceSlug: "odontologia",
     photoUrl:
       "https://images.unsplash.com/photo-1734002886107-168181bcd6a1?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
@@ -200,15 +195,16 @@ const equipo: Professional[] = [
     ],
     gender: "male",
     name: "Dr. Santiago Rodriguez",
-    specialty: "Odontología general",
+    specialty: "Odontólogo",
+    areaSlug: "odontologia",
     serviceSlug: "odontologia",
     photoUrl:
       "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Forma parte del equipo de Odontología de AURIS, acompañando cada tratamiento con información clara y un enfoque preventivo.",
     education: ["Formación en Odontología"],
     certifications: [],
-    // Todavía sin número propio: el botón va al WhatsApp del centro.
-    whatsapp: WHATSAPP_CENTRO,
+    whatsapp: "5493544583449",
+    trayectoria: trayectorias["santiago-rodriguez"],
   },
   {
     slug: "eugenia-leiva",
@@ -222,7 +218,8 @@ const equipo: Professional[] = [
     ],
     gender: "female",
     name: "Lic. Eugenia Leiva",
-    specialty: "Kinesiología y fisioterapia",
+    specialty: "Lic. en Kinesiología · Cosmetóloga",
+    areaSlug: "kinesiologia-estetica",
     serviceSlug: "kinesiologia",
     photoUrl:
       "https://images.unsplash.com/photo-1730597842283-943c7986ee2c?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
@@ -244,15 +241,16 @@ const equipo: Professional[] = [
     ],
     gender: "female",
     name: "Lic. Soledad Di Martino",
-    specialty: "Psicología general",
+    specialty: "Lic. en Psicología",
+    areaSlug: "psicologia",
     serviceSlug: "psicologia",
     photoUrl:
       "https://images.unsplash.com/photo-1712215544003-af10130f8eb3?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Forma parte del equipo de Psicología de AURIS, acompañando procesos personales con escucha y respeto por el tiempo de cada consultante.",
     education: ["Formación en Psicología"],
     certifications: [],
-    // Todavía sin número propio: el botón va al WhatsApp del centro.
-    whatsapp: WHATSAPP_CENTRO,
+    whatsapp: "5493517598062",
+    trayectoria: trayectorias["soledad-di-martino"],
   },
   {
     slug: "romina-tchakerian",
@@ -266,7 +264,8 @@ const equipo: Professional[] = [
     ],
     gender: "female",
     name: "Lic. Romina Tchakerian",
-    specialty: "Fonoaudiología general",
+    specialty: "Lic. en Fonoaudiología",
+    areaSlug: "fonoaudiologia",
     serviceSlug: "fonoaudiologia",
     photoUrl:
       "https://images.unsplash.com/photo-1736289154383-435d94804522?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
@@ -288,8 +287,12 @@ const equipo: Professional[] = [
     ],
     gender: "female",
     name: "Lic. Eugenia Villalobos",
-    specialty: "Fonoaudiología general",
-    serviceSlug: "fonoaudiologia",
+    specialty: "Lic. en Fonoaudiología",
+    areaSlug: "fonoaudiologia",
+    // Su área sigue siendo fonoaudiología, pero el servicio al que se la
+    // asocia es el taller: es quien lo tiene a cargo, y hasta ahora esa página
+    // no mostraba a nadie.
+    serviceSlug: "taller-de-adultos-mayores",
     photoUrl:
       "https://images.unsplash.com/photo-1623854767648-e7bb8009f0db?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Integra el equipo de Fonoaudiología de AURIS, trabajando sobre el lenguaje, la voz y la comunicación.",
@@ -301,9 +304,15 @@ const equipo: Professional[] = [
 ];
 
 /**
+ * Quiénes van al final de cualquier listado, después del resto del equipo.
+ * Hoy son los que todavía no tienen sus fotos propias.
+ */
+const AL_FINAL = new Set(["eugenia-villalobos"]);
+
+/**
  * El equipo en el orden en que se muestra: el Dr. Ariel Vidal, dueño del
- * centro, siempre primero —en /profesionales, en el carrusel de la home y en
- * el equipo de cada servicio—.
+ * centro, siempre primero y los de `AL_FINAL` últimos —en /profesionales, en
+ * el carrusel de la home y en el equipo de cada servicio—.
  *
  * Se ordena acá y no confiando en la posición dentro del array, para que
  * agregar a alguien arriba de todo no lo corra del primer lugar. `sort` es
@@ -311,14 +320,22 @@ const equipo: Professional[] = [
  */
 export const professionals: Professional[] = [...equipo]
   .sort((a, b) => Number(Boolean(b.owner)) - Number(Boolean(a.owner)))
+  .sort((a, b) => Number(AL_FINAL.has(a.slug)) - Number(AL_FINAL.has(b.slug)))
   // Si ya subieron su imagen 1 (`<prefijo>-1.*`), esa foto reemplaza a la
   // provisoria en todo el sitio: ficha, tarjetas y carrusel. Ver
   // `docs/modus-operandi-imagenes-profesionales.md`.
   .map((professional) => {
-    const hero = (fotosGeneradas as Record<string, { hero?: string }>)[
-      professional.slug
-    ]?.hero;
-    return hero ? { ...professional, photoUrl: hero } : professional;
+    const fotos = (
+      fotosGeneradas as Record<string, { hero?: string; hover?: string }>
+    )[professional.slug];
+
+    if (!fotos?.hero) return professional;
+
+    return {
+      ...professional,
+      photoUrl: fotos.hero,
+      photoHoverUrl: fotos.hover,
+    };
   });
 
 /** Tope de tarjetas del carousel de la Home. */
