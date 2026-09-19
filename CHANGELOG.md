@@ -1,5 +1,39 @@
 # Changelog
 
+## 2026-09-19 — Las fotos verticales del recorrido se muestran enteras
+
+- **Las fotos verticales ya no se recortan.** El visor estiraba cada foto hasta
+  llenar la ventana apaisada; de una foto 9:16 eso mostraba un tercio, sin techo
+  ni piso —justo donde están las puertas y los carteles—, y ese tercio se
+  dibujaba al triple de su tamaño, así que salía recortada *y* borrosa. Ahora,
+  cuando habría que agrandarla más de lo razonable, la foto se muestra completa
+  con la altura de la ventana. En escritorio pasa de dibujarse a 1358px de ancho
+  a 405px: entra entera y nítida. `LIMITE_RECORTE` en `TourViewer.tsx`
+- **Los costados los llena la misma foto ampliada y desenfocada**, en una
+  variante de 64px —va a salir borrosa igual—, para que se lea como una decisión
+  y no como un error de tamaño.
+- **Las fotos apaisadas no cambian**: siguen llenando la ventana y con el paneo
+  del cursor, que es como estaban.
+- **`sizes` por modo.** Una vertical ahora ocupa un tercio del ancho de la
+  ventana: pedir lo mismo que antes bajaba cinco veces los píxeles que se ven.
+- **El círculo "Ir al pasillo" estaba en el lugar equivocado**: apuntaba a la
+  pared de la derecha de recepción, sobre el cartel de profesionales. El pasillo
+  es el hueco del extremo izquierdo. Se corrigió y se reubicaron también los de
+  `pasillo`, `pasillo-2` y `pasillo-3`, que estaban sobre el marco de la puerta
+  en vez de sobre la abertura.
+- **Los círculos se ven más.** Pasaron de 28 a 32px y llevan un halo oscuro
+  detrás: un aro blanco fino sobre la pared clara de recepción desaparecía.
+- **Salida rápida desde el pasillo de vuelta.** Al volver del consultorio 3 o
+  del 5 se llegaba a una parada con una sola salida, a la boca del pasillo: ver
+  el otro consultorio obligaba a recorrerlo entero de nuevo. Ahora hay dos
+  círculos, "Ir a recepción" y "Seguir por el pasillo" —que devuelve al final,
+  donde están los dos consultorios—.
+- **Sin `useCallback` en el visor.** El React Compiler no podía probar que los
+  valores medidos de la ventana no cambiaran después y abandonaba la
+  optimización del componente entero (`react-hooks/preserve-manual-memoization`).
+- `docs/fotos-verticales-recorrido.md` (nuevo) — las 9 fotos verticales con su
+  resolución y cuáles conviene volver a sacar.
+
 ## 2026-09-19 — Recorrido virtual rehecho con las fotos nuevas
 
 - **38 fotos nuevas** de las instalaciones, en 10 ambientes, reemplazan por

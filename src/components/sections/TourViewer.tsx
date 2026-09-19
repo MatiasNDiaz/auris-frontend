@@ -10,7 +10,6 @@ import {
 import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import Image from "next/image";
 import {
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -26,7 +25,7 @@ import {
 import { cn } from "@/lib/utils";
 
 /**
- * Cuánto más grande que la ventana se dibuja la foto.
+ * Cuánto más grande que la ventana se dibuja una foto que la cubre.
  *
  * De ese sobrante sale el paneo del cursor. Con 1.06 queda holgura para mirar
  * alrededor —que es el efecto— y la foto se dibuja bastante cerca de su tamaño
@@ -34,12 +33,40 @@ import { cn } from "@/lib/utils";
  */
 const OVERSCAN = 1.06;
 
+/**
+ * Hasta qué desproporción una foto se estira para llenar la ventana.
+ *
+ * Una foto apenas más alta que la ventana se puede recortar sin perder nada:
+ * lo que se va son unos centímetros de piso y de techo. Una foto de teléfono
+ * —9:16— en una ventana apaisada es otra cosa: para llenarla hay que agrandarla
+ * casi tres veces, de la foto se ve un tercio y ese tercio se dibuja al triple
+ * de su tamaño, así que sale recortada *y* borrosa. Por debajo de este umbral
+ * la foto se muestra entera, con la altura de la ventana, y a los costados
+ * queda la misma foto ampliada y desenfocada.
+ */
+const LIMITE_RECORTE = 0.8;
+
 /** Cuánto acompaña el encuadre al puntero, en px sobre cada eje. */
 const LOOK_X = 26;
 const LOOK_Y = 90;
 
 const acotar = (valor: number, tope: number) =>
   Math.max(-tope, Math.min(tope, valor));
+
+/**
+ * Cuánto va a medir la foto en pantalla, que es lo que el navegador usa para
+ * elegir qué variante baja.
+ *
+ * Una foto apaisada cubre la ventana y además se dibuja OVERSCAN veces más
+ * grande: en un teléfono, donde tiene que cubrir por alto, termina midiendo
+ * el doble del ancho de la pantalla. Una vertical se muestra entera y ocupa
+ * apenas un tercio del ancho de la ventana, así que pedir lo mismo sería bajar
+ * cinco veces los píxeles que se van a ver.
+ */
+const medidas = (aspect: number) =>
+  aspect > 1
+    ? "(max-width: 1024px) 200vw, 1350px"
+    : "(max-width: 640px) 75vw, (max-width: 1024px) 45vw, 420px";
 
 /**
  * Cómo se llegó a la foto que se está viendo. Define la transición: entrar a
@@ -150,17 +177,25 @@ export function TourViewer() {
   }, []);
 
   /**
-   * Tamaño de la capa que lleva la foto.
+   * Tamaño de la capa que lleva la foto, en píxeles.
    *
-   * Se calcula en píxeles y no con `aspect-ratio` en CSS porque tiene que
-   * cubrir la ventana en los dos ejes. Sale de la foto que se está mirando y
-   * no del ambiente: dentro de un mismo ambiente conviven fotos verticales y
-   * apaisadas, y dimensionar con una sola recortaba las otras.
+   * Va en píxeles y no con `aspect-ratio` en CSS porque depende de la ventana
+   * medida. Y sale de la foto que se está mirando, no del ambiente: dentro de
+   * un mismo ambiente conviven fotos verticales y apaisadas, y dimensionar con
+   * una sola recortaba las otras.
+   *
+   * Dos modos, según cuánto habría que recortar (ver `LIMITE_RECORTE`):
+   * **cubrir** llena la ventana y deja sobrante para el paneo; **contener**
+   * muestra la foto entera, tan alta como la ventana.
    */
-  const layer = (() => {
-    const width = Math.max(frame.w, frame.h * photo.aspect) * OVERSCAN;
-    return { width, height: width / photo.aspect };
-  })();
+  const entera = photo.aspect < (frame.w / frame.h) * LIMITE_RECORTE;
+
+  const layer = entera
+    ? { width: frame.h * photo.aspect, height: frame.h }
+    : (() => {
+        const width = Math.max(frame.w, frame.h * photo.aspect) * OVERSCAN;
+        return { width, height: width / photo.aspect };
+      })();
 
   const slack = {
     x: Math.max(0, (layer.width - frame.w) / 2),
@@ -187,46 +222,45 @@ export function TourViewer() {
     panY.jump(restY);
   }, [nodeId, foto, restX, restY, panX, panY]);
 
-  const look = useCallback(
-    (event: ReactPointerEvent<HTMLDivElement>) => {
-      if (reduceMotion || !frameRef.current) return;
-      const box = frameRef.current.getBoundingClientRect();
-      const nx = (event.clientX - box.left) / box.width - 0.5;
-      const ny = (event.clientY - box.top) / box.height - 0.5;
+  // Sin `useCallback`: el React Compiler memoriza solo, y escrito a mano acá
+  // se daba por vencido —no puede probar que `slack` y `restX`, que salen de
+  // la medición de la ventana, no cambien después— y dejaba de optimizar el
+  // componente entero.
+  const look = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (reduceMotion || !frameRef.current) return;
+    const box = frameRef.current.getBoundingClientRect();
+    const nx = (event.clientX - box.left) / box.width - 0.5;
+    const ny = (event.clientY - box.top) / box.height - 0.5;
 
-      panX.set(acotar(restX - nx * LOOK_X, slack.x));
-      panY.set(acotar(restY - ny * LOOK_Y, slack.y));
-    },
-    [panX, panY, reduceMotion, restX, restY, slack.x, slack.y],
-  );
+    panX.set(acotar(restX - nx * LOOK_X, slack.x));
+    panY.set(acotar(restY - ny * LOOK_Y, slack.y));
+  };
 
-  const rest = useCallback(() => {
+  const rest = () => {
     panX.set(restX);
     panY.set(restY);
-  }, [panX, panY, restX, restY]);
+  };
 
   /** Cambiar de ambiente. Siempre abre en su primera foto. */
-  const ir = useCallback(
-    (to: string, desde: TourHotspot | null, direccion: "enter" | "back") => {
-      setOrigin(desde ? { x: desde.x, y: desde.y } : { x: 50, y: 55 });
-      setMove(direccion);
-      setFoto(0);
-      setNodeId(to);
-    },
-    [],
-  );
+  const ir = (
+    to: string,
+    desde: TourHotspot | null,
+    direccion: "enter" | "back",
+  ) => {
+    setOrigin(desde ? { x: desde.x, y: desde.y } : { x: 50, y: 55 });
+    setMove(direccion);
+    setFoto(0);
+    setNodeId(to);
+  };
 
   /** Pasar fotos dentro del ambiente actual. */
-  const pasar = useCallback(
-    (delta: 1 | -1) => {
-      const proxima = foto + delta;
-      if (proxima < 0 || proxima > node.photos.length - 1) return;
-      setMove(delta === 1 ? "next" : "prev");
-      setOrigin({ x: 50, y: 50 });
-      setFoto(proxima);
-    },
-    [foto, node.photos.length],
-  );
+  const pasar = (delta: 1 | -1) => {
+    const proxima = foto + delta;
+    if (proxima < 0 || proxima > node.photos.length - 1) return;
+    setMove(delta === 1 ? "next" : "prev");
+    setOrigin({ x: 50, y: 50 });
+    setFoto(proxima);
+  };
 
   const transicion = TRANSICIONES[move];
   const vecinas = [node.photos[foto - 1], node.photos[foto + 1]].filter(
@@ -304,6 +338,21 @@ export function TourViewer() {
             style={{ transformOrigin: `${origin.x}% ${origin.y}%` }}
             className="absolute inset-0"
           >
+            {/* Cuando la foto se muestra entera queda aire a los costados. Lo
+                llena la misma foto ampliada y desenfocada, que es lo que hace
+                que se lea como una decisión y no como un error de tamaño. Pide
+                una variante de 64px: va a salir borrosa de todos modos. */}
+            {entera && (
+              <Image
+                src={photo.src}
+                alt=""
+                aria-hidden
+                fill
+                sizes="64px"
+                className="scale-110 object-cover opacity-40 blur-2xl"
+              />
+            )}
+
             <motion.div
               style={{
                 x: panX,
@@ -317,17 +366,7 @@ export function TourViewer() {
                 src={photo.src}
                 alt={photo.alt}
                 fill
-                // La capa mide OVERSCAN veces el ancho de la ventana, no el
-                // ancho de la ventana: pidiendo menos, Next servía una imagen
-                // más chica que la que se dibuja y se veía blanda. Y una foto
-                // apaisada dentro de la ventana vertical del teléfono se
-                // agranda mucho más —tiene que cubrir por alto—, así que ahí
-                // hay que pedir el doble.
-                sizes={
-                  photo.aspect > 1
-                    ? "(max-width: 1024px) 200vw, 1350px"
-                    : "(max-width: 1024px) 115vw, 1350px"
-                }
+                sizes={medidas(photo.aspect)}
                 priority={node.id === TOUR_START}
                 className="object-cover"
                 draggable={false}
@@ -421,11 +460,7 @@ export function TourViewer() {
             alt=""
             width={8}
             height={8}
-            sizes={
-              vecina.aspect > 1
-                ? "(max-width: 1024px) 200vw, 1350px"
-                : "(max-width: 1024px) 115vw, 1350px"
-            }
+            sizes={medidas(vecina.aspect)}
           />
         ))}
       </div>
@@ -503,10 +538,14 @@ function Hotspot({ hotspot, alwaysOpen, onClick }: HotspotProps) {
       aria-label={hotspot.label}
       className="group absolute z-10 grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full focus-visible:outline-none"
     >
-      {/* El círculo: sin relleno en reposo, se llena de blanco al activarse. */}
+      {/* El círculo: sin relleno en reposo, se llena de blanco al activarse.
+          El halo exterior no es decoración: sobre una pared clara —la de
+          recepción, sin ir más lejos— un aro blanco fino desaparece, y hay que
+          buscar el punto en vez de verlo. El halo lo despega del fondo sea
+          claro u oscuro. */}
       <span
         aria-hidden
-        className="pointer-events-none relative grid size-7 place-items-center rounded-full border-2 border-cream-50/75 shadow-[0_2px_10px_rgba(0,0,0,0.45)] transition-[border-color,transform] duration-300 group-hover:border-cream-50 group-focus-visible:border-cream-50"
+        className="pointer-events-none relative grid size-8 place-items-center rounded-full border-2 border-cream-50 shadow-[0_0_0_5px_rgba(20,24,22,0.28),0_3px_14px_rgba(0,0,0,0.55)] transition-[transform,box-shadow] duration-300 group-hover:scale-110 group-focus-visible:scale-110"
       >
         <span
           className={cn(
@@ -516,7 +555,7 @@ function Hotspot({ hotspot, alwaysOpen, onClick }: HotspotProps) {
           )}
         />
         {/* Latido sutil, para que el punto se note sobre la foto. */}
-        <span className="absolute inset-0 -z-10 animate-ping rounded-full border border-cream-50/40 animation-duration-[2.6s]" />
+        <span className="absolute inset-0 -z-10 animate-ping rounded-full border-2 border-cream-50/60 animation-duration-[2.6s]" />
       </span>
 
       {/* Globo de diálogo, con el triangulito apuntando al círculo.

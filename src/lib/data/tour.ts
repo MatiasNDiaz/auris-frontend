@@ -202,8 +202,11 @@ export const tourNodes: TourNode[] = [
     ],
     back: "hall",
     hotspots: [
-      // El pasillo se abre a la derecha del mostrador, por detrás.
-      { x: 78, y: 45, label: "Ir al pasillo", to: "pasillo" },
+      // El pasillo no sale por detrás del mostrador: es el hueco del extremo
+      // izquierdo, el que deja ver el piso perdiéndose hacia el fondo. El
+      // punto va sobre ese piso —no sobre el marco— porque es lo único que se
+      // lee como "por acá se sigue".
+      { x: 14, y: 55, label: "Ir al pasillo", to: "pasillo" },
     ],
   },
   {
@@ -222,8 +225,8 @@ export const tourNodes: TourNode[] = [
     hotspots: [
       // El baño es lo primero sobre la derecha: el hueco que se abre en esa
       // pared, antes del laboratorio.
-      { x: 72, y: 47, label: "Baño", to: "bano" },
-      { x: 50, y: 60, label: "Seguir por el pasillo", to: "pasillo-2" },
+      { x: 63, y: 42, label: "Baño", to: "bano" },
+      { x: 48, y: 62, label: "Seguir por el pasillo", to: "pasillo-2" },
     ],
   },
   {
@@ -267,10 +270,10 @@ export const tourNodes: TourNode[] = [
     back: "pasillo",
     hotspots: [
       // La abertura de la izquierda, la que deja salir luz azulada.
-      { x: 17, y: 45, label: "Consultorio 1", to: "consultorio-1" },
+      { x: 25, y: 42, label: "Consultorio 1", to: "consultorio-1" },
       // La única puerta de la derecha en este tramo.
-      { x: 84, y: 45, label: "Laboratorio", to: "laboratorio" },
-      { x: 50, y: 62, label: "Seguir por el pasillo", to: "pasillo-3" },
+      { x: 83, y: 42, label: "Laboratorio", to: "laboratorio" },
+      { x: 48, y: 62, label: "Seguir por el pasillo", to: "pasillo-3" },
     ],
   },
   {
@@ -286,8 +289,8 @@ export const tourNodes: TourNode[] = [
     ],
     back: "pasillo-2",
     hotspots: [
-      { x: 24, y: 45, label: "Consultorio 2", to: "consultorio-2" },
-      { x: 50, y: 62, label: "Seguir por el pasillo", to: "pasillo-4" },
+      { x: 31, y: 44, label: "Consultorio 2", to: "consultorio-2" },
+      { x: 50, y: 64, label: "Seguir por el pasillo", to: "pasillo-4" },
     ],
   },
   {
@@ -477,10 +480,18 @@ export const tourNodes: TourNode[] = [
         aspect: 1920 / 1079,
       },
     ],
-    // Sin botón de volver: esta parada ya es la vuelta. Se sigue por el
-    // círculo, que devuelve a la boca del pasillo.
+    // Sin botón de volver: esta parada ya es la vuelta, se sigue por los
+    // círculos.
     back: null,
-    hotspots: [{ x: 48, y: 46, label: "Volver al pasillo", to: "pasillo" }],
+    hotspots: [
+      // Dos salidas, y las dos hacen falta. Acá se llega desde el consultorio
+      // 3 o el 5, que están al fondo: con una sola salida a la boca del
+      // pasillo, ver el otro consultorio obligaba a recorrerlo entero de nuevo.
+      // Arriba, el fondo iluminado que es la recepción; abajo, cerca del
+      // observador, la vuelta al final del pasillo, que es de donde se viene.
+      { x: 49, y: 42, label: "Ir a recepción", to: "recepcion" },
+      { x: 49, y: 72, label: "Seguir por el pasillo", to: "pasillo-4" },
+    ],
   },
 ];
 
