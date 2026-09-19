@@ -4,11 +4,19 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { LeafSprig } from "@/components/shared/LeafSprig";
 import { ProfessionalCard } from "@/components/shared/ProfessionalCard";
+import { RecepcionistaCard } from "@/components/shared/RecepcionistaCard";
 import { areas } from "@/lib/data/areas";
 import { professionals } from "@/lib/data/professionals";
+import { recepcionistas } from "@/lib/data/recepcionistas";
 import { cn } from "@/lib/utils";
 
 const ALL = "todos";
+/**
+ * Recepción es una opción más del filtro pero no es un área: su gente no
+ * atiende pacientes y no está en `areas.ts`. Se le da una clave propia que no
+ * puede chocar con ningún `areaSlug`.
+ */
+const RECEPCION = "recepcion";
 
 /**
  * Listado del equipo, con filtro por el área de cada profesional.
@@ -16,6 +24,10 @@ const ALL = "todos";
  * Filtra por `areaSlug` y no por el servicio: el servicio es el tratamiento
  * que se ofrece —y casi todo el equipo comparte "odontología"—, mientras que
  * el área distingue a quién hace odontopediatría de quién hace estética.
+ *
+ * Recepción va aparte, al final: son tarjetas sin ficha detrás, así que
+ * mezclarlas con el resto rompería la expectativa de que una tarjeta lleva a
+ * algún lado. Con "Todos" se ven las dos grillas, una debajo de la otra.
  */
 export function ProfessionalsDirectory() {
   const [filter, setFilter] = useState<string>(ALL);
@@ -24,9 +36,13 @@ export function ProfessionalsDirectory() {
     () =>
       filter === ALL
         ? professionals
-        : professionals.filter((p) => p.areaSlug === filter),
+        : filter === RECEPCION
+          ? []
+          : professionals.filter((p) => p.areaSlug === filter),
     [filter],
   );
+
+  const muestraRecepcion = filter === ALL || filter === RECEPCION;
 
   // Solo las áreas que hoy tienen gente: una pestaña vacía no sirve de nada.
   const options = [
@@ -34,6 +50,7 @@ export function ProfessionalsDirectory() {
     ...areas.filter((area) =>
       professionals.some((p) => p.areaSlug === area.slug),
     ),
+    ...(recepcionistas.length ? [{ slug: RECEPCION, name: "Recepción" }] : []),
   ];
 
   return (
@@ -73,10 +90,13 @@ export function ProfessionalsDirectory() {
         </div>
 
         <p className="mt-6 text-sm text-ink-700/70" aria-live="polite">
-          {filtered.length}{" "}
-          {filtered.length === 1
-            ? "profesional disponible"
-            : "profesionales disponibles"}
+          {filter === RECEPCION
+            ? `${recepcionistas.length} en recepción`
+            : `${filtered.length} ${
+                filtered.length === 1
+                  ? "profesional disponible"
+                  : "profesionales disponibles"
+              }`}
         </p>
 
         <motion.ul
@@ -102,10 +122,42 @@ export function ProfessionalsDirectory() {
           </AnimatePresence>
         </motion.ul>
 
-        {filtered.length === 0 && (
+        {filtered.length === 0 && !muestraRecepcion && (
           <p className="mt-10 rounded-2xl border border-dashed border-border bg-cream-100 p-8 text-center text-ink-700/75">
             Todavía no tenemos profesionales cargados en esta especialidad.
           </p>
+        )}
+
+        {/* Recepción, al final y con su propio encabezado: son tarjetas sin
+            ficha detrás, así que van separadas de las del equipo en vez de
+            mezcladas en la misma grilla. */}
+        {muestraRecepcion && (
+          <div className={filter === ALL ? "mt-16" : "mt-8"}>
+            {filter === ALL && (
+              <div className="mb-8 border-t border-primary-100 pt-10">
+                <p className="text-xs font-semibold tracking-[0.24em] text-primary-700 uppercase">
+                  Recepción
+                </p>
+                <h2 className="mt-3 font-serif text-2xl text-primary-800 sm:text-3xl">
+                  Recepcionistas
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink-700/80">
+                  Las primeras caras que ves en AURIS.
+                </p>
+              </div>
+            )}
+
+            <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {recepcionistas.map((persona) => (
+                <li key={persona.slug}>
+                  <RecepcionistaCard
+                    recepcionista={persona}
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 300px"
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
       </div>
     </section>

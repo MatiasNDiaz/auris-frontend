@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-09-18 — Equipo de recepción
+
+- **Tres recepcionistas** (Leticia Loza, Soledad Lluch, Yanina Solari) con sus
+  dos fotos cada una, optimizadas de 1,3–1,7 MB a 149–239 KB.
+- **En la home**, después del equipo: los mismos paneles expansores del
+  acordeón, con el cruce a la segunda foto al pasar el cursor.
+  `src/components/sections/ReceptionTeam.tsx` (nuevo)
+- **En el listado del equipo**, al final y con filtro propio "Recepción". Van
+  en su propia grilla y no mezcladas: son tarjetas sin ficha detrás, y
+  mezclarlas rompería la expectativa de que una tarjeta lleva a algún lado.
+  `src/components/shared/RecepcionistaCard.tsx` (nuevo)
+- **No tienen página de detalle** ni transición de elemento compartido: esa
+  animación existe para el morph de la foto al entrar a una ficha.
+- **Tipo `Recepcionista` aparte** de `Professional`: no atienden pacientes, no
+  tienen especialidad, área, trayectoria ni WhatsApp. Un `Professional` con
+  esos campos vacíos habría arrastrado esa mentira por todo el código.
+- **Encuadre por persona.** Soledad Lluch es la única con la toma apaisada: en
+  una tarjeta vertical lo que se recorta son los costados, así que lleva foco
+  horizontal (`65% center`) mientras las otras dos lo llevan vertical.
+- **Navbar**: "Profesionales" pasa a **"Equipos"**. La URL sigue siendo
+  `/profesionales` para no romper enlaces compartidos, el sitemap ni las fichas.
+- **Teléfono de Claudia Tomasi**: `+54 9 3515 52-4109`. Antes mostraba el fijo y
+  el WhatsApp del centro.
+
 ## 2026-09-18 — Auditoría de rendimiento y preparación para producción
 
 Auditoría completa del proyecto y optimización, sin cambios de diseño: no se

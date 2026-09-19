@@ -52,7 +52,10 @@ export const mainNav = [
   // nada para el visitante.
   { href: "/sobre-el-centro", label: "Nuestra historia" },
   { href: "/servicios", label: "Servicios" },
-  { href: "/profesionales", label: "Profesionales" },
+  // La URL sigue siendo /profesionales: cambiarla rompería los enlaces ya
+  // compartidos, el sitemap y las fichas que cuelgan de ahí. Lo que cambia es
+  // solo el rótulo, porque la sección ahora incluye también a recepción.
+  { href: "/profesionales", label: "Equipos" },
   // "Recorrido" y no "Galería": lo que hay detrás es el recorrido virtual del
   // consultorio, no una grilla de fotos sueltas.
   { href: "/galeria", label: "Recorrido" },

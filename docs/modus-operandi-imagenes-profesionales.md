@@ -33,14 +33,14 @@ cuando pase y actualizo la lista de la sección 3.
 
 ## 2. Qué es cada una de las 6 imágenes
 
-| # | Qué mostrar | Dónde se usa | Encuadre recomendado |
-|---|---|---|---|
-| **1** | La foto oficial — la imagen de presentación del profesional | **En todo el sitio**: la grilla de "Nuestro equipo" de la portada, las tarjetas de "profesionales asociados" en cada página de servicio, la foto del hero (arriba de todo) en su propia ficha, **y** la foto de la sección de cifras (al final de la ficha, no le pedimos una foto aparte para eso: reutiliza esta) | Vertical, retrato, 4:5 (por ejemplo 800×1000) |
-| **2** | Una segunda foto para el hero de su ficha | Solo en el hero (sección 1) de su propia página: alterna con la imagen 1 automáticamente, ver el comportamiento abajo | Vertical, mismo encuadre que la 1 (misma pose o una variación natural) |
-| **3** | Foto "en acción" — atendiendo, trabajando | La foto **grande** del mosaico de "Formación y trayectoria" (sección 2 de su ficha) | Vertical, aprox. 3:4 |
-| **4** | Foto "en acción" — atendiendo, trabajando | Una de las dos fotos **chicas** del mosaico de "Formación y trayectoria" | Casi cuadrada |
-| **5** | Foto "en acción" — atendiendo, trabajando | La otra foto **chica** del mosaico de "Formación y trayectoria" | Casi cuadrada |
-| **6** | Una foto para el fondo del banner con frase destacada (sección 3 de su ficha) | Fondo del banner oscuro (azul o rosa según el profesional) | Horizontal, bien ancha (ej. 1920×1080). **Importante:** que la persona quede centrada verticalmente pero corrida hacia la **derecha** del encuadre — el lado izquierdo del banner lo tapa el texto, así que si la persona queda muy a la izquierda, el texto le tapa la cara |
+| #     | Qué mostrar                                                                   | Dónde se usa                                                                                                                                                                                                                                                                                                        | Encuadre recomendado                                                                                                                                                                                                                                                         |
+| ----- | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **1** | La foto oficial — la imagen de presentación del profesional                   | **En todo el sitio**: la grilla de "Nuestro equipo" de la portada, las tarjetas de "profesionales asociados" en cada página de servicio, la foto del hero (arriba de todo) en su propia ficha, **y** la foto de la sección de cifras (al final de la ficha, no le pedimos una foto aparte para eso: reutiliza esta) | Vertical, retrato, 4:5 (por ejemplo 800×1000)                                                                                                                                                                                                                                |
+| **2** | Una segunda foto para el hero de su ficha                                     | Solo en el hero (sección 1) de su propia página: alterna con la imagen 1 automáticamente, ver el comportamiento abajo                                                                                                                                                                                               | Vertical, mismo encuadre que la 1 (misma pose o una variación natural)                                                                                                                                                                                                       |
+| **3** | Foto "en acción" — atendiendo, trabajando                                     | La foto **grande** del mosaico de "Formación y trayectoria" (sección 2 de su ficha)                                                                                                                                                                                                                                 | Vertical, aprox. 3:4                                                                                                                                                                                                                                                         |
+| **4** | Foto "en acción" — atendiendo, trabajando                                     | Una de las dos fotos **chicas** del mosaico de "Formación y trayectoria"                                                                                                                                                                                                                                            | Casi cuadrada                                                                                                                                                                                                                                                                |
+| **5** | Foto "en acción" — atendiendo, trabajando                                     | La otra foto **chica** del mosaico de "Formación y trayectoria"                                                                                                                                                                                                                                                     | Casi cuadrada                                                                                                                                                                                                                                                                |
+| **6** | Una foto para el fondo del banner con frase destacada (sección 3 de su ficha) | Fondo del banner oscuro (azul o rosa según el profesional)                                                                                                                                                                                                                                                          | Horizontal, bien ancha (ej. 1920×1080). **Importante:** que la persona quede centrada verticalmente pero corrida hacia la **derecha** del encuadre — el lado izquierdo del banner lo tapa el texto, así que si la persona queda muy a la izquierda, el texto le tapa la cara |
 
 ### El comportamiento especial de las imágenes 1 y 2 (hero)
 
@@ -56,19 +56,19 @@ distinta: da la sensación de "cobrar vida", no de un cambio brusco de persona.
 
 ## 3. Nombre de archivo de cada profesional
 
-| Profesional | Nombre en el archivo | Carpeta (`assets/raw/` y `public/`) |
-|---|---|---|
-| Dr. Ariel Vidal | `Ariel` | `ariel-vidal/` |
-| Dra. Carla Fernández | `Carla` | `carla-fernandez/` |
-| Dra. Claudia Tomasi | `Claudia` | `claudia-tomasi/` |
-| Dra. Laura Mansilla | `Laura` | `laura-mansilla/` |
-| Lic. Eugenia Leiva | `EugeniaL` | `eugenia-leiva/` |
-| Lic. Romina Tchakerian | `Romina` | `romina-tchakerian/` |
-| Lic. Eugenia Villalobos | `EugeniaV` | `eugenia-villalobos/` |
-| Dra. Daniela Giansetto | `Daniela` | `daniela-giansetto/` |
-| Dra. Rocío Matteucci | `Rocio` | `rocio-matteucci/` |
-| Dr. Santiago Rodriguez | `Santiago` | `santiago-rodriguez/` |
-| Lic. Soledad Di Martino | `Soledad` | `soledad-di-martino/` |
+| Profesional             | Nombre en el archivo | Carpeta (`assets/raw/` y `public/`) |
+| ----------------------- | -------------------- | ----------------------------------- |
+| Dr. Ariel Vidal         | `Ariel`              | `ariel-vidal/`                      |
+| Dra. Carla Fernández    | `Carla`              | `carla-fernandez/`                  |
+| Dra. Claudia Tomasi     | `Claudia`            | `claudia-tomasi/`                   |
+| Dra. Laura Mansilla     | `Laura`              | `laura-mansilla/`                   |
+| Lic. Eugenia Leiva      | `EugeniaL`           | `eugenia-leiva/`                    |
+| Lic. Romina Tchakerian  | `Romina`             | `romina-tchakerian/`                |
+| Lic. Eugenia Villalobos | `EugeniaV`           | `eugenia-villalobos/`               |
+| Dra. Daniela Giansetto  | `Daniela`            | `daniela-giansetto/`                |
+| Dra. Rocío Matteucci    | `Rocio`              | `rocio-matteucci/`                  |
+| Dr. Santiago Rodriguez  | `Santiago`           | `santiago-rodriguez/`               |
+| Lic. Soledad Di Martino | `Soledad`            | `soledad-di-martino/`               |
 
 ## 4. Dónde poner los archivos
 
@@ -119,3 +119,28 @@ Ningún lugar queda roto ni vacío: se ve un bloque de color (azul para
 varones, rosa para mujeres) con las iniciales del profesional, del mismo
 tamaño y forma que tendría la foto. Se puede ir subiendo de a una — no hace
 falta tener las 6 para empezar a ver resultados.
+
+---
+
+## Recepción
+
+El equipo de recepción sigue la misma convención pero **con solo dos fotos**,
+porque no tiene ficha propia: la 1 para la tarjeta y la 2 para el cruce al
+pasar el cursor.
+
+```
+assets/raw/images/recepcionistas/<slug>/<Nombre>-1.jpg
+assets/raw/images/recepcionistas/<slug>/<Nombre>-2.jpg
+```
+
+El slug va en minúscula y con guión (`leticia-loza`), igual que el de los
+profesionales, y el prefijo de cada una está en
+`src/lib/data/prefijo-foto-recepcion.mjs`.
+
+Después de dejar los archivos: `npm run optimize:images` y `npm run dev` (que
+regenera el manifiesto). Quien no tenga su foto 1 queda fuera del listado.
+
+Si una foto viene apaisada —pasó con Soledad Lluch— hay que darle un
+`fotoFoco` horizontal en `src/lib/data/recepcionistas.ts`: la tarjeta es
+vertical, así que de una toma apaisada lo que se recorta son los costados y el
+centro no siempre es donde está la persona.

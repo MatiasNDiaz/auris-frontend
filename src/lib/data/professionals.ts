@@ -180,7 +180,7 @@ const equipo: Professional[] = [
     bio: "Es parte del equipo de Odontología de AURIS, con un enfoque centrado en la persona y en la prevención.",
     education: ["Formación en Odontología"],
     certifications: [],
-    whatsapp: "5493512177788",
+    whatsapp: "5493515524109",
     trayectoria: trayectorias["claudia-tomasi"],
   },
   {

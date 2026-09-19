@@ -1,0 +1,14 @@
+{
+  "leticia-loza": {
+    "hero": "/imagenes/v/1789777661669/recepcionistas/leticia-loza/leticia-1.webp",
+    "hover": "/imagenes/v/1789777662614/recepcionistas/leticia-loza/leticia-2.webp"
+  },
+  "soledad-lluch": {
+    "hero": "/imagenes/v/1789777663518/recepcionistas/soledad-lluch/soledad-1.webp",
+    "hover": "/imagenes/v/1789777664572/recepcionistas/soledad-lluch/soledad-2.webp"
+  },
+  "yanina-solari": {
+    "hero": "/imagenes/v/1789777665464/recepcionistas/yanina-solari/yanina-1.webp",
+    "hover": "/imagenes/v/1789777666322/recepcionistas/yanina-solari/yanina-2.webp"
+  }
+}

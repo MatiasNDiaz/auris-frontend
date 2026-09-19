@@ -176,14 +176,8 @@ export const trayectorias = {
       {
         tipo: "telefono",
         etiqueta: "Turnos y consultas",
-        numero: "481 0843",
-        href: "tel:+543514810843",
-      },
-      {
-        tipo: "whatsapp",
-        etiqueta: "WhatsApp",
-        numero: "351 217 7788",
-        href: "https://wa.me/5493512177788",
+        numero: "+54 9 3515 52-4109",
+        href: "tel:+5493515524109",
       },
     ],
   },

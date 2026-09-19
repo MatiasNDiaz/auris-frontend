@@ -273,3 +273,26 @@ export type FAQ = {
   question: string;
   answer: string;
 };
+
+/**
+ * Alguien del equipo de recepción.
+ *
+ * Es un tipo aparte y no un `Professional` con los campos vacíos: no atiende
+ * pacientes, no tiene especialidad, área ni ficha propia. Solo necesita
+ * nombre y las dos fotos que se cruzan al pasar el cursor.
+ */
+export type Recepcionista = {
+  slug: string;
+  name: string;
+  /**
+   * Foto 1: la de la tarjeta. Es obligatoria porque una tarjeta de recepción
+   * sin foto no tiene nada más que mostrar —no hay especialidad ni ficha—, así
+   * que `recepcionistas.ts` directamente deja afuera a quien no la tenga.
+   */
+  photoUrl: string;
+  /** Foto 2: aparece al pasar el cursor por la tarjeta. */
+  photoHoverUrl?: string;
+  /** Encuadre de cada foto, como `object-position`. */
+  fotoFoco?: string;
+  fotoHoverFoco?: string;
+};
