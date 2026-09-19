@@ -1,5 +1,67 @@
 # Changelog
 
+## 2026-09-19 — Recorrido virtual rehecho con las fotos nuevas
+
+- **38 fotos nuevas** de las instalaciones, en 10 ambientes, reemplazan por
+  completo el recorrido anterior. `public/images/instalaciones/`
+- **Dos niveles de navegación**, que es la idea que sostiene el rediseño: los
+  **círculos** sobre las puertas cambian de ambiente; las **flechas laterales**
+  pasan las fotos de ese mismo ambiente. Por eso los círculos van solo sobre la
+  primera foto de cada parada —la tomada desde la puerta, la que "encaja" con
+  el recorrido—: las demás son el detalle de adentro y no llevan a ningún lado.
+- **La tira de miniaturas se eliminó.** Era la forma anterior de ver las fotos
+  de un ambiente y competía con el recorrido: se reemplazó por las flechas.
+  `src/components/sections/TourViewer.tsx`
+- **Transiciones más suaves y distintas según cómo se llegó.** Entrar a un
+  ambiente empuja hacia adelante (zoom del 6% desde el círculo que se tocó),
+  volver se aleja, y pasar fotos corre de costado 28px con fundido. Antes todo
+  entraba con un zoom del 28% y salía al 150%, que sobre una foto de interior
+  se leía como un salto.
+- **Modelo de datos**: el nodo pasó de `{ image, alt, aspect, extras[] }` a
+  `{ photos: TourPhoto[] }`. Un ambiente ya no tiene una foto principal y
+  agregados, tiene una lista ordenada. `src/lib/data/tour.ts`
+- **Encuadre horizontal, además del vertical.** El encuadre ya se centraba en
+  el promedio de las `y` de los círculos; ahora hace lo mismo con las `x`.
+  Corriendo la capa `(50 − foco)%` del sobrante ×2, un punto que está al `f%`
+  de la foto queda al `f%` de la ventana. Sin eso, el círculo "Ir al pasillo"
+  —al 78% del ancho de la foto de recepción— quedaba **fuera de la ventana en
+  un teléfono**, donde de una foto apaisada se ve apenas el 40% central del
+  ancho, y el recorrido no se podía continuar. Verificado por simulación en
+  360×480, 768×576 y 1152×720: los 16 círculos caen dentro del marco con
+  espacio para su área táctil de 44px (margen mínimo, 31px).
+- **Precarga de la foto anterior y la siguiente**, con el mismo `sizes` que usa
+  el visor —que es lo que decide qué variante baja el navegador—, así la
+  flecha no muestra un hueco. No se precarga la carpeta entera.
+- **Tres reglas del centro** que no se pueden inferir de las fotos y que quedan
+  escritas en el encabezado de `tour.ts`: al baño se entra viendo primero el
+  pasillo frente a su puerta; volver desde el consultorio 3 o el 5 pasa por la
+  vista del pasillo hacia la salida y no vuelve directo; y el consultorio 5 es
+  el que el plano viejo llamaba 4, no son dos ambientes.
+- **El pie de ayuda se arma con lo que la parada realmente ofrece**: en un
+  consultorio no hay círculos y en una foto única no hay flechas, así que
+  anunciarlos sería mentir.
+- **Teclado**: las flechas pasan las fotos, pero solo con el foco dentro del
+  visor. Un listener global se llevaría puestas las flechas del resto de la
+  página.
+- **Nota de copia**: la parada de vuelta se titula "Pasillo", igual que la de
+  ida. Es el mismo lugar mirado al revés, y el botón de volver arma su texto
+  con ese título: con un nombre propio quedaba "Volver a De vuelta por el
+  pasillo". Lo que distingue a las dos paradas es el pie.
+
+### Verificado
+
+`npx tsc --noEmit` · `npm run lint` · `npx next build` — sin errores. Las 38
+fotos referenciadas existen en disco, las proporciones declaradas coinciden con
+las reales y no quedó ninguna sin usar.
+
+### Encontrado y no modificado
+
+- **`public/images/recorrido/`** (2,1 MB, 24 archivos) quedó sin una sola
+  referencia en el código: son las fotos del recorrido anterior. No se borró.
+- **`pasillo-03`, `pasillo-04` y `pasillo-05`** vienen en 447×797, 445×793 y
+  442×791: son las únicas fotos del lote por debajo de 1000px y se agrandan
+  bastante en pantalla. Convendría volver a exportarlas del original.
+
 ## 2026-09-18 — Preguntas frecuentes con contenido real
 
 - **Contenido reemplazado por completo.** El anterior (derivación médica,
