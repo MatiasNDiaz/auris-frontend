@@ -1,71 +1,61 @@
+import { siteConfig } from "@/config/site";
 import type { FAQ } from "@/lib/types";
 
+/**
+ * Contenido real, extraído del material gráfico ya publicado del centro
+ * (carteles, historias de Instagram). No se agregan preguntas ni respuestas
+ * sin ese respaldo: la lista se va a ir ampliando a medida que se apruebe
+ * más contenido, y mientras tanto un servicio sin pregunta acá no significa
+ * que no exista —tiene su propia página en `/servicios`—.
+ *
+ * El teléfono, el WhatsApp y la dirección salen de `siteConfig` y no de un
+ * texto suelto: si el centro cambia un número, esta respuesta lo sigue solo.
+ */
 export const faqs: FAQ[] = [
   {
-    category: "Turnos y consultas",
-    question: "¿Cómo saco un turno?",
+    category: "Sobre el centro",
+    question: "¿Qué servicios ofrece Auris?",
     answer:
-      "Podés solicitarlo por WhatsApp desde cualquier botón de 'Solicitar turno' del sitio, o llamándonos por teléfono en nuestro horario de atención. Te respondemos con la disponibilidad del profesional y coordinamos día y horario.",
+      "Auris es un espacio de salud y bienestar con 8 áreas: Odontología (rehabilitación oral, implantología, alineadores y ortodoncia), Odontopediatría funcional, Bruxismo y disfunciones, Estética facial y corporal, Psicología, Fonoaudiología y Taller de conversación para adultos mayores.",
   },
   {
-    category: "Turnos y consultas",
-    question: "¿Necesito derivación médica para atenderme?",
-    answer:
-      "Para la mayoría de los servicios no hace falta. En fonoaudiología suele solicitarse una orden médica cuando el tratamiento se cubre por obra social; si vas a abonar de forma particular, no es necesaria.",
+    category: "Sobre el centro",
+    question: "¿Dónde están ubicados?",
+    answer: `Estamos en ${siteConfig.address.street}, en el barrio ${siteConfig.address.neighborhood}, ${siteConfig.address.city}.`,
   },
   {
-    category: "Turnos y consultas",
-    question: "¿Qué pasa si no puedo asistir a mi turno?",
-    answer:
-      "Te pedimos avisarnos con al menos 24 horas de anticipación para poder reasignar el espacio. Podés cancelar o reprogramar escribiéndonos por WhatsApp.",
-  },
-  {
-    category: "Turnos y consultas",
-    question: "¿Atienden por videollamada?",
-    answer:
-      "Sí. Psicología y fonoaudiología ofrecen sesiones online con la misma modalidad y duración que las presenciales. El resto de los servicios requiere atención presencial.",
-  },
-  {
-    category: "Servicios y tratamientos",
-    question: "¿Cuánto dura una primera consulta?",
-    answer:
-      "La primera entrevista suele durar entre 45 y 60 minutos, según el servicio. Es un encuentro de evaluación donde definimos objetivos y te explicamos el plan de trabajo propuesto.",
-  },
-  {
-    category: "Servicios y tratamientos",
-    question: "¿Puedo atenderme en más de una especialidad?",
-    answer:
-      "Sí, y en muchos casos lo recomendamos. Nuestro equipo trabaja de forma interdisciplinaria: si tu tratamiento se beneficia del aporte de otra especialidad, te lo proponemos y coordinamos internamente.",
-  },
-  {
-    category: "Servicios y tratamientos",
-    question: "¿Atienden niños y adolescentes?",
-    answer:
-      "Sí. Psicología, fonoaudiología y odontología atienden pacientes pediátricos y adolescentes, siempre con acompañamiento de un adulto responsable en la primera entrevista.",
-  },
-  {
-    category: "Pagos y cobertura",
-    question: "¿Trabajan con obras sociales y prepagas?",
-    answer:
-      "Trabajamos con las principales coberturas del país, y la cobertura varía según el servicio. Consultanos por WhatsApp indicando tu obra social y la especialidad para confirmarte el detalle actualizado.",
+    category: "Sobre el centro",
+    question: "¿Cómo pido un turno?",
+    answer: `Podés escribirnos por WhatsApp al ${siteConfig.whatsapp}, o llamarnos al ${siteConfig.phone} para info y turnos.`,
   },
   {
     category: "Pagos y cobertura",
     question: "¿Qué medios de pago aceptan?",
-    answer:
-      "Aceptamos efectivo, transferencia bancaria, débito y tarjetas de crédito. En tratamientos de varias sesiones ofrecemos planes de pago; consultanos las opciones vigentes.",
+    answer: "Aceptamos efectivo, transferencia bancaria y tarjetas.",
   },
   {
-    category: "El centro",
-    question: "¿El centro es accesible?",
+    category: "Pagos y cobertura",
+    question: "¿Trabajan con obras sociales?",
     answer:
-      "Sí. El acceso al edificio y todos los consultorios de planta baja están adaptados para personas con movilidad reducida, y contamos con baño accesible.",
+      "Sí. Actualmente trabajamos con: Swiss Medical, OSDE, Medifé, Osmedica, Avalian, Osadef, CPCE, Caja de Abogados, Prevención Salud, Jerárquicos, PAMI, Mosaistas, Galeno, Poder Judicial, Medicus, DASPU y Caja Notarial. Si tu obra social no está en la lista, consultanos igual — trabajamos con otras adicionales.",
   },
   {
-    category: "El centro",
-    question: "¿Hay estacionamiento cerca?",
+    category: "Taller de adultos mayores",
+    question: "¿Qué incluye el Taller de conversación para adultos mayores?",
     answer:
-      "Contamos con estacionamiento en la zona y varias líneas de colectivo a menos de dos cuadras. En la sección de contacto vas a encontrar el mapa con indicaciones para llegar.",
+      "Es un espacio guiado por la Lic. Eugenia Villalobos, pensado para compartir, ejercitar el lenguaje y disfrutar el encuentro. Trabajamos sobre 4 ejes: estimulación del lenguaje, la memoria y la atención; mejora de la comunicación; generación de nuevos vínculos; y fortalecimiento de la confianza.",
+  },
+  {
+    category: "Tratamientos estéticos",
+    question: "¿Qué es la toxina botulínica facial y para qué sirve?",
+    answer:
+      "Es un tratamiento estético que suaviza arrugas y líneas de expresión, previene la formación de arrugas nuevas y aporta un aspecto fresco y descansado al rostro.",
+  },
+  {
+    category: "Tratamientos estéticos",
+    question: "¿Qué otros tratamientos estéticos destacados tienen?",
+    answer:
+      "Full Face, Peeling Glow, Yoga Facial, Oxygeneo y Microneedling con exosomas y PDRN, además de la toxina botulínica facial.",
   },
 ];
 

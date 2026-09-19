@@ -1,5 +1,31 @@
 # Changelog
 
+## 2026-09-18 — Preguntas frecuentes con contenido real
+
+- **Contenido reemplazado por completo.** El anterior (derivación médica,
+  videollamada, accesibilidad, estacionamiento) era texto genérico sin
+  respaldo. El nuevo son 8 preguntas extraídas de material gráfico ya
+  publicado del centro, agrupadas en 4 categorías: "Sobre el centro", "Pagos
+  y cobertura", "Taller de adultos mayores" y "Tratamientos estéticos".
+  `src/lib/data/faqs.ts`
+- **Teléfono, WhatsApp y dirección salen de `siteConfig`**, interpolados en
+  el texto de la respuesta en vez de tipeados de nuevo: si el centro cambia
+  un número, la respuesta lo sigue sola y no puede quedar desactualizada.
+- **Acordeón modernizado.** El chevron pasó de dos íconos que se
+  intercambiaban de golpe a uno solo que rota 180°, con la misma curva
+  (`cubic-bezier(0.21, 0.47, 0.32, 0.98)`) que usa el `Reveal` de scroll en
+  todo el sitio — mismo lenguaje de movimiento, no uno nuevo.
+  `src/components/ui/accordion.tsx`
+- **Cada categoría es una tarjeta** (borde, sombra suave, esquinas
+  redondeadas) con ícono propio, en vez de una lista plana terminada en un
+  borde suelto. Los íconos de "Taller de adultos mayores" y "Tratamientos
+  estéticos" repiten los que ya identifican a esos servicios en
+  `lib/icons.tsx`, para que se lean como la misma familia visual.
+- **Nota:** la respuesta de "¿Qué servicios ofrece Auris?" dice "8 áreas" pero
+  nombra 7 (pliega "alineadores y ortodoncia" como sub-ítem de Odontología),
+  mientras que en el sitio esa es una página de servicio propia. Se dejó tal
+  cual la escribió el centro, sin corregirla.
+
 ## 2026-09-18 — Equipo de recepción
 
 - **Tres recepcionistas** (Leticia Loza, Soledad Lluch, Yanina Solari) con sus
