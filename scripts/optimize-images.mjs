@@ -160,6 +160,20 @@ const ENCUADRE = {
   // la baja hasta la altura de las demás y, al hacer la foto más alta, la deja
   // del mismo tamaño en la tarjeta.
   "profesionales/romina-tchakerian/romina-1": { arriba: 0.303 },
+  // Recepción: las tres están paradas contra la pared del logo pero ninguna en
+  // el centro del cuadro, y la tarjeta del listado es vertical. En las dos
+  // tomas verticales la tarjeta muestra el ancho completo, así que no hay
+  // `object-position` que las centre: el recorte tiene que hacerse acá. A
+  // Soledad, además, la toma apaisada la dejaba ocupando un quinto del cuadro.
+  //
+  // Las dos fotos de cada una llevan el mismo recorte: la 2 es la del cruce al
+  // pasar el cursor y con otro encuadre el cambio daba un salto.
+  "recepcionistas/leticia-loza/Leticia-1": { ancho: 0.78, centroX: 0.61 },
+  "recepcionistas/leticia-loza/Leticia-2": { ancho: 0.78, centroX: 0.61 },
+  "recepcionistas/soledad-lluch/Soledad-1": { ancho: 0.38, centroX: 0.475 },
+  "recepcionistas/soledad-lluch/Soledad-2": { ancho: 0.38, centroX: 0.475 },
+  "recepcionistas/yanina-solari/Yanina-1": { ancho: 0.56, centroX: 0.715 },
+  "recepcionistas/yanina-solari/Yanina-2": { ancho: 0.56, centroX: 0.715 },
   // Sus dos fotos vienen en 0,754 y con poco aire arriba: queda más chica y
   // más alta que el resto del equipo. El aire la baja a la altura de las
   // demás y el recorte de los costados la deja en 0,562, la proporción del

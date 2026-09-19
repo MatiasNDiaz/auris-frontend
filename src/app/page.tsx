@@ -2,7 +2,6 @@ import { AboutPreview } from "@/components/sections/AboutPreview";
 import { CtaBanner } from "@/components/sections/CtaBanner";
 import { Hero } from "@/components/sections/Hero";
 import { QuickLinks } from "@/components/sections/QuickLinks";
-import { ReceptionTeam } from "@/components/sections/ReceptionTeam";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
 import { StatsBand } from "@/components/sections/StatsBand";
 import { StickyTreatment } from "@/components/sections/StickyTreatment";
@@ -32,12 +31,6 @@ export default function HomePage() {
       </WindReveal>
       <WindReveal palette="beige">
         <TeamCarousel />
-      </WindReveal>
-      {/* Recepción va justo después del equipo: es la continuación natural
-          del recorrido —quién te atiende, quién te recibe— y comparte el
-          mismo panel expansor. */}
-      <WindReveal>
-        <ReceptionTeam />
       </WindReveal>
       <WindReveal>
         <StatsBand />

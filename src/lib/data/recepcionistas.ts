@@ -20,30 +20,29 @@ const fotos = fotosGeneradas as Record<
 >;
 
 const equipo: Omit<Recepcionista, "photoUrl" | "photoHoverUrl">[] = [
+  // El centrado horizontal de las tres se resuelve recortando el archivo (ver
+  // `ENCUADRE` en `scripts/optimize-images.mjs`): la tarjeta es vertical y de
+  // una foto vertical muestra el ancho completo, así que no hay
+  // `object-position` que las corra. Lo que queda acá es el eje vertical.
   {
     slug: "leticia-loza",
     name: "Leticia Loza",
-    // Vertical y de cuerpo entero: sin correr el recorte hacia arriba, la
-    // tarjeta le deja demasiada pared por encima de la cabeza.
-    fotoFoco: "center 30%",
-    fotoHoverFoco: "center 30%",
+    fotoFoco: "center 40%",
+    fotoHoverFoco: "center 40%",
   },
   {
     slug: "soledad-lluch",
     name: "Soledad Lluch",
-    // La única con la toma apaisada: la tarjeta es vertical, así que acá lo
-    // que se recorta son los costados y lo que hay que elegir es el eje
-    // horizontal. En el centro queda corrida contra el borde derecho.
-    fotoFoco: "65% center",
-    fotoHoverFoco: "65% center",
+    // Su toma es apaisada: después del recorte queda casi cuadrada, así que el
+    // margen vertical es poco y hay que dejarlo arriba, donde está su cara.
+    fotoFoco: "center 25%",
+    fotoHoverFoco: "center 25%",
   },
   {
     slug: "yanina-solari",
     name: "Yanina Solari",
-    // Está más lejos de la cámara que las otras dos: bajando el recorte se la
-    // ve del mismo tamaño en la tarjeta.
-    fotoFoco: "center 55%",
-    fotoHoverFoco: "center 55%",
+    fotoFoco: "center 60%",
+    fotoHoverFoco: "center 60%",
   },
 ];
 

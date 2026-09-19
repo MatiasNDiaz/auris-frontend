@@ -4,13 +4,18 @@
 
 - **Tres recepcionistas** (Leticia Loza, Soledad Lluch, Yanina Solari) con sus
   dos fotos cada una, optimizadas de 1,3–1,7 MB a 149–239 KB.
-- **En la home**, después del equipo: los mismos paneles expansores del
-  acordeón, con el cruce a la segunda foto al pasar el cursor.
-  `src/components/sections/ReceptionTeam.tsx` (nuevo)
 - **En el listado del equipo**, al final y con filtro propio "Recepción". Van
   en su propia grilla y no mezcladas: son tarjetas sin ficha detrás, y
   mezclarlas rompería la expectativa de que una tarjeta lleva a algún lado.
   `src/components/shared/RecepcionistaCard.tsx` (nuevo)
+- **No aparecen en la home**: la sección quedó solo en el listado del equipo.
+- **Centradas por recorte del archivo, no por `object-position`.** Ninguna de
+  las tres está en el centro de su foto (Leticia al 61% del ancho, Soledad al
+  47% ocupando un quinto del cuadro, Yanina al 71%). En una tarjeta vertical,
+  de una foto vertical se muestra el ancho completo: no hay encuadre por CSS
+  que las corra, hay que recortar el archivo. Va en `ENCUADRE` de
+  `optimize-images.mjs`, con el mismo recorte para la foto 1 y la 2 —si
+  difieren, el cruce del hover salta—.
 - **No tienen página de detalle** ni transición de elemento compartido: esa
   animación existe para el morph de la foto al entrar a una ficha.
 - **Tipo `Recepcionista` aparte** de `Professional`: no atienden pacientes, no
