@@ -114,6 +114,16 @@ const altos = {
   extra: "h-36 sm:h-54 lg:h-72",
 } as const;
 
+/**
+ * `normal` cuando hay que reservar el aire de arriba: las mismas medidas
+ * multiplicadas por 1,375 (220/160, que es lo que crece el viewBox).
+ *
+ * La curva queda exactamente del mismo tamaño y en el mismo lugar; lo único
+ * que se agrega es hueco transparente por encima, donde apoyan las tiras.
+ * `alta` y `extra` ya lo traen incluido en sus propias medidas.
+ */
+const NORMAL_CON_AIRE = "h-16.5 sm:h-22 lg:h-33";
+
 export function WaveDivider({
   variant = "gentle",
   className,
@@ -128,6 +138,21 @@ export function WaveDivider({
   const filete = lineaClassName ? lineaWidth : 0;
   const d = alargar(shapes[variant]);
 
+  /*
+   * Si hay tiras, el lienzo tiene que reservar aire por encima de la curva.
+   *
+   * Las tiras son copias del mismo trazo corridas hacia arriba, así que lo que
+   * en la curva original queda cerca del techo, en la copia se va afuera del
+   * lienzo y el navegador lo recorta al ras.
+   *
+   * `alta` y `extra` ya reservaban ese aire; `normal` no, y ahí se veía: la
+   * curva del hero sube hasta 11,6 unidades del techo en x≈1072 de 1440 —el
+   * pico del lado derecho—, y su franja, corrida 30 unidades, terminaba en
+   * −18. Justo el punto más alto salía rebanado, plano, como si la onda
+   * estuviera cortada.
+   */
+  const conAire = alto !== "normal" || franja + filete > 0;
+
   return (
     <svg
       aria-hidden
@@ -135,13 +160,11 @@ export function WaveDivider({
       // transparente y el alto en pantalla lo acompaña, así que la curva no se
       // mueve ni cambia de tamaño: solo aparece lugar por encima para apoyar
       // las tiras de color.
-      viewBox={
-        alto === "normal" ? "0 0 1440 160" : `0 ${-ARRIBA} 1440 ${160 + ARRIBA}`
-      }
+      viewBox={conAire ? `0 ${-ARRIBA} 1440 ${160 + ARRIBA}` : "0 0 1440 160"}
       preserveAspectRatio="none"
       className={cn(
         "pointer-events-none absolute inset-x-0 bottom-0 z-10 block w-full",
-        altos[alto],
+        alto === "normal" && conAire ? NORMAL_CON_AIRE : altos[alto],
         flip && "-scale-x-100",
         className,
       )}

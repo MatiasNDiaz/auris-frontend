@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { BLUR_DATA_URL } from "@/lib/blur";
-import { listedServices as services } from "@/lib/data/services";
+import { heroServices as services } from "@/lib/data/services";
 import { renderServiceIcon } from "@/lib/icons";
 import { useMediaQuery } from "@/lib/use-media-query";
 import { cn } from "@/lib/utils";
@@ -128,7 +128,10 @@ export function ServiceFan({
               )}
             >
               <Image
-                src={service.imageUrl}
+                // La misma foto que el fondo del hero: la tarjeta es su
+                // miniatura, y con fotos distintas el cambio no se lee como el
+                // mismo servicio.
+                src={service.landingImageUrl ?? service.imageUrl}
                 alt=""
                 fill
                 // La tarjeta mide 120×160 en mobile y 152×200 de `md` para
@@ -139,6 +142,11 @@ export function ServiceFan({
                 sizes="360px"
                 placeholder="blur"
                 blurDataURL={BLUR_DATA_URL}
+                // La tarjeta es vertical, así que recorta por los costados como
+                // el hero en mobile: de una foto apaisada entra un tercio del
+                // ancho. Va el mismo encuadre para que la miniatura muestre a
+                // la misma persona que el fondo.
+                style={{ objectPosition: service.landingFoco ?? "center" }}
                 className="object-cover"
               />
               <div
@@ -199,7 +207,10 @@ export function ServiceFan({
             type="button"
             onClick={() => onStep(-1)}
             aria-label="Servicio anterior"
-            className="inline-flex size-10 items-center justify-center rounded-full border border-cream-50/35 bg-ink-900/25 text-cream-50 backdrop-blur-sm transition-colors hover:bg-cream-50/20 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+            // 44px y no 40: es el mínimo con el que un dedo acierta sin
+            // apuntar. En un teléfono estos botones caen justo en el pliegue,
+            // así que cada píxel de blanco cuenta.
+            className="inline-flex size-11 items-center justify-center rounded-full border border-cream-50/35 bg-ink-900/25 text-cream-50 backdrop-blur-sm transition-colors hover:bg-cream-50/20 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
           >
             <ChevronLeft className="size-5" aria-hidden />
           </button>
@@ -214,14 +225,20 @@ export function ServiceFan({
             type="button"
             onClick={() => onStep(1)}
             aria-label="Servicio siguiente"
-            className="inline-flex size-10 items-center justify-center rounded-full border border-cream-50/35 bg-ink-900/25 text-cream-50 backdrop-blur-sm transition-colors hover:bg-cream-50/20 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
+            className="inline-flex size-11 items-center justify-center rounded-full border border-cream-50/35 bg-ink-900/25 text-cream-50 backdrop-blur-sm transition-colors hover:bg-cream-50/20 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none"
           >
             <ChevronRight className="size-5" aria-hidden />
           </button>
         </div>
 
-        {/* Selección directa, además de las flechas. */}
-        <div className="flex items-center gap-1.5">
+        {/* Selección directa, además de las flechas.
+            El punto se dibuja de 6px, pero lo que se toca es el `before`: una
+            caja invisible mucho más alta y ancha que él. Sin eso había que
+            acertarle a un blanco de 6×6, que con el dedo es casi imposible.
+            La caja no puede pasarse de la mitad del hueco entre puntos o se
+            montan entre sí y el de al lado se queda sin tocar: de ahí que el
+            hueco pase de 6 a 10px, para poder darle 5 de cada lado. */}
+        <div className="flex items-center gap-2.5">
           {services.map((service, index) => (
             <button
               key={service.slug}
@@ -230,7 +247,8 @@ export function ServiceFan({
               aria-label={`Ver ${service.name}`}
               aria-current={index === active}
               className={cn(
-                "h-1.5 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none",
+                "relative h-1.5 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none",
+                "before:absolute before:-inset-x-1.25 before:-inset-y-5 before:content-['']",
                 index === active
                   ? "w-6 bg-cream-50"
                   : "w-1.5 bg-cream-50/45 hover:bg-cream-50/75",

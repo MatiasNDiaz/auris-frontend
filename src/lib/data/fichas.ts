@@ -831,8 +831,8 @@ const TIENE_CONTENIDO = /[\p{L}\p{N}]/u;
  *   - Rótulos (títulos, marcas, etiquetas): si coinciden exacto con un
  *     encabezado de la bio, lo cubren; si no, son rótulos de la interfaz.
  *
- * Título, especialidad y contactos no entran: la plantilla los muestra
- * siempre directo de la `Trayectoria`.
+ * Título y especialidad no entran: la plantilla los muestra siempre directo de
+ * la `Trayectoria`.
  */
 function comprobar(slug: string, bio: Trayectoria, ficha: Ficha) {
   const piezas = bio.bloques.flatMap((bloque) =>

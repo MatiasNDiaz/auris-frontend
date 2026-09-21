@@ -39,6 +39,22 @@ export type Service = {
    * foto del consultorio, por ejemplo—.
    */
   heroFoco?: string;
+  /**
+   * Foto propia para el carrusel de la portada, cuando no es la misma que la
+   * del catálogo. Solo la usan el hero y su abanico: la tarjeta del servicio y
+   * el banner de su página siguen con `imageUrl`.
+   */
+  landingImageUrl?: string;
+  /**
+   * Encuadre de esa foto en el carrusel, como `object-position`.
+   *
+   * El que manda es el eje X, y se nota solo en mobile: ahí la caja del hero es
+   * casi el doble de alta que ancha, y de una foto apaisada entra apenas un
+   * quinto del ancho. Sin esto, de una toma donde el profesional está a un
+   * costado se ve el fondo. En escritorio la caja es más apaisada que la foto,
+   * así que se ve el ancho completo y este valor no cambia nada.
+   */
+  landingFoco?: string;
   features: string[];
   /**
    * Ramas del servicio, cuando tiene varias con entidad propia. Solo las lleva
@@ -113,14 +129,6 @@ export type Trayectoria = {
   /** La línea que va debajo del título. */
   especialidad: string;
   bloques: BloqueTrayectoria[];
-  contactos: {
-    tipo: "telefono" | "whatsapp";
-    etiqueta: string;
-    /** Tal como lo escribió el centro, para mostrarlo. */
-    numero: string;
-    /** `tel:` o `https://wa.me/`, ya normalizado. */
-    href: string;
-  }[];
 };
 
 /**

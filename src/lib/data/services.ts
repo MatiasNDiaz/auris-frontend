@@ -10,7 +10,7 @@ export const services: Service[] = [
     tagline: "Prevención antes que tratamiento",
     heroTitle: "Tu salud bucal, cuidada en serio",
     heroSubtitle:
-      "Las cinco áreas de la odontología, explicadas paso a paso antes de empezar.",
+      "Del control de rutina a la rehabilitación completa, con un plan que conversamos con vos antes de empezar.",
     fullDescription:
       "La odontología es el área central del centro y la que reúne más áreas propias: rehabilitación oral, implantología, odontopediatría funcional, alineadores y ortodoncia. Trabajamos con un enfoque preventivo y mínimamente invasivo, desde el control periódico y la limpieza profesional hasta la reposición de piezas perdidas y la corrección de la mordida. Cada plan se arma después de un diagnóstico completo que conversamos con vos antes de empezar, con las etapas y los tiempos reales de cada tratamiento sobre la mesa. Contamos con equipamiento digital que reduce los tiempos de consulta y hace más cómoda cada visita.",
     imageUrl: "/images/servicios/odontologia.webp",
@@ -129,10 +129,15 @@ export const services: Service[] = [
     tagline: "Resultados que se sostienen",
     heroTitle: "Resultados que se sostienen",
     heroSubtitle:
-      "Planes faciales y corporales diseñados sobre un diagnóstico real, sin promesas desmedidas.",
+      "Un plan pensado para tu piel, con resultados reales y pautas de cuidado para sostenerlos en casa.",
     fullDescription:
       "Diseñamos planes de tratamiento personalizados a partir de un diagnóstico de piel y de los objetivos de cada persona. Priorizamos procedimientos seguros, con evidencia y resultados sostenibles en el tiempo, evitando promesas desmedidas. El seguimiento posterior es parte del tratamiento: acompañamos con pautas de cuidado domiciliario para que los resultados se mantengan.",
     imageUrl: "/EsteticaCorporal.webp",
+    // La profesional está al 30% del ancho: en el recorte vertical de mobile,
+    // centrada se veía la camilla y no ella.
+    landingImageUrl:
+      "/images/servicios/portada/estetica-facial-y-corporal.webp",
+    landingFoco: "25% 20%",
     features: [
       "Diagnóstico y limpieza facial profunda",
       "Tratamientos de hidratación y renovación cutánea",
@@ -149,10 +154,12 @@ export const services: Service[] = [
     tagline: "Comunicarse mejor, a toda edad",
     heroTitle: "Comunicarse mejor, a toda edad",
     heroSubtitle:
-      "Lenguaje, voz, audición y deglución, con evaluación diagnóstica y trabajo articulado.",
+      "Lenguaje, voz, audición y deglución, acompañados paso a paso en cada etapa de la vida.",
     fullDescription:
       "Atendemos a niños, adolescentes y adultos en dificultades del lenguaje, el habla, la voz, la audición y la deglución. El proceso comienza con una evaluación diagnóstica detallada y, cuando corresponde, se articula con la familia, la escuela o el equipo médico tratante. Los tratamientos se planifican en ciclos con revisión periódica de objetivos.",
     imageUrl: "/images/servicios/fonoaudiologia.webp",
+    landingImageUrl: "/images/servicios/portada/fonoaudiologia.webp",
+    landingFoco: "29% 25%",
     features: [
       "Evaluación del lenguaje y el habla",
       "Tratamiento de la voz profesional",
@@ -169,10 +176,16 @@ export const services: Service[] = [
     tagline: "Un espacio para pensarte con tiempo",
     heroTitle: "Un espacio para pensarte con tiempo",
     heroSubtitle:
-      "Terapia individual, de pareja y familiar, con la escucha y el encuadre que cada proceso necesita.",
+      "Un lugar tranquilo para hablar de lo que te pasa, a tu ritmo y con la escucha que cada proceso necesita.",
     fullDescription:
       "Nuestro equipo de psicología acompaña procesos de cambio personal desde un enfoque integrador, respetando el tiempo y la singularidad de cada persona. Trabajamos sobre ansiedad, estados de ánimo, duelos, vínculos y crisis vitales, tanto en formato individual como de pareja y familia. Cada proceso comienza con entrevistas de admisión donde definimos objetivos claros y elegimos juntos el encuadre más adecuado.",
     imageUrl: "/Piscologia.webp",
+    // La única del carrusel que es 16:9 y no 2.34: en escritorio se recorta a
+    // lo alto, así que acá el eje Y también cuenta. Con el 55% la foto sube lo
+    // justo para que entre el escritorio con los papeles, sin comerle el aire
+    // de arriba a la cabeza.
+    landingImageUrl: "/images/servicios/portada/psicologia.webp",
+    landingFoco: "37% 55%",
     features: [
       "Terapia individual para adolescentes y adultos",
       "Terapia de pareja y orientación familiar",
@@ -189,10 +202,12 @@ export const services: Service[] = [
     tagline: "Seguir activo, en buena compañía",
     heroTitle: "Seguir activo, en buena compañía",
     heroSubtitle:
-      "Encuentros grupales que sostienen la memoria, la autonomía y el vínculo social.",
+      "Encuentros semanales en grupos reducidos, para ejercitar la memoria y compartir un buen rato con otros.",
     fullDescription:
       "Un espacio grupal pensado para personas mayores, coordinado por profesionales del equipo. Los encuentros combinan estimulación cognitiva, actividad física suave adaptada y dinámicas de participación que fortalecen el vínculo social. El objetivo es sostener la autonomía en la vida cotidiana y acompañar esta etapa desde el encuentro con otros, en grupos reducidos donde cada persona avanza a su ritmo.",
     imageUrl: "/TallerAdultos.webp",
+    landingImageUrl: "/images/servicios/portada/taller-de-adultos-mayores.webp",
+    landingFoco: "54% 25%",
     features: [
       "Estimulación cognitiva y de la memoria",
       "Actividad física suave y adaptada",
@@ -227,12 +242,33 @@ export const services: Service[] = [
 ];
 
 /**
- * Los que se muestran en las grillas, el hero, el footer y el filtro del
+ * Los que se muestran en las grillas, el footer, el menú y el filtro del
  * equipo. `services` sigue teniendo todos para las rutas y las búsquedas por
  * slug: un servicio sin listar conserva su página.
  */
 export const listedServices = services.filter(
   (service) => service.listed !== false,
+);
+
+/**
+ * Los que rota el carrusel del hero, en este orden.
+ *
+ * Son cinco y no los ocho de `listedServices` a propósito: la portada muestra
+ * una selección para no saturar la primera pantalla, y el listado completo ya
+ * vive en la página de servicios. Por eso es una lista aparte y no un recorte
+ * de `listedServices`: ahí el orden lo manda el catálogo, acá lo manda el
+ * centro.
+ */
+const EN_EL_HERO = [
+  "odontologia",
+  "psicologia",
+  "fonoaudiologia",
+  "taller-de-adultos-mayores",
+  "estetica-facial-y-corporal",
+];
+
+export const heroServices = EN_EL_HERO.flatMap(
+  (slug) => services.find((service) => service.slug === slug) ?? [],
 );
 
 export function getServiceBySlug(slug: string) {

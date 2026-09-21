@@ -1,5 +1,98 @@
 # Changelog
 
+## 2026-09-21 — Fuera el teléfono del pie de cada ficha
+
+- **Se eliminó el bloque "Turnos y consultas"** del final de la ficha de cada
+  profesional, para todo el equipo. No queda ningún teléfono en esas páginas:
+  el único que sigue apareciendo es el del footer del sitio, que es el fijo del
+  centro y va en todas las páginas por igual.
+- Se borró el dato de los doce profesionales (`trayectorias.ts`), el campo
+  `contactos` del tipo `Trayectoria` y el bloque que lo dibujaba en
+  `ProfessionalFicha.tsx`, para que no quede el hueco esperando un dato que ya
+  no va a existir.
+- **El botón "Solicitar turno con…" no se tocó**: sigue en su lugar y sigue
+  yendo al WhatsApp del centro.
+
+## 2026-09-21 — Fotos propias para el carrusel de la portada
+
+- **Cuatro fotos nuevas solo para el hero de la portada**: psicología,
+  fonoaudiología, taller de adultos mayores y estética. Odontología queda con
+  la suya. `public/images/servicios/portada/`
+- **Campos nuevos `landingImageUrl` y `landingFoco`**, y no un reemplazo de
+  `imageUrl`, porque el cambio era solo para la portada: la tarjeta del
+  servicio y el banner de su página siguen con la foto del catálogo.
+  Verificado: las cuatro páginas de servicio sirven su imagen de siempre.
+- **Encuadre por foto, medido y no a ojo.** En mobile la caja del hero es
+  390×894 —casi el doble de alta que ancha—, así que de una foto apaisada 2.34
+  entra apenas el **18,8% del ancho**. Centradas, en estética y fonoaudiología
+  se veía la camilla y el fondo en vez de la profesional, que están al 30% y al
+  33% del ancho. Los valores salen de simular el recorte real en 1920×780 y en
+  390×894. En escritorio la caja es más apaisada que la foto, así que se ve el
+  ancho completo y el eje X no cambia nada: el encuadre trabaja solo en mobile.
+- **La miniatura del abanico usa la misma foto y el mismo encuadre**: es
+  vertical y recorta igual de fuerte, y con fotos distintas la tarjeta y el
+  fondo no se leían como el mismo servicio.
+- **Las fuentes se movieron** de `assets/raw/images/profesionales/Slider-HERO/`
+  a `assets/raw/images/servicios/portada/`, con el nombre del slug. En la
+  carpeta anterior el optimizador las tomaba como retrato de profesional —el
+  preset se elige por carpeta, en cualquier nivel de la ruta— y además las
+  mayúsculas de `Slider-HERO` quedaban en la URL. 6,4 MB → 637 KB.
+
+- **Psicología sube a `37% 55%`** para que entre el escritorio con los papeles.
+  Con el 22% anterior la foto se cortaba justo debajo de sus manos. Solo afecta
+  a escritorio: en mobile la caja es tan vertical que de esta foto se ve el alto
+  completo y el eje Y no cambia nada.
+
+### Controles del carrusel: se podían tocar mal
+
+- **Los puntitos medían 6×6 px.** Ahora el punto se sigue dibujando de 6px pero
+  lo que se toca es un `::before` invisible: **15×45 px** los inactivos y 33×45
+  el activo. El hueco entre puntos pasó de 6 a 10px para poder darles 5 de cada
+  lado —la caja no puede pasarse de la mitad del hueco o se montan entre sí y el
+  de al lado se queda sin poder tocar—. Verificado: los cinco llevan a su slide.
+- **Las flechas pasan de 40 a 44px**, el mínimo con el que un dedo acierta sin
+  apuntar.
+
+### Encontrado y no modificado
+
+- **En un teléfono los controles caen justo en el pliegue**: en 390×844 quedan
+  en y=845, un píxel por debajo del borde. Es consecuencia de que el hero mida
+  894px de alto; moverlos sería cambiar la composición de la portada.
+- **En escritorio el texto se apoya sobre la profesional** en psicología y
+  fonoaudiología: en esas tomas está en el tercio izquierdo, que es donde va el
+  bloque de texto. No se puede corregir con `object-position` —en un monitor de
+  1920 la foto entra entera y el encuadre no tiene margen para correrla—. El
+  degradé y la sombra del texto sostienen la lectura, igual que en odontología.
+
+## 2026-09-21 — Hero: la onda cortada y el carrusel de 8 a 5
+
+- **La franja de la onda salía rebanada en el pico de la derecha.** Las tiras de
+  color no son trazos, son copias del mismo relleno corridas hacia arriba; sin
+  aire por encima de la curva, lo que estaba cerca del techo del lienzo se iba
+  afuera y el navegador lo cortaba al ras. La curva `hero` sube hasta **11,6
+  unidades del techo en x≈1072 de 1440** —el pico del lado derecho—, y su franja,
+  corrida 30 unidades, terminaba en **−18**. `alta` y `extra` ya reservaban ese
+  aire; `normal`, que es la que usa el hero, no. Ahora lo reserva en cuanto hay
+  tiras. `WaveDivider.tsx`
+- **La curva no cambió de tamaño ni de lugar**: el lienzo pasa de 160 a 220
+  unidades y la altura en pantalla acompaña ×1,375 (66 / 88 / 132px contra
+  48 / 64 / 96). Verificado en los tres breakpoints: misma escala, 0,6px por
+  unidad, igual que antes.
+- **El carrusel del hero pasa de 8 servicios a 5**: Odontología, Psicología,
+  Fonoaudiología, Taller de adultos mayores y Estética facial y corporal, en ese
+  orden. El listado completo sigue en la página de servicios.
+- **Va en una lista propia (`heroServices`) y no en un recorte de
+  `listedServices`**, porque ese mismo arreglo alimenta el menú, el footer, la
+  grilla y el contador de servicios de las cifras: recortarlo ahí habría
+  encogido las cuatro cosas. Además el orden lo manda el centro, no el catálogo.
+  `services.ts`
+- **Descripciones del hero reescritas** para esos cinco, más cercanas y
+  concretas. `heroTitle` y `heroSubtitle` solo los usa el hero, así que no
+  afectan a las páginas de servicio.
+- **El abanico no necesitó cambios**: ya repartía las tarjetas por distancia al
+  activo, así que con cinco muestra cuatro en escritorio y tres en mobile, y la
+  quinta sale por la izquierda.
+
 ## 2026-09-21 — Auditoría de imágenes: `sizes` declaraba el ancho equivocado
 
 Un mismo error repetido en seis componentes, y la causa de que las fotos se

@@ -51,14 +51,6 @@ export const trayectorias = {
           "Cada tratamiento comienza con un diagnóstico preciso. A partir de allí, trabaja en el diseño de estrategias personalizadas que permitan recuperar la función, mejorar la salud bucal y acompañar las necesidades estéticas de cada persona.",
       },
     ],
-    contactos: [
-      {
-        tipo: "telefono",
-        etiqueta: "Turnos y consultas",
-        numero: "351 481 0843",
-        href: "tel:+5493514810843",
-      },
-    ],
   },
   // Dra. Carla Daniela Fernández
   "carla-fernandez": {
@@ -106,14 +98,6 @@ export const trayectorias = {
         tipo: "parrafo",
         texto:
           "Cada tratamiento se adapta a las necesidades particulares de la persona, priorizando una atención personalizada, respetuosa y basada en la evaluación clínica y el trabajo interdisciplinario.",
-      },
-    ],
-    contactos: [
-      {
-        tipo: "telefono",
-        etiqueta: "Turnos y consultas",
-        numero: "351 481 0843",
-        href: "tel:+5493514810843",
       },
     ],
   },
@@ -172,14 +156,6 @@ export const trayectorias = {
           "Cada tratamiento parte de una evaluación personalizada que permite comprender las necesidades y objetivos de cada paciente. Su enfoque busca integrar salud, función y estética, priorizando resultados armónicos, naturales y acordes a la identidad de cada persona.",
       },
     ],
-    contactos: [
-      {
-        tipo: "telefono",
-        etiqueta: "Turnos y consultas",
-        numero: "351 481 0843",
-        href: "tel:+5493514810843",
-      },
-    ],
   },
   // Dra. Laura Mansilla Federmann
   "laura-mansilla": {
@@ -220,14 +196,6 @@ export const trayectorias = {
         tipo: "parrafo",
         texto:
           "Su objetivo es que cada persona pueda volver a sonreír, comer y hablar con comodidad, confianza y naturalidad.",
-      },
-    ],
-    contactos: [
-      {
-        tipo: "telefono",
-        etiqueta: "Turnos y consultas",
-        numero: "351 481 0843",
-        href: "tel:+5493514810843",
       },
     ],
   },
@@ -291,14 +259,6 @@ export const trayectorias = {
           "Su filosofía es que cada persona pueda verse y sentirse bien en cada etapa de su vida. La salud de la piel comienza con una observación atenta.",
       },
     ],
-    contactos: [
-      {
-        tipo: "telefono",
-        etiqueta: "Turnos y consultas",
-        numero: "351 481 0843",
-        href: "tel:+5493514810843",
-      },
-    ],
   },
   // Lic. Romina Tchakerian
   "romina-tchakerian": {
@@ -342,14 +302,6 @@ export const trayectorias = {
           "Su objetivo es favorecer el desarrollo y la recuperación de las funciones comunicativas y orofaciales, contribuyendo a mejorar la calidad de vida de cada paciente.",
       },
     ],
-    contactos: [
-      {
-        tipo: "telefono",
-        etiqueta: "Turnos y consultas",
-        numero: "351 481 0843",
-        href: "tel:+5493514810843",
-      },
-    ],
   },
   // Lic. Eugenia Villalobos
   "eugenia-villalobos": {
@@ -382,14 +334,6 @@ export const trayectorias = {
       {
         tipo: "lista",
         items: ["Taller de Conversación.", "Taller de Memoria Auditiva."],
-      },
-    ],
-    contactos: [
-      {
-        tipo: "telefono",
-        etiqueta: "Turnos y consultas",
-        numero: "351 481 0843",
-        href: "tel:+5493514810843",
       },
     ],
   },
@@ -426,14 +370,6 @@ export const trayectorias = {
         ],
       },
     ],
-    contactos: [
-      {
-        tipo: "telefono",
-        etiqueta: "Turnos y consultas",
-        numero: "351 481 0843",
-        href: "tel:+5493514810843",
-      },
-    ],
   },
   // Dra. María Daniela Giansetto
   "daniela-giansetto": {
@@ -466,14 +402,6 @@ export const trayectorias = {
         tipo: "parrafo",
         texto:
           "Porque una sonrisa saludable comienza con un diagnóstico que mira más allá de los dientes.",
-      },
-    ],
-    contactos: [
-      {
-        tipo: "telefono",
-        etiqueta: "Turnos y consultas",
-        numero: "351 481 0843",
-        href: "tel:+5493514810843",
       },
     ],
   },
@@ -525,14 +453,6 @@ export const trayectorias = {
       },
     ],
     // Todavía no pasó un número propio: queda el del centro.
-    contactos: [
-      {
-        tipo: "telefono",
-        etiqueta: "Turnos y consultas",
-        numero: "351 481 0843",
-        href: "tel:+5493514810843",
-      },
-    ],
   },
   // Lic. Soledad Di Martino
   "soledad-di-martino": {
@@ -578,14 +498,6 @@ export const trayectorias = {
         tipo: "parrafo",
         texto:
           "Cada proceso terapéutico es un espacio de escucha, acompañamiento y construcción conjunta. Su objetivo es favorecer el bienestar emocional y brindar herramientas que permitan a cada persona afrontar sus desafíos y desarrollar sus recursos personales.",
-      },
-    ],
-    contactos: [
-      {
-        tipo: "telefono",
-        etiqueta: "Turnos y consultas",
-        numero: "351 481 0843",
-        href: "tel:+5493514810843",
       },
     ],
   },

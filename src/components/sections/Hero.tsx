@@ -9,7 +9,7 @@ import { ShineButton } from "@/components/shared/ShineButton";
 import { WaveDivider } from "@/components/shared/WaveDivider";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { siteConfig } from "@/config/site";
-import { listedServices as services } from "@/lib/data/services";
+import { heroServices as services } from "@/lib/data/services";
 import { renderServiceIcon } from "@/lib/icons";
 
 const AUTOPLAY_MS = 4000;
@@ -110,7 +110,9 @@ export function Hero() {
               className="absolute inset-0"
             >
               <Image
-                src={service.imageUrl}
+                // La foto propia de la portada si la tiene; si no, la del
+                // catálogo. Odontología sigue con la suya de siempre.
+                src={service.landingImageUrl ?? service.imageUrl}
                 alt=""
                 fill
                 /*
@@ -138,10 +140,13 @@ export function Hero() {
                 // compresión el agrandado saca a la luz los artefactos.
                 quality={88}
                 priority={index === 0}
-                // En las ocho fotos la gente está en el tercio de arriba, así
-                // que centradas la franja les cortaba la cabeza. Con el 25%
-                // entran enteras en todas.
-                style={{ objectPosition: "center 25%" }}
+                // En mobile la caja del hero es casi el doble de alta que
+                // ancha, y de una foto apaisada entra apenas un quinto del
+                // ancho: el encuadre de cada foto dice dónde cae ese quinto,
+                // para que sea el profesional y no el fondo. Sin encuadre
+                // propio, el 25% de arriba centrado, que es donde está la
+                // gente en las fotos del catálogo.
+                style={{ objectPosition: service.landingFoco ?? "center 25%" }}
                 className="object-cover"
               />
             </motion.div>

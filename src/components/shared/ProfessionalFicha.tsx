@@ -7,9 +7,7 @@ import {
   HandHeart,
   Leaf,
   Medal,
-  MessageCircle,
   Microscope,
-  Phone,
   Plus,
   Presentation,
   Quote,
@@ -236,7 +234,6 @@ export function ProfessionalFicha({
   const p = paletas[professional.gender];
   const siglas = iniciales(professional.name);
   const nombre = professional.name.split(" ").slice(1).join(" ");
-  const contactos = trayectoria?.contactos ?? [];
   const frase = cerrarFrase(conMayuscula(ficha.enfoque.frase));
 
   return (
@@ -825,53 +822,6 @@ export function ProfessionalFicha({
                     {parrafo}
                   </p>
                 ))}
-              </Reveal>
-            )}
-
-            {contactos.length > 0 && (
-              <Reveal>
-                <ul
-                  className={cn(
-                    "mt-10 flex flex-col gap-3 border-t pt-6 sm:flex-row sm:flex-wrap sm:gap-x-8",
-                    p.separador,
-                  )}
-                >
-                  {contactos.map((contacto) => {
-                    const Icono =
-                      contacto.tipo === "whatsapp" ? MessageCircle : Phone;
-                    const externo = contacto.tipo === "whatsapp";
-
-                    return (
-                      <li key={contacto.href}>
-                        <a
-                          href={contacto.href}
-                          target={externo ? "_blank" : undefined}
-                          rel={externo ? "noopener noreferrer" : undefined}
-                          className={cn(
-                            "group inline-flex items-center gap-3 rounded-xl text-base text-ink-700/85 focus-visible:ring-2 focus-visible:outline-none",
-                            p.foco,
-                          )}
-                        >
-                          <span
-                            aria-hidden
-                            className={cn(
-                              "inline-flex size-9 shrink-0 items-center justify-center rounded-xl ring-1 transition-[translate] duration-200 group-hover:-translate-y-0.5",
-                              p.contacto,
-                            )}
-                          >
-                            <Icono className="size-4.5" strokeWidth={1.7} />
-                          </span>
-                          <span>
-                            {contacto.etiqueta}:{" "}
-                            <strong className="font-semibold text-ink-900 tabular-nums">
-                              {contacto.numero}
-                            </strong>
-                          </span>
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
               </Reveal>
             )}
           </div>
