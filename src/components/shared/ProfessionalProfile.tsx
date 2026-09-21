@@ -285,11 +285,13 @@ export function ProfessionalProfile({
                 custom={0.42}
                 className="mt-9"
               >
+                {/* Sin número propio: todo turno pasa por la línea del
+                    centro. `phone` no se pasa, así que `WhatsAppButton` usa
+                    su valor por defecto (`siteConfig.whatsapp`). */}
                 <WhatsAppButton
                   tone={c.button}
-                  phone={professional.whatsapp}
                   label={`Solicitar turno con ${firstName}`}
-                  message={`¡Hola AURIS! Quisiera solicitar un turno con ${professional.name} (${professional.specialty}).`}
+                  message={`HOLA AURIS QUIERO SOLICITAR TURNO CON ${professional.name}`}
                 />
               </motion.div>
             </div>

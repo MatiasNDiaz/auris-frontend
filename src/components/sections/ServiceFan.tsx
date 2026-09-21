@@ -131,7 +131,12 @@ export function ServiceFan({
                 src={service.imageUrl}
                 alt=""
                 fill
-                sizes="160px"
+                // La tarjeta mide 120×160 en mobile y 152×200 de `md` para
+                // arriba: es vertical, y con una foto apaisada manda el alto,
+                // así que la foto se dibuja a ~356px de ancho aunque la tarjeta
+                // mida 152. Declarando 160 se servía una variante de 384 para
+                // dibujarla al doble.
+                sizes="360px"
                 placeholder="blur"
                 blurDataURL={BLUR_DATA_URL}
                 className="object-cover"

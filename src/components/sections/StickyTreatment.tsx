@@ -40,7 +40,13 @@ export function StickyTreatment() {
           src="/ChicaTratamiento.webp"
           alt="Paciente durante un tratamiento facial en AURIS"
           fill
-          sizes="100vw"
+          // La foto ocupa la pantalla entera (`h-screen`) y es muy apaisada
+          // (2.36), así que la caja nunca llega a serlo tanto: manda siempre el
+          // alto y la foto se dibuja entre 1650 y 2350px de ancho, en cualquier
+          // pantalla. `sizes` no admite `vh`, así que va un valor fijo de ese
+          // orden; como el archivo mide 1584 de ancho, el efecto es que se
+          // sirve entero, que es lo máximo disponible.
+          sizes="2000px"
           className="object-cover"
         />
         <div
@@ -68,7 +74,13 @@ export function StickyTreatment() {
       {/* Panel que sube por encima de la foto y la cubre. */}
       <div className="relative z-10 overflow-hidden rounded-t-[3rem] bg-surface-sage pt-20 pb-24 shadow-[0_-30px_60px_-15px_rgba(0,0,0,0.35)] lg:pt-24">
         <LeafScatter pattern="a" />
-        <LeafSprig palette="green" size="md" flip seed={6} className="bottom-0 right-4 h-48 opacity-55" />
+        <LeafSprig
+          palette="green"
+          size="md"
+          flip
+          seed={6}
+          className="bottom-0 right-4 h-48 opacity-55"
+        />
 
         <div className="container-auris relative">
           <SectionHeading

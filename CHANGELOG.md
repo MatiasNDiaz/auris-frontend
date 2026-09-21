@@ -1,5 +1,55 @@
 # Changelog
 
+## 2026-09-21 — Auditoría de imágenes: `sizes` declaraba el ancho equivocado
+
+Un mismo error repetido en seis componentes, y la causa de que las fotos se
+vieran pixeladas en mobile y bien en escritorio.
+
+- **El problema.** `sizes` tiene que declarar el ancho al que se **dibuja** la
+  foto, no el ancho del contenedor. Cuando una foto apaisada llena con
+  `object-cover` una caja más vertical que ella, el que manda es el alto: la
+  foto se dibuja mucho más ancha que la caja y se sale por los costados. Todos
+  estos componentes declaraban `100vw`, así que el navegador bajaba una variante
+  del ancho de la pantalla y la estiraba.
+- **Medido en un teléfono de 390px con pantalla retina**, antes → después:
+
+  | Componente | Se dibuja a | Declaraba | Estiraba |
+  | --- | --- | --- | --- |
+  | `StickyTreatment` | ~1992px | 390px | 4,8× |
+  | `Hero` (portada) | 1105–1722px | 390px | 4,2× |
+  | `PageHeader` | 715–1258px | 390px | 2,4× |
+  | `ServiceFan` | ~356px | 160px | 1,9× |
+  | Hero de servicio | 640–936px | 390px | 1,7× |
+  | `HistoryTimeline` | ~768px | 512px | 1,4× |
+
+- **La densidad del hero** —píxeles servidos sobre píxeles necesarios— pasa de
+  24–37% a 52–83% según el servicio, sin crear ningún archivo nuevo ni cambiar
+  el diseño.
+- **No se crearon variantes mobile.** Se simuló el recorte real de las nueve
+  fotos del hero en 390×736: las caras entran enteras en todas y el
+  `object-position: center 25%` funciona. El problema era de resolución, no de
+  composición, así que una variante mobile no habría arreglado nada.
+- **`ServiceCard`, `ProfessionalCard`, `TeamCarousel` y `ProfessionalFicha` no
+  se tocaron**: su `sizes` ya era correcto. En las tarjetas de profesional
+  porque las fotos 1 y 2 son todas más verticales que el `aspect-4/5` de la
+  tarjeta, así que ahí manda el ancho.
+
+### Encontrado y no modificado
+
+- **`public/ChicaTratamiento.webp`** (1584×672, 38 KB) se dibuja a ~2000px de
+  ancho y no tiene original en `assets/raw/`. Es el único caso que no se puede
+  arreglar sin un archivo nuevo.
+- **Tres fotos del hero están sueltas en la raíz de `public/`**, fuera del
+  pipeline de optimización: `EsteticaCorporal.webp`, `Piscologia.webp` (nombre
+  mal escrito) y `TallerAdultos.webp`.
+- **`bruxismo-y-disfunciones` usa un banner de sección como hero**
+  (`banner-servicios.webp`). Tiene original de 6192×3962, pero el pipeline topa
+  en 1920.
+- **`fonoaudiologia.webp`** es la más chica del hero: 1264×842, y su original
+  mide lo mismo.
+- **El abanico de servicios monta las ocho fotos** en el área del hero. Llevan
+  `loading="lazy"`, que no difiere lo que está dentro del viewport.
+
 ## 2026-09-19 — Las fotos verticales del recorrido se muestran enteras
 
 - **Las fotos verticales ya no se recortan.** El visor estiraba cada foto hasta

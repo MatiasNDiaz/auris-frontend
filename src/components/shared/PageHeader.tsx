@@ -135,9 +135,16 @@ export function PageHeader({
             src={foto}
             alt={fotoAlt}
             fill
-            // A sangre, pero por encima de 1600px la foto ya no gana detalle:
-            // se acota para no pedir el 1920 en pantallas grandes.
-            sizes="(max-width: 1600px) 100vw, 1600px"
+            /*
+             * Declara el ancho al que se dibuja la foto, no el de la pantalla.
+             *
+             * Los banners van de 1.49 a 2.62 de proporción y la caja es siempre
+             * más vertical que eso, así que con `object-cover` manda el alto:
+             * en un teléfono la foto se dibuja entre 715 y 1258px de ancho, y
+             * en escritorio el banner más apaisado llega a 1800. Con `100vw` se
+             * bajaba una variante de 828px y se estiraba al doble.
+             */
+            sizes="(min-width: 1024px) 1800px, 1260px"
             quality={88}
             priority
             style={fotoFoco ? { objectPosition: fotoFoco } : undefined}

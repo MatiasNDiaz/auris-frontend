@@ -90,12 +90,6 @@ export type Professional = {
   education: string[];
   certifications: string[];
   /**
-   * WhatsApp al que va el botón "Solicitar turno con…" de su ficha, solo
-   * dígitos y con 549 adelante. Quien todavía no pasó su número usa el del
-   * centro.
-   */
-  whatsapp: string;
-  /**
    * Su historia profesional, tal como la escribió el centro. Si no está, la
    * ficha avisa que la información está en actualización.
    */

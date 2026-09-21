@@ -24,9 +24,6 @@ import { trayectorias } from "./trayectorias";
  * y que forman parte del equipo de AURIS.
  */
 
-/** WhatsApp del centro, para quien todavía no pasó su número. */
-const WHATSAPP_CENTRO = "5493512177788";
-
 const equipo: Professional[] = [
   {
     slug: "ariel-vidal",
@@ -50,7 +47,6 @@ const equipo: Professional[] = [
     education: ["Formación en Odontología"],
     certifications: [],
     owner: true,
-    whatsapp: "5493512177788",
     trayectoria: trayectorias["ariel-vidal"],
   },
   {
@@ -73,7 +69,6 @@ const equipo: Professional[] = [
     bio: "Forma parte del equipo de Odontología de AURIS, con un enfoque preventivo y centrado en explicar cada paso del tratamiento antes de empezarlo.",
     education: ["Formación en Odontología"],
     certifications: [],
-    whatsapp: "5493516075681",
     trayectoria: trayectorias["carla-fernandez"],
   },
   {
@@ -100,7 +95,6 @@ const equipo: Professional[] = [
     bio: "Integra el equipo de Odontología de AURIS, acompañando a cada paciente con un abordaje preventivo y personalizado.",
     education: ["Formación en Odontología"],
     certifications: [],
-    whatsapp: "5493517031002",
     trayectoria: trayectorias["daniela-giansetto"],
   },
   {
@@ -124,8 +118,6 @@ const equipo: Professional[] = [
     bio: "Es parte del equipo de Odontología de AURIS y sostiene un enfoque de atención integral, con foco en la prevención.",
     education: ["Formación en Odontología"],
     certifications: [],
-    // Todavía sin número propio: el botón va al WhatsApp del centro.
-    whatsapp: WHATSAPP_CENTRO,
     trayectoria: trayectorias["rocio-matteucci"],
   },
   {
@@ -149,7 +141,6 @@ const equipo: Professional[] = [
     bio: "Integra el equipo de Odontología de AURIS, priorizando la prevención y el acompañamiento en cada etapa del tratamiento.",
     education: ["Formación en Odontología"],
     certifications: [],
-    whatsapp: "5493512177788",
     trayectoria: trayectorias["laura-mansilla"],
   },
   {
@@ -180,7 +171,6 @@ const equipo: Professional[] = [
     bio: "Es parte del equipo de Odontología de AURIS, con un enfoque centrado en la persona y en la prevención.",
     education: ["Formación en Odontología"],
     certifications: [],
-    whatsapp: "5493515524109",
     trayectoria: trayectorias["claudia-tomasi"],
   },
   {
@@ -203,7 +193,6 @@ const equipo: Professional[] = [
     bio: "Forma parte del equipo de Odontología de AURIS, acompañando cada tratamiento con información clara y un enfoque preventivo.",
     education: ["Formación en Odontología"],
     certifications: [],
-    whatsapp: "5493544583449",
     trayectoria: trayectorias["santiago-rodriguez"],
   },
   {
@@ -226,7 +215,6 @@ const equipo: Professional[] = [
     bio: "Forma parte del equipo de Kinesiología y Fisioterapia de AURIS, acompañando procesos de recuperación y bienestar físico.",
     education: ["Formación en Kinesiología y Fisioterapia"],
     certifications: [],
-    whatsapp: "5493516991150",
     trayectoria: trayectorias["eugenia-leiva"],
   },
   {
@@ -249,7 +237,6 @@ const equipo: Professional[] = [
     bio: "Forma parte del equipo de Psicología de AURIS, acompañando procesos personales con escucha y respeto por el tiempo de cada consultante.",
     education: ["Formación en Psicología"],
     certifications: [],
-    whatsapp: "5493517598062",
     trayectoria: trayectorias["soledad-di-martino"],
   },
   {
@@ -272,7 +259,6 @@ const equipo: Professional[] = [
     bio: "Forma parte del equipo de Fonoaudiología de AURIS, acompañando el desarrollo del lenguaje y la comunicación.",
     education: ["Formación en Fonoaudiología"],
     certifications: [],
-    whatsapp: "5493513725125",
     trayectoria: trayectorias["romina-tchakerian"],
   },
   {
@@ -298,7 +284,6 @@ const equipo: Professional[] = [
     bio: "Integra el equipo de Fonoaudiología de AURIS, trabajando sobre el lenguaje, la voz y la comunicación.",
     education: ["Formación en Fonoaudiología"],
     certifications: [],
-    whatsapp: "5493516539545",
     trayectoria: trayectorias["eugenia-villalobos"],
   },
 ];

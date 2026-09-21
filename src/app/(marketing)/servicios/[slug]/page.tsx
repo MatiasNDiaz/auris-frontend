@@ -76,7 +76,13 @@ export default async function ServicioDetallePage({
           src={service.imageUrl}
           alt=""
           fill
-          sizes="100vw"
+          // Mismo caso que el hero de la portada: el banner mide 400px de alto
+          // en mobile y la caja queda más vertical que la foto, así que el alto
+          // es el que manda y la foto se dibuja entre 640 y 936px de ancho, no
+          // a 390. Con `100vw` el navegador bajaba una variante de 828px para
+          // estirarla. De 1024 para arriba la caja ya es más apaisada que
+          // cualquiera de las fotos y ahí sí vale el ancho de pantalla.
+          sizes="(min-width: 1024px) 100vw, 900px"
           priority
           // En estas fotos la gente está en el tercio de arriba: centrada, la
           // franja les cortaba la cabeza. El 15% las deja enteras en las ocho.

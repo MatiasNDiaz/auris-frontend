@@ -113,9 +113,30 @@ export function Hero() {
                 src={service.imageUrl}
                 alt=""
                 fill
-                // El hero es full-bleed pero por encima de 1600px la foto ya no gana
-                // detalle: se acota para no bajar el 1920 en pantallas grandes.
-                sizes="(max-width: 1600px) 100vw, 1600px"
+                /*
+                 * `sizes` tiene que declarar el ancho al que se DIBUJA la foto,
+                 * que acá no es el ancho de la pantalla.
+                 *
+                 * La sección mide 736px de alto y en un teléfono la caja queda
+                 * vertical (390×736), mientras que las fotos son apaisadas
+                 * (entre 1.50 y 2.34). Con `object-cover`, para tapar una caja
+                 * vertical con una foto apaisada manda el alto: la foto se
+                 * dibuja a 1105–1722px de ancho, no a 390. Declarando `100vw`
+                 * el navegador bajaba la variante de 828px para dibujarla a
+                 * 1722: cuatro veces estirada, y de ahí la pixelación.
+                 *
+                 * El cruce está en 1225px de ancho de pantalla, que es donde la
+                 * caja se vuelve más apaisada que la foto y el ancho pasa a
+                 * mandar. Por debajo de 1024 la caja mide 736 de alto; entre
+                 * 1024 y 1225 el `clamp` la fija en 688, así que el ancho
+                 * dibujado es constante.
+                 */
+                sizes="(min-width: 1225px) 100vw, (min-width: 1024px) 1225px, 1310px"
+                // 88 y no el 75 por defecto, igual que los banners de sección.
+                // La foto del hero se agranda siempre —nunca se achica—, y al
+                // 75 un archivo de 1918px quedaba en 36 KB: a ese nivel de
+                // compresión el agrandado saca a la luz los artefactos.
+                quality={88}
                 priority={index === 0}
                 // En las ocho fotos la gente está en el tercio de arriba, así
                 // que centradas la franja les cortaba la cabeza. Con el 25%
