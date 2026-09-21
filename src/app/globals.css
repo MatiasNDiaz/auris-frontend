@@ -134,6 +134,17 @@
 
 /* Tokens semánticos de shadcn mapeados sobre la paleta AURIS. */
 :root {
+  /*
+   * El sitio no tiene modo oscuro, pero sin esto el navegador igual sigue el
+   * tema oscuro del sistema operativo para lo que él controla: scrollbar,
+   * sombra de los inputs, etc. En Windows con tema oscuro, Chrome pinta el
+   * scrollbar casi negro —contrasta feo contra la curva clara del hero, se ve
+   * como una franja pegada al borde derecho—. Esto le dice explícitamente que
+   * esta página es clara, así que usa su UI nativa en la variante clara sea
+   * cual sea el tema del sistema.
+   */
+  color-scheme: light;
+
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-serif:
     var(--font-fraunces), ui-serif, Georgia, "Times New Roman", serif;
