@@ -1,5 +1,36 @@
 # Changelog
 
+## 2026-09-21 — El pasillo del recorrido, ahora panorámico
+
+- **Cuatro tomas nuevas del pasillo**, todas 2:1, reemplazan a las verticales.
+  Se quitó la quinta. `pasillo-01` a `pasillo-04`
+- **La ventana del visor pasa a ser apaisada también en el teléfono**
+  (`aspect-4/3 sm:aspect-3/2`, antes `3/4 sm:4/3`). Era vertical de cuando las
+  tomas lo eran; con una foto 2:1 adentro se veía un tercio del ancho y los
+  círculos de las puertas quedaban fuera de cuadro. Ahora las panorámicas
+  **cubren el contenedor** en los tres tamaños —63%, 71% y 75% del ancho a la
+  vista, con el alto completo, techo incluido— y ninguna queda con barras. Las
+  únicas dos que siguen mostrándose enteras son las que de verdad son
+  verticales: la puerta del baño y la primera de kinesiología.
+- **El pasillo se camina derecho.** Las cuatro tomas están hechas desde el mismo
+  eje, así que el punto de fuga cae siempre en el mismo sitio de la foto. Se
+  agregó `focoX` a `TourPhoto` para fijar ahí el encuadre en vez de usar el
+  promedio de los círculos, que cambia en cada tramo según cuántas puertas haya
+  y hacía saltar el fondo de costado al avanzar. Verificado: el fondo cae en el
+  **44,0% del ancho de la pantalla en los tres tramos y en los tres tamaños**.
+- **Círculos recolocados** sobre las puertas reales de las tomas nuevas: el baño
+  sobre la hoja negra y la boca del pasillo a la izquierda en la primera; los
+  consultorios y el laboratorio en las demás. Los dos de la primera toma van más
+  juntos de lo que pediría la foto: cuanto más separados, menos entran juntos en
+  la ventana de un teléfono.
+- **Dos fotos nuevas en el consultorio de psicología**, en el orden pedido.
+- Se actualizaron los pies que describían el encuadre viejo.
+
+### Verificado
+
+Las 37 fotos existen, las proporciones declaradas coinciden con las reales y no
+sobra ninguna. Los círculos entran todos en 390×293, 768×512 y 1152×720.
+
 ## 2026-09-21 — Fuera el teléfono del pie de cada ficha
 
 - **Se eliminó el bloque "Turnos y consultas"** del final de la ficha de cada

@@ -153,7 +153,9 @@ export function TourViewer() {
     node.hotspots.reduce((sum, h) => sum + h[eje], 0) / node.hotspots.length;
 
   const navegable = showHotspots && node.hotspots.length > 0;
-  const focusX = navegable ? promedio("x") : 50;
+  // El `focoX` de la foto manda sobre el promedio: es lo que mantiene el punto
+  // de fuga del pasillo en la misma columna al encadenar sus cuatro tomas.
+  const focusX = photo.focoX ?? (navegable ? promedio("x") : 50);
   const focusY = navegable ? promedio("y") : (photo.focus ?? 42);
 
   const panX = useSpring(0, { stiffness: 80, damping: 20, mass: 0.7 });
@@ -321,7 +323,11 @@ export function TourViewer() {
           if (event.key === "ArrowRight") pasar(1);
           if (event.key === "ArrowLeft") pasar(-1);
         }}
-        className="relative aspect-3/4 touch-pan-y overflow-hidden rounded-3xl bg-ink-900 shadow-xl focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:outline-none sm:aspect-4/3 lg:aspect-16/10"
+        // La ventana va apaisada también en el teléfono. Antes era 3:4, de
+        // cuando las tomas del pasillo eran verticales; ahora casi todas son
+        // panorámicas (2:1) y en una ventana vertical se veía un tercio del
+        // ancho, con los círculos de las puertas fuera de cuadro.
+        className="relative aspect-4/3 touch-pan-y overflow-hidden rounded-3xl bg-ink-900 shadow-xl focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2 focus-visible:outline-none sm:aspect-3/2 lg:aspect-16/10"
       >
         <AnimatePresence initial={false} mode="popLayout">
           <motion.div

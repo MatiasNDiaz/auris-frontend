@@ -28,15 +28,18 @@
  *   El consultorio 5 es el que el plano anterior llamaba 4: es el mismo
  *   ambiente, no dos. No existe un nodo "consultorio 4".
  *
- * TRES REGLAS ESPECIALES que pidió el centro y que no se pueden inferir de
+ * DOS REGLAS ESPECIALES que pidió el centro y que no se pueden inferir de
  * las fotos:
  *
- *   1. El baño no se entra directo: primero se ve el pasillo frente a su
- *      puerta (`pasillo-1-5banos`) y recién después el baño en sí.
- *   2. Volver desde el consultorio 3 o desde el 5 no lleva al pasillo de una:
+ *   1. Volver desde el consultorio 3 o desde el 5 no lleva al pasillo de una:
  *      pasa por `pasillo-volver`, que es la foto del pasillo mirando hacia la
  *      salida, y desde ahí un círculo devuelve a la boca del pasillo.
- *   3. La primera foto de cada carpeta es la que abre el ambiente.
+ *   2. La primera foto de cada carpeta es la que abre el ambiente.
+ *
+ * Antes había una tercera: al baño se entraba viendo primero el pasillo frente
+ * a su puerta. Dejó de hacer falta cuando la toma panorámica del pasillo pasó a
+ * mostrar esa misma puerta negra, así que el paso intermedio repetía lo que ya
+ * se acababa de ver.
  *
  * UN LÍMITE AL PONER CÍRCULOS. El visor encuadra la foto centrada en el
  * promedio de las `y` de los hotspots de esa parada. En una foto vertical
@@ -67,6 +70,16 @@ export type TourPhoto = {
    * del medio.
    */
   focus?: number;
+  /**
+   * Dónde se centra el encuadre a lo ancho, en % del ancho de la foto.
+   *
+   * Por defecto el visor usa el promedio de los círculos, que sirve para que
+   * todos queden a la vista. Pero al encadenar varias fotos del mismo pasillo
+   * ese promedio cambia en cada tramo —según cuántas puertas haya— y el fondo
+   * salta de costado al avanzar. Fijándolo acá, el punto de fuga cae siempre en
+   * la misma columna y el recorrido se siente derecho.
+   */
+  focoX?: number;
 };
 
 export type TourNode = {
@@ -90,6 +103,17 @@ export type TourNode = {
 
 /** Raíz de las fotos, para no repetirla en cada línea. */
 const F = "/images/instalaciones";
+
+/**
+ * Dónde cae el punto de fuga del pasillo, en % del ancho de la foto.
+ *
+ * Las cuatro tomas del pasillo están hechas desde el mismo eje, así que el
+ * fondo se va siempre al mismo lugar. Fijando ahí el encuadre —y no en el
+ * promedio de los círculos, que cambia en cada tramo— el pasillo queda en la
+ * misma columna de la pantalla al pasar de una foto a la siguiente, y caminarlo
+ * se siente derecho en vez de ir saltando de costado.
+ */
+const FUGA = 44;
 
 export const tourNodes: TourNode[] = [
   {
@@ -213,20 +237,24 @@ export const tourNodes: TourNode[] = [
     id: "pasillo",
     title: "Pasillo",
     caption:
-      "El eje del centro, desde la boca. A la derecha, la puerta del baño.",
+      "Saliendo de la recepción: el baño es la puerta negra y el pasillo arranca a la izquierda.",
     photos: [
       {
         src: `${F}/pasillo/pasillo-01.webp`,
-        alt: "Pasillo del centro visto desde la recepción, con la puerta del patio al fondo",
-        aspect: 1080 / 1920,
+        alt: "Vista panorámica desde la recepción: a la izquierda arranca el pasillo y al centro está la puerta negra del baño",
+        aspect: 1774 / 887,
       },
     ],
     back: "recepcion",
     hotspots: [
-      // El baño es lo primero sobre la derecha: el hueco que se abre en esa
-      // pared, antes del laboratorio.
-      { x: 63, y: 42, label: "Baño", to: "bano" },
-      { x: 48, y: 62, label: "Seguir por el pasillo", to: "pasillo-2" },
+      // Sobre la hoja de la puerta negra, que ocupa del 51% al 70% del ancho.
+      // Va en el 54 y no más al centro de la hoja para no alejarse del otro
+      // círculo: cuanto más separados, menos entran juntos en un teléfono.
+      { x: 54, y: 45, label: "Baño", to: "bano" },
+      // La boca del pasillo, al fondo a la izquierda. Va en el 18% y no más al
+      // borde: los dos círculos tienen que entrar juntos en la ventana, y en un
+      // teléfono de esta foto se ve poco más de la mitad del ancho.
+      { x: 18, y: 55, label: "Seguir por el pasillo", to: "pasillo-2" },
     ],
   },
   {
@@ -234,13 +262,6 @@ export const tourNodes: TourNode[] = [
     title: "Baño",
     caption: "Sobre el pasillo, a pasos de la recepción. Es accesible.",
     photos: [
-      // Esta foto no se saltea: es la que ubica dónde está la puerta antes de
-      // entrar, y por eso abre el ambiente en vez de ir directo al interior.
-      {
-        src: `${F}/pasillo/pasillo-1-5banos.webp`,
-        alt: "El pasillo frente a la puerta del baño, con el cuadro sobre la pared de la izquierda",
-        aspect: 1080 / 1920,
-      },
       {
         src: `${F}/banos/banorecepcion1.webp`,
         alt: "Puerta del baño abierta, con los pictogramas de accesibilidad y el inodoro con barra de apoyo",
@@ -259,21 +280,24 @@ export const tourNodes: TourNode[] = [
     id: "pasillo-2",
     title: "Pasillo — primer tramo",
     caption:
-      "Unos pasos adentro. A la izquierda el consultorio 1 y, enfrente, la puerta del laboratorio.",
+      "Unos pasos adentro. A la izquierda el consultorio 1 y, a la derecha, la puerta del laboratorio.",
     photos: [
       {
         src: `${F}/pasillo/pasillo-02.webp`,
         alt: "Tramo del pasillo con una puerta abierta a la izquierda y la del laboratorio a la derecha",
-        aspect: 1080 / 1920,
+        aspect: 1774 / 887,
+        focoX: FUGA,
       },
     ],
     back: "pasillo",
     hotspots: [
-      // La abertura de la izquierda, la que deja salir luz azulada.
-      { x: 25, y: 42, label: "Consultorio 1", to: "consultorio-1" },
-      // La única puerta de la derecha en este tramo.
-      { x: 83, y: 42, label: "Laboratorio", to: "laboratorio" },
-      { x: 48, y: 62, label: "Seguir por el pasillo", to: "pasillo-3" },
+      // Medidos por pixel sobre el archivo: la abertura angosta de luz
+      // azulada, entre el 33% y el 37% del ancho.
+      { x: 34.5, y: 28, label: "Consultorio 1", to: "consultorio-1" },
+      // La puerta entornada de la derecha, vista casi de canto entre el 58% y
+      // el 61%.
+      { x: 60, y: 26, label: "Laboratorio", to: "laboratorio" },
+      { x: FUGA, y: 62, label: "Seguir por el pasillo", to: "pasillo-3" },
     ],
   },
   {
@@ -284,13 +308,14 @@ export const tourNodes: TourNode[] = [
       {
         src: `${F}/pasillo/pasillo-03.webp`,
         alt: "Tramo del pasillo con la puerta del consultorio 2 abierta sobre la izquierda",
-        aspect: 447 / 797,
+        aspect: 1774 / 887,
+        focoX: FUGA,
       },
     ],
     back: "pasillo-2",
     hotspots: [
-      { x: 31, y: 44, label: "Consultorio 2", to: "consultorio-2" },
-      { x: 50, y: 64, label: "Seguir por el pasillo", to: "pasillo-4" },
+      { x: 31, y: 45, label: "Consultorio 2", to: "consultorio-2" },
+      { x: FUGA, y: 62, label: "Seguir por el pasillo", to: "pasillo-4" },
     ],
   },
   {
@@ -302,20 +327,15 @@ export const tourNodes: TourNode[] = [
       {
         src: `${F}/pasillo/pasillo-04.webp`,
         alt: "Final del pasillo, con la puerta de madera del patio al frente y aberturas a los costados",
-        aspect: 445 / 793,
-      },
-      {
-        src: `${F}/pasillo/pasillo-05.webp`,
-        alt: "La puerta de madera que cierra el pasillo, de cerca",
-        aspect: 442 / 791,
+        aspect: 1774 / 887,
+        focoX: FUGA,
       },
     ],
     back: "pasillo-3",
     hotspots: [
-      { x: 30, y: 42, label: "Consultorio 3", to: "consultorio-3" },
-      // La abertura del fondo a la derecha. No va más al borde: el círculo
-      // mide 44px y pegado al 92% se corta contra el marco en un teléfono.
-      { x: 88, y: 50, label: "Consultorio 5", to: "consultorio-5" },
+      { x: 28, y: 45, label: "Consultorio 3", to: "consultorio-3" },
+      // La abertura del fondo a la derecha, la que deja ver el escritorio.
+      { x: 54, y: 45, label: "Consultorio 5", to: "consultorio-5" },
       // La puerta de madera del centro da al patio: no es una sala, así que
       // no lleva círculo. Marcarla mandaría a una habitación que no existe.
     ],
@@ -422,13 +442,13 @@ export const tourNodes: TourNode[] = [
     photos: [
       {
         src: `${F}/consultorio-5-entrevista/psicologia1.webp`,
-        alt: "El consultorio de psicología visto desde la puerta, con el escritorio al fondo",
-        aspect: 900 / 1600,
+        alt: "El consultorio de psicología visto desde la puerta: el escritorio blanco con dos sillas y el cuadro de flores sobre la pared",
+        aspect: 1774 / 887,
       },
       {
         src: `${F}/consultorio-5-entrevista/psicologia2.webp`,
-        alt: "Escritorio y sillas del consultorio de psicología, con el cuadro sobre la pared",
-        aspect: 900 / 1600,
+        alt: "El escritorio del consultorio de psicología de cerca, con el difusor y las flores sobre la mesa",
+        aspect: 1920 / 1280,
       },
       {
         src: `${F}/consultorio-5-entrevista/psicologia3.webp`,
