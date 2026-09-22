@@ -45,7 +45,12 @@ export function TeamCarousel() {
       className="relative overflow-hidden bg-surface-sand py-20 lg:py-28"
     >
       <LeafScatter pattern="c" palette="beige" />
-      <LeafSprig palette="beige" size="lg" seed={7} className="bottom-0 left-2 h-56 opacity-60 lg:h-72" />
+      <LeafSprig
+        palette="beige"
+        size="lg"
+        seed={7}
+        className="bottom-0 left-2 h-56 opacity-60 lg:h-72"
+      />
       <div className="container-auris relative">
         <SectionHeading
           eyebrow="Nuestro equipo"
@@ -54,7 +59,13 @@ export function TeamCarousel() {
         />
       </div>
 
-      <ul className="scrollbar-none mt-12 flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-4 sm:px-8 md:overflow-x-visible md:px-12 [&::-webkit-scrollbar]:hidden">
+      {/* El relleno lateral no es estético: es lo que permite que la primera y
+          la última tarjeta lleguen al centro. Sin ese espacio antes y después,
+          el navegador no puede desplazarse lo suficiente y las deja pegadas
+          contra el borde. Mide lo que sobra de la pantalla a los costados de
+          una tarjeta, partido dos. De `md` para arriba no corre: ahí la fila
+          deja de ser carrusel y pasa a ser el acordeón. */}
+      <ul className="scrollbar-none mt-12 flex snap-x snap-mandatory gap-3 overflow-x-auto px-[calc((100%-16rem)/2)] pb-4 md:overflow-x-visible md:px-12 [&::-webkit-scrollbar]:hidden">
         {featured.map((professional) => {
           const area = getAreaBySlug(professional.areaSlug);
           // En mobile todos van expandidos; en desktop, solo el activo.
@@ -84,7 +95,12 @@ export function TeamCarousel() {
                 );
               }}
               className={cn(
-                "group relative h-104 w-64 shrink-0 cursor-pointer snap-start overflow-hidden rounded-3xl shadow-md",
+                // `snap-center` deja la tarjeta en el medio de la pantalla.
+                // `snap-always` es lo que impide que un envión se lleve media
+                // lista por delante: obliga al navegador a frenar en el
+                // siguiente punto de anclaje, así un deslizamiento avanza una
+                // tarjeta y no las que le alcance la inercia.
+                "group relative h-104 w-64 shrink-0 cursor-pointer snap-center snap-always overflow-hidden rounded-3xl shadow-md",
                 // `md:grow` es lo que le da ancho al panel desde el primer
                 // fotograma. Sin eso el ancho salía solo del `flexGrow` que
                 // aplica Framer al montar, así que al volver desde una ficha el

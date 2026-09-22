@@ -23,6 +23,10 @@ export const areas = [
   { slug: "kinesiologia-estetica", name: "Kinesiología y estética avanzada" },
   { slug: "fonoaudiologia", name: "Fonoaudiología" },
   { slug: "psicologia", name: "Psicología" },
+  // Área propia y no "fonoaudiología": es el único lugar del centro donde
+  // trabaja quien la tiene a cargo, y mezclarla con las fonoaudiólogas de
+  // consultorio la mostraba en un filtro donde no atiende.
+  { slug: "taller-adultos-mayores", name: "Taller de adultos mayores" },
 ] as const satisfies readonly Area[];
 
 export type AreaSlug = (typeof areas)[number]["slug"];

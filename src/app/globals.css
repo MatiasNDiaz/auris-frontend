@@ -599,6 +599,41 @@
   }
 }
 
+/* En mobile la cinta no se mueve sola: se desliza con el dedo, de a una reseña.
+   El bucle automático es una animación sobre `transform`, así que no se puede
+   agarrar ni frenar —no hay puntero que la pause—, y leer una reseña entera
+   obligaba a perseguirla. Acá pasa a ser scroll real con anclaje.
+
+   `scroll-snap-stop: always` es lo que hace que un envión avance una sola
+   tarjeta: sin eso la inercia se lleva media lista y frena donde cae.
+
+   El relleno lateral es lo que permite que la primera y la última lleguen al
+   centro; sin ese espacio el navegador no tiene a dónde desplazarse y las deja
+   contra el borde. Mide lo que sobra de pantalla al costado de una tarjeta
+   —`19rem` es el ancho de la tarjeta en este tamaño—, partido dos. */
+@media (width < 48rem) {
+  .auris-marquee-track {
+    animation: none;
+    scroll-snap-type: x mandatory;
+    padding-inline: max(0.75rem, calc((100% - 19rem) / 2));
+  }
+
+  .auris-marquee {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .auris-marquee::-webkit-scrollbar {
+    display: none;
+  }
+
+  .auris-marquee-track > * {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+  }
+}
+
 /* View Transitions nativas ------------------------------------------------ */
 
 /* Durante una transición el scroll tiene que ser instantáneo: si el

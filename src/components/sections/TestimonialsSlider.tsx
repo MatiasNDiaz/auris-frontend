@@ -32,7 +32,12 @@ export function TestimonialsSlider() {
     <section className="relative overflow-hidden bg-surface-sage py-20 lg:py-28">
       {/* Follaje de fondo, en la misma línea que el resto de la landing. */}
       <LeafScatter pattern="a" />
-      <LeafSprig palette="green" size="lg" seed={8} className="bottom-0 left-2 h-56 opacity-55 lg:h-72" />
+      <LeafSprig
+        palette="green"
+        size="lg"
+        seed={8}
+        className="bottom-0 left-2 h-56 opacity-55 lg:h-72"
+      />
       <div
         aria-hidden
         className="pointer-events-none absolute -top-24 left-1/4 size-96 rounded-full bg-primary-200/30 blur-3xl"
@@ -48,15 +53,11 @@ export function TestimonialsSlider() {
 
       {/* La cinta se sale del container a propósito: recorre todo el ancho de
           la ventana, que es lo que hace que el bucle se lea como continuo. */}
-      <div
-        data-decor=""
-        // Lo muta el observer del script inline, que le pone `data-offscreen`
-        // para congelar la animación fuera de pantalla. React no lo sabe y lo
-        // reporta como desajuste de hidratación; esto le avisa que este nodo se
-        // toca por fuera. Silencia solo este elemento, no el árbol.
-        suppressHydrationWarning
-        className="auris-marquee relative mt-14 overflow-hidden [--marquee-duration:70s]"
-      >
+      {/* Los degradados van acá afuera y no dentro de la cinta: en mobile la
+          cinta pasa a ser el elemento que se desplaza, y ahí adentro un
+          `absolute` viaja con el contenido en vez de quedarse pegado al borde
+          de la pantalla. */}
+      <div className="relative mt-14">
         {/* Los bordes se funden con el fondo para que las tarjetas entren y
             salgan en vez de cortarse contra el filo de la pantalla. */}
         <div
@@ -68,46 +69,59 @@ export function TestimonialsSlider() {
           className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-linear-to-l from-surface-sage to-transparent sm:w-28"
         />
 
-        <ul className="auris-marquee-track flex w-max gap-6 px-3 py-2">
-          {Array.from({ length: COPIES }).flatMap((_, copy) =>
-            testimonials.map((testimonial) => (
-              <li
-                key={`${copy}-${testimonial.authorName}`}
-                // Solo la primera copia se anuncia: las otras dos existen para
-                // que el bucle no tenga costura, no para volver a leerse.
-                aria-hidden={copy > 0}
-                className="w-76 shrink-0 sm:w-88"
-              >
-                <figure className="flex h-full flex-col rounded-3xl border border-primary-100 bg-card p-7 shadow-sm">
-                  <div className="flex items-start justify-between gap-4">
-                    <Quote
-                      className="size-7 shrink-0 text-primary-300"
-                      strokeWidth={1.5}
-                      aria-hidden
-                    />
-                    <RatingStars rating={testimonial.rating} />
-                  </div>
+        <div
+          data-decor=""
+          // Lo muta el observer del script inline, que le pone `data-offscreen`
+          // para congelar la animación fuera de pantalla. React no lo sabe y lo
+          // reporta como desajuste de hidratación; esto le avisa que este nodo
+          // se toca por fuera. Silencia solo este elemento, no el árbol.
+          suppressHydrationWarning
+          className="auris-marquee overflow-hidden [--marquee-duration:70s]"
+        >
+          <ul className="auris-marquee-track flex w-max gap-6 px-3 py-2">
+            {Array.from({ length: COPIES }).flatMap((_, copy) =>
+              testimonials.map((testimonial) => (
+                <li
+                  key={`${copy}-${testimonial.authorName}`}
+                  // Solo la primera copia se anuncia: las otras dos existen para
+                  // que el bucle no tenga costura, no para volver a leerse.
+                  aria-hidden={copy > 0}
+                  // Y en mobile ni siquiera se dibujan: ahí no hay bucle que
+                  // disimular, se desliza a mano, y dejarlas obligaría a pasar
+                  // tres veces por las mismas reseñas para llegar al final.
+                  className={`w-76 shrink-0 sm:w-88 ${copy > 0 ? "max-md:hidden" : ""}`}
+                >
+                  <figure className="flex h-full flex-col rounded-3xl border border-primary-100 bg-card p-7 shadow-sm">
+                    <div className="flex items-start justify-between gap-4">
+                      <Quote
+                        className="size-7 shrink-0 text-primary-300"
+                        strokeWidth={1.5}
+                        aria-hidden
+                      />
+                      <RatingStars rating={testimonial.rating} />
+                    </div>
 
-                  <blockquote className="mt-5 flex-1 text-base leading-relaxed text-pretty text-ink-700/90">
-                    {testimonial.content}
-                  </blockquote>
+                    <blockquote className="mt-5 flex-1 text-base leading-relaxed text-pretty text-ink-700/90">
+                      {testimonial.content}
+                    </blockquote>
 
-                  <figcaption className="mt-6 flex items-center gap-3 border-t border-primary-100 pt-5">
-                    <span
-                      aria-hidden
-                      className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-600 font-semibold text-cream-50"
-                    >
-                      {initials(testimonial.authorName)}
-                    </span>
-                    <span className="font-medium text-ink-900">
-                      {testimonial.authorName}
-                    </span>
-                  </figcaption>
-                </figure>
-              </li>
-            )),
-          )}
-        </ul>
+                    <figcaption className="mt-6 flex items-center gap-3 border-t border-primary-100 pt-5">
+                      <span
+                        aria-hidden
+                        className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-600 font-semibold text-cream-50"
+                      >
+                        {initials(testimonial.authorName)}
+                      </span>
+                      <span className="font-medium text-ink-900">
+                        {testimonial.authorName}
+                      </span>
+                    </figcaption>
+                  </figure>
+                </li>
+              )),
+            )}
+          </ul>
+        </div>
       </div>
     </section>
   );

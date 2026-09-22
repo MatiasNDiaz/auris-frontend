@@ -289,10 +289,14 @@ export function Hero() {
         se empastan en una sola mancha. Con color sí se leen, pero el pie del
         hero termina pesando más que el titular.
       */}
+      {/* El filete verde va también acá: es el mismo remate que llevan los
+          banners de todas las secciones de la navbar, y al hero le faltaba.
+          Mismos colores que `PageHeader` para que se lea como la misma pieza. */}
       <WaveDivider
         variant="hero"
         className="text-surface-base"
         underlineClassName="text-surface-sand"
+        lineaClassName="text-primary-600"
       />
     </section>
   );

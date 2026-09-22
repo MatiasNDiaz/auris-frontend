@@ -83,10 +83,10 @@ const equipo: Professional[] = [
     ],
     gender: "female",
     name: "Dra. Daniela Giansetto",
-    // Su foto 2 es apaisada y ella está sobre el borde derecho: el recorte
-    // vertical de las tarjetas y del hero tiene que ir a buscarla ahí. Pasado
-    // del 50% el recorte se corre hacia la derecha, que es donde está.
-    fotoHoverFoco: "86% center",
+    // Ya no lleva `fotoHoverFoco`: su foto 2 venía apaisada y con ella sobre el
+    // borde derecho, y había que ir a buscarla con el encuadre. Ahora se
+    // recorta a la forma de la tarjeta en el archivo (ver `ENCUADRE` en
+    // `scripts/optimize-images.mjs`), así que entra centrada y sin agrandarse.
     specialty: "Odontopediatra",
     areaSlug: "odontopediatria",
     serviceSlug: "odontologia",
@@ -274,14 +274,14 @@ const equipo: Professional[] = [
     gender: "female",
     name: "Lic. Eugenia Villalobos",
     specialty: "Lic. en Fonoaudiología",
-    areaSlug: "fonoaudiologia",
-    // Su área sigue siendo fonoaudiología, pero el servicio al que se la
-    // asocia es el taller: es quien lo tiene a cargo, y hasta ahora esa página
-    // no mostraba a nadie.
+    // En AURIS trabaja solo en el taller de adultos mayores, así que va en su
+    // propia área y no entre las fonoaudiólogas de consultorio: el filtro del
+    // listado es por área, y ahí aparecía en un apartado donde no atiende.
+    areaSlug: "taller-adultos-mayores",
     serviceSlug: "taller-de-adultos-mayores",
     photoUrl:
       "https://images.unsplash.com/photo-1623854767648-e7bb8009f0db?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
-    bio: "Integra el equipo de Fonoaudiología de AURIS, trabajando sobre el lenguaje, la voz y la comunicación.",
+    bio: "Tiene a cargo los talleres de adultos mayores de AURIS, dedicados a la comunicación, la memoria y el envejecimiento saludable.",
     education: ["Formación en Fonoaudiología"],
     certifications: [],
     trayectoria: trayectorias["eugenia-villalobos"],

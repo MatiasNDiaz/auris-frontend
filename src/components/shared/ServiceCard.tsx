@@ -38,7 +38,22 @@ export function ServiceCard({
             src={service.imageUrl}
             alt=""
             fill
-            sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 360px"
+            /*
+             * Una vez y media el ancho de la tarjeta, no el ancho de la
+             * tarjeta.
+             *
+             * La caja es 16:10 pero varias fotos son panorámicas (2.35), y una
+             * foto más ancha que su caja se ajusta por el alto: se dibuja
+             * desbordada de costado. Medido en el navegador, una tarjeta de
+             * 377px dibuja esas fotos a 554. Declarando 360 el navegador bajaba
+             * una variante de 750 para pintar 1108 píxeles reales —el 68%— y de
+             * ahí que se vieran blandas. Las fotos que ya son 16:10 se dibujan
+             * al ancho de la tarjeta y no les afecta.
+             */
+            sizes="(max-width: 640px) 133vw, (max-width: 1024px) 66vw, 560px"
+            // 88 y no el 75 por defecto: es la misma foto que el banner del
+            // servicio, que ya va en 88, y acá se recorta todavía más.
+            quality={88}
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
             className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"

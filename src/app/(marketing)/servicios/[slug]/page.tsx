@@ -267,7 +267,7 @@ export default async function ServicioDetallePage({
                 <Reveal as="li" key={professional.slug} delay={index * 0.08}>
                   <ProfessionalCard
                     professional={professional}
-                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 300px"
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 520px"
                   />
                 </Reveal>
               ))}

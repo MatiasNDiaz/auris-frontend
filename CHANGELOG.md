@@ -1,5 +1,201 @@
 # Changelog
 
+## 2026-09-22 — Banners de sección y la foto 2 de Daniela, más nítidos
+
+- **Los banners de sección salían a 1920px pero se dibujan más anchos.** Son
+  fotos apaisadas dentro de una franja todavía más apaisada, así que se ajustan
+  por el alto y desbordan de costado: en un monitor de 1440 el de preguntas
+  frecuentes se dibuja a 1801px, y en pantalla retina eso son 3602 píxeles
+  reales. Ya bajaban el archivo entero y aun así no alcanzaba. Los originales
+  son de 6192px, así que ahora salen por el preset `panoramica` (2560).
+  `optimize-images.mjs`
+
+  | Sección | Antes | Ahora |
+  | --- | --- | --- |
+  | Equipo | 57% | **75%** |
+  | Recorrido | 67% | **89%** |
+  | Contacto | 67% | **89%** |
+  | Preguntas frecuentes | 53% | **71%** |
+
+  El navegador recibe 175 KB en AVIF por banner: la mejora no se paga con peso.
+
+- **La foto 2 de Daniela Giansetto se recorta en el archivo, no por CSS.** Era
+  la única apaisada de las que van en tarjeta: en una tarjeta vertical se
+  dibujaba al doble de ancho que la tarjeta y en un teléfono pedía 1965px de una
+  foto que solo tiene 1536. Recortada a 4:5 —lo que se descarta es la pared
+  vacía de la izquierda— ya no hay que agrandar nada: **de 104% a 149% en
+  escritorio y de 55% a 78% en mobile**. Con esto tampoco hace falta su
+  `fotoHoverFoco`, que existía para ir a buscarla al borde derecho.
+
+### Encontrado y no modificado
+
+- **El banner de "Nuestra historia" sigue en 58%.** Su original mide 1672×940 y
+  ya se sirve entero: no hay de dónde sacar más. Hace falta la foto en grande.
+- **La foto 2 de Daniela toca su techo en 78% en un teléfono de alta densidad.**
+  El original mide 1536×1024, y recortado a la forma de la tarjeta quedan
+  822×1024, que es todo lo que esa foto puede dar.
+
+## 2026-09-22 — Eugenia Villalobos y el taller de adultos mayores
+
+- **Bio ampliada** con lo que mandó el centro: disertante en la II Jornada de
+  Actualización Científica del Hospital Nacional de Clínicas 2026, el posgrado
+  en neurociencias cognitivas de la Universidad Favaloro, y el cierre sobre el
+  lugar de la comunicación en el envejecimiento saludable. Su especialidad pasa
+  a ser "Comunicación y Lenguaje de adultos mayores".
+- **Sin teléfono**, como pidió el centro. Verificado: el número no aparece en
+  ninguna parte de su página.
+- **Área propia: "Taller de adultos mayores"**, y no fonoaudiología. En AURIS
+  trabaja solo ahí, y el filtro del listado del equipo es por área: estaba
+  apareciendo entre las fonoaudiólogas de consultorio, en un apartado donde no
+  atiende. `areas.ts`
+- **Tercera foto**: un collage de los talleres. Va a la grilla de su ficha, no
+  al banner —que recorta una tira angosta y dejaría un mosaico de fotos
+  cortadas—. El banner sigue con su foto 2.
+- **El servicio del taller toma el texto del centro**: los Talleres de
+  Conversación y de Memoria Auditiva, y el programa con su nombre propio,
+  "Activos y Protagonistas". Antes describía actividades genéricas —actividad
+  física suave, articulación con el médico tratante— que no son lo que se
+  ofrece. `services.ts`
+
+### Encontrado y no modificado
+
+- Su ficha muestra dos recuadros vacíos donde irían sus fotos 4 y 5. Es el
+  comportamiento normal de la plantilla para quien todavía no las mandó; se
+  llenan solos cuando aparezcan.
+
+## 2026-09-22 — Las tarjetas se veían borrosas: `sizes` otra vez
+
+- **Las fotos de las tarjetas de servicio llegaban al 68% de densidad.** La
+  caja es 16:10 pero varias fotos son panorámicas (2.35), y una foto más ancha
+  que su caja se ajusta por el alto: se dibuja desbordada de costado. Medido en
+  el navegador, una tarjeta de 377px dibujaba esas fotos a **554px**, pero
+  `sizes` declaraba 360 y el navegador bajaba una variante de 750 para pintar
+  1108 píxeles reales. Ahora declara una vez y media el ancho de la tarjeta.
+  **De 68% a 109–125%** en escritorio y mobile. `ServiceCard.tsx`
+- **Calidad 88 en vez de 75** en esas tarjetas: es la misma foto que el banner
+  del servicio, que ya iba en 88, y en la tarjeta se recorta todavía más.
+- **Lo mismo en las tarjetas del equipo.** Ahí la mayoría estaba bien —las fotos
+  de retrato son más verticales que la tarjeta y se ajustan por el ancho— pero
+  las pocas que tienen la segunda foto apaisada caían al 55–62% al pasar el
+  cursor. `ProfessionalsDirectory.tsx`, `servicios/[slug]/page.tsx`
+- **Peso verificado**: 0,56 MB de imágenes en `/servicios` en mobile y 0,31 MB
+  en escritorio. Las variantes grandes que ahora se piden son AVIF de 47–108 KB.
+- **Taller de adultos mayores** pasa a usar también la foto de la portada, que
+  era el que faltaba de la tanda anterior.
+- **El hero de la portada suma el filete verde** sobre la franja arena, el mismo
+  remate que ya llevaban los banners de todas las secciones de la navbar.
+  `Hero.tsx`
+- **Los botones "Ver más servicios" y "Ver todo el equipo" dejan de ser
+  planos.** Los dos viven sobre fondos verde o beige y, sin sombra ni relieve,
+  se confundían con la sección. Ahora llevan degradé de arriba abajo, sombra
+  apoyada y un filete de luz por dentro del borde —el mismo recurso que la
+  pastilla del servicio en el hero—, y la sombra crece al pasar el cursor.
+  `ShineButton.tsx`, tonos `outlinePrimary` y `soft`
+- **Consultorio 4**: la primera foto cambió por una panorámica (1920×720, antes
+  era vertical). Se actualizó su proporción y su descripción.
+
+## 2026-09-22 — "Equipo" en la navbar y fotos unificadas con la portada
+
+- **El enlace de la navbar dice "Equipo"** y no "Equipos". Sale de `mainNav` en
+  `site.ts`, así que cambia a la vez en la barra de escritorio, el menú de
+  mobile y el footer. La URL sigue siendo `/profesionales`.
+- **Fonoaudiología, psicología y estética pasan a usar la misma foto que el
+  carrusel de la portada**, en la tarjeta del listado y en el banner de su
+  página. Quien entra desde la portada reconoce el servicio.
+- **Odontología ya usaba la misma**: su `imageUrl` es la que muestra el hero, no
+  hubo nada que cambiar.
+- **`landingImageUrl` desaparece de esas tres**: al quedar igual que `imageUrl`,
+  el hero la toma por defecto y el campo sobraba.
+- **Encuadre propio para el banner del servicio** (`heroFoco`), distinto del de
+  la portada. La caja del banner es bastante más apaisada que la del hero y
+  recorta distinto: en psicología, el 55% que en el hero deja ver el escritorio
+  acá le pegaba la cabeza al techo, así que va 30%. Verificado en escritorio y
+  en mobile.
+
+### Encontrado y no modificado
+
+- **Taller de adultos mayores** sigue con fotos distintas entre la portada
+  (`portada/taller-de-adultos-mayores.webp`) y su página (`/TallerAdultos.webp`).
+  No estaba en el pedido.
+- Quedaron sin referencia `/EsteticaCorporal.webp`, `/Piscologia.webp` y
+  `/images/servicios/fonoaudiologia.webp`. No se borraron.
+
+## 2026-09-22 — Los consultorios corren un lugar y entra el 3
+
+Faltaba un consultorio en el recorrido. El primero de la izquierda no está
+dentro del pasillo sino en su boca, y al no estar mapeado toda la numeración
+quedaba corrida.
+
+- **La boca del pasillo pasa a tener tres círculos**: consultorio 1 a la
+  izquierda, seguir por el pasillo al centro y el baño a la derecha.
+- **Los consultorios corren un lugar hacia atrás**. Odontología (1) pasa del
+  primer tramo a la boca; odontopediatría (2), del segundo tramo al primero; el
+  segundo tramo queda para el consultorio 3 nuevo.
+- **Consultorio 3 — Odontología**, cuatro fotos nuevas.
+  `assets/raw/images/instalaciones/consultorio-03/`
+- **Kinesiología y estética pasa de 3 a 4**, con sus fotos movidas a
+  `consultorio-4-estetica/`. Se borró la carpeta `consultorio-3/` de `public`,
+  que quedaba con las fotos viejas sin referenciar.
+- **El encuadre de la boca del pasillo va anclado al borde izquierdo**
+  (`focoX: 0`), que es lo más lejos que el visor puede correrlo sin destapar la
+  foto. Lo que se pierde por la derecha es el mostrador, que no lleva círculo.
+
+### Verificado
+
+Los 17 círculos y los "volver" apuntan a un nodo real; las 40 fotos existen y no
+sobra ninguna. Recorrido completo caminado en el navegador: boca → consultorio 1
+→ tramo 1 → tramo 2 → consultorio 3 → final → consultorio 4. Círculos dentro de
+cuadro en 390, 768 y 1152px.
+
+### Encontrado y no resuelto
+
+**La puerta del consultorio 1 no llega a verse en pantallas anchas.** Asoma en
+el filo de `pasillo-01`, del 0% al 3,5% del ancho, y en escritorio el recorte
+empieza recién en el 4,8%: queda 74px afuera aun con el encuadre en su tope. El
+círculo está en el 8% —el punto más pegado al borde que se puede tocar, contando
+que el paneo del cursor lo corre hasta 13px más— así que señala hacia la puerta
+pero no se apoya sobre ella. Se arregla con una toma que deje esa puerta más
+adentro del cuadro.
+
+## 2026-09-21 — Los dos carruseles de la portada se deslizan de a uno
+
+- **Equipo.** La fila ya tenía anclaje, pero le faltaba `scroll-snap-stop:
+  always`: sin eso el anclaje solo decide *dónde* frena la inercia, no *cuánto*
+  recorre, así que un envión se llevaba media lista por delante. Con esa
+  propiedad el navegador tiene que frenar en el siguiente punto, y un
+  deslizamiento avanza una tarjeta.
+- **La tarjeta queda centrada**, no pegada al borde: `snap-start` pasa a
+  `snap-center`. Para que la primera y la última también puedan centrarse hace
+  falta espacio antes y después —si no, el navegador no tiene a dónde
+  desplazarse—, así que el relleno lateral pasa a medir lo que sobra de pantalla
+  al costado de una tarjeta, partido dos. `TeamCarousel.tsx`
+- **Reseñas.** Eran una cinta en bucle automático: una animación sobre
+  `transform`, que no se puede agarrar ni frenar con el dedo —no hay puntero que
+  la pause— y obligaba a perseguir la reseña para terminar de leerla. Hasta `md`
+  pasa a ser scroll real con el mismo anclaje que el equipo; de `md` para arriba
+  queda igual que siempre. `globals.css`, `TestimonialsSlider.tsx`
+- **Las dos copias extra de las reseñas se ocultan en mobile.** Existen para que
+  el bucle no tenga costura; deslizando a mano solo harían pasar tres veces por
+  las mismas ocho.
+- **Los degradados de los bordes salieron de la cinta.** Al volverse la cinta el
+  elemento que se desplaza, un `absolute` adentro viaja con el contenido: se
+  habrían despegado del borde al deslizar.
+
+### Verificado
+
+Estilos calculados en 390px: anclaje `x mandatory` en los dos carriles, `center`
+y `always` en cada tarjeta, relleno de 67px (equipo) y 43px (reseñas) —
+exactamente la mitad de lo que sobra—, y la animación de la cinta apagada con
+solo 8 reseñas. En 1280px la cinta sigue animando con sus 24 tarjetas y sin
+anclaje. Al desplazar, la tarjeta queda centrada con 0px de desvío.
+
+### No verificado
+
+El envión con inercia de un dedo real no se puede sintetizar en un navegador sin
+pantalla: el arrastre se reproduce, la inercia no. Lo que sí está comprobado es
+que `scroll-snap-stop: always` está aplicado en todas las tarjetas, que es la
+propiedad que la limita. Conviene confirmarlo en un teléfono.
+
 ## 2026-09-21 — El pasillo del recorrido, ahora panorámico
 
 - **Cuatro tomas nuevas del pasillo**, todas 2:1, reemplazan a las verticales.

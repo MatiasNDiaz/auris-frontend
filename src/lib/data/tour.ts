@@ -20,18 +20,20 @@
  *   la sala de espera, a la derecha el mostrador. Desde el mostrador arranca
  *   el pasillo, que es el eje del centro.
  *
- *   Entrando por el pasillo, y en este orden:
- *     - derecha: el baño (casi en la boca) y el laboratorio;
- *     - izquierda: consultorio 1, consultorio 2 y consultorio 3;
- *     - al fondo a la derecha: el consultorio 5.
+ *   Sobre la izquierda hay cuatro consultorios, y el primero no está adentro
+ *   del pasillo sino en su boca: su puerta asoma en el filo de la foto de
+ *   `pasillo`, junto a la del baño. Los otros tres aparecen de a uno por tramo.
  *
- *   El consultorio 5 es el que el plano anterior llamaba 4: es el mismo
- *   ambiente, no dos. No existe un nodo "consultorio 4".
+ *   Entrando por el pasillo, y en este orden:
+ *     - en la boca: consultorio 1 (izquierda) y el baño (derecha);
+ *     - primer tramo: consultorio 2 (izquierda) y el laboratorio (derecha);
+ *     - segundo tramo: consultorio 3 (izquierda);
+ *     - al fondo: consultorio 4 (izquierda) y consultorio 5 (derecha).
  *
  * DOS REGLAS ESPECIALES que pidió el centro y que no se pueden inferir de
  * las fotos:
  *
- *   1. Volver desde el consultorio 3 o desde el 5 no lleva al pasillo de una:
+ *   1. Volver desde el consultorio 4 o desde el 5 no lleva al pasillo de una:
  *      pasa por `pasillo-volver`, que es la foto del pasillo mirando hacia la
  *      salida, y desde ahí un círculo devuelve a la boca del pasillo.
  *   2. La primera foto de cada carpeta es la que abre el ambiente.
@@ -237,24 +239,34 @@ export const tourNodes: TourNode[] = [
     id: "pasillo",
     title: "Pasillo",
     caption:
-      "Saliendo de la recepción: el baño es la puerta negra y el pasillo arranca a la izquierda.",
+      "La boca del pasillo: a la izquierda el consultorio 1, al centro el pasillo y a la derecha el baño.",
     photos: [
       {
         src: `${F}/pasillo/pasillo-01.webp`,
-        alt: "Vista panorámica desde la recepción: a la izquierda arranca el pasillo y al centro está la puerta negra del baño",
+        alt: "Vista panorámica desde la recepción: a la izquierda la puerta del consultorio 1, al centro la boca del pasillo y a la derecha la puerta negra del baño",
         aspect: 1774 / 887,
+        // Anclado al borde izquierdo, que es lo más lejos que el visor puede
+        // correr el encuadre sin destapar la foto. Sin esto la puerta del
+        // consultorio 1 —que asoma en el filo, del 0% al 3,5% del ancho— quedaba
+        // muy lejos de la ventana. Lo que se pierde por la derecha es el
+        // mostrador, que no lleva ningún círculo.
+        focoX: 0,
       },
     ],
     back: "recepcion",
     hotspots: [
-      // Sobre la hoja de la puerta negra, que ocupa del 51% al 70% del ancho.
-      // Va en el 54 y no más al centro de la hoja para no alejarse del otro
-      // círculo: cuanto más separados, menos entran juntos en un teléfono.
-      { x: 54, y: 45, label: "Baño", to: "bano" },
-      // La boca del pasillo, al fondo a la izquierda. Va en el 18% y no más al
-      // borde: los dos círculos tienen que entrar juntos en la ventana, y en un
-      // teléfono de esta foto se ve poco más de la mitad del ancho.
+      // Marca la puerta que asoma en el filo izquierdo, pero no va sobre ella.
+      // Medido en el navegador: aun con el encuadre en su tope, en escritorio
+      // el recorte empieza recién en el 4,8% de la foto, así que la puerta
+      // queda 74px afuera y un círculo encima sería intocable. Además, con el
+      // cursor sobre la mitad derecha el paneo corre la foto hasta 13px más a
+      // la izquierda. El 8% es el punto más pegado al borde que sigue siendo
+      // tocable en los dos casos: a 48px en escritorio y 45px en un teléfono.
+      { x: 8, y: 45, label: "Consultorio 1", to: "consultorio-1" },
+      // La boca del pasillo, al fondo a la izquierda.
       { x: 18, y: 55, label: "Seguir por el pasillo", to: "pasillo-2" },
+      // Sobre la hoja de la puerta negra, que ocupa del 51% al 70% del ancho.
+      { x: 54, y: 45, label: "Baño", to: "bano" },
     ],
   },
   {
@@ -293,7 +305,7 @@ export const tourNodes: TourNode[] = [
     hotspots: [
       // Medidos por pixel sobre el archivo: la abertura angosta de luz
       // azulada, entre el 33% y el 37% del ancho.
-      { x: 34.5, y: 28, label: "Consultorio 1", to: "consultorio-1" },
+      { x: 34.5, y: 28, label: "Consultorio 2", to: "consultorio-2" },
       // La puerta entornada de la derecha, vista casi de canto entre el 58% y
       // el 61%.
       { x: 60, y: 26, label: "Laboratorio", to: "laboratorio" },
@@ -314,7 +326,7 @@ export const tourNodes: TourNode[] = [
     ],
     back: "pasillo-2",
     hotspots: [
-      { x: 31, y: 45, label: "Consultorio 2", to: "consultorio-2" },
+      { x: 31, y: 45, label: "Consultorio 3", to: "consultorio-3" },
       { x: FUGA, y: 62, label: "Seguir por el pasillo", to: "pasillo-4" },
     ],
   },
@@ -333,7 +345,7 @@ export const tourNodes: TourNode[] = [
     ],
     back: "pasillo-3",
     hotspots: [
-      { x: 28, y: 45, label: "Consultorio 3", to: "consultorio-3" },
+      { x: 28, y: 45, label: "Consultorio 4", to: "consultorio-4" },
       // La abertura del fondo a la derecha, la que deja ver el escritorio.
       { x: 54, y: 45, label: "Consultorio 5", to: "consultorio-5" },
       // La puerta de madera del centro da al patio: no es una sala, así que
@@ -343,7 +355,7 @@ export const tourNodes: TourNode[] = [
   {
     id: "consultorio-1",
     title: "Consultorio 1 — Odontología",
-    caption: "Primer consultorio sobre la izquierda del pasillo.",
+    caption: "El primero de todos: su puerta da a la boca del pasillo.",
     photos: [
       {
         src: `${F}/consultorio-1/odontologia1.webp`,
@@ -371,7 +383,7 @@ export const tourNodes: TourNode[] = [
         aspect: 1920 / 1280,
       },
     ],
-    back: "pasillo-2",
+    back: "pasillo",
     hotspots: [],
   },
   {
@@ -395,38 +407,67 @@ export const tourNodes: TourNode[] = [
         aspect: 1920 / 1079,
       },
     ],
-    back: "pasillo-3",
+    back: "pasillo-2",
     hotspots: [],
   },
   {
     id: "consultorio-3",
-    title: "Consultorio 3 — Kinesiología y estética",
+    title: "Consultorio 3 — Odontología",
+    caption: "Sobre la izquierda del pasillo, pasando odontopediatría.",
+    photos: [
+      {
+        src: `${F}/consultorio-03/consultorio-01.webp`,
+        alt: "El consultorio 3 visto desde la puerta, con el sillón odontológico a la izquierda y el escritorio bajo la ventana",
+        aspect: 1920 / 1079,
+      },
+      {
+        src: `${F}/consultorio-03/consultorio-02.webp`,
+        alt: "El sillón del consultorio 3 junto a la mesada con bacha",
+        aspect: 1920 / 1079,
+      },
+      {
+        src: `${F}/consultorio-03/consultorio-03.webp`,
+        alt: "El consultorio 3 desde el otro extremo, con el cuadro de la muela sobre la pared",
+        aspect: 1920 / 1079,
+      },
+      {
+        src: `${F}/consultorio-03/consultorio-04.webp`,
+        alt: "Vista general del consultorio 3, con el equipo y el escritorio de trabajo",
+        aspect: 1920 / 1079,
+      },
+    ],
+    back: "pasillo-3",
+    hotspots: [],
+  },
+  {
+    id: "consultorio-4",
+    title: "Consultorio 4 — Kinesiología y estética",
     caption:
       "Al final del pasillo, sobre la izquierda: escritorio de consulta y camilla de estética.",
     photos: [
       {
-        src: `${F}/consultorio-3/kinesiologia1.webp`,
-        alt: "El consultorio 3 visto desde la puerta, con el escritorio y las sillas",
-        aspect: 720 / 1280,
+        src: `${F}/consultorio-4-estetica/kinesiologia1.webp`,
+        alt: "Vista panorámica del consultorio 4: la camilla contra la pared de la izquierda y el escritorio con dos sillas bajo la ventana",
+        aspect: 1920 / 720,
       },
       {
-        src: `${F}/consultorio-3/kinesiologia2.webp`,
-        alt: "Escritorio del consultorio 3 con las orquídeas sobre la mesada",
+        src: `${F}/consultorio-4-estetica/kinesiologia2.webp`,
+        alt: "Escritorio del consultorio 4 con las orquídeas sobre la mesada",
         aspect: 1920 / 1079,
       },
       {
-        src: `${F}/consultorio-3/kinesiologia3.webp`,
-        alt: "La camilla de estética y el equipamiento del consultorio 3",
+        src: `${F}/consultorio-4-estetica/kinesiologia3.webp`,
+        alt: "La camilla de estética y el equipamiento del consultorio 4",
         aspect: 1920 / 1280,
       },
       {
-        src: `${F}/consultorio-3/kinesiologia4.webp`,
-        alt: "Vista general del consultorio 3, con el escritorio y la camilla",
+        src: `${F}/consultorio-4-estetica/kinesiologia4.webp`,
+        alt: "Vista general del consultorio 4, con el escritorio y la camilla",
         aspect: 1920 / 1280,
       },
       {
-        src: `${F}/consultorio-3/kinesiologia5.webp`,
-        alt: "El consultorio 3 desde el escritorio hacia la camilla",
+        src: `${F}/consultorio-4-estetica/kinesiologia5.webp`,
+        alt: "El consultorio 4 desde el escritorio hacia la camilla",
         aspect: 1920 / 1079,
       },
     ],

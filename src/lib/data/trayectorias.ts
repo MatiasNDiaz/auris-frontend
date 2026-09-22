@@ -306,8 +306,7 @@ export const trayectorias = {
   // Lic. Eugenia Villalobos
   "eugenia-villalobos": {
     titulo: "Licenciada en Fonoaudiología",
-    especialidad:
-      "Especialista en comunicación, lenguaje y estimulación cognitiva en adultos mayores.",
+    especialidad: "Comunicación y Lenguaje de adultos mayores.",
     bloques: [
       {
         tipo: "parrafo",
@@ -318,22 +317,29 @@ export const trayectorias = {
       {
         tipo: "lista",
         items: [
-          "Adscripción concluida a la Cátedra de Neurolingüística de la Facultad de Fonoaudiología de la Universidad Nacional de Córdoba.",
+          "Disertante en la II Jornada de Actualización Científica del Servicio de Fonoaudiología del Hospital Nacional de Clínicas 2026, Córdoba.",
+          "Adscripción concluida a la Cátedra de Neurolingüística de la Escuela de Fonoaudiología de la Universidad Nacional de Córdoba.",
+          "Neurociencias cognitivas, neuropsicología y rehabilitación cognitiva. Facultad de Posgrado, Universidad Favaloro, Buenos Aires.",
           "Ex pasante del Servicio de Fonoaudiología del Centro de Rehabilitación para Adultos FLENI, sede Escobar, Buenos Aires.",
           "Ex integrante del Servicio de Neurorehabilitación CNR del Sanatorio Allende.",
           "Ex integrante del Servicio de Fonoaudiología del Hospital Nacional de Clínicas.",
-          "Tallerista dedicada a la comunicación y el lenguaje en adultos mayores en diferentes municipios de la provincia de Córdoba.",
+          "Tallerista dedicada a la prevención en adultos mayores, con dictado en diferentes municipios de Córdoba.",
         ],
       },
-      { tipo: "titulo", texto: "Atención especializada en adultos mayores" },
+      { tipo: "titulo", texto: "Talleres en AURIS" },
       {
         tipo: "parrafo",
         texto:
-          "En AURIS desarrolla propuestas orientadas a fortalecer la comunicación, la memoria y la participación social:",
+          "Talleres grupales dedicados al envejecimiento saludable de los adultos mayores:",
       },
       {
         tipo: "lista",
         items: ["Taller de Conversación.", "Taller de Memoria Auditiva."],
+      },
+      {
+        tipo: "parrafo",
+        texto:
+          "La comunicación ocupa un lugar fundamental en el bienestar, en la vida cotidiana y forma parte del camino del envejecimiento saludable.",
       },
     ],
   },

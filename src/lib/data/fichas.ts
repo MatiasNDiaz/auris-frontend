@@ -552,11 +552,27 @@ const fichas: Partial<Record<keyof typeof trayectorias, Ficha>> = {
     trayectoriaTitulo: "Formación y trayectoria profesional",
     hitos: [
       {
+        icono: "publicacion",
+        marca: "Hospital Nacional de Clínicas, 2026",
+        titulo: "Disertante",
+        texto: [
+          "Disertante en la II Jornada de Actualización Científica del Servicio de Fonoaudiología del Hospital Nacional de Clínicas 2026, Córdoba.",
+        ],
+      },
+      {
         icono: "formacion",
         marca: "Universidad Nacional de Córdoba",
         titulo: "Neurolingüística",
         texto: [
-          "Adscripción concluida a la Cátedra de Neurolingüística de la Facultad de Fonoaudiología de la Universidad Nacional de Córdoba.",
+          "Adscripción concluida a la Cátedra de Neurolingüística de la Escuela de Fonoaudiología de la Universidad Nacional de Córdoba.",
+        ],
+      },
+      {
+        icono: "especializacion",
+        marca: "Universidad Favaloro, Buenos Aires",
+        titulo: "Neurociencias cognitivas",
+        texto: [
+          "Neurociencias cognitivas, neuropsicología y rehabilitación cognitiva. Facultad de Posgrado, Universidad Favaloro, Buenos Aires.",
         ],
       },
       {
@@ -583,10 +599,10 @@ const fichas: Partial<Record<keyof typeof trayectorias, Ficha>> = {
       },
       {
         icono: "docencia",
-        marca: "Provincia de Córdoba",
+        marca: "Municipios de Córdoba",
         titulo: "Tallerista",
         texto: [
-          "Tallerista dedicada a la comunicación y el lenguaje en adultos mayores en diferentes municipios de la provincia de Córdoba.",
+          "Tallerista dedicada a la prevención en adultos mayores, con dictado en diferentes municipios de Córdoba.",
         ],
       },
     ],
@@ -595,9 +611,9 @@ const fichas: Partial<Record<keyof typeof trayectorias, Ficha>> = {
       texto: "Comunicación y lenguaje en adultos mayores",
     },
     enfoque: {
-      etiqueta: "Atención especializada en adultos mayores",
+      etiqueta: "Talleres en AURIS",
       frase:
-        "En AURIS desarrolla propuestas orientadas a fortalecer la comunicación, la memoria y la participación social",
+        "La comunicación ocupa un lugar fundamental en el bienestar, en la vida cotidiana y forma parte del camino del envejecimiento saludable",
       texto: [
         "Con una sólida trayectoria en el ámbito de la neurorehabilitación y la atención fonoaudiológica, Eugenia acompaña a adultos mayores promoviendo el bienestar comunicacional, la participación activa y el mantenimiento de sus capacidades cognitivas y lingüísticas.",
       ],
@@ -607,6 +623,9 @@ const fichas: Partial<Record<keyof typeof trayectorias, Ficha>> = {
       titulo: "Talleres en AURIS",
       grupos: [
         { items: ["Taller de Conversación.", "Taller de Memoria Auditiva."] },
+      ],
+      cierre: [
+        "Talleres grupales dedicados al envejecimiento saludable de los adultos mayores:",
       ],
     },
   },

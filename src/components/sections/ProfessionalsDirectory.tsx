@@ -115,7 +115,7 @@ export function ProfessionalsDirectory() {
               >
                 <ProfessionalCard
                   professional={professional}
-                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 300px"
+                  sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 520px"
                 />
               </motion.li>
             ))}
@@ -152,7 +152,7 @@ export function ProfessionalsDirectory() {
                 <li key={persona.slug}>
                   <RecepcionistaCard
                     recepcionista={persona}
-                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 300px"
+                    sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 520px"
                   />
                 </li>
               ))}

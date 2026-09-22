@@ -62,8 +62,10 @@ const FOTO_CIFRAS: Record<string, number> = {
  * cualquiera donde la cara entre bien (ver `bannerFoco` en su ficha).
  */
 const FOTO_BANNER: Record<string, number> = {
-  // Por ahora mandó solo dos fotos: el banner usa la 2, que es la misma toma
-  // que la de portada pero con otro gesto.
+  // Su foto 3 es un collage de los talleres, no un retrato: en la franja del
+  // banner, que recorta una tira angosta, quedaría un recorte ilegible de
+  // varias fotos cortadas. El banner usa la 2, que es la misma toma que la de
+  // portada pero con otro gesto.
   "eugenia-villalobos": 2,
 };
 

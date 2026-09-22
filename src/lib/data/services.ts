@@ -132,12 +132,16 @@ export const services: Service[] = [
       "Un plan pensado para tu piel, con resultados reales y pautas de cuidado para sostenerlos en casa.",
     fullDescription:
       "Diseñamos planes de tratamiento personalizados a partir de un diagnóstico de piel y de los objetivos de cada persona. Priorizamos procedimientos seguros, con evidencia y resultados sostenibles en el tiempo, evitando promesas desmedidas. El seguimiento posterior es parte del tratamiento: acompañamos con pautas de cuidado domiciliario para que los resultados se mantengan.",
-    imageUrl: "/EsteticaCorporal.webp",
+    // La misma foto que en el carrusel de la portada, para que quien entra
+    // desde ahí reconozca el servicio. Ya no hace falta `landingImageUrl`: el
+    // hero usa esta cuando no hay una propia.
+    imageUrl: "/images/servicios/portada/estetica-facial-y-corporal.webp",
     // La profesional está al 30% del ancho: en el recorte vertical de mobile,
-    // centrada se veía la camilla y no ella.
-    landingImageUrl:
-      "/images/servicios/portada/estetica-facial-y-corporal.webp",
+    // centrada se veía la camilla y no ella. El alto cambia entre las dos
+    // pantallas porque la caja del banner del servicio es más apaisada que la
+    // del hero y recorta distinto.
     landingFoco: "25% 20%",
+    heroFoco: "25% 20%",
     features: [
       "Diagnóstico y limpieza facial profunda",
       "Tratamientos de hidratación y renovación cutánea",
@@ -157,9 +161,9 @@ export const services: Service[] = [
       "Lenguaje, voz, audición y deglución, acompañados paso a paso en cada etapa de la vida.",
     fullDescription:
       "Atendemos a niños, adolescentes y adultos en dificultades del lenguaje, el habla, la voz, la audición y la deglución. El proceso comienza con una evaluación diagnóstica detallada y, cuando corresponde, se articula con la familia, la escuela o el equipo médico tratante. Los tratamientos se planifican en ciclos con revisión periódica de objetivos.",
-    imageUrl: "/images/servicios/fonoaudiologia.webp",
-    landingImageUrl: "/images/servicios/portada/fonoaudiologia.webp",
+    imageUrl: "/images/servicios/portada/fonoaudiologia.webp",
     landingFoco: "29% 25%",
+    heroFoco: "29% 20%",
     features: [
       "Evaluación del lenguaje y el habla",
       "Tratamiento de la voz profesional",
@@ -179,13 +183,14 @@ export const services: Service[] = [
       "Un lugar tranquilo para hablar de lo que te pasa, a tu ritmo y con la escucha que cada proceso necesita.",
     fullDescription:
       "Nuestro equipo de psicología acompaña procesos de cambio personal desde un enfoque integrador, respetando el tiempo y la singularidad de cada persona. Trabajamos sobre ansiedad, estados de ánimo, duelos, vínculos y crisis vitales, tanto en formato individual como de pareja y familia. Cada proceso comienza con entrevistas de admisión donde definimos objetivos claros y elegimos juntos el encuadre más adecuado.",
-    imageUrl: "/Piscologia.webp",
+    imageUrl: "/images/servicios/portada/psicologia.webp",
     // La única del carrusel que es 16:9 y no 2.34: en escritorio se recorta a
     // lo alto, así que acá el eje Y también cuenta. Con el 55% la foto sube lo
     // justo para que entre el escritorio con los papeles, sin comerle el aire
-    // de arriba a la cabeza.
-    landingImageUrl: "/images/servicios/portada/psicologia.webp",
+    // de arriba a la cabeza. En el banner del servicio, que es bastante más
+    // apaisado, ese mismo 55% le dejaba la cabeza pegada al techo: ahí va 30%.
     landingFoco: "37% 55%",
+    heroFoco: "37% 30%",
     features: [
       "Terapia individual para adolescentes y adultos",
       "Terapia de pareja y orientación familiar",
@@ -198,21 +203,24 @@ export const services: Service[] = [
     name: "Taller de adultos mayores",
     icon: "users",
     shortDescription:
-      "Encuentros grupales para sostener la autonomía, la memoria y el vínculo social.",
-    tagline: "Seguir activo, en buena compañía",
+      "Talleres de Conversación y de Memoria Auditiva: espacios grupales dedicados al envejecimiento saludable.",
+    tagline: "Activos y Protagonistas",
     heroTitle: "Seguir activo, en buena compañía",
     heroSubtitle:
-      "Encuentros semanales en grupos reducidos, para ejercitar la memoria y compartir un buen rato con otros.",
+      "Talleres de Conversación y de Memoria Auditiva, para sostener la comunicación y seguir participando de la vida cotidiana.",
+    // Texto del centro. El programa tiene nombre propio —"Activos y
+    // Protagonistas"— y los dos talleres se llaman así: no son una
+    // descripción genérica de actividades.
     fullDescription:
-      "Un espacio grupal pensado para personas mayores, coordinado por profesionales del equipo. Los encuentros combinan estimulación cognitiva, actividad física suave adaptada y dinámicas de participación que fortalecen el vínculo social. El objetivo es sostener la autonomía en la vida cotidiana y acompañar esta etapa desde el encuentro con otros, en grupos reducidos donde cada persona avanza a su ritmo.",
-    imageUrl: "/TallerAdultos.webp",
-    landingImageUrl: "/images/servicios/portada/taller-de-adultos-mayores.webp",
+      "Los Talleres de Conversación y de Memoria Auditiva son espacios grupales dedicados al envejecimiento saludable. Aprendemos, entrenamos, compartimos y seguimos participando activamente de la vida cotidiana, fortaleciendo las habilidades cognitivas que sostienen la comunicación. Es el programa “Activos y Protagonistas”, a cargo de la Lic. Eugenia Villalobos, que trabaja en comunicación y lenguaje de adultos mayores.",
+    imageUrl: "/images/servicios/portada/taller-de-adultos-mayores.webp",
     landingFoco: "54% 25%",
+    heroFoco: "54% 25%",
     features: [
-      "Estimulación cognitiva y de la memoria",
-      "Actividad física suave y adaptada",
-      "Grupos reducidos y encuentros semanales",
-      "Articulación con la familia y el médico tratante",
+      "Taller de Conversación",
+      "Taller de Memoria Auditiva",
+      "Habilidades cognitivas que sostienen la comunicación",
+      "Encuentros grupales de envejecimiento saludable",
     ],
   },
   {

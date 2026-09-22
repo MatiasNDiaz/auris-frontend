@@ -67,9 +67,21 @@ const PRESETS = {
  * coincide con ninguna va como `grande`, que es el caso de más calidad: si una
  * carpeta nueva queda sin mapear, se equivoca para el lado seguro.
  */
+/** @type {Record<string, keyof typeof PRESETS>} */
 const PRESET_POR_CARPETA = {
   profesionales: "retrato",
   historia: "tarjeta",
+  /*
+   * Los banners de sección se dibujan más anchos que la pantalla.
+   *
+   * Son fotos apaisadas dentro de una franja todavía más apaisada, así que se
+   * ajustan por el alto y desbordan de costado: en un monitor de 1440 el de
+   * preguntas frecuentes se dibuja a 1798px, y en una pantalla retina eso son
+   * 3596 píxeles reales. Con el tope de 1920 de `grande` llegaban al 53%
+   * —bajaban el archivo entero y aun así no alcanzaba—. Los originales son de
+   * 6192px, así que hay de dónde sacar.
+   */
+  "banners-secciones": "panoramica",
   // `servicios` no va acá a propósito: esas fotos además de la tarjeta son el
   // banner a pantalla completa del detalle del servicio, y necesitan `grande`.
 };
@@ -119,6 +131,19 @@ const NO_SOPORTADOS = new Set([".heic", ".heif"]);
  * @type {Record<string, { arriba?: number, cabeza?: number, abajo?: number, ancho?: number, centroX?: number }>}
  */
 const ENCUADRE = {
+  /*
+   * Su foto 2 es la única apaisada de las que van en tarjeta.
+   *
+   * La tarjeta es vertical (4:5), así que una foto 3:2 se ajusta por el alto y
+   * se dibuja casi el doble de ancha que la tarjeta: en un teléfono pedía
+   * 1965px de una foto que solo tiene 1536, y se veía blanda. Recortándola acá
+   * a la forma de la tarjeta, lo que se descarta es la pared vacía de la
+   * izquierda —ella ocupa del 45% al 85% del ancho— y ya no hay que agrandar
+   * nada. Con esto tampoco hace falta `fotoHoverFoco` en `professionals.ts`.
+   */
+  // La clave es la ruta del archivo original tal cual está escrita, con su
+  // mayúscula: acá el nombre es `Daniela-2.png`, no `daniela-2.png`.
+  "profesionales/daniela-giansetto/Daniela-2": { ancho: 0.535, centroX: 0.65 },
   // Las tres del mostrador ocupan del 14% al 72% del ancho: el resto es
   // pared vacía a la derecha. El banner muestra la foto entera a lo ancho
   // —es más angosta que la franja—, así que la única forma de centrarlas es

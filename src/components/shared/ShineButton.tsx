@@ -31,11 +31,19 @@ const tones = {
    */
   outlineLight:
     "border border-cream-50/55 bg-ink-900/30 text-cream-50 shadow-lg shadow-ink-900/30 backdrop-blur-xl backdrop-saturate-150 hover:border-cream-50/85 hover:bg-ink-900/40 hover:shadow-xl hover:shadow-ink-900/40",
-  /** Contorno verde sobre fondos claros. */
+  /**
+   * Contorno verde sobre fondos claros.
+   *
+   * Lleva relieve propio —degradé de arriba abajo, sombra apoyada y un filete
+   * de luz por dentro del borde— porque los dos lugares donde se usa son
+   * secciones de fondo verde o beige: en plano y sin sombra el botón se
+   * confundía con el fondo y había que buscarlo. Es el mismo recurso que usa
+   * la pastilla del servicio en el hero.
+   */
   outlinePrimary:
-    "border border-primary-400/70 bg-primary-50/70 text-primary-800 backdrop-blur-sm hover:border-primary-600 hover:text-primary-900",
+    "border border-primary-300 bg-linear-to-b from-cream-50 to-primary-50 text-primary-800 shadow-md shadow-primary-900/15 ring-1 ring-cream-50/80 ring-inset hover:border-primary-500 hover:to-primary-100 hover:text-primary-900 hover:shadow-lg hover:shadow-primary-900/25",
   /** Discreto, para acciones terciarias sobre fondos claros. */
-  soft: "bg-primary-100/80 text-primary-800 backdrop-blur-sm hover:bg-primary-200/90 hover:text-primary-900",
+  soft: "bg-linear-to-b from-primary-100 to-primary-200 text-primary-800 shadow-md shadow-primary-900/15 ring-1 ring-cream-50/70 ring-inset hover:from-primary-200 hover:to-primary-300 hover:text-primary-900 hover:shadow-lg hover:shadow-primary-900/25",
   /** Ficha de profesionales mujeres: el mismo rosa violáceo del titular. */
   rose: "bg-linear-to-br from-rose-700 to-rose-900 text-cream-50 shadow-lg shadow-rose-900/30 hover:from-rose-500 hover:to-rose-700 hover:shadow-xl hover:shadow-rose-900/45",
   /** Ficha de profesionales varones: el mismo azul profundo del titular. */
@@ -153,7 +161,9 @@ export function ShineButton({
         />
       )}
 
-      <span className="relative inline-flex items-center gap-2">{children}</span>
+      <span className="relative inline-flex items-center gap-2">
+        {children}
+      </span>
     </>
   );
 
