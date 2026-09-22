@@ -179,24 +179,30 @@ export function Hero() {
           {/* Titular y bajada del servicio activo. Se remontan con `key`, así
               cada cambio entra desde abajo en vez de reemplazarse de golpe. */}
           {/* Sin `mode="wait"`: esperar la salida del titular anterior lo dejaba
-              un paso atrás del fondo. Entrada y salida corren a la vez, y el
-              texto saliente va en absolute para no empujar el layout. */}
-          <div className="relative mt-7 min-h-56 sm:min-h-60 lg:min-h-64">
+              un paso atrás del fondo. Entrada y salida corren a la vez.
+
+              Los dos van en la misma celda del grid, uno encima del otro. Antes
+              el saliente se sacaba del flujo con un `position: absolute` dentro
+              de `exit`, pero Framer recién lo aplica un fotograma después de
+              montar el entrante: en ese fotograma los dos titulares quedaban
+              apilados en el flujo, el hero pasaba de 688 a 910 px y el navegador
+              corregía el scroll 222 px y lo devolvía. Cada 4 segundos, que es lo
+              que tarda el carrusel en girar. Se veía como un tirón hacia arriba
+              y, de paso, la navbar leía ese retroceso como "el usuario subió" y
+              se destapaba sola. Apilados en grid el alto es el mayor de los dos
+              y nunca la suma, así que no hay fotograma intermedio que corregir. */}
+          <div className="relative mt-7 grid min-h-56 sm:min-h-60 lg:min-h-64">
             <AnimatePresence initial={false}>
               <motion.div
                 key={active}
                 initial={reduceMotion ? false : { opacity: 0, y: 28 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={
-                  reduceMotion
-                    ? undefined
-                    : { opacity: 0, y: -18, position: "absolute" }
-                }
+                exit={reduceMotion ? undefined : { opacity: 0, y: -18 }}
                 transition={{
                   duration: reduceMotion ? 0 : 0.45,
                   ease: [0.21, 0.47, 0.32, 0.98],
                 }}
-                className="inset-x-0 top-0"
+                className="[grid-area:1/1] self-start"
               >
                 {/* El nombre del servicio. Antes iba en verde claro suelto
                     sobre la foto y contra un consultorio blanco desaparecía;

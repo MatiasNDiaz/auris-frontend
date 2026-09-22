@@ -1,5 +1,65 @@
 # Changelog
 
+## 2026-09-22 — El tirón de scroll cada 4 segundos en la portada
+
+- **La portada daba un salto de scroll cada 4 segundos.** Se reportó como algo
+  de la sección de profesionales, pero no era de ahí: medido en el navegador,
+  la sección de equipo no mueve el scroll ni al pasar el cursor, ni al tabular,
+  ni al bajar con la rueda. El salto viene del carrusel del hero y se nota en
+  cualquier punto de la página, porque el hero está arriba de todo.
+- **Causa.** Los dos titulares del hero —el que sale y el que entra— se cruzan
+  a la vez, y al que salía se lo sacaba del flujo con un `position: absolute`
+  puesto dentro de `exit`. Framer recién aplica esa propiedad un fotograma
+  después de montar el entrante, así que durante ese fotograma los dos quedaban
+  apilados en el flujo: la caja del titular pasaba de 268 a 536 px, el hero de
+  688 a 910 y el documento crecía 222 px. El navegador corregía el scroll para
+  no mover lo que se estaba viendo y lo devolvía al fotograma siguiente.
+- **De paso, la navbar se destapaba sola.** Se esconde al bajar y reaparece al
+  subir; ese retroceso de 222 px lo leía como que el usuario había subido.
+- **Arreglo.** Los dos titulares van apilados en la misma celda de un grid, así
+  el alto de la caja es el mayor de los dos y nunca la suma. El `exit` ya no
+  toca `position`, con lo cual no depende de cuándo lo aplique Framer.
+- **Verificado en el navegador**, 24 segundos —seis vueltas del carrusel— en
+  1440, 768 y 390 px: ningún movimiento de scroll, un solo alto de documento, y
+  la navbar escondida en las 90 muestras de 18 segundos. Antes el salto salía
+  puntual a los 4, 8, 12, 16 y 20 segundos.
+
+### Encontrado y no modificado
+
+- **En 768 px la caja del titular varía 2 px entre servicios** (240 contra 242),
+  porque el piso `sm:min-h-60` cae justo en el límite. No mueve el scroll —el
+  navegador no reajusta por 3 px— y subir el piso cambiaría el reposo en el
+  resto de los anchos, así que se deja.
+
+## 2026-09-22 — Foto nueva de alineadores y texto del video
+
+- **La tarjeta y el banner de "Alineadores y ortodoncia" usan la foto nueva**
+  (`servicios/alineadores.png`, la mano con el alineador y la sonrisa), en vez
+  de la anterior. `imageUrl` es el único campo que alimenta ambos lugares —la
+  tarjeta del listado y el banner de su página—, así que un solo cambio bastó.
+  Se borró el archivo viejo, que quedó sin ninguna referencia.
+- **Foto cuadrada (851×851) con un solo `heroFoco`.** En la tarjeta (16:10) y en
+  el banner (bastante más apaisado en escritorio, casi cuadrado en mobile) la
+  caja siempre es igual o más ancha que 1:1, así que lo único que se recorta es
+  arriba y abajo, nunca los costados. Medido con el mismo método de simulación
+  de recorte que vengo usando: `center 37%` deja la sonrisa y el alineador
+  enteros tanto en la ventana angosta de la tarjeta como en la más ajustada del
+  banner de escritorio. Verificado en el navegador en los tres casos.
+- **Texto del video de "Sobre el centro" reemplazado.** Decía "Más que un
+  consultorio, un equipo que se lleva bien" —la palabra pedida fuera—. Ahora
+  dice "Cuidar a otros empieza por un equipo que disfruta estar juntos", una
+  versión acortada de la frase que pidió el centro ("Porque cuidar a otros
+  también empieza por construir un equipo que disfruta de estar juntos"): la
+  frase entera no entraba cómoda en el cuadro del video. Verificado en
+  escritorio (dos líneas) y en mobile (tres), sin chocar con el botón de sonido.
+
+### Encontrado y no modificado
+
+- **La foto de alineadores se ve algo blanda en el banner de escritorio.** El
+  archivo mide 851×851 y ya se sirve entero; en una pantalla grande el banner
+  pide más ancho del que ese archivo tiene. Es el mismo tipo de límite que el
+  banner de "Nuestra historia": hace falta el original en mayor resolución.
+
 ## 2026-09-22 — Banners de sección y la foto 2 de Daniela, más nítidos
 
 - **Los banners de sección salían a 1920px pero se dibujan más anchos.** Son

@@ -87,7 +87,13 @@ export const services: Service[] = [
       "Alineadores transparentes o brackets, con el recorrido planificado digitalmente antes de colocar nada.",
     fullDescription:
       "Antes de empezar cualquier tratamiento de ortodoncia hacemos un escaneo intraoral y planificamos digitalmente el recorrido completo: qué pieza se mueve, en qué orden y cuánto tiempo lleva. Recién con esa planificación sobre la mesa conversamos las opciones. Los alineadores transparentes son removibles y prácticamente invisibles, pero dependen de que los uses las horas indicadas; los brackets no dependen de eso, pero se ven y exigen más cuidado en la higiene. Ninguna de las dos opciones es mejor en abstracto: la elección depende del caso y de la rutina de cada persona. Terminado el tratamiento viene la contención, que es lo que evita que los dientes vuelvan a moverse.",
-    imageUrl: "/images/servicios/alineadores-y-ortodoncia.webp",
+    imageUrl: "/images/servicios/alineadores.webp",
+    // Foto cuadrada: en la tarjeta y en el banner se recorta a lo alto, nunca
+    // a lo ancho (la caja siempre es más apaisada que 1:1, salvo en el banner
+    // mobile, donde es casi cuadrada y apenas recorta a los costados). El 37%
+    // deja la sonrisa y el alineador enteros tanto en la ventana angosta de la
+    // tarjeta como en la más ajustada del banner de escritorio.
+    heroFoco: "center 37%",
     features: [
       "Escaneo intraoral y planificación digital",
       "Alineadores transparentes removibles",

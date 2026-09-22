@@ -129,7 +129,11 @@ export function AboutPreview() {
               src="/videos/video-equipo-auris.mp4"
               poster="/videos/video-equipo-auris-poster.webp"
               descripcion="El equipo de AURIS entre risas, en la recepción del centro"
-              pie="Más que un consultorio, un equipo que se lleva bien"
+              // Versión corta de la frase del centro: "Porque cuidar a
+              // otros también empieza por construir un equipo que disfruta
+              // de estar juntos". Entera no entraba cómoda en el cuadro del
+              // video, así que se acortó sin perder la idea.
+              pie="Cuidar a otros empieza por un equipo que disfruta estar juntos"
               className="relative aspect-464/832 w-full rounded-[2.5rem] shadow-xl"
             />
           </div>
