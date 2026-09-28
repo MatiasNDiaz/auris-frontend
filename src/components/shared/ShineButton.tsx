@@ -63,11 +63,24 @@ const fillLayers = {
   clinic: "bg-linear-to-t from-clinic-900 to-clinic-500",
 } as const;
 
+/**
+ * `min-h` y no `h`: con una etiqueta larga en una pantalla angosta el texto
+ * pasa a dos líneas, y con alto fijo la segunda se salía de la pastilla. En una
+ * sola línea el alto es el mismo de siempre —el `py` queda muy por debajo del
+ * mínimo—, así que no cambia nada de lo que ya entraba.
+ */
 const sizes = {
-  /** Único tamaño del sitio: el de los CTA del hero. */
-  default: "h-13 px-7 text-base",
+  /**
+   * Único tamaño del sitio: el de los CTA del hero.
+   *
+   * El relleno lateral cede en pantallas angostas. Con 28 px fijos a cada lado,
+   * etiquetas como "Conocé nuestros servicios" pedían 283 px dentro de una
+   * columna de 280 y partían en dos renglones por tres píxeles. De `sm` para
+   * arriba vuelve a ser el de siempre.
+   */
+  default: "min-h-13 px-5 py-2 text-base sm:px-7",
   /** Solo donde el ancho es crítico; mantiene la misma altura visual. */
-  compact: "h-11 px-5 text-sm",
+  compact: "min-h-11 px-4 py-1.5 text-sm sm:px-5",
 } as const;
 
 export type ShineTone = keyof typeof tones;
@@ -103,7 +116,15 @@ export function ShineButton({
   ...rest
 }: ShineButtonProps) {
   const classes = cn(
-    "auris-btn group relative inline-flex shrink-0 items-center justify-center gap-2 overflow-hidden rounded-full font-semibold whitespace-nowrap",
+    // Sin `whitespace-nowrap` y con `max-w-full`: un botón que no puede cortar
+    // su texto tiene un ancho mínimo igual al de su etiqueta entera, y ese
+    // mínimo se lo impone a lo que lo contiene. El CTA de la ficha del
+    // profesional dice "Solicitar turno con <nombre completo>" y llegaba a
+    // pedir 368 px, más que un teléfono de 320: la columna del hero se estiraba
+    // a ese ancho y el título, el rótulo y la foto quedaban cortados contra el
+    // borde derecho. Pudiendo cortar el texto, el mínimo pasa a ser el de la
+    // palabra más larga y el botón se acomoda a lo que haya.
+    "auris-btn group relative inline-flex max-w-full shrink-0 items-center justify-center gap-2 overflow-hidden rounded-full text-center font-semibold",
     // Sin rebote y sin `scale`: solo eleva y asienta.
     //
     // Los dos `--tw-gradient-*` son necesarios: los tonos con degradé cambian

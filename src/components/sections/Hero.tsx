@@ -29,6 +29,62 @@ const PRECARGA_MS = 1200;
 const RISE_DELAY = { eyebrow: "0.1s", cta: "0.21s" };
 
 /**
+ * Pastilla, titular y bajada de un servicio.
+ *
+ * Aparte para poder dibujarlo dos veces: el que se ve y el que, sin verse,
+ * reserva el alto de la caja. Si fueran dos bloques de markup distintos, uno
+ * quedaría desfasado del otro al primer retoque de tipografía o de espaciado.
+ */
+function TitularServicio({
+  service,
+  className,
+}: {
+  service: (typeof services)[number];
+  className?: string;
+}) {
+  return (
+    <div className={className}>
+      {/* El nombre del servicio. Antes iba en verde claro suelto sobre la foto
+          y contra un consultorio blanco desaparecía; en pastilla llena gana
+          fondo propio y queda una jerarquía clara con el saludo de arriba, que
+          va en contorno.
+
+          El relleno es un degradé y no un plano: en plano la pastilla se leía
+          como una etiqueta pegada. El degradé de claro a oscuro, el filete de
+          luz de un píxel en el borde superior y el aro interior le dan el
+          volumen que le faltaba. El ícono del servicio, en disco crema, la
+          ancla a lo que está mostrando el carrusel. */}
+      <p className="relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-linear-to-b from-primary-500 to-primary-700 py-1.5 pr-4 pl-1.5 text-xs font-semibold tracking-[0.16em] text-cream-50 uppercase shadow-lg shadow-primary-900/35 ring-1 ring-cream-50/30 ring-inset">
+        <span
+          aria-hidden
+          // Se apaga hacia las puntas: a lo ancho completo se leía como una
+          // línea dibujada y no como un reflejo.
+          className="absolute inset-x-3 top-0 h-px bg-linear-to-r from-transparent via-cream-50/55 to-transparent"
+        />
+        <span
+          aria-hidden
+          className="inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-cream-50 text-primary-700 shadow-sm shadow-primary-900/25"
+        >
+          {renderServiceIcon(service.icon, {
+            className: "size-3.5",
+            strokeWidth: 2,
+          })}
+        </span>
+        {service.name}
+      </p>
+      {/* La sombra de texto sostiene la lectura sobre las zonas claras de la
+          foto sin tener que oscurecer el overlay, que apagaría la imagen. */}
+      <h1 className="mt-5 font-serif text-4xl leading-[1.08] text-balance text-cream-50 [text-shadow:0_2px_20px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-6xl">
+        {service.heroTitle}
+      </h1>
+      <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-cream-50/95 [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
+        {service.heroSubtitle}
+      </p>
+    </div>
+  );
+}
+
+/**
  * Hero por capas: la foto del servicio activo ocupa toda la sección, un
  * degradé oscuro sostiene la legibilidad del texto y el abanico de cards de
  * abajo a la derecha es el que decide qué foto se ve.
@@ -191,7 +247,24 @@ export function Hero() {
               y, de paso, la navbar leía ese retroceso como "el usuario subió" y
               se destapaba sola. Apilados en grid el alto es el mayor de los dos
               y nunca la suma, así que no hay fotograma intermedio que corregir. */}
+          {/* El `min-h` es un piso, no el alto real: cuando el texto no entra,
+              manda el texto. En pantallas angostas cada servicio parte en
+              distinta cantidad de renglones —entre 246 y 314 px a 320 px de
+              ancho—, así que el hero cambiaba de alto en cada giro y arrastraba
+              con él a toda la página. Por eso va, en la misma celda y sin ver,
+              una copia de los cinco titulares: la celda mide siempre lo que el
+              más largo, en cualquier ancho y sin números a mano. */}
           <div className="relative mt-7 grid min-h-56 sm:min-h-60 lg:min-h-64">
+            <div aria-hidden className="invisible grid [grid-area:1/1]">
+              {services.map((service) => (
+                <TitularServicio
+                  key={service.slug}
+                  service={service}
+                  className="[grid-area:1/1] self-start"
+                />
+              ))}
+            </div>
+
             <AnimatePresence initial={false}>
               <motion.div
                 key={active}
@@ -204,44 +277,7 @@ export function Hero() {
                 }}
                 className="[grid-area:1/1] self-start"
               >
-                {/* El nombre del servicio. Antes iba en verde claro suelto
-                    sobre la foto y contra un consultorio blanco desaparecía;
-                    en pastilla llena gana fondo propio y queda una jerarquía
-                    clara con el saludo de arriba, que va en contorno.
-
-                    El relleno es un degradé y no un plano: en plano la
-                    pastilla se leía como una etiqueta pegada. El degradé de
-                    claro a oscuro, el filete de luz de un píxel en el borde
-                    superior y el aro interior le dan el volumen que le
-                    faltaba. El ícono del servicio, en disco crema, la ancla
-                    a lo que está mostrando el carrusel. */}
-                <p className="relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-linear-to-b from-primary-500 to-primary-700 py-1.5 pr-4 pl-1.5 text-xs font-semibold tracking-[0.16em] text-cream-50 uppercase shadow-lg shadow-primary-900/35 ring-1 ring-cream-50/30 ring-inset">
-                  <span
-                    aria-hidden
-                    // Se apaga hacia las puntas: a lo ancho completo se leía
-                    // como una línea dibujada y no como un reflejo.
-                    className="absolute inset-x-3 top-0 h-px bg-linear-to-r from-transparent via-cream-50/55 to-transparent"
-                  />
-                  <span
-                    aria-hidden
-                    className="inline-flex size-6 shrink-0 items-center justify-center rounded-full bg-cream-50 text-primary-700 shadow-sm shadow-primary-900/25"
-                  >
-                    {renderServiceIcon(services[active].icon, {
-                      className: "size-3.5",
-                      strokeWidth: 2,
-                    })}
-                  </span>
-                  {services[active].name}
-                </p>
-                {/* La sombra de texto sostiene la lectura sobre las zonas
-                    claras de la foto sin tener que oscurecer el overlay, que
-                    apagaría la imagen entera. */}
-                <h1 className="mt-5 font-serif text-4xl leading-[1.08] text-balance text-cream-50 [text-shadow:0_2px_20px_rgba(0,0,0,0.45)] sm:text-5xl lg:text-6xl">
-                  {services[active].heroTitle}
-                </h1>
-                <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-cream-50/95 [text-shadow:0_1px_12px_rgba(0,0,0,0.5)]">
-                  {services[active].heroSubtitle}
-                </p>
+                <TitularServicio service={services[active]} />
               </motion.div>
             </AnimatePresence>
           </div>

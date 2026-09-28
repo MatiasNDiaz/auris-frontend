@@ -23,10 +23,26 @@ const ENLACE_ACTIVO = "bg-primary-300 text-primary-900";
 const ENLACE_QUIETO =
   "text-primary-700 hover:bg-primary-200 hover:text-primary-900";
 
-/** Ruido de scroll por debajo de esto no cambia el estado de la navbar. */
-const DELTA_THRESHOLD = 6;
-/** Recién a partir de acá tiene sentido esconderla. */
-const HIDE_AFTER = 120;
+/**
+ * Ruido de scroll por debajo de esto no cambia el estado de la navbar.
+ *
+ * Es por evento de scroll, no acumulado: un gesto real mueve decenas de píxeles
+ * por fotograma, así que 4 alcanza para descartar el temblor del dedo y la
+ * corrección de una barra de direcciones que se repliega, y no para frenar un
+ * arrastre lento de verdad.
+ */
+const DELTA_THRESHOLD = 4;
+/**
+ * Recién a partir de acá tiene sentido esconderla.
+ *
+ * Estaba en 120: había que bajar bastante antes de que reaccionara y se sentía
+ * lenta. Ahora es el alto de la propia navbar (`h-20`, 80 px): se va justo
+ * cuando igual estaría por salir de pantalla, que es el primer momento en que
+ * esconderla no le saca nada al usuario. Por debajo de eso —y hasta 8 px del
+ * tope, donde vuelve sola— se queda quieta, así un rebote corto cerca del
+ * encabezado no la hace parpadear.
+ */
+const HIDE_AFTER = 80;
 
 export function Navbar() {
   const pathname = usePathname();

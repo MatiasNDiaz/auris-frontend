@@ -1,5 +1,89 @@
 # Changelog
 
+## 2026-09-28 — Auditoría de mobile: contenido cortado, tarjeta del mosaico, hero y navbar
+
+### 1. La ficha del profesional se cortaba contra el borde derecho
+
+- **Qué pasaba.** En 320–412 px, el título, el rótulo "EQUIPO AURIS", las
+  etiquetas y la foto del hero quedaban corridos a la derecha y cortados. No
+  había scroll horizontal: la sección lleva `overflow-hidden`, así que lo que
+  sobraba desaparecía en vez de poder alcanzarse.
+- **Causa, medida.** El CTA "Solicitar turno con \<nombre completo\>" llevaba
+  `whitespace-nowrap`. Un botón que no puede cortar su texto tiene un ancho
+  mínimo igual al de su etiqueta entera —368 px en Romina Tchakerian, 339 en
+  Claudia Tomasi, 299 en Ariel Vidal— y las celdas de un grid no bajan de su
+  contenido mínimo. La columna se estiraba a ese ancho dentro de un contenedor
+  de 280, y todo lo que colgaba de ella se iba con ella. Afectaba a **todas**
+  las fichas: hasta la etiqueta más corta pedía 299 px en una pantalla de 320.
+- **Arreglo.** `ShineButton` deja de llevar `whitespace-nowrap` y gana
+  `max-w-full`; el alto fijo pasa a ser mínimo (`h-13` → `min-h-13`) para que un
+  texto en dos renglones no se salga de la pastilla. En una sola línea el alto
+  es el de siempre.
+- **Efecto lateral, corregido.** Con el texto pudiendo cortarse, cuatro botones
+  de la portada pasaban a dos renglones a 320 px por tres píxeles de diferencia
+  ("Conocé nuestros servicios" pedía 283 dentro de 280). El relleno lateral cede
+  en pantallas angostas (`px-5 sm:px-7`, y `px-4 sm:px-5` en el compacto) y el
+  banner de cierre bajó su `px-7` a `px-5`. Con eso el único que sigue en dos
+  renglones es el CTA de la ficha, que con el nombre completo no entra de otra
+  forma en un teléfono.
+
+### 2. La tarjeta blanca del mosaico ya no tapa las fotos
+
+- En escritorio estaba en `absolute bottom-0` y se apoyaba sobre las dos fotos
+  de abajo. Ahora cuelga del mosaico: va debajo del grid, con el mismo ancho
+  corto y pegada al borde izquierdo de la columna.
+- De `lg` para abajo no se muestra (`hidden lg:block`): es justo donde la ficha
+  deja de ser dos columnas. Verificado en siete anchos —`display: none`, 0 px de
+  alto y 0 de ancho hasta 768; 272×129 y en el flujo desde 1024—.
+
+### 3. Hero de la portada: el alto ya no se mueve en mobile
+
+- En 320, 360 y 375 px el alto del hero variaba 38–39 px en cada giro del
+  carrusel y arrastraba el scroll de toda la página. El piso `min-h-56` (224 px)
+  quedaba corto: ahí cada servicio parte en distinta cantidad de renglones y la
+  caja iba de 246 a 314 px según el texto.
+- Ahora la celda lleva, sin verse, una copia de los cinco titulares, así que
+  mide siempre lo que el más largo, en cualquier ancho y sin números a mano. El
+  bloque se extrajo a `TitularServicio` para no tener dos markups que se
+  desincronicen.
+- Verificado 22 segundos por ancho en 320/360/375/390/412/430: **variación 0 px
+  y ningún salto de scroll**.
+
+### 4. La navbar responde antes
+
+- `HIDE_AFTER` pasa de 120 px a 80, el alto de la propia navbar: se va justo
+  cuando igual estaría por salir de pantalla. `DELTA_THRESHOLD`, de 6 a 4.
+- Sigue quieta cerca del tope: con un temblor de ±6 px no se mueve, y bajando
+  3000 px seguidos no parpadea. Al subir 30 px vuelve enseguida.
+
+### Encontrado y no modificado
+
+- **Lo que queda "fuera de cuadro" es intencional**: el zoom del recuadro de
+  cifras, el corrimiento de la foto del banner, la marquesina de testimonios, el
+  acordeón de equipo, el riel horizontal de "Nuestra historia" y el recorte con
+  aire del visor del recorrido. Todos recortan a propósito y el contenido se
+  alcanza deslizando o no es contenido.
+- **En 768 px la caja del titular varía 2 px entre servicios.** Sin efecto sobre
+  el scroll; ya estaba anotado.
+
+## 2026-09-28 — Claudia Tomasi: se dieron vuelta sus fotos 2 y 6
+
+- **Los archivos ya venían intercambiados desde el centro**, así que no hubo
+  nada que cablear: la 2 y la 6 se resuelven por nombre de archivo. Alcanzó con
+  `npm run optimize:images` —reprocesó esas dos y nada más— y regenerar el
+  manifiesto. La 6 salió por el preset panorámico (2560) y la 2 por retrato
+  (2000), como corresponde a cada puesto.
+- **La que ahora es la 2** —sentada, con los brazos apoyados— es la que alterna
+  con la 1 cada 3 segundos en el hero de su ficha y la que aparece al pasar el
+  cursor, ahí y en las tarjetas del listado. Verificado en las dos.
+- **La que ahora es la 6** —apoyada en la mano— es el fondo del banner de su
+  frase.
+- **Se recalibró el encuadre del banner.** El `bannerFoco` estaba en 50% para la
+  foto anterior, que la tenía más lejos y con pared vacía arriba; la nueva está
+  más cerca y más alta, y con ese valor la franja le cortaba el pelo. Medido
+  contra siete valores en el navegador: en 43% la cabeza entra entera y la mano
+  sigue dentro del recorte. El `bannerCorrimiento` (19%) no hizo falta tocarlo.
+
 ## 2026-09-22 — El tirón de scroll cada 4 segundos en la portada
 
 - **La portada daba un salto de scroll cada 4 segundos.** Se reportó como algo

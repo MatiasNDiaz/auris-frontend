@@ -367,7 +367,7 @@ export function ProfessionalFicha({
           {/* Mosaico: una grande arriba, dos chicas abajo lado a lado. Más
               alto que ancho —4:5, como un retrato— y con la grande pesando el
               doble que cada chica, para que se note quién manda en el grupo. */}
-          <Reveal from="right" className="relative pb-10 sm:pb-12">
+          <Reveal from="right" className="relative">
             <div className="grid aspect-4/5 grid-rows-[2fr_1fr] gap-3 sm:gap-4">
               <div
                 className={cn(
@@ -433,10 +433,20 @@ export function ProfessionalFicha({
               </div>
             </div>
 
+            {/* Antes iba en `absolute bottom-0`, apoyada sobre las dos fotos de
+                abajo y tapándoles media altura. Ahora cuelga del mosaico: va
+                debajo, con el mismo ancho corto y pegada al borde izquierdo de
+                la columna, así sigue leyéndose como parte del grupo sin comerse
+                ninguna foto.
+
+                De `lg` para abajo no se muestra. Es exactamente donde la ficha
+                deja de ser dos columnas: ahí el mosaico pasa a ocupar el ancho
+                completo y una pastilla suelta debajo no acompaña a nada, solo
+                alarga la página. */}
             {ficha.destacado && (
               <div
                 className={cn(
-                  "group absolute bottom-0 left-4 max-w-68 rounded-2xl border bg-white p-5 shadow-[0_8px_30px_-8px_rgba(43,43,40,0.3)] transition-[translate,box-shadow] duration-500 hover:-translate-y-1.5 hover:shadow-[0_16px_40px_-10px_rgba(43,43,40,0.4)] sm:left-8",
+                  "group mt-4 hidden max-w-68 rounded-2xl border bg-white p-5 shadow-[0_8px_30px_-8px_rgba(43,43,40,0.3)] transition-[translate,box-shadow] duration-500 hover:-translate-y-1.5 hover:shadow-[0_16px_40px_-10px_rgba(43,43,40,0.4)] lg:block",
                   suave,
                   p.borde,
                 )}

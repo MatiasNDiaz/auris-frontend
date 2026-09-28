@@ -18,7 +18,10 @@ export function CtaBanner({
   return (
     <section className="container-auris py-20 lg:py-24">
       <Reveal>
-        <div className="relative overflow-hidden rounded-[2.5rem] bg-primary-700 px-7 py-12 sm:px-12 lg:px-16 lg:py-14">
+        {/* 20 px de aire a los costados en lo más angosto, no 28: con 28 el
+            recuadro dejaba 224 px libres y "Hablar por WhatsApp" pedía 227, así
+            que el botón partía en dos renglones. */}
+        <div className="relative overflow-hidden rounded-[2.5rem] bg-primary-700 px-5 py-12 sm:px-12 lg:px-16 lg:py-14">
           <div
             aria-hidden
             className="absolute inset-0 opacity-30"

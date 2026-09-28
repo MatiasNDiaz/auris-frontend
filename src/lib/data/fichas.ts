@@ -1009,9 +1009,11 @@ const encuadreBanner: Record<
   },
   // Sentada al escritorio: la cara le queda justo debajo de la mitad.
   "claudia-tomasi": {
-    // Sentada y lejos en su foto 6, con mucha pared vacía arriba: recién
-    // pasado el 50% la cara queda centrada en la franja sin cortarle el pelo.
-    bannerFoco: "center 50%",
+    // Su foto 6 es la toma apoyada en la mano, más cerca y más alta en el
+    // cuadro que la anterior: con el 50% que pedía aquella, a esta la franja le
+    // cortaba el pelo. En el 43% la cabeza entra entera y la mano sigue dentro
+    // del recorte; bajando más, la cara se va al piso de la franja.
+    bannerFoco: "center 43%",
     bannerCorrimiento: "19%",
     // Su foto 3 la muestra escribiendo: bajando el recorte entra la escena
     // entera —el escritorio, las manos, la lapicera— y no solo la cabeza. En
