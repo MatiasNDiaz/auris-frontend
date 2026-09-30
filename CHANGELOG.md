@@ -1,5 +1,32 @@
 # Changelog
 
+## 2026-09-28 — Eugenia Leiva: fotos nuevas y renumeradas
+
+- **Se descartó su foto 1** (de pie, brazos cruzados, gesto neutro) y **la 2 pasó
+  a ser la 1**: es la misma toma pero sonriendo. Como la sección de cifras
+  —la última de la ficha— reusa la foto 1, esa cara nueva aparece ahí sola, que
+  es lo que se pedía; no hizo falta tocar nada para eso.
+- **`eugenia_leiva2.jpg` es ahora su foto 2**: sentada al escritorio, apoyada en
+  la mano. Es la que alterna con la 1 cada 3 segundos en el hero de su ficha y
+  la que sale al pasar el cursor.
+- **`eugenia_leiva4.jpg` reemplaza a su foto 4**, una de las dos chicas del
+  mosaico de trayectoria.
+- **3, 5 y 6 quedaron como estaban.** El banner de su frase sigue con la 6.
+- Las dos descartadas quedaron guardadas fuera del proyecto antes de borrarlas,
+  por si hacen falta.
+
+### Encontrado y no modificado
+
+- **Las dos fotos nuevas vienen bastante más chicas que el resto**: 930×1600 y
+  766×1280, contra los 3480×6192 de las demás. Se sirven enteras, sin agrandar,
+  así que rinden bien hasta pantalla retina común y quedan algo más blandas en
+  un teléfono de densidad alta. Si existen los originales en grande, conviene
+  reemplazarlas.
+- **La 1 y la 2 ya no son la misma toma.** Antes eran la misma pose con otro
+  gesto y el cruce del hero se leía como que la foto cobraba vida; ahora una
+  está de pie en la sala y la otra sentada al escritorio, así que el cambio se
+  nota más. Es consecuencia de lo pedido, no un error.
+
 ## 2026-09-28 — Auditoría de mobile: contenido cortado, tarjeta del mosaico, hero y navbar
 
 ### 1. La ficha del profesional se cortaba contra el borde derecho
