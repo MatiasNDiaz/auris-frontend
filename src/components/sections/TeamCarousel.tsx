@@ -11,6 +11,7 @@ import { SectionHeading } from "@/components/shared/SectionHeading";
 import { ShineButton } from "@/components/shared/ShineButton";
 import { CAROUSEL_LIMIT, professionals } from "@/lib/data/professionals";
 import { getAreaBySlug } from "@/lib/data/areas";
+import { precargarFotoDeFicha } from "@/lib/precarga-foto";
 import { useMediaQuery } from "@/lib/use-media-query";
 import { useViewTransitionRouter } from "@/components/providers/ViewTransitionProvider";
 import { cn } from "@/lib/utils";
@@ -86,6 +87,14 @@ export function TeamCarousel() {
               onMouseLeave={() => setExpanded(null)}
               onFocusCapture={() => setExpanded(professional.slug)}
               onBlurCapture={() => setExpanded(null)}
+              // La ficha muestra la misma foto pero más grande, así que pide
+              // otra variante y no le sirve la que ya bajó la tarjeta. Esto
+              // arranca esa descarga al apuntar o tocar, no al navegar, que es
+              // cuando se veía el placeholder esperándola. En escritorio el
+              // cursor llega bastante antes que el click; en celular, el dedo
+              // baja antes de que termine el toque.
+              onPointerEnter={() => precargarFotoDeFicha(professional.photoUrl)}
+              onPointerDown={() => precargarFotoDeFicha(professional.photoUrl)}
               // El panel entero navega, no solo el nombre.
               onClick={(event) => {
                 if (event.defaultPrevented) return;

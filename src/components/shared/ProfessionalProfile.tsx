@@ -10,6 +10,7 @@ import { ProfessionalFicha } from "./ProfessionalFicha";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { getAreaBySlug } from "@/lib/data/areas";
 import type { FotosProfesional } from "@/lib/fotos-profesional";
+import { SIZES_FOTO_FICHA } from "@/lib/precarga-foto";
 import type { Ficha, Professional, Service } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -160,7 +161,11 @@ export function ProfessionalProfile({
                 // alcanzaría con 460, pero una apaisada se recorta a lo ancho
                 // y solo muestra la mitad: con 460 el navegador bajaba 640px
                 // y la card los estiraba al doble, que es lo que se pixelaba.
-                sizes="(max-width: 1024px) 100vw, 960px"
+                //
+                // La medida vive en `precarga-foto.ts` porque las tarjetas que
+                // llevan acá precargan con ella: si las dos no piden la misma
+                // variante, la precarga no sirve.
+                sizes={SIZES_FOTO_FICHA}
                 className="aspect-4/5 w-full rounded-3xl"
               />
 

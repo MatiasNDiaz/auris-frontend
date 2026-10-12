@@ -1,5 +1,61 @@
 # Changelog
 
+## 2026-10-12 (2) — El rectángulo verde al abrir la ficha de un profesional
+
+### Qué se veía y por qué
+
+Al tocar la tarjeta de un profesional, la foto desaparecía, salía un bloque
+verde y recién después volvía la imagen. Dos causas distintas, las dos medidas:
+
+- **La foto se bajaba de nuevo, entera.** La tarjeta pide `…&w=640` y la ficha
+  `…&w=828`: son URLs distintas, así que lo que ya estaba en caché no le servía
+  a la ficha. En una red de 1,6 Mbps eso son 755 ms de descarga que arrancan
+  recién cuando la ficha termina de montar.
+- **El bloque verde era el placeholder.** `BLUR_DATA_URL` es un PNG genérico de
+  4×4 "crema → verde salvia" (rgb 204,214,198) que se usaba igual para todas las
+  fotos. Muestreando el color del área de la foto fotograma a fotograma, estuvo
+  en rgb(217,225,222) —verdoso— entre los 3546 y los 6022 ms: casi dos segundos
+  y medio de rectángulo verde donde tenía que haber una persona.
+
+### Qué se cambió
+
+- **Precarga al apuntar o tocar la tarjeta** (`src/lib/precarga-foto.ts`, usado
+  por `TeamCarousel` y `ProfessionalCard`). No fuerza un ancho a mano: le pasa
+  al navegador el mismo `srcset` y el mismo `sizes` que va a tener la ficha, así
+  elige la misma variante y la encuentra en caché al llegar. El `sizes` vive en
+  un solo lugar y lo importa también `ProfessionalProfile`, para que no se
+  desincronicen. Se dispara en `pointerenter`/`pointerdown`, no al montar: las
+  doce fotos del carrusel compitiendo con la carga de la portada serían peor que
+  el problema. Bajó el verde de 2476 ms a 1155 ms.
+- **El placeholder ahora es la propia foto.** `scripts/fotos-profesionales.mjs`
+  genera con sharp una miniatura de 12 px por cada foto 1 y 2 (207 caracteres,
+  7 KB el mapa entero) y `AnimatedProfessionalImage` la usa en vez del verde
+  genérico. Lo que se ve mientras baja la imagen es la misma foto desenfocada.
+  **Con esto el verde desaparece del todo**: el primer fotograma de la ficha
+  mide rgb(193,195,198), que ya son los colores de la foto.
+- La transición compartida entre la tarjeta y la ficha se mantiene intacta:
+  verificado que `startViewTransition` sigue corriendo y que el destino conserva
+  su `view-transition-name`, en celular y en escritorio.
+
+### Lo que se revisó y resultó estar bien
+
+- **El prefetch del App Router funciona.** Una primera medición dio cero rutas
+  precargadas, pero estaba mal tomada: midiendo de nuevo aparecen 24 prefetch
+  RSC que cubren todas las rutas de la navbar, tanto con red lenta como sin
+  ella. No se tocó nada.
+- **La caché entre visitas es correcta.** Volviendo a `/servicios` ya visitada:
+  22 de 26 pedidos salen de caché y solo 1 KB viaja por la red.
+
+### Pendiente, no resuelto
+
+- En una navegación de cliente, las imágenes de la ruta de destino se descubren
+  recién cuando React renderiza la página nueva: el `preload` que genera
+  `priority` vive en el HTML del documento, y en una navegación del router no
+  hay documento nuevo. Por eso el contenido aparece antes que la foto del banner
+  en cada sección. La precarga al apuntar resuelve el caso de los profesionales;
+  extenderla a los banners de la navbar sería el paso siguiente y no se hizo
+  todavía.
+
 ## 2026-10-12 — La capa blanca de la carga en celular
 
 ### La página entera se servía al 40% de opacidad

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { AnimatedProfessionalImage } from "./AnimatedProfessionalImage";
 import { getAreaBySlug } from "@/lib/data/areas";
+import { precargarFotoDeFicha } from "@/lib/precarga-foto";
 import type { Professional } from "@/lib/types";
 import { useViewTransitionRouter } from "@/components/providers/ViewTransitionProvider";
 import { cn } from "@/lib/utils";
@@ -41,6 +42,11 @@ export function ProfessionalCard({
         if (event.defaultPrevented) return;
         navigate(href, photoRef.current);
       }}
+      // La ficha pide una variante más grande de la misma foto, así que no
+      // reusa la de la tarjeta: se empieza a bajar al apuntar o tocar, no al
+      // llegar a la ficha. Ver `precargarFotoDeFicha`.
+      onPointerEnter={() => precargarFotoDeFicha(professional.photoUrl)}
+      onPointerDown={() => precargarFotoDeFicha(professional.photoUrl)}
     >
       <AnimatedProfessionalImage
         ref={photoRef}
