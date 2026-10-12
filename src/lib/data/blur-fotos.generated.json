@@ -26,5 +26,20 @@
   "recepcionistas/soledad-lluch/soledad-1.webp": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAACwAwCdASoMABIAPt1cpkyopSOiMAgBEBuJQBOgBHwQxSe4/EkuAAD3RJfHA/Vhi4tS/Z1yKOx46rx/tzWhxMI8DkkkGDD8MRxQ59roB2GaCe7jZBIG/YweEvIY8irTLNY9UnYD5QOj5sbE92Ir5PEgAAA=",
   "recepcionistas/soledad-lluch/soledad-2.webp": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAAAQBACdASoMABIAPt1cp0yopSOiMAgBEBuJQBdkERhhJba5EvFuhbIxAADhWDfhsw0gzrAXlmJYgmRSDUKfL19/gLrOJOARu9VHzn4H9/EsjOYa2pUHTJlbCuCGKv+lx8rxPb2XoNcmeUSmI3YAHcfUAAA=",
   "recepcionistas/yanina-solari/yanina-1.webp": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADQAwCdASoMABUAPt1apkyopSOiMAgBEBuJQBYdg1q2j4ql3WNvD0AA9x8N+dTV8EWsjI2Dr44Y0xql01oo3ojtP4gKTJvREqf4752CaP5xjUGX+cXyj5sBVcBTe0yuqw8co9BE6ZQFsPrx4xgfEqDCXSfGopAA",
-  "recepcionistas/yanina-solari/yanina-2.webp": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAQBACdASoMABUAPt1cpkyopSOiMAgBEBuJYwCdABtr73VgONIjPBV0AAD8Wwz4yYVc33eX5TV9dk74YVOZkKHpiUFfK1vXOjtLpCGcOMGqZyw/HWXuPS4UPpVR7IqB50ohiYPuPt6vhIfrTE6NLvvKT6Ug+xWzEhD2TwgAAAA="
+  "recepcionistas/yanina-solari/yanina-2.webp": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAQBACdASoMABUAPt1cpkyopSOiMAgBEBuJYwCdABtr73VgONIjPBV0AAD8Wwz4yYVc33eX5TV9dk74YVOZkKHpiUFfK1vXOjtLpCGcOMGqZyw/HWXuPS4UPpVR7IqB50ohiYPuPt6vhIfrTE6NLvvKT6Ug+xWzEhD2TwgAAAA=",
+  "banners-secciones/banner-contacto.webp": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoMAAgAAwBSJZQCdAD2P1UaneAA/tfuvJ3iMIHrydq/v2TE0avEdFxw2bV1wLV8EqfTZIzP5X1zqtcVqWnCJAmgJAA=",
+  "banners-secciones/banner-nuestra-historia.webp": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAQCdASoMAAcAAwBSJaACdAEPD3psA5AA9FtBTi1lxo8LhLZXrnJLihsUd54Eoy/Q6YSuZ3smTNddPJpsDQGIbWcRSGuOq2qgAA==",
+  "banners-secciones/banner-preguntas-frecuentes.webp": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADwAQCdASoMAAUAAwBSJYwCdAD6F5xXJwAA/PEPrrcn9DPt+NjGGV30PclW8nhokPwBAQdC3oJpQAAA",
+  "banners-secciones/banner-profesionales.webp": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADQAQCdASoMAAYAAwBSJZQAAq9bHMVPQADOP367M2W+h49aUiVX2iFkDKNuDcr3PHMs88L7dwsTGTCSBiFvOEvLxn7gAAAA",
+  "banners-secciones/banner-recorrido.webp": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAQAgCdASoMAAgAAwBSJZQCdAD7j1XsL/2gAM4CoA9a99gANvCZn5F6EFkJZvLv/t/jBeTszW/SNOWXl17H1tCwTWlzGAAA",
+  "banners-secciones/banner-servicios.webp": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAACwAQCdASoMAAgAAwBSJZwAAmdugWAAAP70/yGg64j1srfBItwvsy35BjLcXXibzVJ3WjcOcjBePRFauzgQAA==",
+  "servicios/alineadores.webp": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAQAgCdASoMAAwAAwBSJZgCdAD8JJbGZUwAAPyjgwYL6+kTXyKJuXPouX8TGwp4ZU87v4/OeHSJ4z2o7iEyVcKE/0rjh7jZ3l9SEBNkdZJu9+LLmlX8MILEueMAAA==",
+  "servicios/fonoaudiologia.webp": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQAgCdASoMAAgAAwBSJYgCdAD7FpYIGy0AAP7Xmmd383oG5hSDWXo1VZ6J1P7xSkR4tW2J6XTQhaa1nR8eA238ab0w9LpAJmoE/B0TnEUj7QPqQvqAAA==",
+  "servicios/kinesiologia.webp": "data:image/webp;base64,UklGRkgAAABXRUJQVlA4IDwAAACwAQCdASoMAAcAAwBSJZQCdADZlgJAAP7z64mkYK7DnV6NsFLOiD0YyxfQAW2GgzqKITDwiNit6nvzQAA=",
+  "servicios/odontologia.webp": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAACQAQCdASoMAAUAAwBSJZwAAlwFSbAA/vTwYnhr6YVFN2Dwrp3DBc5HzXvckvV6g9BYBwhoInyOAAAA",
+  "servicios/odontopediatria-funcional.webp": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAACwAQCdASoMAAgAAwBSJaACdADZjbqgAP5BN42tudnNOupfsgMffHbSRwj/8IpGAeOwoiLXS/Qt4OnrF/n6cXn1x/2xwGkJsSSYhbBBXh9LINcipL1SAAAA",
+  "servicios/portada/estetica-facial-y-corporal.webp": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoMAAUAAwBSJYwCdADtD9KOQAD+6I2q7xuXHF0rJYHph/+EY2GtAYJ7HutuUpz6b6xf5IabLcRwdTmOb0tAAA==",
+  "servicios/portada/fonoaudiologia.webp": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAQCdASoMAAUAAwBSJZQCdAD8Jr2UcADicUM2Xgx5gnew2DEDi2hSU7Q99pOZvChJQxVPksm9eYsyK9lbq73Aqr9AAA==",
+  "servicios/portada/psicologia.webp": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoMAAcAAwBSJZQAEP3LH8+kda0AAP7f9a+ebTx0EPchltA1mmGw/o571rADTDnL7fwnvr0+Y6yNYiuFIL3ZNsyA0BRWGgsAAAA=",
+  "servicios/portada/taller-de-adultos-mayores.webp": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAAAQAgCdASoMAAUAAwBSJZACsAYqNkwVtuAAAP638477jE89c3bAPoMxKuahNj0cn/n1ytvcAESAFprRfuEHJe/bE8AAAA=="
 }

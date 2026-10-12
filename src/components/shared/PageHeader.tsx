@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { miniaturaDe } from "@/lib/miniatura";
 import { LeafScatter } from "./LeafScatter";
 import { LeafSprig } from "./LeafSprig";
 import { WaveDivider, type WaveVariant } from "./WaveDivider";
@@ -147,6 +148,15 @@ export function PageHeader({
             sizes="(min-width: 1024px) 1800px, 1260px"
             quality={88}
             priority
+            // El fondo de esta franja es `bg-ink-900`, casi negro, para que el
+            // texto claro se lea aunque la foto falle. El efecto no buscado era
+            // que mientras la foto bajaba —entre 100 y 175 KB, más de un
+            // segundo en 1,6 Mbps— lo que se veía era ese rectángulo negro.
+            // Con la miniatura, desde el primer pintado está la foto: borrosa
+            // al principio y nítida al terminar. No se bajó su resolución, que
+            // es lo único que habría acortado la descarga a costa de nitidez.
+            placeholder="blur"
+            blurDataURL={miniaturaDe(foto)}
             style={fotoFoco ? { objectPosition: fotoFoco } : undefined}
             className="-z-20 object-cover"
           />

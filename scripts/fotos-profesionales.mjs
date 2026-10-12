@@ -12,7 +12,7 @@
  *
  * Corre solo antes de `npm run dev` y de `npm run build`.
  */
-import { existsSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { PREFIJO_FOTO } from "../src/lib/data/prefijo-foto.mjs";
 import { PREFIJO_FOTO_RECEPCION } from "../src/lib/data/prefijo-foto-recepcion.mjs";
@@ -141,11 +141,41 @@ const recepcion = await generar(
   borrosas,
 );
 
+/**
+ * Las fotos grandes que abren una página: el banner de cada sección de la
+ * navbar y las portadas de servicio que usa el hero.
+ *
+ * Son las que `PageHeader` y el hero dibujan sobre un fondo `bg-ink-900`, que
+ * es casi negro. Pesan entre 100 y 175 KB, así que en una conexión de 1,6 Mbps
+ * tardan más de un segundo: durante ese rato lo que se veía era ese negro. Con
+ * la miniatura, lo que se ve es la foto desenfocada desde el primer pintado.
+ *
+ * No se tocan sus archivos ni su resolución: bajar el peso las ablandaría, y
+ * acá el problema no era el tamaño sino qué se muestra mientras llegan.
+ */
+async function borrosasDeCarpeta(carpeta) {
+  const dir = path.join(RAIZ, "public", "images", ...carpeta.split("/"));
+  if (!existsSync(dir)) return 0;
+  let n = 0;
+  for (const archivo of readdirSync(dir)) {
+    if (!/\.(webp|avif|jpg|jpeg|png)$/i.test(archivo)) continue;
+    const k = `${carpeta}/${archivo}`;
+    borrosas[k] = await miniaturaBorrosa(sharp, path.join(dir, archivo));
+    n++;
+  }
+  return n;
+}
+
+const banners = await borrosasDeCarpeta("banners-secciones");
+const portadas =
+  (await borrosasDeCarpeta("servicios")) +
+  (await borrosasDeCarpeta("servicios/portada"));
+
 writeFileSync(
   path.join(RAIZ, "src", "lib", "data", "blur-fotos.generated.json"),
   `${JSON.stringify(borrosas, null, 2)}\n`,
 );
 
 console.log(
-  `fotos · ${conFotos} profesionales y ${recepcion} de recepción con foto 1 · ${Object.keys(borrosas).length} miniaturas borrosas`,
+  `fotos · ${conFotos} profesionales y ${recepcion} de recepción · ${banners} banners y ${portadas} portadas · ${Object.keys(borrosas).length} miniaturas borrosas`,
 );

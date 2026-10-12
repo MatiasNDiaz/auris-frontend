@@ -3,9 +3,8 @@
 import { useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { forwardRef, useEffect, useRef, useState } from "react";
-import { BLUR_DATA_URL } from "@/lib/blur";
 import { CALIDAD_FOTO } from "@/lib/calidad-foto";
-import miniaturas from "@/lib/data/blur-fotos.generated.json";
+import { miniaturaDe } from "@/lib/miniatura";
 import {
   PHOTO_VT_NAME,
   useActiveProfessionalSlug,
@@ -64,23 +63,6 @@ type AnimatedProfessionalImageProps = {
 /** Cada cuánto alterna, en el hero, entre la imagen 1 y la 2. */
 const CICLO_MS = 3000;
 
-/**
- * La miniatura borrosa de esta foto, si el pipeline la generó.
- *
- * Las claves del mapa son la ruta sin el número de versión —`/imagenes/v/<n>/`
- * es un prefijo que cambia cada vez que se reemplaza el archivo—, así que se lo
- * quitamos para buscar. Sin coincidencia queda el placeholder genérico, que es
- * lo que corresponde para una foto que no pasó por el generador.
- *
- * Esto es lo que evita el rectángulo de color durante la transición de una
- * tarjeta a la ficha: las dos muestran la misma foto a distinto tamaño, piden
- * variantes distintas y por lo tanto la ficha no la tiene en caché. Mientras la
- * baja, lo que se ve es esta foto desenfocada y no un bloque liso.
- */
-function miniaturaDe(src: string) {
-  const ruta = src.replace(/^\/imagenes\/v\/\d+\//, "");
-  return (miniaturas as Record<string, string>)[ruta] ?? BLUR_DATA_URL;
-}
 
 /**
  * Foto de un profesional que participa del shared element transition.

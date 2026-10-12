@@ -11,6 +11,7 @@ import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { siteConfig } from "@/config/site";
 import { heroServices as services } from "@/lib/data/services";
 import { renderServiceIcon } from "@/lib/icons";
+import { miniaturaDe } from "@/lib/miniatura";
 
 const AUTOPLAY_MS = 4000;
 
@@ -196,6 +197,14 @@ export function Hero() {
                 // compresión el agrandado saca a la luz los artefactos.
                 quality={88}
                 priority={index === 0}
+                // Igual que en los banners: la capa de atrás del hero es
+                // `bg-ink-900`, así que sin esto el primer pintado en celular
+                // era un rectángulo negro hasta que llegaba la foto. Con la
+                // miniatura se ve la foto desenfocada desde el arranque.
+                placeholder="blur"
+                blurDataURL={miniaturaDe(
+                  service.landingImageUrl ?? service.imageUrl,
+                )}
                 // En mobile la caja del hero es casi el doble de alta que
                 // ancha, y de una foto apaisada entra apenas un quinto del
                 // ancho: el encuadre de cada foto dice dónde cae ese quinto,
