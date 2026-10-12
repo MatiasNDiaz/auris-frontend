@@ -1,5 +1,219 @@
 # Changelog
 
+## 2026-10-12 — La capa blanca de la carga en celular
+
+### La página entera se servía al 40% de opacidad
+
+- **Qué pasaba.** `app/template.tsx` envuelve todo el contenido en un
+  `motion.div` con `initial={{ opacity: 0.4, y: 8 }}` para el fundido de
+  entrada entre páginas. Framer serializa ese `initial` como estilo en línea en
+  el HTML del servidor, así que el documento salía con
+  `<div style="opacity:0.4">` alrededor de la página entera, y recién llegaba a
+  opaca cuando bajaba el bundle y Framer hidrataba. Eso es la "capa blanca
+  semitransparente que cubre toda la pantalla": no era un overlay ni un loader,
+  era la página misma atenuada.
+- **Medido** en un teléfono simulado con la CPU a 1/4 y 1,6 Mbps: el primer
+  pintado ocurría a los 2,4 s y el contenido seguía al 40% hasta los 5,6–6,4 s
+  (tres corridas). Casi cuatro segundos de página lavada después de que ya
+  estaba todo dibujado.
+- **Arreglo.** El template distingue la carga inicial de una navegación interna
+  con una bandera de módulo: en la primera no anima —no hay nada de dónde venir
+  y el JS todavía no llegó—, y de ahí en más el fundido queda igual que
+  siempre. Verificado: el HTML ya no contiene ningún `opacity:0.4`, el
+  envoltorio no existe en las cinco corridas, y en una navegación interna sigue
+  apareciendo (0,4 → 0,57 → 1). Capturas de la carga a 2,5/3,2/4/6 s: la página
+  se ve completa y opaca desde la primera.
+
+### La fuente de los titulares pedía dos ejes que nadie usa
+
+- `Fraunces` se cargaba con `axes: ["SOFT", "WONK"]`, pero ninguna regla del
+  proyecto declara `font-variation-settings` —`getComputedStyle` devuelve
+  `normal` en los titulares—, así que esos ejes viajaban sin dibujar nada. Es
+  una fuente precargada, o sea peso directo sobre el camino crítico.
+- Sin ellos: **60,6 KB → 35,7 KB**; el total de fuentes precargadas baja de
+  85 KB a 60 KB. Tipografía idéntica, verificada en el hero.
+
+### Encontrado y medido, pero NO modificado
+
+- **El HTML de la portada pesa 757 KB** (320 KB de payload RSC, 243 KB de SVG
+  en línea repartidos en 288 elementos, 193 KB de marcado). Se probó servir la
+  página sin las hojas decorativas, sin las estrellas y sin el payload RSC: la
+  diferencia de FCP quedó dentro del ruido de medición de esta máquina
+  (±400 ms), e incluso la versión más liviana midió peor en una corrida. **No
+  se refactorizó nada por esto**: no hay una ganancia que se pueda demostrar.
+- **Ninguna imagen está sobredimensionada para celular.** Auditadas las 28 de
+  la portada en 390 px con DPR 3 comparando el ancho dibujado contra el
+  servido: 0 KB en variantes de más. Varias se sirven por debajo de lo que
+  pediría la pantalla, que es el límite del archivo de origen, no un problema
+  de carga.
+- **La portada descarga 862 KB de imágenes** en total, el grueso del peso. El
+  hero dibuja una foto apaisada de 1918 px dentro de una caja vertical de
+  390 px: se baja entera y se ve menos de un quinto de su ancho. Un recorte
+  propio para celular lo bajaría bastante, pero son archivos nuevos y eso se
+  avisa antes de generarlos.
+- **TBT de 1694 ms**, con una tarea de 678 ms al hidratar. Reducirlo de verdad
+  implica sacar Framer Motion de secciones que hoy dependen de él, que es
+  rediseñar. `dynamic()` sobre las secciones de abajo no ayudaría: con SSR
+  activo React necesita igual ese código para hidratar.
+- **`RatingStars` es un componente cliente sin necesitarlo** (solo usa `useId`
+  para el degradé) y abre 23 fronteras de hidratación. No se cambió porque no
+  se pudo medir una mejora que lo justifique.
+- Las animaciones decorativas en reposo ya están bien resueltas: con la página
+  quieta solo quedan 2 corriendo, gracias al `data-offscreen` que ya existía.
+- CLS 0,000 en todas las corridas, antes y después.
+
+## 2026-10-08 (4) — El banner de Eugenia Leiva: la foto entera, sin recorte
+
+Tercer intento sobre lo mismo, ahora sí con la cara completa y en un tamaño
+más chico, pero sin el recuadro que se había rechazado.
+
+- **Por qué los intentos anteriores no podían funcionar.** Llenando la franja
+  con `object-cover`, en 1920px solo entra un tercio del alto de la foto: no
+  hay `bannerFoco` que alcance, siempre queda media cara afuera. Y achicarla
+  con `scale` dejaba un canto recto contra el violeta, que es el "recuadro"
+  que no se quería. Las dos cosas son consecuencia de forzar una toma cerrada
+  y vertical a cubrir una franja mucho más ancha que alta.
+- **`bannerEntera`**, un campo nuevo de la ficha. Con él la caja de la foto
+  deja de ocupar el 62% y toma la proporción de un retrato (`aspect-3/4`): su
+  ancho sale del alto de la franja y se apoya contra el borde derecho. La foto
+  la llena sin recortarse, así que se ve entera y, al ser la caja más angosta,
+  bastante más chica.
+- **Por qué no se ve ningún borde.** Arriba y abajo la caja sangra contra la
+  sección, así que ahí no hay canto que mostrar, y los dos costados los apaga
+  la máscara —la misma técnica que ya usaba el banner, pero fundiendo las dos
+  puntas y en un tramo más corto, porque acá tiene que borrar el borde mismo
+  de la foto y no media franja—.
+- **Queda con aire contra el borde derecho** (`right: 9%`), repartida entre el
+  texto y la punta de la pantalla en vez de pegada contra ella. El valor es
+  porcentual para que ese aire acompañe al ancho de la ventana.
+- `bannerCorrimiento` no se aplica en este modo: la caja ya está contra el
+  borde. De `lg` para abajo no cambia nada —ahí la foto va de fondo bajo el
+  tinte, igual que la de todo el equipo—.
+- Verificado en 390, 768, 1440, 1920 y 2560px, y que Ariel y Claudia siguen
+  exactamente iguales.
+
+## 2026-10-08 (3) — El banner de Eugenia Leiva, sin el recuadro
+
+Se revirtió el `bannerZoom` + fondo desenfocado de la entrega anterior.
+Reportado como que se veía "encerrada en un rectángulo", con un pedido
+puntual: que quede igual que la de Ariel —la foto a pantalla completa en el
+contenedor violeta, sin ningún subcontenedor.
+
+- Sacado por completo: el campo `bannerZoom` (de `types.ts`, de
+  `encuadreBanner` en `fichas.ts` y de la entrada de Eugenia), la capa de
+  fondo desenfocado en `ProfessionalFicha.tsx`, y las clases
+  `lg:scale-(--foco-zoom)` / `lg:group-hover:scale-[calc(...)]`. El `<Image>`
+  del banner volvió a su forma de siempre: `object-cover`, `group-hover:scale-105`
+  en todos los anchos, sin escala de reposo distinta de 1. Hoy nadie usa ese
+  mecanismo —no quedó como opción sin usar, se borró entero—.
+- `bannerFoco: "center 25%"` se mantuvo: sigue siendo el valor que muestra la
+  cara entera de esta foto en particular.
+- **Queda anotado el límite real, sin ocultarlo**: la foto 6 de Eugenia es un
+  primer plano de cara (959×1280), más cerrada que las tomas del resto del
+  equipo, que son de cuerpo o al menos de hombros para arriba con algo de
+  aire. A pantalla completa eso significa que, en monitores muy anchos
+  (verificado en 2560px), la nariz y la boca terminan ocupando buena parte de
+  la franja —más cerca que cualquier otro banner del equipo—. Es la foto que
+  hay, mostrada igual que la de todos; una toma con más aire alrededor seguiría
+  siendo la solución de fondo.
+- Verificado en 1440, 1920 y 2560px, y que Ariel y Claudia —que nunca
+  necesitaron el mecanismo— siguen exactamente iguales.
+
+## 2026-10-08 (2) — El banner de Eugenia Leiva y la foto de contacto, de vuelta
+
+Dos ajustes sobre los cambios recién hechos, los dos reportados como que
+todavía no quedaban bien.
+
+- **El banner violeta de Eugenia Leiva se veía como un rectángulo recortado
+  flotando en el vacío.** El `bannerZoom: 0.6` de la entrega anterior resolvía
+  que la cara no ocupara toda la franja, pero al encogerla dejaba un borde neto
+  contra el violeta sólido alrededor, y encima a 1920/2560px —donde esta
+  sección crece de ancho pero no de alto, porque no tiene un `min-height` en
+  `vw` como el resto de los banners— la foto volvía a ocupar casi toda la
+  franja igual. Dos cambios:
+  - Mismo recurso que ya usa el visor del recorrido para una foto vertical que
+    no llena su marco: una copia de la misma foto, ampliada y desenfocada,
+    detrás de la nítida. El margen que deja el achique ahora se lee como un
+    degradé hacia el violeta, no como un corte.
+  - `bannerZoom` bajó de 0.6 a 0.4. Medido en el navegador en 1440, 1920 y
+    2560px: con 0.4 queda aire visible en los tres anchos; con 0.6 a partir de
+    ~1900px la foto volvía a tocar los bordes de arriba y abajo.
+  - Sigue siendo la foto de origen la limitante real: es un primer plano de
+    cara (959×1280, vertical), no la toma horizontal con contexto que pide la
+    convención para esta posición (`docs/modus-operandi-imagenes-profesionales.md`,
+    foto 6). Con el desenfoque de fondo el resultado ya es prolijo, pero una
+    foto pensada para este lugar seguiría siendo mejor que cualquier CSS.
+- **La foto de contacto no mostraba la taza ni la notebook.** Bajar el
+  `fotoFoco` a 40% arregló que no le cortara la cabeza, pero la franja de esta
+  página sólo llega a mostrar ~53% del alto de la foto, y entre las cejas y el
+  borde de la taza hay 52 puntos de foto —casi el límite exacto de lo que
+  entra—. Medido con una grilla de porcentaje superpuesta sobre el original
+  (no a ojo: la primera estimación visual erró por varios puntos y ninguna
+  franja mostraba la taza). En `center 70%` la ventana corre lo justo para
+  sumar la taza y las manos tecleando sin perder la cara —se pierde algo de
+  pelo arriba, no la cara—. Verificado en 390, 1440, 1920 y 2560px: en las
+  cuatro se ve la cara, las manos escribiendo y la taza.
+
+### Encontrado y no modificado
+
+- A partir de cierto ancho de pantalla, ni la foto de contacto ni la de
+  Eugenia Leiva pueden mostrar el cuadro completo (cara entera + contexto) al
+  mismo tiempo: la franja es más ancha que alta y las fotos no tienen tanto
+  margen vertical. Se priorizó el contexto (taza/manos en un caso, cara
+  completa en el otro) sobre mostrar absolutamente todo; es una decisión de
+  encuadre, no algo que se pueda arreglar sin recortar nada.
+
+## 2026-10-08 — Banners de recorrido y contacto, Yanina, Eugenia Leiva en dos servicios, encuadres
+
+- **Eugenia Leiva ahora también aparece en el equipo de "Estética facial y
+  corporal"**, sin perder su lugar en Kinesiología. El modelo de datos solo
+  admitía un `serviceSlug` por profesional —el que decide a qué página enlaza
+  su ficha—, así que se sumó `serviciosAdicionales?: string[]`: entra en el
+  listado de equipo de esos servicios también, pero su ficha sigue enlazando a
+  Kinesiología. Verificado: su tarjeta aparece en ambos servicios y el chip de
+  su ficha sigue yendo a `/servicios/kinesiologia`.
+- **Banners de "Recorrido" y "Contacto" actualizados** con las fotos nuevas.
+  La de recorrido mantenía una composición parecida (tres personas en
+  recepción) y su encuadre seguía andando bien tal cual. La de contacto es una
+  escena completamente distinta —antes alguien en el mostrador, ahora alguien
+  escribiendo desde un sillón—, así que el `fotoAlt`, que describía el
+  mostrador, se actualizó para no nombrar un lugar que la foto ya no muestra.
+- **El banner de contacto le cortaba la cabeza en monitores anchos.** El
+  `fotoFoco` venía en `center 90%`, calibrado para la foto vieja. Con la nueva,
+  a 1440px se veía bien, pero la franja crece con el ancho de pantalla
+  (`clamp` en `vw`) y a partir de ~1800px ese 90% empujaba el recorte tan abajo
+  que la cabeza entera quedaba afuera —el caso que se reportó, en una pantalla
+  de ese orden—. Se bajó a `center 40%`, verificado en 390, 1024, 1440, 1920 y
+  2560px: cara y cabeza completas en todo el rango.
+- **Yanina Solari (recepción) quedó en cuerpo entero, como Leticia y Soledad.**
+  Sus fotos nuevas traían el mismo recorte angosto (`ancho: 0.56`) calibrado
+  para las anteriores. Ese recorte no toca el alto, pero al dejar la imagen
+  mucho más angosta que alta, la tarjeta —que es un recuadro 4:5— termina
+  mostrando solo una tira muy acotada en el centro: de ahí que se viera apenas
+  el busto. Simulado contra la caja real de la tarjeta antes de decidir: sin
+  ningún recorte (ella ya está cerca del centro del encuadre original) el
+  resultado ya queda igual de cuerpo entero que sus compañeras, así que se
+  sacó el ajuste en vez de calibrar uno nuevo.
+- **La foto 6 de Eugenia Leiva (banner violeta) le cortaba los ojos.** Cambió
+  de una toma de escritorio a un primer plano de cara; con el `bannerFoco` de
+  la anterior (52%) solo entraban boca y cuello. Se bajó a 25%, con lo que la
+  cara entra entera —pero a esa escala seguía viéndose más cerca que el resto
+  del equipo, porque `object-cover` igual la agranda al forzarla a cubrir una
+  franja mucho más ancha que alta—. Se agregó `bannerZoom` (mismo mecanismo
+  que `cifrasZoom`, pero para achicar en vez de agrandar): a 0.6 la foto pasa a
+  verse como una composición con banner alrededor, no un primer plano a
+  pantalla completa. Solo corre en `lg`, igual que `bannerCorrimiento`: en
+  mobile la foto ya queda semitransparente bajo un tinte parejo, y encogerla
+  ahí no acerca ni aleja nada, solo dibuja un rectángulo que se nota contra el
+  tinte. Confirmado que el resto de las fichas no cambia (`bannerZoom` por
+  defecto es 1, foto tal cual).
+
+### Encontrado y no modificado
+
+- **Las fotos de Eugenia Leiva ya traían un salto de calidad entre sí** (la 2 y
+  la 4, de una sesión anterior, se ven algo más blandas en pantallas de alta
+  densidad que el resto de su set) — ya estaba anotado, sigue igual.
+
 ## 2026-09-28 — Eugenia Leiva: fotos nuevas y renumeradas
 
 - **Se descartó su foto 1** (de pie, brazos cruzados, gesto neutro) y **la 2 pasó

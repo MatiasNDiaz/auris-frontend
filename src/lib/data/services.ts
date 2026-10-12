@@ -128,16 +128,16 @@ export const services: Service[] = [
   },
   {
     slug: "estetica-facial-y-corporal",
-    name: "Estética facial y corporal",
+    name: "Kinesiología y Fisioterapia ",
     icon: "sparkles",
     shortDescription:
-      "Tratamientos que cuidan la piel y el cuerpo con criterio profesional y resultados progresivos.",
+      "Kinesiología estética avanzada con un enfoque en fisioterapia dermatofuncional aplicada a los tratamientos estéticos y odontológicos",
     tagline: "Resultados que se sostienen",
     heroTitle: "Resultados que se sostienen",
     heroSubtitle:
       "Un plan pensado para tu piel, con resultados reales y pautas de cuidado para sostenerlos en casa.",
     fullDescription:
-      "Diseñamos planes de tratamiento personalizados a partir de un diagnóstico de piel y de los objetivos de cada persona. Priorizamos procedimientos seguros, con evidencia y resultados sostenibles en el tiempo, evitando promesas desmedidas. El seguimiento posterior es parte del tratamiento: acompañamos con pautas de cuidado domiciliario para que los resultados se mantengan.",
+    "Trabajamos la kinesiología como Complemento de los tratamientos estéticos y odontológicos El abordaje está orientado a disminuir el dolor en mandíbula y rostro con técnicas de liberación miofascial , reeducación de la postura y entrenamiento de la respiración.",
     // La misma foto que en el carrusel de la portada, para que quien entra
     // desde ahí reconozca el servicio. Ya no hace falta `landingImageUrl`: el
     // hero usa esta cuando no hay una propia.
@@ -149,10 +149,15 @@ export const services: Service[] = [
     landingFoco: "25% 20%",
     heroFoco: "25% 20%",
     features: [
-      "Diagnóstico y limpieza facial profunda",
-      "Tratamientos de hidratación y renovación cutánea",
-      "Abordaje corporal y drenaje linfático",
-      "Plan de cuidado domiciliario personalizado",
+      "Técnicas de liberación miofascial y cráneo cervical",
+      "Abordaje multidisciplinario y funcional",
+      "Recuperación tras procedimientos odontológicos",
+      "Entrenamiento de la respiración y corrección postural",
+      "Diagnóstico profesional de la piel",
+      "Tratamientos faciales y corporales no invasivos",
+      "Protocolos basados en ciencia e innovación",
+      "Bienestar integral y longevidad",
+      "Seguimiento profesiónal",
     ],
   },
   {

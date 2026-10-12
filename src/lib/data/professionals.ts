@@ -197,7 +197,7 @@ const equipo: Professional[] = [
   },
   {
     slug: "eugenia-leiva",
-    motto: "El cuerpo también necesita tiempo para recuperarse bien.",
+    motto: "La salud de la piel comienza con una observación atenta.",
     credentials: [
       {
         title: "Kinesiología y Fisioterapia",
@@ -210,6 +210,10 @@ const equipo: Professional[] = [
     specialty: "Lic. en Kinesiología · Cosmetóloga",
     areaSlug: "kinesiologia-estetica",
     serviceSlug: "kinesiologia",
+    // También atiende estética facial y corporal: su tarjeta aparece en el
+    // equipo de ese servicio además del de Kinesiología, que sigue siendo el
+    // que enlaza su ficha.
+    serviciosAdicionales: ["estetica-facial-y-corporal"],
     photoUrl:
       "https://images.unsplash.com/photo-1730597842283-943c7986ee2c?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
     bio: "Forma parte del equipo de Kinesiología y Fisioterapia de AURIS, acompañando procesos de recuperación y bienestar físico.",
@@ -234,7 +238,7 @@ const equipo: Professional[] = [
     serviceSlug: "psicologia",
     photoUrl:
       "https://images.unsplash.com/photo-1712215544003-af10130f8eb3?q=80&w=800&h=1000&fit=crop&crop=faces&auto=format",
-    bio: "Forma parte del equipo de Psicología de AURIS, acompañando procesos personales con escucha y respeto por el tiempo de cada consultante.",
+    bio: "Forma parte del equipo de kinesiología y fisioterapia de auris acompañando  procesos de recuperación funcional,bienestar físico y calidad de vida.",
     education: ["Formación en Psicología"],
     certifications: [],
     trayectoria: trayectorias["soledad-di-martino"],
@@ -332,6 +336,8 @@ export function getProfessionalBySlug(slug: string) {
 
 export function getProfessionalsByService(serviceSlug: string) {
   return professionals.filter(
-    (professional) => professional.serviceSlug === serviceSlug,
+    (professional) =>
+      professional.serviceSlug === serviceSlug ||
+      professional.serviciosAdicionales?.includes(serviceSlug),
   );
 }

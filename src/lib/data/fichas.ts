@@ -969,6 +969,7 @@ const encuadreBanner: Record<
     Ficha,
     | "bannerFoco"
     | "bannerCorrimiento"
+    | "bannerEntera"
     | "heroFoco"
     | "heroHoverFoco"
     | "grillaFoco"
@@ -998,11 +999,12 @@ const encuadreBanner: Record<
   "romina-tchakerian": { bannerFoco: "center 47%", bannerCorrimiento: "16%" },
   // De pie y centrada, con la cara cerca de la mitad de la foto.
   "laura-mansilla": { bannerFoco: "center 44%", bannerCorrimiento: "15%" },
-  // Sentada al escritorio: con este foco la cara entra entera y el diploma de
-  // la pared queda fuera de la franja.
+  // Su foto 6 es un primer plano de cara, no la toma abierta de las demás:
+  // llenando la franja con recorte no hay `bannerFoco` que alcance —en 1920 la
+  // franja solo llega a mostrar un tercio del alto de la foto, así que siempre
+  // quedaba afuera media cara—. Va entera, apoyada contra el borde derecho.
   "eugenia-leiva": {
-    bannerFoco: "center 52%",
-    bannerCorrimiento: "18%",
+    bannerEntera: true,
     // Su foto 3 la tiene sentada al escritorio: bajando el recorte entran el
     // escritorio y lo que la rodea, en vez de quedar solo la cara.
     grillaFoco: ["center 88%"],

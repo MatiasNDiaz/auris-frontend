@@ -197,8 +197,12 @@ const ENCUADRE = {
   "recepcionistas/leticia-loza/Leticia-2": { ancho: 0.78, centroX: 0.61 },
   "recepcionistas/soledad-lluch/Soledad-1": { ancho: 0.38, centroX: 0.475 },
   "recepcionistas/soledad-lluch/Soledad-2": { ancho: 0.38, centroX: 0.475 },
-  "recepcionistas/yanina-solari/Yanina-1": { ancho: 0.56, centroX: 0.715 },
-  "recepcionistas/yanina-solari/Yanina-2": { ancho: 0.56, centroX: 0.715 },
+  // Yanina sí está cerca del centro del cuadro (58% del ancho), así que acá no
+  // hace falta recorte: sin él, de cuerpo entero, la tarjeta ya la muestra
+  // igual que a Leticia y Soledad. La foto que tenía antes de ella —con otro
+  // encuadre, más lejos— sí lo necesitaba; a esta un recorte angosto (0,56) la
+  // dejaba con un aspecto tan alto y angosto que la tarjeta, al cubrir su
+  // caja 4:5, terminaba mostrando sólo el busto.
   // Sus dos fotos vienen en 0,754 y con poco aire arriba: queda más chica y
   // más alta que el resto del equipo. El aire la baja a la altura de las
   // demás y el recorte de los costados la deja en 0,562, la proporción del

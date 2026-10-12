@@ -91,7 +91,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="group relative inline-flex size-11 items-center justify-center overflow-hidden rounded-full bg-primary-600 text-cream-50 transition-[transform,translate,box-shadow] duration-[420ms] [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-lg hover:shadow-ink-900/30 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                  className="group relative inline-flex size-11 items-center justify-center overflow-hidden rounded-full bg-primary-600 text-cream-50 transition-[transform,translate,box-shadow] duration-[420ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-1 hover:shadow-lg hover:shadow-ink-900/30 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none motion-reduce:transition-none motion-reduce:hover:translate-y-0"
                 >
                   {/* Capa de marca: crece desde el centro al pasar el mouse. */}
                   <span

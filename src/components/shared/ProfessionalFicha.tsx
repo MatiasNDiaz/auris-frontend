@@ -492,13 +492,38 @@ export function ProfessionalFicha({
             {/* Foto a la derecha. En pantallas anchas se desvanece por la
                 izquierda hacia el color sólido: el difuminado ocupa más de la
                 mitad del ancho de la foto, así el empalme con el color no se
-                lee como un corte. */}
-            <div className="absolute inset-y-0 right-0 -z-20 w-full overflow-hidden lg:w-[62%] lg:mask-[linear-gradient(to_right,transparent_0%,transparent_34%,rgba(0,0,0,0.5)_58%,black_82%)]">
+                lee como un corte.
+
+                Con `bannerEntera` la caja deja de ocupar el 62% y toma la
+                proporción de un retrato: su ancho sale del alto de la franja.
+                La foto la llena sin recorte, así que se ve entera y queda más
+                chica. Arriba y abajo sangra contra la sección, así que ahí no
+                hay canto que mostrar; los dos costados los funde la máscara,
+                que por eso apaga las dos puntas y no solo la izquierda como la
+                del caso normal —acá tiene que borrar el borde mismo de la
+                foto, no media franja—.
+
+                No va pegada al borde derecho sino con aire: queda repartida
+                entre el texto y el borde en vez de escaparse contra la punta
+                de la pantalla. El valor es porcentual para que ese aire
+                acompañe al ancho de la ventana. */}
+            <div
+              className={cn(
+                "absolute inset-y-0 right-0 -z-20 w-full overflow-hidden",
+                ficha.bannerEntera
+                  ? "lg:right-[9%] lg:aspect-3/4 lg:w-auto lg:mask-[linear-gradient(to_right,transparent_0%,black_45%,black_88%,transparent_100%)]"
+                  : "lg:w-[62%] lg:mask-[linear-gradient(to_right,transparent_0%,transparent_34%,rgba(0,0,0,0.5)_58%,black_82%)]",
+              )}
+            >
               <Image
                 src={fotos.banner}
                 alt=""
                 fill
-                sizes="(max-width: 1024px) 100vw, 62vw"
+                sizes={
+                  ficha.bannerEntera
+                    ? "(max-width: 1024px) 100vw, 28vw"
+                    : "(max-width: 1024px) 100vw, 62vw"
+                }
                 quality={CALIDAD_FOTO}
                 // El banner es una franja baja y la foto es vertical: de toda
                 // la foto se ve una tira finita, así que dónde cae la cara la
@@ -510,7 +535,10 @@ export function ProfessionalFicha({
                   } as CSSProperties
                 }
                 className={cn(
-                  "object-cover transition-transform duration-2000 group-hover:scale-105 lg:translate-x-(--foco-x)",
+                  "object-cover transition-transform duration-2000 group-hover:scale-105",
+                  // Con `bannerEntera` la caja ya está contra el borde derecho:
+                  // correrla más la sacaría de pantalla.
+                  !ficha.bannerEntera && "lg:translate-x-(--foco-x)",
                   suave,
                 )}
               />

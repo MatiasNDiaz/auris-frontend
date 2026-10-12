@@ -8,11 +8,15 @@ import { ScrollToTop } from "@/components/shared/ScrollToTop";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
+// Sin los ejes `SOFT` y `WONK`: se pedían pero no los usa ninguna regla de
+// CSS —nada declara `font-variation-settings`—, así que la tipografía se
+// dibujaba igual y el archivo variable viajaba con dos ejes de más. Es la
+// fuente de los titulares y va precargada, con lo cual su peso cae de lleno
+// en la carga inicial.
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
   display: "swap",
-  axes: ["SOFT", "WONK"],
 });
 
 const manrope = Manrope({

@@ -83,6 +83,13 @@ export type Professional = {
   areaSlug: AreaSlug;
   /** El servicio del sitio al que se la asocia, para enlazar a su página. */
   serviceSlug: string;
+  /**
+   * Otros servicios en cuyo listado de equipo también aparece su tarjeta,
+   * además del de `serviceSlug` —que sigue siendo el único al que enlaza su
+   * ficha—. Para quien atiende más de una especialidad sin que eso le cambie
+   * el servicio "de origen".
+   */
+  serviciosAdicionales?: string[];
   photoUrl: string;
   /**
    * Su imagen 2. Es la que aparece al pasar el cursor por su tarjeta, cruzada
@@ -196,6 +203,17 @@ export type Ficha = {
    * anchas, que es donde la foto convive con el texto.
    */
   bannerCorrimiento?: string;
+  /**
+   * Muestra la foto del banner entera, sin recortarla a la franja.
+   *
+   * Para una foto 6 que es un primer plano de cara en vez de la toma abierta
+   * que pide la convención: la franja es mucho más ancha que alta, así que
+   * llenarla recortando deja afuera media cara por más que se mueva el
+   * `bannerFoco`. Con esto la caja toma la proporción de un retrato y se apoya
+   * contra el borde derecho: la cara entra completa y la foto queda más chica,
+   * como las demás. `bannerCorrimiento` no se aplica —ya está contra el borde—.
+   */
+  bannerEntera?: boolean;
   /**
    * Encuadre de las fotos del hero (`object-position`), para cuando la persona
    * no está en el centro del cuadro o la foto es apaisada y hay que recortarla

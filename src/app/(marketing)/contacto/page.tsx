@@ -66,8 +66,21 @@ export default function ContactoPage() {
         wave="gentle"
         waveTone="sage"
         foto={bannerDeSeccion("contacto")}
-        fotoFoco="center 90%"
-        fotoAlt="Atención en el mostrador de AURIS"
+        // El 90% era de la foto anterior, de mostrador, y dejaba a esta sin
+        // cabeza en monitores anchos. Pasarlo a un valor bajo (40%) arregló
+        // eso pero generó otro problema: la franja solo alcanza a mostrar
+        // ~53% del alto de la foto, y ni la cara entera ni la taza-y-la-compu
+        // entran juntas en esa ventana —hay 52 puntos de foto entre las cejas
+        // y el borde de la taza, casi exactos a los 53 disponibles—. Medido
+        // con una grilla de porcentaje sobre el original: a 70% la ventana
+        // corre lo justo para sumar la taza y las manos tecleando sin perder
+        // la cara (se pierde algo de pelo arriba, no la cara). Verificado en
+        // 390, 1440, 1920 y 2560.
+        fotoFoco="center 70%"
+        // La foto cambió de escena (antes mostrador, ahora alguien escribiendo
+        // un mensaje desde el sillón): el alt describe lo que se ve, sin
+        // nombrar un lugar que la imagen ya no muestra.
+        fotoAlt="Persona escribiendo un mensaje desde la notebook"
         eyebrow="Contacto"
         title="Estamos para escucharte"
         description="Escribinos por el canal que prefieras. Si necesitás un turno, WhatsApp es la vía más rápida."
