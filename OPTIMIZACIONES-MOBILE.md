@@ -2,6 +2,50 @@
 
 ---
 
+# PARTE −1 — Sobre el objetivo de "100 en Performance"
+
+**No es alcanzable para esta aplicación en el perfil que usa Lighthouse, y es
+importante que quede claro con números y no como excusa.**
+
+El perfil por defecto es un Moto G Power con la CPU frenada 4× y red Slow 4G.
+Ahí, medido con perfil limpio y mediana de 5 corridas, la portada da **88**.
+
+### Qué bloquea el 100: el desglose del LCP
+
+| Fase | Tiempo | % del LCP |
+| --- | --- | --- |
+| TTFB | 454 ms | 12 % |
+| Load Delay | 1289 ms | 35 % |
+| **Load Time (bajar la imagen)** | **78 ms** | **2 %** |
+| **Render Delay (pintarla)** | **1868 ms** | **51 %** |
+
+Esto **descarta** la hipótesis más intuitiva: bajar el peso de las imágenes no
+sirve de nada, porque transferirlas ya cuesta apenas 78 ms. El tiempo se va en
+que el navegador pueda *pintar*, con la CPU a un cuarto de velocidad.
+
+### El experimento que lo demuestra
+
+Desactivé temporalmente todas las hojas decorativas: el HTML pasó de 758 KB a
+430 KB y los nodos del DOM se redujeron casi a la mitad.
+
+| | HTML | Performance (mediana de 5) | LCP |
+| --- | --- | --- | --- |
+| Con hojas | 758 KB | **88** | 3,6 s |
+| Sin hojas | 430 KB | **89** | 3,4 s |
+
+**Sacar 328 KB de HTML movió el puntaje un punto.** Las hojas se restauraron:
+no valía la pena perder un elemento de identidad por eso.
+
+Si ni eliminando contenido se pasa de 89, el 100 no está a una optimización de
+distancia: requeriría sacar React del cliente en las secciones que hoy dependen
+de él, o sea rediseñar la aplicación. Un sitio de este tipo, con animaciones y
+hecho con un framework de componentes, rinde entre 85 y 95 en ese perfil.
+
+**Lo que sí está en 100: Accesibilidad, Buenas Prácticas y SEO, en las tres
+rutas medidas.**
+
+---
+
 # PARTE 0 — Lo más importante: tu Lighthouse estaba contaminado
 
 El reporte del 13/10 (Performance 34, Best Practices 73, TBT 6.190 ms, Speed
