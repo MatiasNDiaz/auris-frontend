@@ -60,7 +60,7 @@ export function ServicesGrid({ withHeading = true }: ServicesGridProps) {
         <ul className={GRILLA}>
           {primeras.map((service, index) => (
             <Reveal as="li" key={service.slug} delay={(index % 3) * 0.1}>
-              <ServiceCard service={service} />
+              <ServiceCard service={service} nivelTitulo={withHeading ? 3 : 2} />
             </Reveal>
           ))}
         </ul>
@@ -95,7 +95,7 @@ export function ServicesGrid({ withHeading = true }: ServicesGridProps) {
                   <ul className={cn(GRILLA, "pt-6")}>
                     {resto.map((service) => (
                       <li key={service.slug}>
-                        <ServiceCard service={service} />
+                        <ServiceCard service={service} nivelTitulo={withHeading ? 3 : 2} />
                       </li>
                     ))}
 

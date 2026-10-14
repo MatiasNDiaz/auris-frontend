@@ -13,7 +13,7 @@ import { AnimatedNavLogo } from "./AnimatedNavLogo";
 import { MobileMenu } from "./MobileMenu";
 import { NavServicesMenu } from "./NavServicesMenu";
 import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
-import { mainNav, siteConfig } from "@/config/site";
+import { mainNav } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 /** Las clases de un enlace de la navbar; las comparte el menú de servicios. */
@@ -113,9 +113,13 @@ export function Navbar() {
           absoluto, pero acá sí reserva espacio, así que el logo y el CTA no
           pueden pisarlo por más que crezcan. */}
       <div className="mx-auto flex h-20 w-full max-w-360 items-center justify-between gap-8 px-5 sm:px-8 lg:px-12 xl:grid xl:grid-cols-[1fr_auto_1fr] xl:gap-12">
+        {/* Sin `aria-label`: el logo ya dibuja "AURIS" y la bajada como texto,
+            así que el nombre accesible sale de ahí. El `aria-label` que había
+            decía lo mismo pero con un guión largo en el medio, y eso rompe la
+            regla de que el nombre accesible tiene que contener el texto que se
+            ve —lo marcaba Lighthouse como `label-content-name-mismatch`—. */}
         <Link
           href="/"
-          aria-label={`${siteConfig.name} — ${siteConfig.tagline}`}
           className="w-fit rounded-md focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:outline-none xl:justify-self-start"
         >
           <AnimatedNavLogo hovered={hovered} />

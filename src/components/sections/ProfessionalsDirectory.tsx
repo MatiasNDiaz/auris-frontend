@@ -89,7 +89,7 @@ export function ProfessionalsDirectory() {
           })}
         </div>
 
-        <p className="mt-6 text-sm text-ink-700/70" aria-live="polite">
+        <p className="mt-6 text-sm text-ink-700/75" aria-live="polite">
           {filter === RECEPCION
             ? `${recepcionistas.length} en recepción`
             : `${filtered.length} ${
@@ -115,6 +115,10 @@ export function ProfessionalsDirectory() {
               >
                 <ProfessionalCard
                   professional={professional}
+                  // Esta grilla cuelga directo del `h1` de la página, sin un
+                  // `h2` de sección en el medio: las tarjetas son el nivel que
+                  // sigue.
+                  nivelTitulo={2}
                   sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 520px"
                 />
               </motion.li>

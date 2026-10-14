@@ -14,13 +14,23 @@ type ServiceCardProps = {
   className?: string;
   /** `compact` deja la tarjeta sin foto, solo con el ícono. */
   variant?: "photo" | "compact";
+  /**
+   * Nivel del título de la tarjeta. Por defecto `h3`, que es lo correcto
+   * cuando la grilla cuelga de un `h2` de sección —el caso de la portada—. En
+   * `/servicios` las tarjetas van directamente bajo el `h1` de la página y sin
+   * `h2` en el medio, así que ahí tienen que ser `h2`: saltar de `h1` a `h3`
+   * rompe el orden de encabezados y lo marca Lighthouse.
+   */
+  nivelTitulo?: 2 | 3;
 };
 
 export function ServiceCard({
   service,
   className,
   variant = "photo",
+  nivelTitulo = 3,
 }: ServiceCardProps) {
+  const Titulo = nivelTitulo === 2 ? "h2" : "h3";
   return (
     <motion.article
       whileHover={{ y: -6 }}
@@ -102,7 +112,7 @@ export function ServiceCard({
           )}
         </span>
 
-        <h3
+        <Titulo
           className={cn(
             "font-serif text-[1.375rem] leading-snug font-semibold text-ink-900 transition-colors duration-300 group-hover:text-primary-800",
             variant === "compact" && "mt-6",
@@ -114,7 +124,7 @@ export function ServiceCard({
           >
             {service.name}
           </Link>
-        </h3>
+        </Titulo>
 
         <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-700/80">
           {service.shortDescription}

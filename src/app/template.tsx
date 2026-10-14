@@ -45,8 +45,15 @@ export default function Template({ children }: { children: ReactNode }) {
   if (reduceMotion || skip) return <>{children}</>;
 
   return (
+    // Arranca en 0.88 y no en 0.4. Con 0.4 la página entrante se veía
+    // translúcida durante los primeros fotogramas, y eso es lo que se reportaba
+    // como "la página se vuelve transparente" al navegar: sobre todo viniendo
+    // de una página larga, donde el scroll se reinicia y encima el contenido
+    // nuevo entraba lavado. A 0.88 el gesto se sigue percibiendo como una
+    // entrada —el desplazamiento de 8px hace casi todo el trabajo— pero no hay
+    // ningún fotograma en el que se lea el fondo a través del contenido.
     <motion.div
-      initial={{ opacity: 0.4, y: 8 }}
+      initial={{ opacity: 0.88, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
     >

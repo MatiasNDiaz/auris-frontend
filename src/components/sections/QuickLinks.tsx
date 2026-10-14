@@ -59,7 +59,7 @@ export function QuickLinks() {
                 <span className="mt-4 font-semibold text-ink-900">
                   {link.title}
                 </span>
-                <span className="mt-1 text-sm text-ink-700/70">
+                <span className="mt-1 text-sm text-ink-700/75">
                   {link.description}
                 </span>
               </Link>

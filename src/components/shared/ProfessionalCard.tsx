@@ -15,13 +15,22 @@ type ProfessionalCardProps = {
   professional: Professional;
   className?: string;
   sizes?: string;
+  /**
+   * Nivel del título. Por defecto `h3`, correcto cuando la grilla cuelga de un
+   * `h2` de sección. En `/profesionales` las tarjetas van directo bajo el `h1`
+   * de la página, así que ahí van en `h2`: saltar de `h1` a `h3` rompe el orden
+   * de encabezados.
+   */
+  nivelTitulo?: 2 | 3;
 };
 
 export function ProfessionalCard({
   professional,
   className,
   sizes,
+  nivelTitulo = 3,
 }: ProfessionalCardProps) {
+  const Titulo = nivelTitulo === 2 ? "h2" : "h3";
   const area = getAreaBySlug(professional.areaSlug);
   const photoRef = useRef<HTMLDivElement>(null);
   const navigate = useViewTransitionRouter();
@@ -72,7 +81,7 @@ export function ProfessionalCard({
           </p>
         )}
 
-        <h3 className="mt-2 font-serif text-xl text-ink-900">
+        <Titulo className="mt-2 font-serif text-xl text-ink-900">
           <Link
             href={href}
             onClick={(event) => {
@@ -85,7 +94,7 @@ export function ProfessionalCard({
           >
             {professional.name}
           </Link>
-        </h3>
+        </Titulo>
 
         <p className="mt-1 text-sm text-ink-700/75">{professional.specialty}</p>
 

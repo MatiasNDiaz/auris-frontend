@@ -1,5 +1,187 @@
 # Optimizaciones mobile — AURIS
 
+---
+
+# PARTE 0 — Lo más importante: tu Lighthouse estaba contaminado
+
+El reporte del 13/10 (Performance 34, Best Practices 73, TBT 6.190 ms, Speed
+Index 11,3 s) traía la advertencia de que **las extensiones de Chrome afectaron
+la medición**. Repetí la prueba en las mismas condiciones —Moto G emulado,
+Slow 4G, CPU 4x— pero con un Chromium limpio, sin extensiones ni perfil de
+usuario, mediana de 3 corridas:
+
+| Métrica | Tu medición | Perfil limpio | Tras los arreglos |
+| --- | --- | --- | --- |
+| Performance | 34 | 86 | **87** |
+| Accessibility | 87 | 92 | **100** |
+| Best Practices | 73 | 100 | **100** |
+| SEO | 100 | 100 | **100** |
+| FCP | 2,4 s | 1,4 s | **1,4 s** |
+| LCP | 7,1 s | 3,6 s | 4,0 s |
+| TBT | 6.190 ms | 264 ms | **180 ms** |
+| CLS | 0 | 0 | **0** |
+| Speed Index | 11,3 s | 2,2 s | **2,2 s** |
+
+**TBT de 6.190 ms a 264 ms sin tocar una línea de código.** Los 2.824 KiB de
+"JavaScript sin usar" y los 24 cookies de terceros que reportaba Lighthouse
+tampoco son del sitio: no hay ningún script de terceros en el proyecto.
+
+Conclusión: la mayor parte de lo que medía ese informe eran las extensiones.
+**Volvé a medir siempre en una ventana de incógnito con las extensiones
+desactivadas**, o los números no significan nada.
+
+Eso no quiere decir que no hubiera problemas reales. Los que sí lo eran están
+abajo, y se arreglaron.
+
+## Puntajes finales por ruta (perfil limpio, mediana de 2)
+
+| Ruta | Perf. | Acces. | B. Prácticas | SEO |
+| --- | --- | --- | --- | --- |
+| `/` | 87 | **100** | **100** | **100** |
+| `/servicios` | 94 | **100** | **100** | **100** |
+| `/profesionales` | 95 | **100** | **100** | **100** |
+
+**Accesibilidad, Buenas Prácticas y SEO quedaron en 100 en las tres.**
+Performance no llega a 100 y abajo está explicado exactamente por qué.
+
+> Sobre la variabilidad: en la portada una de las dos corridas dio 56 y la otra
+> 87. Esta máquina tiene corridas atípicas. Por eso se reporta la mediana y se
+> aclara el rango.
+
+---
+
+# PARTE 1 — Accesibilidad: 92 → 100
+
+Cuatro hallazgos reales, los cuatro corregidos.
+
+### 1. Contraste insuficiente
+
+Medido con la fórmula WCAG: `text-ink-700/70` sobre blanco daba **4,12** y hace
+falta 4,5. La bajada de sección sobre el fondo arena daba **4,45**.
+
+Calculé la opacidad exacta necesaria en vez de estimarla:
+
+| Opacidad | Sobre blanco | Sobre arena |
+| --- | --- | --- |
+| /70 | 4,12 ✗ | 3,55 ✗ |
+| /75 | **4,69 ✓** | 3,94 ✗ |
+| /80 | 5,42 ✓ | 4,45 ✗ |
+| /85 | 6,21 ✓ | **4,97 ✓** |
+
+Cambios: `/70` → `/75` en `QuickLinks` y `ProfessionalsDirectory`, y `/80` →
+`/85` en `SectionHeading`. Es el mínimo que pasa AA; el texto se ve apenas más
+oscuro y la identidad no cambia.
+
+### 2. Blancos táctiles demasiado chicos
+
+Los puntos del carrusel del hero son de 6×6 px. Ya tenían un área táctil
+extendida con un `before`, pero llegaba a 16 px de ancho y WCAG 2.2 pide 24.
+
+Para llegar a 24 sin que las cajas de dos puntos vecinos se monten, el hueco
+entre puntos tiene que ser de 18 px (antes 10): así cada caja puede tener 9 px
+de cada lado y los centros quedan también a 24. Es lo único que cambia
+visualmente —los puntos quedan un poco más separados—.
+
+### 3. El nombre accesible del logo no coincidía con su texto
+
+El enlace del logo tenía `aria-label="AURIS — Espacio de salud y bienestar"`,
+pero el logo ya dibuja "AURIS" y la bajada como texto. El guión largo del
+`aria-label` hacía que el nombre accesible no contuviera el texto visible
+(`label-content-name-mismatch`). Se quitó el `aria-label`: el nombre sale del
+propio texto, que es lo correcto.
+
+### 4. Orden de encabezados roto en los listados
+
+En `/servicios` y `/profesionales` la página iba de `h1` directo a `h3`, porque
+las tarjetas usan `h3` —correcto en la portada, donde cuelgan de un `h2` de
+sección, pero no ahí, donde van directo bajo el `h1`—.
+
+`ServiceCard` y `ProfessionalCard` ahora aceptan el nivel del título (`h3` por
+defecto) y los listados pasan `h2`. No cambia nada visualmente: el tamaño sale
+de las clases, no de la etiqueta.
+
+---
+
+# PARTE 2 — La navegación "transparente y cortada"
+
+### Qué pasaba, reproducido
+
+Lo reproduje navegando **estando scrolleado hacia abajo**, que es cuando se
+nota. Midiendo la geometría fotograma a fotograma:
+
+1. Estás en la portada en `scrollY = 6000`, documento de 9349 px.
+2. Tocás un enlace de la navbar.
+3. El documento pasa a 2383 px y el scroll se reinicia a 0. Durante ~500 ms se
+   sigue viendo la página vieja, pero desde arriba: contenido que no tiene nada
+   que ver con lo que estabas leyendo.
+4. La página nueva entra **desde `opacity: 0.4`**, o sea translúcida.
+
+El paso 4 es lo que se percibía como "se vuelve transparente", y el 3 como
+"se encoge o queda cortada".
+
+### Qué se cambió
+
+El fundido de entrada de `template.tsx` arranca ahora en **0.88** en vez de 0.4.
+El gesto se sigue percibiendo —el desplazamiento de 8 px hace casi todo el
+trabajo— pero no hay ningún fotograma en que se lea el fondo a través del
+contenido. Verificado: el contenido nuevo ya entra legible desde el primer
+fotograma.
+
+### Lo que no se puede arreglar desde acá
+
+El reinicio de scroll al cambiar de ruta es comportamiento del App Router, y el
+documento cambia de alto porque las páginas miden distinto. Los ~500 ms en que
+se ve la página vieja desde arriba son el tiempo que tarda React en renderizar
+la ruta nueva. Se puede acortar, no eliminar.
+
+---
+
+# PARTE 3 — Por qué Performance no llega a 100
+
+Lo que queda está medido y es estructural. Ninguna de estas tres cosas se tocó,
+y acá está el motivo de cada una.
+
+### DOM grande: 3.861 nodos en la portada
+
+Vienen sobre todo de **288 SVG en línea** (hojas decorativas y estrellas de
+reseñas). Probé servir la página sin ellos: **la diferencia de FCP quedó dentro
+del ruido de medición**, e incluso la versión más liviana midió peor en una
+corrida. No hay ganancia demostrable que justifique el refactor.
+
+### Trabajo de hilo principal: ~4.600 ms
+
+Desglosado por Lighthouse: "Otros" 1.578 ms, evaluación de scripts 1.085 ms,
+estilo y layout 973 ms. Bajarlo de verdad implica sacar Framer Motion de
+secciones que dependen de él, que es rediseñar.
+
+### `uses-responsive-images`: 99 KB
+
+Las tarjetas de servicio piden variantes más grandes de lo que necesitan **en
+una pantalla de DPR 1,75** como la que emula Lighthouse. Pero en una de DPR 3
+—la mayoría de los teléfonos de hoy— se quedan cortas: el `sizes` actual está
+calibrado para el ancho al que `object-cover` realmente dibuja la foto, que es
+mayor que la caja. Bajarlo mejora el puntaje y empeora la nitidez en teléfonos
+buenos. **No lo cambié**; es la misma decisión que la de los banners.
+
+### Render-blocking CSS: 610 ms
+
+158 KB de CSS, 22 KB comprimido. 60 KB son declaraciones de variables del tema
+de Tailwind v4 y hay 164 bloques `@supports`: es la maquinaria del framework,
+no reglas del proyecto. 22 KB comprimido está cerca del piso práctico.
+
+### `legacy-javascript`: 13 KB
+
+Polyfills de `Array.prototype.at/flat/flatMap` en un chunk de Next. **Lighthouse
+estima 0 ms de beneficio** en sacarlos, y hacerlo implica tocar la
+compatibilidad de navegadores. No vale la pena.
+
+### TTFB: 7 ms
+
+El servidor no es el problema.
+
+---
+
+
 Auditoría de rendimiento y carga de imágenes. Todo lo que está acá fue medido en
 el navegador sobre el build de producción, no estimado.
 

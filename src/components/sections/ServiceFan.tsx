@@ -236,9 +236,14 @@ export function ServiceFan({
             caja invisible mucho más alta y ancha que él. Sin eso había que
             acertarle a un blanco de 6×6, que con el dedo es casi imposible.
             La caja no puede pasarse de la mitad del hueco entre puntos o se
-            montan entre sí y el de al lado se queda sin tocar: de ahí que el
-            hueco pase de 6 a 10px, para poder darle 5 de cada lado. */}
-        <div className="flex items-center gap-2.5">
+            montan entre sí y el de al lado se queda sin tocar.
+
+            El hueco es de 18px para que la caja pueda tener 9px de cada lado:
+            6 del punto más 18 son los 24px de lado mínimo que pide WCAG 2.2
+            para un blanco táctil, y con ese hueco los centros quedan también a
+            24px, así que ninguna caja invade a la de al lado. Con los 10px que
+            tenía antes el blanco quedaba en 16px y Lighthouse lo marcaba. */}
+        <div className="flex items-center gap-4.5">
           {services.map((service, index) => (
             <button
               key={service.slug}
@@ -248,7 +253,7 @@ export function ServiceFan({
               aria-current={index === active}
               className={cn(
                 "relative h-1.5 rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-cream-50 focus-visible:outline-none",
-                "before:absolute before:-inset-x-1.25 before:-inset-y-5 before:content-['']",
+                "before:absolute before:-inset-x-2.25 before:-inset-y-5 before:content-['']",
                 index === active
                   ? "w-6 bg-cream-50"
                   : "w-1.5 bg-cream-50/45 hover:bg-cream-50/75",

@@ -81,7 +81,7 @@ export function SectionHeading({
         <p
           className={cn(
             "mx-auto mt-6 max-w-2xl text-base leading-relaxed text-pretty sm:text-lg",
-            light ? "text-primary-100" : "text-ink-700/80",
+            light ? "text-primary-100" : "text-ink-700/85",
           )}
         >
           {description}
