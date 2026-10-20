@@ -107,11 +107,14 @@ const NO_SOPORTADOS = new Set([".heic", ".heif"]);
 /**
  * Reencuadre de fotos sueltas, en fracciones de su alto original.
  *
+ *   cabeza  cuánto recortarle por arriba. Sirve para sacarle el techo o la
+ *           pared de más a una toma abierta, que en una franja apaisada deja a
+ *           la persona chica y perdida en el medio. Se aplica antes que
+ *           `arriba`, así que también sirve para limpiar la primera fila de
+ *           píxeles cuando tiene algo colgado —un aplique, un estante— que al
+ *           estirarse dejaría un chorreado vertical
  *   arriba  cuánto fondo agregarle por encima, estirando la fila de píxeles
  *           de más arriba (en estas tomas, pared lisa)
- *   cabeza  cuánto recortarle por arriba. Lo contrario de `arriba`: sirve para
- *           sacarle el techo o la pared de más a una toma abierta, que en una
- *           franja apaisada deja a la persona chica y perdida en el medio
  *   abajo   cuánto recortarle por debajo
  *   ancho   qué fracción del ancho conservar
  *   centroX en qué punto del ancho original queda centrada esa fracción; 0,5
@@ -165,26 +168,58 @@ const ENCUADRE = {
   // El recorte de arriba llega justo hasta el spot del techo: un pelo más y
   // le come la punta al logo de la pared, que arranca cinco píxeles debajo.
   "banners-secciones/banner-profesionales": { cabeza: 0.215, abajo: 0.05 },
+  /*
+   * FOTOS 1 DE PROFESIONAL: misma proporción y la cabeza a la misma altura.
+   *
+   * La foto 1 es la que va en el acordeón de la home, y ahí el panel cambia de
+   * forma: arranca angosto y al pasar el cursor se ensancha. Con `object-cover`
+   * eso tiene dos consecuencias, y las dos dependen de la foto, no del CSS.
+   *
+   * 1. El zoom del hover es emergente. La escala es
+   *    `max(anchoPanel/anchoFoto, altoPanel/altoFoto)`: mientras manda el alto,
+   *    la foto se dibuja de `altoPanel x proporción` de ancho y ensanchar el
+   *    panel sólo recorta a los costados; recién cuando el panel supera ese
+   *    ancho pasa a mandar el ancho y la foto crece. Con 0,562 ese cruce cae
+   *    dentro del recorrido del hover y la foto se agranda; con una foto casi
+   *    cuadrada el cruce no llega nunca y se queda quieta. Por eso todas
+   *    terminan en 0,562: es lo que hace que el efecto sea el mismo para todas.
+   *
+   * 2. La cabeza queda donde diga la foto. Con `object-position` en el 50%, el
+   *    panel ancho muestra la franja del 25% al 75% de la foto y a quien tenga
+   *    la cabeza más arriba se la corta. La solución no es mover el foco de a
+   *    una —eso cambia con el ancho de la pantalla—, sino dejar todas las
+   *    cabezas en la misma fracción del alto: el 27%. Con eso, y con el foco
+   *    en ese mismo 27% en el acordeón, la cabeza cae siempre en el 27% del
+   *    panel, esté colapsado, expandido o en la pantalla que sea.
+   *
+   * De las once, ocho ya venían en 0,562 y con la cabeza entre el 26,4% y el
+   * 27,9%: ésas no se tocan. Acá están las que se iban de ahí.
+   */
+  // Cabeza en el 22,6%: es la más alta de todas y la que primero se cortaba.
+  // El aire de arriba la baja al 27% y el recorte de abajo —la misma
+  // fracción— le devuelve la proporción, así que el tamaño no cambia.
+  "profesionales/ariel-vidal/ARIEL-1": { arriba: 0.044, abajo: 0.044 },
+  // Lo mismo, desde el 23,3%.
+  "profesionales/santiago-rodriguez/santiago-1": {
+    arriba: 0.037,
+    abajo: 0.037,
+  },
+  // Al revés: con la cabeza en el 29,6% sobraba pared por encima. Se le corta
+  // esa franja y los costados en la misma proporción, que es lo que mantiene
+  // el 0,562.
+  "profesionales/carla-fernandez/carla-1": { cabeza: 0.036, ancho: 0.964 },
   // De cuerpo entero y sin aire arriba: se le suma cielo y se le cortan las
-  // piernas para que quede como las demás del equipo.
-  //
-  // El recorte de los costados la deja con la misma forma vertical que el
-  // resto (0,562). No es un capricho: en el carrusel de la home el panel
-  // muestra la foto a lo alto, y al expandirse llega un punto en que pasa a
-  // recortarla a lo ancho y ahí se agranda sola. Ese es el efecto de hover de
-  // todas las tarjetas. Con la foto casi cuadrada ese punto nunca llegaba y la
-  // suya se quedaba quieta. Cortando de los lados —y no de arriba y abajo— el
-  // tamaño al que se la ve no cambia.
+  // piernas para que quede del mismo tamaño que las demás del equipo. El
+  // recorte de los costados es el que sostiene el 0,562.
   "profesionales/claudia-tomasi/claudia-1": {
-    arriba: 0.16,
-    abajo: 0.43,
+    arriba: 0.14,
+    abajo: 0.41,
     ancho: 0.616,
   },
   // También con la cabeza pegada al borde de arriba, y con un plano más
-  // cerrado que el resto. El aire de arriba resuelve las dos cosas a la vez:
-  // la baja hasta la altura de las demás y, al hacer la foto más alta, la deja
-  // del mismo tamaño en la tarjeta.
-  "profesionales/romina-tchakerian/romina-1": { arriba: 0.303 },
+  // cerrado que el resto. El aire la baja al 27%; el recorte de abajo es el
+  // que la deja en 0,562, porque su toma viene más angosta (0,667).
+  "profesionales/romina-tchakerian/romina-1": { arriba: 0.237, abajo: 0.052 },
   // Recepción: las tres están paradas contra la pared del logo pero ninguna en
   // el centro del cuadro, y la tarjeta del listado es vertical. En las dos
   // tomas verticales la tarjeta muestra el ancho completo, así que no hay
@@ -203,12 +238,28 @@ const ENCUADRE = {
   // encuadre, más lejos— sí lo necesitaba; a esta un recorte angosto (0,56) la
   // dejaba con un aspecto tan alto y angosto que la tarjeta, al cubrir su
   // caja 4:5, terminaba mostrando sólo el busto.
-  // Sus dos fotos vienen en 0,754 y con poco aire arriba: queda más chica y
-  // más alta que el resto del equipo. El aire la baja a la altura de las
-  // demás y el recorte de los costados la deja en 0,562, la proporción del
-  // resto. Las dos llevan el mismo encuadre: la 2 es la que aparece en el
-  // hover, y con otro recorte el cruce entre una y otra daba un salto.
-  "profesionales/eugenia-villalobos/EugeniaV-1": { arriba: 0.2, ancho: 0.895 },
+  // Su foto 1 es la única apaisada del equipo (1600x1200) y es la que no se
+  // agrandaba en el hover: quedaba en 0,994, casi cuadrada, y el panel nunca
+  // llegaba a ensancharla. El recorte de los costados la lleva a 0,562 y el
+  // aire de arriba le baja la cabeza al 27%, como a las demás.
+  //
+  // El `cabeza` no recorta nada que importe: se come los 48 píxeles de arriba,
+  // donde asoma el aplique de la pared. Va primero, así lo que se estira para
+  // hacer el aire es pared lisa y no ese caño, que dejaba un chorreado
+  // vertical sobre su hombro.
+  //
+  // `centroX` porque la ventana es angosta y ella está apenas corrida a la
+  // izquierda del cuadro.
+  "profesionales/eugenia-villalobos/EugeniaV-1": {
+    cabeza: 0.04,
+    arriba: 0.302,
+    ancho: 0.533,
+    centroX: 0.47,
+  },
+  // La 2 es la del cruce al pasar el cursor en el listado, y viene de otra
+  // toma (896x1189). Con este encuadre ya queda en 0,562 y con la cabeza en el
+  // 26,5%, que es donde está la 1: por eso lleva números propios y no los de
+  // arriba.
   "profesionales/eugenia-villalobos/EugeniaV-2": { arriba: 0.2, ancho: 0.895 },
 };
 
@@ -245,18 +296,35 @@ async function reencuadrar(sharp, original, encuadre) {
   } = encuadre;
   if (!arriba && !cabeza && !abajo && ancho === 1) return original;
 
-  // `.rotate()` primero: con una foto de teléfono, el alto real es el de
-  // después de aplicar la orientación EXIF.
-  const derecha = await sharp(original, { failOn: "none" }).rotate().toBuffer();
-  const { width = 0, height = 0 } = await sharp(derecha).metadata();
+  // El alto real es el de después de aplicar la orientación EXIF, y con una
+  // foto de teléfono eso puede significar el ancho: `metadata()` describe el
+  // archivo, no lo que se va a ver.
+  const info = await sharp(original, { failOn: "none" }).metadata();
+  const acostada = (info.orientation ?? 1) >= 5;
+  const width = (acostada ? info.height : info.width) ?? 0;
+  const height = (acostada ? info.width : info.height) ?? 0;
+
   const sumar = Math.round(height * arriba);
   const cortar = Math.round(height * abajo);
-
-  const conAire = sumar
-    ? await sharp(derecha).extend({ top: sumar, extendWith: "copy" }).toBuffer()
-    : derecha;
-
   const quitar = Math.round(height * cabeza);
+
+  // El recorte de arriba va en esta misma cadena y no en un paso aparte: cada
+  // `toBuffer()` intermedio vuelve a comprimir la foto y le suma una
+  // generación de pérdida.
+  //
+  // Va antes de agregar el aire, así lo que se estira es la primera fila que
+  // queda y no la original. Es la diferencia entre copiar pared lisa y copiar
+  // lo que estuviera colgado en el borde de la toma.
+  const base = sharp(original, { failOn: "none" }).rotate();
+  const recortada = quitar
+    ? base.extract({ left: 0, top: quitar, width, height: height - quitar })
+    : base;
+
+  const conAire = await (sumar
+    ? recortada.extend({ top: sumar, extendWith: "copy" })
+    : recortada
+  ).toBuffer();
+
   const anchoFinal = Math.round(width * ancho);
   // La ventana se centra en `centroX`, pero sin salirse de la foto: contra el
   // borde se apoya y no deja una franja vacía.
@@ -268,7 +336,7 @@ async function reencuadrar(sharp, original, encuadre) {
   return sharp(conAire)
     .extract({
       left: izquierda,
-      top: quitar,
+      top: 0,
       width: anchoFinal,
       height: height + sumar - cortar - quitar,
     })
@@ -348,7 +416,14 @@ async function main() {
     const { max } = PRESETS[preset];
     const destino = rutaDeSalida(original, ENTRADA, SALIDA, ".webp");
     const destinoRel = relativa(destino);
-    const ajustes = `webp:q${CALIDAD}:max${max}`;
+    // El encuadre entra en la huella: si se cambia un recorte acá adentro, el
+    // original sigue pesando y midiendo lo mismo y sin esto la foto quedaba
+    // como estaba hasta que alguien se acordara de borrar el `.webp` a mano.
+    const encuadre = encuadreDe(original);
+    const recorte = Object.keys(encuadre).length
+      ? `:enc${JSON.stringify(encuadre)}`
+      : "";
+    const ajustes = `webp:q${CALIDAD}:max${max}${recorte}`;
     const info = await stat(original);
 
     if (destinos.has(destinoRel)) {

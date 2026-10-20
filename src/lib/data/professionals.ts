@@ -158,11 +158,8 @@ const equipo: Professional[] = [
     name: "Dra. Claudia Tomasi",
     // Su foto 1 es de cuerpo entero y sin aire arriba: el reencuadre que la
     // deja como el resto del equipo se hace en el archivo, no acá (ver
-    // `ENCUADRE` en `scripts/optimize-images.mjs`).
-    //
-    // Al pasar el cursor la tarjeta se ensancha y la foto pasa a recortarse a
-    // lo alto: sin esto el recorte arranca por debajo de su cabeza.
-    fotoFoco: "center 40%",
+    // `ENCUADRE` en `scripts/optimize-images.mjs`). Con la cabeza ya en el
+    // mismo 27% que las demás, no necesita un foco propio.
     specialty: "Odontóloga estética",
     areaSlug: "odontologia-estetica",
     serviceSlug: "odontologia",

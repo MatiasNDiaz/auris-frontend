@@ -445,10 +445,13 @@ export function HistoryTimeline() {
                             src={milestone.image}
                             alt={milestone.alt}
                             fill
-                            // El dorso de la tarjeta es vertical y la foto
-                            // apaisada (1.60), así que manda el alto: se dibuja
-                            // bastante más ancha que la tarjeta.
-                            sizes="800px"
+                            // El dorso mide 504x292 y todas estas fotos son
+                            // más apaisadas o más verticales que esa caja, así
+                            // que `object-cover` siempre las ajusta por el
+                            // ancho: lo que hay que pedir son esos 504px y no
+                            // 800, que en una pantalla retina hacía bajar la
+                            // variante de 1920 para nada.
+                            sizes="520px"
                             className="object-cover"
                           />
                         </div>

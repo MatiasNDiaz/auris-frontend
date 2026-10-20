@@ -72,8 +72,10 @@ export const milestones: Milestone[] = [
     title: "El enfoque se extiende",
     description:
       "La misma lógica llega a la odontopediatría funcional, donde la odontología se complementa con fonoaudiología y kinesiología para acompañar el desarrollo de los chicos desde temprano. Mirar cómo respira, cómo traga y cómo mastica dice tanto como mirarle los dientes.",
-    image: "/images/profesionales/carla-fernandez/carla-3.webp",
-    alt: "La Dra. Carla Fernández en el consultorio de odontopediatría, con los modelos que usa para explicarles a los chicos",
+    // La 5 y no la 3: es la misma escena, pero en la 3 está mirando hacia
+    // abajo y el recorte apaisado de la tarjeta le corta la frente.
+    image: "/images/profesionales/carla-fernandez/carla-5.webp",
+    alt: "La Dra. Carla Fernández enseñando el cepillado con el modelo que usa para explicarles a los chicos",
   },
   {
     when: "Hoy",

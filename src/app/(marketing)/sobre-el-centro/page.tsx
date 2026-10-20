@@ -20,14 +20,21 @@ export const metadata: Metadata = {
   alternates: { canonical: "/sobre-el-centro" },
 };
 
-/** Fotos que acompañan la historia, en el orden en que se entra al centro. */
+/**
+ * Fotos que acompañan la historia, en el orden en que se entra al centro.
+ *
+ * Sólo se ven hasta `lg`, donde la historia va como lista vertical. Apuntaban
+ * a `/images/galeria/`, una carpeta que no existe en `public/`: en el teléfono
+ * las dos daban 400 y quedaban dos rectángulos vacíos. Son las mismas tomas,
+ * buscadas donde sí están.
+ */
 const storyPhotos = [
   {
-    src: "/images/galeria/ingreso-01.webp",
-    alt: "Cartel de AURIS en el frente del centro",
+    src: "/images/instalaciones/ingreso/entrada1.webp",
+    alt: "Frente del centro, con el cartel de AURIS junto a la puerta",
   },
   {
-    src: "/images/galeria/recepcion-02.webp",
+    src: "/images/instalaciones/ingreso/entrada4.webp",
     alt: "Sala de espera con el logo de AURIS en la pared",
   },
 ];
@@ -286,7 +293,13 @@ export default function SobreElCentroPage() {
                 src="/images/servicios/portada/taller-de-adultos-mayores.webp"
                 alt="Encuentro del taller de adultos mayores en el centro"
                 fill
-                sizes="(max-width: 1024px) 90vw, 520px"
+                // La caja es 4:3 y la foto 16:9, así que `object-cover` la
+                // ajusta por el alto y la dibuja un tercio más ancha que la
+                // caja: 520px de caja son 693px de foto. `sizes` tiene que
+                // declarar ese ancho y no el de la caja, porque si no el
+                // navegador baja una variante más chica y la estira —que es
+                // de donde venía el pixelado—.
+                sizes="(max-width: 1024px) 120vw, 700px"
                 className="object-cover"
               />
             </div>

@@ -125,7 +125,20 @@ export function TeamCarousel() {
                 }}
                 vtSlug={professional.slug}
                 src={professional.photoUrl}
-                objectPosition={professional.fotoFoco}
+                // El 27% es donde está la cabeza dentro de la foto —todas las
+                // fotos 1 se recortan a esa altura, ver `ENCUADRE` en
+                // `scripts/optimize-images.mjs`—, y poner el foco en el mismo
+                // número es lo que la deja clavada ahí.
+                //
+                // Con `object-cover`, la cabeza cae en `(h - f(1-V)) / V` del
+                // panel, donde `h` es su altura dentro de la foto, `f` el foco
+                // y `V` la fracción de foto que se ve. Con `f = h` eso se
+                // simplifica a `h` y `V` desaparece: da igual cuánto recorte
+                // el panel al ensancharse o qué tan ancha sea la pantalla, la
+                // cabeza queda siempre en el 27% del panel. Es el único lugar
+                // del sitio donde hace falta, porque es el único donde la caja
+                // cambia de forma; en el listado y en la ficha es fija.
+                objectPosition={professional.fotoFoco ?? "center 27%"}
                 alt={`Retrato de ${professional.name}`}
                 sizes="(max-width: 768px) 16rem, 420px"
                 className="absolute inset-0 size-full rounded-3xl"
