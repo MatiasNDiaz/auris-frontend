@@ -280,7 +280,10 @@ export default function SobreElCentroPage() {
           <Reveal>
             <div className="relative aspect-4/3 overflow-hidden rounded-3xl bg-cream-100 shadow-sm">
               <Image
-                src="/TallerAdultos.webp"
+                // La misma foto nueva que usa el servicio del taller, en vez
+                // del archivo suelto que había en la raíz de `public/` y que no
+                // pasaba por el pipeline de optimización.
+                src="/images/servicios/portada/taller-de-adultos-mayores.webp"
                 alt="Encuentro del taller de adultos mayores en el centro"
                 fill
                 sizes="(max-width: 1024px) 90vw, 520px"

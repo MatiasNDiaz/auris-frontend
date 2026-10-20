@@ -233,6 +233,9 @@ export function ProfessionalFicha({
 }: ProfessionalFichaProps) {
   const p = paletas[professional.gender];
   const siglas = iniciales(professional.name);
+  // Las dos chicas del mosaico son las fotos 4 y 5. Quien no las subió no
+  // lleva esa fila: dibujarla igual dejaba dos recuadros de color vacíos.
+  const hayFotosChicas = fotos.grilla.slice(1).some(Boolean);
   const nombre = professional.name.split(" ").slice(1).join(" ");
   const frase = cerrarFrase(conMayuscula(ficha.enfoque.frase));
 
@@ -366,9 +369,26 @@ export function ProfessionalFicha({
 
           {/* Mosaico: una grande arriba, dos chicas abajo lado a lado. Más
               alto que ancho —4:5, como un retrato— y con la grande pesando el
-              doble que cada chica, para que se note quién manda en el grupo. */}
+              doble que cada chica, para que se note quién manda en el grupo.
+
+              Quien no subió las fotos 4 y 5 no lleva la fila de abajo: antes se
+              dibujaban igual, con el bloque de color de relleno, y quedaban dos
+              recuadros vacíos debajo de la foto buena.
+
+              Sin esa fila la caja pasa a ser cuadrada en vez de 4:5. Es más
+              alta que la franja que tenía la grande dentro del mosaico, así que
+              la foto se ve más grande, pero sin estirar el marco a 4:5: con un
+              original cuadrado —el caso que hay hoy— eso le recortaba un quinto
+              del ancho, y lo que se pedía era verla entera. */}
           <Reveal from="right" className="relative">
-            <div className="grid aspect-4/5 grid-rows-[2fr_1fr] gap-3 sm:gap-4">
+            <div
+              className={cn(
+                "grid gap-3 sm:gap-4",
+                hayFotosChicas
+                  ? "aspect-4/5 grid-rows-[2fr_1fr]"
+                  : "aspect-square",
+              )}
+            >
               <div
                 className={cn(
                   "group relative overflow-hidden rounded-3xl shadow-[0_4px_10px_-2px_rgba(43,43,40,0.12),0_18px_40px_-12px_rgba(43,43,40,0.25)] transition-[translate,box-shadow] duration-700 hover:-translate-y-1.5 hover:shadow-[0_8px_16px_-4px_rgba(43,43,40,0.16),0_30px_60px_-14px_rgba(43,43,40,0.35)]",
@@ -399,38 +419,40 @@ export function ProfessionalFicha({
                 )}
               </div>
 
-              <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                {fotos.grilla.slice(1).map((src, index) => (
-                  <div
-                    key={index}
-                    className={cn(
-                      "group relative overflow-hidden rounded-3xl shadow-[0_4px_10px_-2px_rgba(43,43,40,0.12),0_18px_40px_-12px_rgba(43,43,40,0.25)] transition-[translate,box-shadow] duration-700 hover:-translate-y-1.5 hover:shadow-[0_8px_16px_-4px_rgba(43,43,40,0.16),0_30px_60px_-14px_rgba(43,43,40,0.35)]",
-                      suave,
-                    )}
-                  >
-                    {src ? (
-                      <Image
-                        src={src}
-                        alt={`${professional.name}, foto ${index + 2}`}
-                        fill
-                        sizes="(max-width: 1024px) 70vw, 560px"
-                        quality={CALIDAD_FOTO}
-                        style={
-                          ficha.grillaFoco?.[index + 1]
-                            ? { objectPosition: ficha.grillaFoco[index + 1] }
-                            : undefined
-                        }
-                        className={cn(
-                          "object-cover transition-transform duration-1200 group-hover:scale-[1.06]",
-                          suave,
-                        )}
-                      />
-                    ) : (
-                      <FotoPendiente p={p} />
-                    )}
-                  </div>
-                ))}
-              </div>
+              {hayFotosChicas && (
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                  {fotos.grilla.slice(1).map((src, index) => (
+                    <div
+                      key={index}
+                      className={cn(
+                        "group relative overflow-hidden rounded-3xl shadow-[0_4px_10px_-2px_rgba(43,43,40,0.12),0_18px_40px_-12px_rgba(43,43,40,0.25)] transition-[translate,box-shadow] duration-700 hover:-translate-y-1.5 hover:shadow-[0_8px_16px_-4px_rgba(43,43,40,0.16),0_30px_60px_-14px_rgba(43,43,40,0.35)]",
+                        suave,
+                      )}
+                    >
+                      {src ? (
+                        <Image
+                          src={src}
+                          alt={`${professional.name}, foto ${index + 2}`}
+                          fill
+                          sizes="(max-width: 1024px) 70vw, 560px"
+                          quality={CALIDAD_FOTO}
+                          style={
+                            ficha.grillaFoco?.[index + 1]
+                              ? { objectPosition: ficha.grillaFoco[index + 1] }
+                              : undefined
+                          }
+                          className={cn(
+                            "object-cover transition-transform duration-1200 group-hover:scale-[1.06]",
+                            suave,
+                          )}
+                        />
+                      ) : (
+                        <FotoPendiente p={p} />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Antes iba en `absolute bottom-0`, apoyada sobre las dos fotos de

@@ -2,18 +2,21 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
-import { CheckCircle2, Loader2, Send } from "lucide-react";
+import { CheckCircle2, Loader2, MessageCircle, Send } from "lucide-react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ShineButton } from "@/components/shared/ShineButton";
+import { siteConfig } from "@/config/site";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
+import { cn, whatsappLink } from "@/lib/utils";
 
 /**
- * Refleja la tabla `contact_submissions` de Supabase. Cuando exista el backend,
- * este mismo esquema se revalida en la Server Action antes de insertar.
+ * Lo que se le pide a quien escribe. Se valida acá y nada más: el formulario no
+ * guarda en ningún lado, arma un mensaje con estos campos y lo abre en el
+ * WhatsApp del centro.
  */
 const contactSchema = z.object({
   fullName: z
@@ -55,11 +58,47 @@ export function ContactForm() {
     },
   });
 
-  const onSubmit = async (values: ContactValues) => {
-    // TODO: reemplazar por la Server Action que inserta en `contact_submissions`.
+  /**
+   * El enlace de WhatsApp que se armó en el último envío.
+   *
+   * Se guarda para poder ofrecerlo como botón en la pantalla de confirmación:
+   * si el navegador bloqueó la apertura automática —pasa cuando el permiso de
+   * ventanas emergentes está restringido—, el mensaje no se pierde y alcanza
+   * con un toque para abrirlo.
+   */
+  const [enlaceWhatsapp, setEnlaceWhatsapp] = useState("");
+
+  /**
+   * El formulario no guarda nada: arma el mensaje y lo abre en WhatsApp.
+   *
+   * Los datos viajan dentro del texto porque `wa.me` solo acepta eso. Van con
+   * un rótulo cada uno para que del lado del centro se lea igual de ordenado
+   * que en un correo.
+   */
+  const onSubmit = (values: ContactValues) => {
     if (values.website) return; // honeypot completado: descartamos en silencio
-    await new Promise((resolve) => setTimeout(resolve, 900));
-    console.info("Consulta de contacto (mock):", values);
+
+    const texto = [
+      "Hola AURIS, quiero hacer una consulta.",
+      "",
+      `Nombre: ${values.fullName}`,
+      `Correo: ${values.email}`,
+      `Teléfono: ${values.phone}`,
+      "",
+      "Consulta:",
+      values.message,
+    ].join("\n");
+
+    const url = whatsappLink(siteConfig.whatsapp, texto);
+    setEnlaceWhatsapp(url);
+
+    // Se intenta en una pestaña nueva para no sacar a nadie del sitio. Si el
+    // navegador lo bloquea, `window.open` devuelve `null` y ahí sí se navega
+    // en la misma pestaña, que ningún bloqueador frena.
+    const pestana = window.open(url, "_blank", "noopener,noreferrer");
+    // `assign` y no `location.href = …`: el compilador de React trata la
+    // asignación a esa propiedad como una mutación y la rechaza.
+    if (!pestana) window.location.assign(url);
   };
 
   const fields = [
@@ -105,21 +144,36 @@ export function ContactForm() {
               aria-hidden
             />
             <h3 className="mt-5 font-serif text-2xl text-ink-900">
-              ¡Recibimos tu consulta!
+              Tu consulta está lista
             </h3>
             <p className="mx-auto mt-3 max-w-sm text-pretty text-ink-700/80">
-              Te vamos a responder dentro de las próximas 24 horas hábiles.
-              Gracias por escribirnos.
+              Se abrió WhatsApp con tus datos ya escritos. Tocá enviar ahí y te
+              respondemos a la brevedad.
             </p>
-            <ShineButton
-              type="button"
-              tone="soft"
-              effect="ring"
-              onClick={() => reset()}
-              className="mt-6"
-            >
-              Enviar otra consulta
-            </ShineButton>
+
+            {/* Por si el navegador bloqueó la apertura automática: el mensaje
+                sigue armado y se puede abrir desde acá. */}
+            <div className="mt-6 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              {enlaceWhatsapp && (
+                <ShineButton
+                  href={enlaceWhatsapp}
+                  external
+                  tone="primary"
+                  effect="fill"
+                >
+                  <MessageCircle className="size-4" aria-hidden />
+                  Abrir WhatsApp
+                </ShineButton>
+              )}
+              <ShineButton
+                type="button"
+                tone="soft"
+                effect="ring"
+                onClick={() => reset()}
+              >
+                Enviar otra consulta
+              </ShineButton>
+            </div>
           </motion.div>
         ) : (
           <motion.form
@@ -135,8 +189,8 @@ export function ContactForm() {
               Escribinos tu consulta
             </h2>
             <p className="mt-2 text-sm text-ink-700/75">
-              Completá el formulario y te respondemos a la brevedad. No hace
-              falta registrarse.
+              Completá el formulario y se abre WhatsApp con todo escrito. No
+              hace falta registrarse.
             </p>
 
             <div className="mt-7 grid gap-5 sm:grid-cols-2">
@@ -222,19 +276,22 @@ export function ContactForm() {
               {isSubmitting ? (
                 <>
                   <Loader2 className="size-4 animate-spin" aria-hidden />
-                  Enviando…
+                  Abriendo WhatsApp…
                 </>
               ) : (
                 <>
-                  <Send className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
-                  Enviar consulta
+                  <Send
+                    className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    aria-hidden
+                  />
+                  Enviar por WhatsApp
                 </>
               )}
             </ShineButton>
 
             <p className="mt-4 text-xs leading-relaxed text-ink-700/60">
-              Al enviar aceptás que nos contactemos con vos por los datos
-              provistos. No compartimos tu información con terceros.
+              Al enviar se abre WhatsApp con tu consulta ya escrita, para que la
+              mandes vos. No guardamos tus datos ni los compartimos.
             </p>
           </motion.form>
         )}

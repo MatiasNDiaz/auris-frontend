@@ -1,5 +1,49 @@
 # Changelog
 
+## 2026-10-20 — Formulario por WhatsApp, fotos nuevas y la ficha de Villalobos
+
+### El formulario de contacto ahora manda a WhatsApp
+
+- Antes no mandaba a ningún lado: el `onSubmit` esperaba 900 ms y hacía un
+  `console.info`, con un `TODO` de una Server Action que nunca existió. La
+  pantalla de confirmación decía "te respondemos dentro de las 24 horas
+  hábiles", algo que no iba a pasar.
+- Ahora arma el mensaje con los cuatro campos —nombre, correo, teléfono y
+  consulta, cada uno rotulado— y lo abre en el WhatsApp del centro
+  (`siteConfig.whatsapp`). Los textos del formulario y de la confirmación se
+  ajustaron para decir lo que realmente ocurre.
+- Se intenta abrir en una pestaña nueva; si el navegador lo bloquea, se navega
+  en la misma, que ningún bloqueador frena. Y la pantalla de confirmación deja
+  un botón **Abrir WhatsApp** con el mensaje ya armado, por si las dos cosas
+  fallan: así la consulta escrita no se pierde nunca.
+- `window.location.assign(url)` y no `location.href = …`: el compilador de
+  React trata esa asignación como una mutación y la rechaza en lint.
+
+### Fotos nuevas
+
+- **Fonoaudiología** y **taller de adultos mayores**: fotos nuevas en sus
+  archivos de siempre, así que entran solas en el hero, el abanico, las
+  tarjetas y el banner del detalle sin tocar una línea de código. El raw del
+  taller venía como `adultos_mayores.png` y se renombró al slug del servicio
+  para que reemplace en su lugar en vez de crear un archivo suelto.
+- **Bruxismo ya tiene foto propia.** Prestaba la del banner de la página de
+  servicios —el consultorio vacío con el sillón—, que no decía nada del tema.
+  Con la foto nueva se le sacó el `heroFoco: "center 70%"`, que existía sólo
+  para bajar el recorte hasta ese sillón.
+- **"Nuestra historia"** usaba `/TallerAdultos.webp`, un archivo suelto en la
+  raíz de `public/` que no pasaba por el pipeline. Ahora apunta a la foto nueva
+  del servicio, que sí está optimizada. El archivo viejo quedó sin referencias.
+
+### La ficha de Eugenia Villalobos
+
+- No tiene fotos 4 ni 5, y el mosaico las dibujaba igual: dos recuadros de
+  color vacíos debajo de la foto buena. Ahora esa fila no se renderiza cuando
+  no hay fotos chicas.
+- Sin esa fila la caja pasa de 4:5 a cuadrada. Es más alta que la franja que
+  tenía la foto dentro del mosaico, así que se ve más grande, y con un original
+  cuadrado —el caso que hay— entra **entera**: antes el marco 4:5 le recortaba
+  un quinto del ancho. Medido: 100 % del ancho visible en escritorio y mobile.
+
 ## 2026-10-12 (2) — El rectángulo verde al abrir la ficha de un profesional
 
 ### Qué se veía y por qué

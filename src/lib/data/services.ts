@@ -113,12 +113,12 @@ export const services: Service[] = [
       "Placas, ajuste de la mordida y trabajo sobre la articulación, para detener el desgaste a tiempo.",
     fullDescription:
       "El bruxismo casi nunca llega como motivo de consulta: llega como un diente sensible, una restauración que se fisura o un dolor de cabeza al despertar. El diagnóstico mira el patrón de desgaste del esmalte, la musculatura de la mandíbula y cómo cierra la mordida. El tratamiento suele combinar una placa de descarga hecha a medida, ajustes sobre la oclusión cuando corresponde y trabajo sobre la articulación temporomandibular. El desgaste que ya ocurrió no se revierte solo, pero se puede frenar; por eso el seguimiento en el tiempo es parte del tratamiento y no un extra.",
-    // El consultorio real del centro, la misma foto que abre la página de
-    // servicios. Reemplaza a una de banco que mostraba una placa en la mano y
-    // se confundía con la de alineadores. Va con el foco abajo: lo que cuenta
-    // —el sillón y el equipo— está en la mitad inferior.
-    imageUrl: "/images/banners-secciones/banner-servicios.webp",
-    heroFoco: "center 70%",
+    // Foto propia del servicio. Antes prestaba la del banner de la página de
+    // servicios —el consultorio vacío con el sillón—, que no decía nada de
+    // bruxismo. Esta muestra la articulación y la mordida, que es de lo que se
+    // trata. Sin `heroFoco`: el centro de la foto ya es lo que importa, y el
+    // 70% de la anterior estaba puesto para bajar hasta el sillón.
+    imageUrl: "/images/servicios/portada/bruxismo.webp",
     features: [
       "Diagnóstico del desgaste y de la mordida",
       "Placas de descarga hechas a medida",
