@@ -7,7 +7,19 @@ export const siteConfig = {
   tagline: "Espacio de salud y bienestar",
   description:
     "Centro de salud y bienestar en Cerro de las Rosas, Córdoba. Odontología, odontopediatría funcional, alineadores y ortodoncia, bruxismo y disfunciones, estética facial y corporal, fonoaudiología, psicología y taller de adultos mayores, con un enfoque humano, profesional y personalizado.",
-  url: "https://auris.com.ar",
+  /**
+   * El dominio canónico, con `www`. De acá salen el `canonical` de cada
+   * página, las direcciones de Open Graph, el `robots.txt` y el `sitemap.xml`.
+   *
+   * Decía `auris.com.ar`, que es de otra empresa —una casa de audífonos en
+   * Rosario, viva y sin relación con el centro—. Eso le decía a Google que la
+   * versión buena de cada página estaba en un dominio ajeno, y dejaba la foto
+   * de las previsualizaciones apuntando a una dirección que da 404: al
+   * compartir el sitio por WhatsApp la tarjeta salía sin imagen.
+   *
+   * Va con `www` porque es la forma a la que redirige el dominio pelado.
+   */
+  url: "https://www.espacioauris.com",
 
   phone: "+54 351 481-0843",
   whatsapp: "+54 351 217-7788",
