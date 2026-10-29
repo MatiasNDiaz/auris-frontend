@@ -1,4 +1,4 @@
-import { CALIDAD_FOTO } from "./calidad-foto";
+import cargadorDeImagen from "./image-loader";
 
 /**
  * El `sizes` de la foto grande de la ficha de un profesional.
@@ -22,15 +22,15 @@ const ANCHOS = [128, 384, 640, 1080, 1920];
 /**
  * Empieza a bajar la foto que va a usar la ficha, antes de navegar hacia ella.
  *
- * El problema que resuelve: la tarjeta del listado y la ficha muestran la misma
- * foto pero a tamaños distintos, así que `next/image` pide dos variantes
- * distintas —`w=640` en la tarjeta, `w=828` en la ficha—. Son URLs diferentes,
- * de modo que lo ya descargado para la tarjeta no le sirve a la ficha y la foto
- * se baja entera de nuevo recién cuando la ficha termina de montar. Durante esa
- * espera se ve el placeholder.
+ * El problema que resuelve: la tarjeta del listado dibuja la foto a 420-520px
+ * y la ficha a 960, así que una pide la variante de 640 y la otra la de 1080.
+ * Son archivos distintos, de modo que lo ya descargado para la tarjeta no le
+ * sirve a la ficha y la foto se baja de nuevo recién cuando la ficha termina
+ * de montar. Durante esa espera se ve el placeholder.
  *
- * No se fuerza un ancho a mano: se le da al navegador el mismo `srcset` y el
- * mismo `sizes` que va a tener la ficha y que elija él. Así la variante
+ * No se fuerza un ancho a mano: se le arma al navegador el mismo `srcset` y el
+ * mismo `sizes` que va a tener la ficha —con el mismo loader, así que las
+ * direcciones son idénticas carácter por carácter— y que elija él. La variante
  * coincide con la que pedirá después y la encuentra en caché.
  *
  * Se dispara al apuntar o tocar la tarjeta, no al montarla: precargar las doce
@@ -43,7 +43,6 @@ export function precargarFotoDeFicha(src: string) {
   const img = new window.Image();
   img.sizes = SIZES_FOTO_FICHA;
   img.srcset = ANCHOS.map(
-    (w) =>
-      `/_next/image?url=${encodeURIComponent(src)}&w=${w}&q=${CALIDAD_FOTO} ${w}w`,
+    (w) => `${cargadorDeImagen({ src, width: w })} ${w}w`,
   ).join(", ");
 }

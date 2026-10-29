@@ -3,6 +3,15 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     /**
+     * Las fotos no pasan por ningún optimizador: ya vienen listas del
+     * pipeline, en los anchos de la escalera, y `src/lib/image-loader.ts` se
+     * limita a elegir cuál corresponde. En producción eso significa que Vercel
+     * sirve archivos estáticos desde el CDN en vez de convertir cada foto la
+     * primera vez que alguien la pide.
+     */
+    loader: "custom",
+    loaderFile: "./src/lib/image-loader.ts",
+    /**
      * Las dos calidades con las que el pipeline deja las variantes: 82 para
      * fotos de personas y 88 para banners, portadas e instalaciones. Hay que
      * declarar acá cada valor que se use, o Next 16 rechaza el pedido.
@@ -64,6 +73,7 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+
 };
 
 export default nextConfig;
