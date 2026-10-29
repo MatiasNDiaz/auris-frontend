@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { CALIDAD_BANNER } from "@/lib/calidad-foto";
 import { miniaturaDe } from "@/lib/miniatura";
 import { LeafScatter } from "./LeafScatter";
 import { LeafSprig } from "./LeafSprig";
@@ -146,7 +147,7 @@ export function PageHeader({
              * bajaba una variante de 828px y se estiraba al doble.
              */
             sizes="(min-width: 1024px) 1800px, 1260px"
-            quality={88}
+            quality={CALIDAD_BANNER}
             priority
             // El fondo de esta franja es `bg-ink-900`, casi negro, para que el
             // texto claro se lea aunque la foto falle. El efecto no buscado era

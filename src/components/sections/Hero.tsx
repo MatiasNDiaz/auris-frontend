@@ -11,6 +11,7 @@ import { WhatsAppButton } from "@/components/shared/WhatsAppButton";
 import { siteConfig } from "@/config/site";
 import { heroServices as services } from "@/lib/data/services";
 import { renderServiceIcon } from "@/lib/icons";
+import { CALIDAD_BANNER } from "@/lib/calidad-foto";
 import { miniaturaDe } from "@/lib/miniatura";
 
 const AUTOPLAY_MS = 4000;
@@ -195,7 +196,7 @@ export function Hero() {
                 // La foto del hero se agranda siempre —nunca se achica—, y al
                 // 75 un archivo de 1918px quedaba en 36 KB: a ese nivel de
                 // compresión el agrandado saca a la luz los artefactos.
-                quality={88}
+                quality={CALIDAD_BANNER}
                 priority={index === 0}
                 // Igual que en los banners: la capa de atrás del hero es
                 // `bg-ink-900`, así que sin esto el primer pintado en celular

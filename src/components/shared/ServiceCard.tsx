@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { CALIDAD_BANNER } from "@/lib/calidad-foto";
 import { BLUR_DATA_URL } from "@/lib/blur";
 import { renderServiceIcon } from "@/lib/icons";
 import type { Service } from "@/lib/types";
@@ -63,7 +64,7 @@ export function ServiceCard({
             sizes="(max-width: 640px) 133vw, (max-width: 1024px) 66vw, 560px"
             // 88 y no el 75 por defecto: es la misma foto que el banner del
             // servicio, que ya va en 88, y acá se recorta todavía más.
-            quality={88}
+            quality={CALIDAD_BANNER}
             placeholder="blur"
             blurDataURL={BLUR_DATA_URL}
             className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"

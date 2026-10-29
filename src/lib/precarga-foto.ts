@@ -12,12 +12,12 @@ import { CALIDAD_FOTO } from "./calidad-foto";
 export const SIZES_FOTO_FICHA = "(max-width: 1024px) 100vw, 960px";
 
 /**
- * Los anchos que `next/image` ofrece en el `srcset`. Son los `deviceSizes` por
- * defecto de Next: `next.config.ts` no los redefine. Si algún día se tocan allá,
- * esta lista queda vieja y la precarga deja de acertar la variante —no se rompe
- * nada, simplemente deja de ahorrar la descarga—.
+ * Los anchos que `next/image` ofrece en el `srcset`: `imageSizes` seguido de
+ * `deviceSizes`, tal como están en `next.config.ts`. Si algún día se tocan
+ * allá, esta lista queda vieja y la precarga deja de acertar la variante —no
+ * se rompe nada, simplemente deja de ahorrar la descarga—.
  */
-const ANCHOS = [640, 750, 828, 1080, 1200, 1920, 2048, 3840];
+const ANCHOS = [128, 384, 640, 1080, 1920];
 
 /**
  * Empieza a bajar la foto que va a usar la ficha, antes de navegar hacia ella.

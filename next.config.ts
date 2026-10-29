@@ -3,20 +3,36 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     /**
-     * Next vuelve a comprimir cada foto al servirla, y por defecto lo hace al
-     * 75. Para los retratos del equipo eso se notaba en la piel y el pelo, así
-     * que las fichas piden 92 (`quality={CALIDAD_FOTO}`). Hay que declarar acá
-     * cada valor que se use: Next 16 rechaza los que no estén en esta lista.
+     * Las dos calidades con las que el pipeline deja las variantes: 82 para
+     * fotos de personas y 88 para banners, portadas e instalaciones. Hay que
+     * declarar acá cada valor que se use, o Next 16 rechaza el pedido.
+     *
+     * Con el loader propio estos números ya no deciden nada para las fotos del
+     * sitio —la compresión viene hecha del archivo—, pero siguen valiendo para
+     * las remotas, que son las únicas que pasan por el optimizador.
      */
-    qualities: [75, 88, 92],
+    qualities: [82, 88],
     /**
-     * AVIF primero y WebP de respaldo. Sobre estas fotos —piel, pelo, paredes
-     * lisas— AVIF pesa entre un 20% y un 30% menos que WebP a igual calidad
-     * percibida, y el navegador que no lo soporta recibe WebP sin más. El
-     * costo es que la primera conversión de cada tamaño tarda más; en Vercel
-     * queda cacheada y solo la paga la primera visita.
+     * Solo WebP. AVIF comprime mejor, pero el loader devuelve una única URL y
+     * no ve la cabecera `Accept`: un Safari viejo —iOS 16.0 a 16.3— recibiría
+     * un archivo que no sabe abrir y vería la imagen rota. WebP lo entiende
+     * todo lo que está en la calle desde 2020.
      */
-    formats: ["image/avif", "image/webp"],
+    formats: ["image/webp"],
+    /**
+     * La escalera de anchos, y es la misma lista que genera
+     * `optimize-images.mjs`. `next/image` arma el `srcset` con
+     * `imageSizes` + `deviceSizes`, así que recortarla acá es lo que hace que
+     * el `srcset` apunte solo a variantes que existen de verdad.
+     *
+     * Eran las quince por defecto. Con un `sizes` sin unidades `vw` —y hay
+     * cinco así— Next las usa todas, y eso multiplicaba por quince los
+     * archivos a pregenerar y, antes, las conversiones a pagarle a Vercel.
+     *
+     * `imageSizes` tiene que quedar entero por debajo del primer `deviceSizes`.
+     */
+    imageSizes: [128, 384],
+    deviceSizes: [640, 1080, 1920],
     /**
      * Las fotos llevan la fecha del archivo en la ruta (ver `rewrites`), así
      * que una imagen nueva es una dirección nueva y nunca hace falta invalidar

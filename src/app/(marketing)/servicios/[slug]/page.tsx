@@ -11,6 +11,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CtaBanner } from "@/components/sections/CtaBanner";
+import { CALIDAD_BANNER } from "@/lib/calidad-foto";
 import { ProfessionalCard } from "@/components/shared/ProfessionalCard";
 import { Reveal } from "@/components/shared/Reveal";
 import { SectionHeading } from "@/components/shared/SectionHeading";
@@ -83,6 +84,7 @@ export default async function ServicioDetallePage({
           // estirarla. De 1024 para arriba la caja ya es más apaisada que
           // cualquiera de las fotos y ahí sí vale el ancho de pantalla.
           sizes="(min-width: 1024px) 100vw, 900px"
+          quality={CALIDAD_BANNER}
           priority
           // En estas fotos la gente está en el tercio de arriba: centrada, la
           // franja les cortaba la cabeza. El 15% las deja enteras en las ocho.
