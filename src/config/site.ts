@@ -30,9 +30,8 @@ export const siteConfig = {
   },
 
   hours: [
-    { days: "Lunes a viernes", time: "08:00 – 20:00" },
-    { days: "Sábados", time: "09:00 – 14:00" },
-    { days: "Domingos y feriados", time: "Cerrado" },
+    { days: "Lunes a viernes", time: "08:30 – 18:30" },
+    { days: "Sábados y domingos", time: "Cerrado" },
   ],
 
   social: {
