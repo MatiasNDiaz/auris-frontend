@@ -74,6 +74,32 @@ const nextConfig: NextConfig = {
     ];
   },
 
+  /**
+   * Las fotos versionadas se guardan para siempre.
+   *
+   * `immutable` le dice al navegador que ni siquiera pregunte: esa dirección
+   * no va a cambiar nunca de contenido. Se puede afirmar porque el número del
+   * medio es la fecha del archivo, así que reemplazar una foto produce una
+   * dirección nueva. Sin esto, Next sirve lo de `public/` con `max-age=0` y el
+   * navegador revalida cada foto en cada visita.
+   *
+   * Sólo las versionadas. Las de `/images/...` a secas —las portadas de
+   * servicio y las del recorrido— no llevan fecha en la ruta, así que un año
+   * de caché dejaría a alguien viendo la foto vieja después de cambiarla.
+   */
+  async headers() {
+    return [
+      {
+        source: "/imagenes/v/:ruta*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
