@@ -14,8 +14,8 @@
  * Cada subcarpeta mantiene su lugar: `assets/raw/images/profesionales/x.jpg`
  * sale como `public/images/profesionales/x.webp`.
  */
-import { rename, stat, unlink } from "node:fs/promises";
-import { existsSync, mkdirSync } from "node:fs";
+import { rename, stat, unlink, writeFile } from "node:fs/promises";
+import { existsSync, mkdirSync, readdirSync } from "node:fs";
 import path from "node:path";
 import {
   RAIZ,
@@ -32,9 +32,45 @@ import {
 
 const ENTRADA = path.join(RAIZ, "assets", "raw", "images");
 const SALIDA = path.join(RAIZ, "public", "images");
+/** Dónde queda la lista de variantes que lee el loader de `next/image`. */
+const MANIFIESTO_WEB = path.join(RAIZ, "src", "generated", "image-manifest.json");
 
 /** Calidad WebP, de 1 a 100. 88 mantiene la piel y el pelo sin artefactos. */
 const CALIDAD = Number(process.env.IMG_QUALITY ?? 88);
+
+/**
+ * Calidad de las fotos de personas, más baja que la del resto.
+ *
+ * Medido sobre el retrato de Ariel a 1080px: 92 pesa 141 KB, 82 pesa 77 KB y
+ * la diferencia es de 1,13 niveles sobre 255 (PSNR 42,7 dB; por encima de 40
+ * no se distingue). Los banners se quedan en 88 porque tienen grano —los
+ * nocturnos sobre todo— y ahí 82 sí baja de los 40 dB.
+ *
+ * Tiene que coincidir con `CALIDAD_FOTO` de `src/lib/calidad-foto.ts`.
+ */
+const CALIDAD_PERSONAS = Number(process.env.IMG_QUALITY_PERSONAS ?? 82);
+
+/** Carpetas cuyas fotos son de personas. */
+const CARPETAS_PERSONAS = new Set(["profesionales", "recepcionistas"]);
+
+/**
+ * Los anchos a los que se pregenera cada foto.
+ *
+ * Es la misma lista que `imageSizes` + `deviceSizes` en `next.config.ts`, y no
+ * es casualidad: `next/image` arma el `srcset` con esa lista, así que cualquier
+ * ancho que esté allá y no acá terminaría apuntando a un archivo que no existe.
+ * Si se toca una, hay que tocar la otra.
+ *
+ * Nunca se agranda: de cada foto sólo salen los escalones más chicos que ella.
+ */
+const ESCALERA = [384, 640, 1080, 1920];
+
+/**
+ * El escalón de 128 es sólo para el recorrido virtual, que muestra miniaturas
+ * de 64px. Para el resto del sitio sobra: la foto más chica que se dibuja en
+ * cualquier otro lado son los 360px del abanico de servicios.
+ */
+const CARPETAS_MINIATURA = new Set(["instalaciones", "recorrido"]);
 
 /**
  * Presets de tamaño: el lado más largo nunca pasa de `max`. Una imagen más
@@ -343,6 +379,47 @@ async function reencuadrar(sharp, original, encuadre) {
     .toBuffer();
 }
 
+/**
+ * Las carpetas de `assets/raw/images` en las que cae este original.
+ * @param {string} original
+ */
+function carpetasDe(original) {
+  return path
+    .relative(ENTRADA, path.dirname(original))
+    .split(path.sep)
+    .map((c) => c.toLowerCase());
+}
+
+/**
+ * Con qué calidad se comprime esta foto. Las de personas van más bajas que el
+ * resto: la piel perdona la compresión mucho mejor que el grano de una toma
+ * nocturna.
+ *
+ * @param {string} original
+ */
+function calidadDe(original) {
+  const carpetas = carpetasDe(original);
+  return carpetas.some((c) => CARPETAS_PERSONAS.has(c))
+    ? CALIDAD_PERSONAS
+    : CALIDAD;
+}
+
+/**
+ * Los escalones que se generan para esta foto: la escalera común, más el de
+ * 128 si es del recorrido virtual, y siempre sin pasarse del ancho que la foto
+ * tiene de verdad.
+ *
+ * @param {string} original
+ * @param {number} anchoFinal ancho de la imagen ya optimizada
+ */
+function anchosDe(original, anchoFinal) {
+  const carpetas = carpetasDe(original);
+  const escalera = carpetas.some((c) => CARPETAS_MINIATURA.has(c))
+    ? [128, ...ESCALERA]
+    : ESCALERA;
+  return escalera.filter((w) => w < anchoFinal);
+}
+
 /** @param {string} original */
 function presetDe(original) {
   const forzado = flags().preset;
@@ -402,6 +479,8 @@ async function main() {
     errores: 0,
     antes: 0,
     despues: 0,
+    /** Archivos `-<ancho>.webp` escritos en esta corrida. */
+    variantes: 0,
   };
   /** Para detectar dos originales que terminarían en el mismo archivo. */
   const destinos = new Map();
@@ -423,7 +502,11 @@ async function main() {
     const recorte = Object.keys(encuadre).length
       ? `:enc${JSON.stringify(encuadre)}`
       : "";
-    const ajustes = `webp:q${CALIDAD}:max${max}${recorte}`;
+    const calidad = calidadDe(original);
+    // La escalera también entra en la huella: si se agrega o se saca un
+    // escalón, el original sigue igual y sin esto las fotos ya hechas se
+    // quedarían sin la variante nueva.
+    const ajustes = `webp:q${calidad}:max${max}${recorte}:esc${ESCALERA.join("-")}`;
     const info = await stat(original);
 
     if (destinos.has(destinoRel)) {
@@ -479,14 +562,58 @@ async function main() {
         // Los valores son conservadores a propósito: más que esto empieza a
         // marcar halos en los contornos y a resaltar el ruido de la piel.
         .sharpen({ sigma: 0.8, m1: 0.6, m2: 2.2 })
-        .webp({ quality: CALIDAD, effort: 6, smartSubsample: true })
+        .webp({ quality: calidad, effort: 6, smartSubsample: true })
         .toFile(temporal);
 
       await unlink(destino).catch(() => {});
       await rename(temporal, destino);
 
+      /*
+       * Las variantes salen del mismo `entrada` que el archivo grande y no de
+       * él: pasar un WebP por el compresor otra vez le suma una generación de
+       * pérdida, y a 384px eso se nota.
+       *
+       * Se llaman `nombre-w<ancho>.webp` al lado del grande, así el rewrite
+       * `/imagenes/v/:version/...` las alcanza igual que a él y conservan el
+       * número de versión, que es lo que permite cachearlas para siempre.
+       *
+       * La `w` no es decorativa: las fotos de profesional se llaman
+       * `ariel-1.webp`, `ariel-2.webp`… así que un sufijo de sólo números
+       * haría que `ariel-1.webp` se leyera como "la variante de 1px de
+       * ariel.webp".
+       */
+      const salidas = [destinoRel];
+      let pesoVariantes = 0;
+      const anchos = anchosDe(original, resultado.width);
+
+      // Barrer las variantes de una escalera anterior: si no, un escalón que
+      // se sacó de la lista queda en `public/` y se despliega para siempre.
+      const nombreBase = path.basename(destino, ".webp");
+      for (const vecino of readdirSync(path.dirname(destino))) {
+        const suelta = vecino.match(/^(.+)-w(\d+)\.webp$/);
+        if (!suelta || suelta[1] !== nombreBase) continue;
+        if (anchos.includes(Number(suelta[2]))) continue;
+        await unlink(path.join(path.dirname(destino), vecino)).catch(() => {});
+      }
+
+      for (const w of anchos) {
+        const archivo = destino.replace(/\.webp$/, `-w${w}.webp`);
+        const parcial = archivo + ".part";
+        await sharp(entrada, { failOn: "none" })
+          .rotate()
+          .resize({ width: w, withoutEnlargement: true })
+          .sharpen({ sigma: 0.8, m1: 0.6, m2: 2.2 })
+          .webp({ quality: calidad, effort: 6, smartSubsample: true })
+          .toFile(parcial);
+        await unlink(archivo).catch(() => {});
+        await rename(parcial, archivo);
+        salidas.push(relativa(archivo));
+        pesoVariantes += await tamano(archivo);
+        totales.variantes++;
+      }
+
       const antes = info.size;
-      const despues = await tamano(destino);
+      const despues = (await tamano(destino)) + pesoVariantes;
       // `metadata` da las medidas antes de girar; si la orientación EXIF es
       // 5 a 8 la foto va de costado y ancho y alto están cruzados.
       const girada = (meta.orientation ?? 1) >= 5;
@@ -496,13 +623,18 @@ async function main() {
 
       console.log(`✓ ${clave}`);
       console.log(
-        `    → ${destinoRel}  [${preset} ${max}px]  ${origW}×${origH}${reescalada ? ` → ${resultado.width}×${resultado.height}` : " (sin reescalar)"}`,
+        `    → ${destinoRel}  [${preset} ${max}px q${calidad}]  ${origW}×${origH}${reescalada ? ` → ${resultado.width}×${resultado.height}` : " (sin reescalar)"}`,
       );
+      if (salidas.length > 1) {
+        console.log(
+          `    + ${salidas.length - 1} variantes (${anchos.join(", ")}px)  ${peso(pesoVariantes)}`,
+        );
+      }
       console.log(
         `    ${peso(antes)} → ${peso(despues)}  (${reduccion(antes, despues)})`,
       );
 
-      manifiesto.anotar(clave, info, ajustes, [destinoRel]);
+      manifiesto.anotar(clave, info, ajustes, salidas);
       totales.procesados++;
       totales.antes += antes;
       totales.despues += despues;
@@ -514,8 +646,73 @@ async function main() {
   }
 
   manifiesto.guardar();
+  await escribirManifiestoWeb(sharp);
   imprimirResumen("optimize:images", totales);
+  console.log(`  variantes escritas ${totales.variantes}`);
   if (totales.errores) process.exitCode = 1;
+}
+
+/**
+ * Deja en `src/generated/image-manifest.json` qué variantes existe de cada
+ * foto. Es lo único que el loader de `next/image` tiene para saber a qué
+ * archivo apuntar, porque en el navegador no hay forma de preguntar si una
+ * ruta existe antes de pedirla.
+ *
+ * Se arma recorriendo `public/images` y no acumulando lo de esta corrida: así
+ * sale bien igual cuando no se procesó nada —que es el caso normal— y se
+ * entera si alguien borró una variante a mano.
+ *
+ * @param {import("sharp").default} sharp
+ */
+async function escribirManifiestoWeb(sharp) {
+  /** @type {Record<string, { w: number, h: number, v: number[] }>} */
+  const mapa = {};
+  /** @type {Map<string, number[]>} ruta del archivo grande -> anchos sueltos */
+  const variantes = new Map();
+  /** @type {string[]} */
+  const grandes = [];
+
+  const recorrerCarpeta = (/** @type {string} */ dir) => {
+    for (const entrada of readdirSync(dir, { withFileTypes: true })) {
+      const p = path.join(dir, entrada.name);
+      if (entrada.isDirectory()) {
+        recorrerCarpeta(p);
+        continue;
+      }
+      if (!entrada.name.endsWith(".webp")) continue;
+      const suelta = entrada.name.match(/^(.+)-w(\d+)\.webp$/);
+      if (suelta) {
+        const base = path.join(dir, `${suelta[1]}.webp`);
+        const lista = variantes.get(base) ?? [];
+        lista.push(Number(suelta[2]));
+        variantes.set(base, lista);
+      } else {
+        grandes.push(p);
+      }
+    }
+  };
+  if (existsSync(SALIDA)) recorrerCarpeta(SALIDA);
+
+  for (const grande of grandes.sort()) {
+    const clave = path.relative(SALIDA, grande).split(path.sep).join("/");
+    const meta = await sharp(grande).metadata();
+    mapa[clave] = {
+      w: meta.width ?? 0,
+      h: meta.height ?? 0,
+      v: (variantes.get(grande) ?? []).sort((a, b) => a - b),
+    };
+  }
+
+  mkdirSync(path.dirname(MANIFIESTO_WEB), { recursive: true });
+  // Una clave por línea: el archivo va al repo y un diff de una sola foto
+  // tiene que leerse como una sola línea cambiada.
+  const cuerpo = Object.entries(mapa)
+    .map(([k, v]) => `  ${JSON.stringify(k)}: ${JSON.stringify(v)}`)
+    .join(",\n");
+  await writeFile(MANIFIESTO_WEB, `{\n${cuerpo}\n}\n`, "utf8");
+  console.log(
+    `  manifiesto ${relativa(MANIFIESTO_WEB)} · ${grandes.length} fotos`,
+  );
 }
 
 await main();

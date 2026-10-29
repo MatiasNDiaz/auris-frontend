@@ -10,6 +10,7 @@
     "start": "next start",
     "lint": "eslint",
     "optimize:images": "node --disable-warning=ExperimentalWarning scripts/optimize-images.mjs",
+    "optimize-images": "npm run optimize:images --",
     "optimize:videos": "node --disable-warning=ExperimentalWarning scripts/optimize-videos.mjs",
     "optimize:media": "node --disable-warning=ExperimentalWarning scripts/optimize-images.mjs && node --disable-warning=ExperimentalWarning scripts/optimize-videos.mjs"
   },
